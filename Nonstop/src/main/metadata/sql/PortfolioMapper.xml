@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="PortfolioMapper">
+ 	
+ 	
+	<resultMap id="portfolioSelectMap" type="portfolio">
+		<result property="portNo" 			column="port_no" 			jdbcType="NUMERIC"/>
+		<result property="portUserId"		column="port_user_id" 		jdbcType="VARCHAR" />
+		<result property="portDivision" 	column="port_division" 		jdbcType="NUMERIC" />
+		<result property="portTitle" 		column="port_title" 		jdbcType="VARCHAR" />
+		<result property="portRegdate" 		column="port_regdate" 		jdbcType="DATE" />
+		<result property="portUpdate" 		column="port_update" 		jdbcType="DATE" />
+		<result property="portThumbnail" 	column="port_thumbnail" 	jdbcType="VARCHAR" />
+		<result property="portDetail" 		column="port_detail" 		jdbcType="VARCHAR"  />
+		<result property="totalPortView" 	column="reg_date" 			jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addPortfolio"		parameterType="portfolio" >
+	 	INSERT 
+		INTO portfolio ( port_no, port_user_id, port_division, port_title, port_regdate, port_file, port_detail) 
+		VALUES ( seq_portfolio_port_no.nextval, 
+		#{portUserId:VARCHAR}, 
+		#{portDivision:NUMERIC}, 
+		#{portTitle:VARCHAR}, 
+		SYSDATE, 
+		#{portFile:VARCHAR}, 
+		#{portDetail:VARCHAR})
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPortfolio"	parameterType="int"	resultMap="portfolioSelectMap">
+		SELECT
+		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_thumbnail, port_viewcount	
+		FROM portfolio
+		WHERE port_no = #{portNo}
+	 </select>
+	 
+	 <select  id="getPortfolioList" resultMap="portfolioSelectMap">
+	  	SELECT *
+	  	FROM portfolio 
+	 </select>
+	 
+	
+	 
+</mapper>

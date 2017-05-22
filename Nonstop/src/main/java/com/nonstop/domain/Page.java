@@ -1,7 +1,6 @@
 package com.nonstop.domain;
 
 
-//==> PageNavigation �� ���� Bean
 public class Page {
 	
 	///Field
@@ -12,6 +11,7 @@ public class Page {
 	private int maxPage;			// �ִ� ������ ��ȣ(��ü ������)
 	private int beginUnitPage;	//ȭ�鿡 �������� ������ ��ȣ�� �ּҼ�
 	private int endUnitPage;		//ȭ�鿡 �������� ������ ��ȣ�� �ִ��
+
 	
 	///Constructor
 	public Page() {
