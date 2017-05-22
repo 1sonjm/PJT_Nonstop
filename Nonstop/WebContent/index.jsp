@@ -50,6 +50,7 @@
 <!-- jQuery UI JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+
 <!-- Bootstrap custom Theme-->
 <link rel="stylesheet" href="/css/custom-theme.css" >
 
@@ -133,6 +134,7 @@ font-family: 'Syncopate', sans-serif;
 			<div class="col-md-12">
 				<div class="jumbotron">
 					<h1>Hello, world!</h1>
+					
 					<p>...</p>
 					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
 				</div>
