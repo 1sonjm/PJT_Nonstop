@@ -18,13 +18,11 @@
 		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
 		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
 	</resultMap>
-	
-	SQL : INSERT
-	<insert 	id="addUser"		parameterType="user" >
-	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , SYSDATE )
-	 </insert>
-	  -->
+	-->
+	<insert id="addStatistics" parameterType="statistics">
+		INSERT INTO statistics(stat_no, stat_tech_name, stat_tech_class,
+												 stat_demand, stat_supply, stat_user_rate)
+		VALUES (seq_statisics_stat_no.nextval, #{techName}, #{techClass},
+						#{demand}, #{supply}, #{userRate})
+	</insert>
 </mapper>
