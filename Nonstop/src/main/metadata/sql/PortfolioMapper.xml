@@ -33,11 +33,11 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getPortfolio"	parameterType="string"	resultMap="portfolioSelectMap">
+	 <select 	id="getPortfolio"	parameterType="int"	resultMap="portfolioSelectMap">
 		SELECT
 		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_thumbnail, port_viewcount	
 		FROM portfolio
-		WHERE port_no = #{value}
+		WHERE port_no = #{portNo}
 	 </select>
 	 
 	 <select  id="getPortfolioList" resultMap="portfolioSelectMap">
