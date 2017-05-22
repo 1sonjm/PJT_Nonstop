@@ -1,6 +1,7 @@
 package com.nonstop.common.AOP;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.codehaus.jackson.node.NodeCursor.Object;
 
 public class LogAspectJ {
 
