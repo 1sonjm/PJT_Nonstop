@@ -46,9 +46,9 @@
 		WHERE proj_no = #{value}
 	 </select>
 	 
-	 <select  id="listProject" resultMap="projectSelectMap">
+	 <!-- <select  id="listProject" resultMap="projectSelectMap">
 	  	
-	 </select>
+	 </select> -->
 	 
 	 
 	 

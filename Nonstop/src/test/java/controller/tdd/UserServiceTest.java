@@ -1,12 +1,14 @@
 package controller.tdd;
 
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.nonstop.domain.Project;
+import com.nonstop.service.project.ProjectService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
@@ -18,22 +20,22 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class UserServiceTest {
 
 	@Autowired
-	@Qualifier("userServiceImpl")
-	//private UserService userService;
+	@Qualifier("projectServiceImpl")
+	private ProjectService projectService;
 
 	@Test
-	public void testAddUser() throws Exception {
-		/*
-		User user = new User();
-		user.setUserId("testUserId");
+	public void testGetProject() throws Exception {
 		
-		userService.addUser(user);
 		
-		user = userService.getUser("testUserId");
+		Project project = new Project();
+		
+		
+		
+		project = projectService.getProject(1);
 
 		//System.out.println(user);
 		
-		Assert.assertEquals("testUserId", user.getUserId());
-		*/
+//		Assert.assertEquals("testUserId", user.getUserId());
+		
 	}
 }
