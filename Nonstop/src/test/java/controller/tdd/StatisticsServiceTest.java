@@ -1,5 +1,6 @@
 package controller.tdd;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,8 +8,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.nonstop.domain.Project;
-import com.nonstop.service.project.ProjectService;
+import com.nonstop.domain.Statistics;
+import com.nonstop.service.statistics.StatisticsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
@@ -17,25 +18,26 @@ import com.nonstop.service.project.ProjectService;
 													"classpath:config/context-aspect.xml",
 													"classpath:config/context-mybatis.xml",
 													"classpath:config/context-transaction.xml" })
-public class UserServiceTest {
+public class StatisticsServiceTest {
 
 	@Autowired
-	@Qualifier("projectServiceImpl")
-	private ProjectService projectService;
+	@Qualifier("statisticsServiceImpl")
+	private StatisticsService statisticsService;
 
 	@Test
-	public void testGetProject() throws Exception {
-		
-		
-		Project project = new Project();
-		
-		
-		
-		project = projectService.getProject(1);
+	public void testAddStatisticsData() throws Exception {
 
-		//System.out.println(user);
+		Statistics statistics = new Statistics();
+		statistics.setDemand(30);
+		statistics.setSupply(20);
+		statistics.setUserRate(10.5);
+		statistics.setLocation("서울시");
+		statistics.setTechName("java");
+		statistics.setTechClass(1);
 		
-//		Assert.assertEquals("testUserId", user.getUserId());
+		int result = statisticsService.addStatisticsData(statistics);
 		
+		Assert.assertEquals(1, result);
+
 	}
 }

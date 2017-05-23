@@ -56,15 +56,20 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="getPortfolio")
-	public String getPortfolio( @RequestParam("portNo") int portNo, Model model) throws Exception {
+	public String getPortfolio(Model model) throws Exception {
+	/*public String getPortfolio( @RequestParam("portNo") int portNo, Model model) throws Exception {*/
 		
 		System.out.println("getPortfolio Controller");
 		
+		int portNo = 10000;
+		
 		Portfolio portfolio = portfolioService.getPortfolio(portNo);
+		
+		System.out.println("getPortfolio portfolio : "+portfolio);
 		
 		model.addAttribute("portfolio", portfolio);
 		
-		return "forward:/portfolio/getPortfolio.jsp";
+		return "forward:/view/portfolio/getPortfolio.jsp";
 	}
 
 }

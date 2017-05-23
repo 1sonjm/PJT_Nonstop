@@ -264,7 +264,7 @@
                               <!-- 왜 안나오는거야아아아ㅏ워ㅠㅜㅠㅜㅠㅜ -->
 	                            <!-- Post Headline Start -->
 	                            <div class="post-title">
-	                            	<h1>How to make your company website 이놈에 h1태그를 어떻게하나</h1> 
+	                            	<h1>${portfolio.portTitle}</h1> 
 	                            </div>
 	                            <!-- Post Headline End -->
 	                                    

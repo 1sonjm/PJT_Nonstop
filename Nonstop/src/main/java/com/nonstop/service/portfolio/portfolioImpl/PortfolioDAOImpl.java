@@ -35,6 +35,9 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	@Override
 	public Portfolio getPortfolio(int portNo) throws Exception {
 
+		System.out.println("포트폴리오 디에오임쁠 여기들어오냣!");
+		System.out.println(portNo);
+		
 		return sqlSession.selectOne("PortfolioMapper.getPortfolio", portNo);
 	}
 
