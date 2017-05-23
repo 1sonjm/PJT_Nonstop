@@ -24,12 +24,12 @@
 	 	INSERT 
 		INTO portfolio ( port_no, port_user_id, port_division, port_title, port_regdate, port_file, port_detail) 
 		VALUES ( seq_portfolio_port_no.nextval, 
-		#{portUserId:VARCHAR}, 
-		#{portDivision:NUMERIC}, 
-		#{portTitle:VARCHAR}, 
+		#{portUserId}, 
+		#{portDivision}, 
+		#{portTitle}, 
 		SYSDATE, 
-		#{portFile:VARCHAR}, 
-		#{portDetail:VARCHAR})
+		#{portFile}, 
+		#{portDetail})
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -45,6 +45,18 @@
 	  	FROM portfolio 
 	 </select>
 	 
+	<!-- SQL : INSERT -->
+	<update 	id="updatePortfolio"		parameterType="portfolio" >
+	 	UPDATE portfolio
+		<set>
+		port_division=#{portDivision}, 
+		port_title=#{portTitle}, 
+		port_update=SYSDATE, 
+		port_file=#{portFile}, 
+		port_detail=#{portDetail}
+		</set>
+		WHERE port_no=#{portNo}
+	 </update>
 	
 	 
 </mapper>
