@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProjectMapper">
+ 	
+ 	
+	<resultMap id="projectSelectMap" type="project">
+		<result property="projNo" 			column="proj_no" 			jdbcType="NUMERIC"/>
+		<result property="projUserId"		column="proj_user_id" 		jdbcType="VARCHAR" />
+		<result property="projDivision" 	column="proj_division" 		jdbcType="NUMERIC" />
+		<result property="projTitle" 		column="proj_title" 		jdbcType="VARCHAR" />
+		<result property="projAnnoStart" 	column="proj_annostart" 	jdbcType="DATE" />
+		<result property="projAnnoEnd" 		column="proj_annoend" 		jdbcType="DATE" />
+		<result property="projStartDate" 	column="proj_startdate" 	jdbcType="DATE" />
+		<result property="projEndDate" 		column="proj_enddate" 		jdbcType="DATE"  />
+		<result property="projLocation" 	column="proj_location" 		jdbcType="VARCHAR" />
+		<result property="projDetail" 		column="proj_detail" 		jdbcType="VARCHAR" />
+		<result property="projViewcount" 	column="proj_viewcount" 	jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addProject"		parameterType="project" >
+	 	INSERT 
+		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
+		VALUES ( seq_project_proj_no.nextval, 
+		#{projUserId:VARCHAR}, 
+		#{portDivision:NUMERIC}, 
+		#{projTitle:VARCHAR}, 
+		SYSDATE, 
+		#{projAnnoEnd:DATE}, 
+		#{projStartDate:DATE}, 
+		#{projEndDate:DATE},
+		#{projLocation:VARCHAR}, 
+		#{projDetail:VARCHAR}, 
+		0)
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getProject"	parameterType="int"	resultMap="projectSelectMap">
+		SELECT
+		proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount	
+		FROM project
+		WHERE proj_no = #{value}
+	 </select>
+	 
+	 <!-- <select  id="listProject" resultMap="projectSelectMap">
+	  	
+	 </select> -->
+	 
+	 
+	 
+	
+	 
+</mapper>
