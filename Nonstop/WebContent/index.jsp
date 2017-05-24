@@ -74,7 +74,7 @@ font-family: 'Syncopate', sans-serif;
 
 <body>
 	<!-- ToolBar Start /////////////////////////////////////-->
-<%-- 	<jsp:include page="/layout/toolbar.jsp" /> --%>
+ 	<jsp:include page="/view/common/toolbar.jsp" /> 
 	<!-- ToolBar End   /////////////////////////////////////-->
 	
 	<!-- MainSlide Start /////////////////////////////////////-->

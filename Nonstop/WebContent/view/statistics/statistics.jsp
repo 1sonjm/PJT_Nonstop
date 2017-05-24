@@ -1,7 +1,15 @@
+﻿<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
+<!-- 지도오오오오오오오오ㅗ오오오 -->
+<!-- http://jsfiddle.net/gh/get/jquery/1.11.0/highslide-software/highcharts.com/tree/master/samples/mapdata/countries/kr/kr-all -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -10,14 +18,14 @@
 
 <!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="../../resources/css/bootstrap-theme.css">
+<link rel="stylesheet" href="/resources/css/bootstrap-theme.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 <!-- highcharts javascript sources -->
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-<script src="../../resources/javascript/highmap_chart.js"></script>
+<script src="/resources/javascript/highmap_chart.js"></script>
 
 <meta name="description" content="chart created using amCharts live editor" />
 <!-- amCharts javascript sources -->
@@ -31,7 +39,7 @@
 <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css">
 
 <!-- amCharts CreateData -->
-<script src="../../resources/javascript/amChartsCreate.js"></script>
+<script src="/resources/javascript/amChartsCreate.js"></script>
 
 
 <!-- Include Required Prerequisites -->
@@ -54,7 +62,29 @@ $(function(){
 
 	$('li a:contains("전체 기술 집계")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			totalStatics(JSON);
+			$.ajax("/product/listJsonProduct/",{
+				method : "GET" ,
+				dataType : "json" ,
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},/*
+				data:{
+					currentPage:page,
+					sortingTarget:$('#SortingTarget').val(),
+					sortingDESC:$('#SortingDESC').val(),
+					viewSoldItem:$('[name="viewSoldItem"]').val(),
+					searchCondition:$('[name="searchCondition"]').val(),
+					searchKeyword:$('[name="searchKeyword"]').val(),
+					searchValueLow:$('[name="searchValueLow"]').val(),
+					searchValueHigh:$('[name="searchValueHigh"]').val()
+				},*/
+				success : function(JSON , status) {
+						totalStatics(JSON);
+					}
+				}
+			});
+			
 		}
 	})
 	$('li a:contains("과반수 사용 기술")').on('click',function(){
@@ -74,6 +104,7 @@ $(function(){
 		}
 	})
 });
+
 </script>
 </head>
 <body>

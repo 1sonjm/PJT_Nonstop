@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="utf-8"%>
     
 <html lang="ko">
@@ -9,6 +9,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<link href="/css/animate.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <title>Thumbnail Gallery - Start Bootstrap Template</title>
 
@@ -205,38 +214,28 @@
     </style>
 
 	<script type="text/javascript">
-	(function ($) {
-	    'use strict';
-
-	    jQuery(document).ready(function () {
+	$(function() {
+		$("#rmsid").on("click", function(){
+			self.location ="/project/getProject?projNo=17"
+		});
+		
+	});
 	
-	    	/* Smooth Scroll */
+	$(function() {
+		$("#rmsid1").on("click", function(){
+			self.location ="/view/project/addProjectView.jsp"
+		});
 		
-		    $('a.smoth-scroll').on("click", function (e) {
-		        var anchor = $(this);
-		        $('html, body').stop().animate({
-		            scrollTop: $(anchor.attr('href')).offset().top - 50
-		        }, 1000);
-		        e.preventDefault();
-		    });
-			
-			/* Scroll To Top */
-			
-		    $(window).scroll(function(){
-		    if ($(this).scrollTop() >= 500) {
-		        $('.scroll-to-top').fadeIn();
-		     } else {
-		        $('.scroll-to-top').fadeOut();
-		     }
-		     });
+	});
+	
+	$(function() {
+		$("#rmsid2").on("click", function(){
+			self.location ="/project/updateProjectView?projNo=17"
+		});
 		
-		
-		    $('.scroll-to-top').click(function(){
-		      $('html, body').animate({scrollTop : 0},800);
-		      return false;
-		      });
-	    });
-	    })(jQuery);
+	});
+	
+	
     
 	</script>
 </head>
@@ -264,20 +263,21 @@
                               <!-- 왜 안나오는거야아아아ㅏ워ㅠㅜㅠㅜㅠㅜ -->
 	                            <!-- Post Headline Start -->
 	                            <div class="post-title">
-	                            	<h1>${portfolio.portTitle}</h1> 
+	                            	<h1>How to make your company website 이놈에 h1태그를 어떻게하나</h1> 
 	                            </div>
 	                            <!-- Post Headline End -->
 	                                    
 	                                    
 	                            <!-- Post Detail Start -->
 	                            <div class="post-info">
-	                            	<span>November 23, 2016 / by <a href="#" target="_blank">Alex Parker</a></span>
+	                            	<span>November 23, 2016 / by <a href="#" target="_blank" >Alex Parker</a></span>
 	                            </div>
 	                            <!-- Post Detail End -->
 	                            
 	                            <!-- Post Image Start -->
-                                <div class="post-image margin-top-40 margin-bottom-40">
+                                <div class="post-image margin-top-40 margin-bottom-40" id="rmsid2">
                                    <img src="http://placehold.it/800x500" alt="">
+                                   <input type="hidden" name="projNo" value="16"/>
                                    <!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
                                 </div>
                                 <!-- Post Image End -->
@@ -304,6 +304,7 @@
 							};
 							*/
 							
+									
 							           (function() { // DON'T EDIT BELOW THIS LINE
 							           var d = document, s = d.createElement('script');
 							           s.src = '//uipasta.disqus.com/embed.js';   // Please change the url from your own disqus id
@@ -343,10 +344,10 @@
 				      </div> 
 			       
 				      <div class="row">
-				         <input class="btn btn-default" type="button" value="Input">
+				         <input class="btn btn-default" id="rmsid" type="button" value="Input">
 				      </div>
 				      <div class="row">
-				         <input class="btn btn-default" type="button" value="Input">
+				         <input class="btn btn-default" id="rmsid1" type="button" value="Input">
 				      </div>
 			
 			     </div>

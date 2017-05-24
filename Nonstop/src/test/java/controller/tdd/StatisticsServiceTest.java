@@ -24,8 +24,8 @@ public class StatisticsServiceTest {
 	@Qualifier("statisticsServiceImpl")
 	private StatisticsService statisticsService;
 
-	@Test
-	public void testAddStatisticsData() throws Exception {
+	//@Test
+	public void addStatisticsData() throws Exception {
 
 		Statistics statistics = new Statistics();
 		statistics.setDemand(30);
@@ -39,5 +39,39 @@ public class StatisticsServiceTest {
 		
 		Assert.assertEquals(1, result);
 
+	}
+	//@Test
+	public void addStatisticsDataList()  throws Exception{
+		Assert.assertEquals(true, (statisticsService.addStatisticsDataList()!=0));		
+	}
+
+	//@Test
+	public void getJSONTotalStatisticsList()  throws Exception{
+		//Statistics statistics
+	}
+
+	//@Test
+	public void getJSONMajorStatisticsList()  throws Exception{
+		//Statistics statistics
+	}
+
+	//@Test
+	public void getJSONPeriodStatisticsList()  throws Exception{
+		//Statistics statistics
+	}
+
+	//@Test
+	public void getJSONRegionStatisticsList()  throws Exception{
+		//Statistics statistics
+	}
+
+	//@Test
+	public void getPostCountList()  throws Exception{
+
+	}
+
+	//@Test
+	public void getUserStatisticsList()  throws Exception{
+		//String userId
 	}
 }
