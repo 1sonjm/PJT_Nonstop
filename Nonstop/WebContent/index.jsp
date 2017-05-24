@@ -1,11 +1,11 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- ///////////////////////////// ·Î±×ÀÎ½Ã Forward  /////////////////////////////////////// -->
+<!-- ///////////////////////////// ë¡œê·¸ì¸ì‹œ Forward  /////////////////////////////////////// -->
 <%-- 
  <c:if test="${ ! empty user }">
  	<jsp:forward page="main.jsp"/>
@@ -19,13 +19,13 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="utf-8">
 	
 
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Font ////////////////////////// -->
@@ -49,7 +49,16 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- jQuery UI JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+ 	$("#profile").on("click" , function() {
+ 		self.location = "/profile/getUserProfile";
+		//self.location = "/user/logout"
+	}); 
+ });
 
+</script>
 
 <!-- Bootstrap custom Theme-->
 <link rel="stylesheet" href="/css/custom-theme.css" >
@@ -125,6 +134,9 @@ font-family: 'Syncopate', sans-serif;
 			<div class="col-md-12">
 				<div class="jumbotron">
 					<h1>Hello, world!</h1>
+					 <div class="col-sm-offset-4  col-sm-4 text-center">
+		      		<button type="button" class="btn btn-primary" id="profile" >í”„ë¡œí•„</button>
+		    		</div>
 					<p>...</p>
 					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
 				</div>

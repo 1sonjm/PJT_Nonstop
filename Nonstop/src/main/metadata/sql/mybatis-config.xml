@@ -32,6 +32,9 @@
 		<mapper resource="sql/PortfolioMapper.xml"/>
 		<mapper resource="sql/StatisticsMapper.xml"/>
 		<mapper resource="sql/LetterMapper.xml"/>
+		<mapper resource="sql/CareerMapper.xml"/>
+		<mapper resource="sql/FollowMapper.xml"/>
+		<mapper resource="sql/ScrapMapper.xml"/>
 
 	</mappers>
 
