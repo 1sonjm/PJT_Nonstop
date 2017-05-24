@@ -26,8 +26,8 @@
 	 	INSERT 
 		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
 		VALUES ( seq_project_proj_no.nextval, 
-		#{projUserId:VARCHAR}, 
-		#{portDivision:NUMERIC}, 
+		'user01', 
+		#{projDivision:NUMERIC}, 
 		#{projTitle:VARCHAR}, 
 		SYSDATE, 
 		#{projAnnoEnd:DATE}, 
@@ -46,10 +46,27 @@
 		WHERE proj_no = #{value}
 	 </select>
 	 
+	 
+	 <update	id="updateProject"	parameterType="project" >
+	   	UPDATE project
+	   	<set>
+	   		proj_division	=	#{projDivision:NUMERIC}, 
+	   		proj_title		=	#{projTitle:VARCHAR}, 
+	   		proj_annoend	=	#{projAnnoEnd:DATE}, 
+	   		proj_startdate	=	#{projStartDate:DATE}, 
+	   		proj_enddate	=	#{projEndDate:DATE},
+	   		proj_location   =   #{projLocation:VARCHAR}, 
+	   		proj_detail		=	#{projDetail:VARCHAR}
+	   	</set>
+	   	WHERE proj_no = #{projNo}
+	 </update>
 	 <!-- <select  id="listProject" resultMap="projectSelectMap">
 	  	
 	 </select> -->
-	 
+	  <delete id="deleteProject" parameterType="project">
+		DELETE from project
+		where proj_no=#{projNo}
+	 </delete>
 	 
 	 
 	

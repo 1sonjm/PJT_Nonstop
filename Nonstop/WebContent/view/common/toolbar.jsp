@@ -3,155 +3,140 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+	<nav class="navbar navbar-inverse" id="floater">
+	  <div class="container-fluid">
+	    <div class="navbar-header">
+	      <a class="navbar-brand" href="#">NONSTOP</a>
+	    </div>
+	    
+	    <ul class="nav navbar-nav" id="center">
+	      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Portfolio</a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#" id="portDesigner">Designer</a></li>
+	          <li><a href="#" id="portDeveloper">Developer</a></li>
+	        </ul>
+	      </li>
 
 
-<!--  ///////////////////////// JavaScript ////////////////////////// -->
-<script type="text/javascript">
-//autocomplte 동적 생성
-$( function() {
-	var searchProductItems = [];
-	$(document).ready(function(){
-		$.ajax("/product/getJsonListProduct",{
-			method:"GET",
-			dataType:"json",
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			success: function(JSONData){
-				for(var i=0;i<JSONData.productList.length;i++){
-					searchProductItems.push(JSONData.productList[i].prodName);
-				}
-			}
-		});
-	});
-	$( 'input[name="searchKeyword"]' ).autocomplete({
-		source: searchProductItems
-	});
-	$('input[name="searchKeyword"]').keydown(function (key) {
-				if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
-					$('form').attr('action','/product/listProduct?menu=search&searchCondition=1').attr('method','post').submit();
-				}
-		});
+	      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Project </a>
+	        <ul class="dropdown-menu">
+	          <li><a href="#" id="projDesigner">Designer</a></li>
+	          <li><a href="#" id="projDeveloper">Developer</a></li>
+	        </ul>
+	      </li>
+	      
+	      
+	      <li><a href="#">Statistics</a></li>
+	    </ul>
+	    
+	    
+	    <ul class="nav navbar-nav navbar-right">
+	      <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
+		   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>김준영님 환영합니다.</a></li>
+		   	  <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+		      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
+		        <ul class="dropdown-menu">
+		          <li><a href="#">프로필</a></li>
+		          <li><a href="#">내정보보기</a></li>
+		          <li><a href="#">내정보수정</a></li>
+		          <li><a href="#">팔로우 목록보기</a></li>
+		          <li><a href="#">로그아웃</a></li>
+		        </ul>
+		      </li>
+		      
+		      
+		      
+		     <!--  <li><a href="#"><span class="glyphicon glyphicon-align-justify"></span></a></li> -->
+	     <%--  </c:if> --%>
+	      
+	      <%-- <c:if test="${sessionScope.user.role != '1' || ${sessionScope.user.role != '2' || ${sessionScope.user.role != '3'}">
+	      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+		      <li><a href="#"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
+		  </c:if> --%>
+	    </ul>
+	  </div>
+	</nav>
 
-});
-</script>
-
-<!-- ToolBar Start /////////////////////////////////////-->
-<nav>
-	<div class="navbar navbar-inverse">
-		<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-inverse-collapse">
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-				<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand" href="#">
-				<span><img alt="Brand" src="/images/layer/1491480052_home.png" width="20px"></span>
-				Model2MVCShop
-			</a>
-		</div>
-		<div class="navbar-collapse collapse navbar-inverse-collapse">
-			<form class="navbar-form navbar-left">
-					<input type="text" class="form-control col-lg-8" placeholder="ProductName" name="searchKeyword">
-			</form>
-			<ul class="nav navbar-nav navbar-right">
-				<c:if test="${user.role=='user'}">
-					<li><a href="#">ListPurchase</a></li>
-				</c:if>
-				<c:if test="${user.role=='admin'}">
-					<li><a href="#">ListSalse</a></li>
-				</c:if>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Product<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">ListProduct</a></li>
-						<li><a href="#">History</a></li>
-						<c:if test="${user.role=='admin'}">
-						<li class="divider"></li>
-						<li><a href="#">AddProductView</a></li>
-						</c:if>
-					</ul>
-				</li>
-				<li class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
-					<ul class="dropdown-menu">
-						<li><a href="#">GetUser</a></li>
-						<c:if test="${user.role=='admin'}">
-						<li class="divider"></li>
-						<li><a href="#">ListUser</a></li>
-						</c:if>
-					</ul>
-				</li>
-				<c:if test="${!empty user}">
-					<li><a href="#">Log Out</a></li>
-				</c:if>
-				<c:if test="${empty user}">
-					<li><a href="#">Log In</a></li>
-				</c:if>
-			</ul>
-		</div>
-	</div>
-</nav>
-<!-- ToolBar End /////////////////////////////////////-->
+<style>
+	
+	
+	
+	#center {
+		margin-left:30%;
+        margin-right:30%;
+       
+	}
+	
+	/* p {
+		margin-top : 0;
+		margin-bottom : 0;
+		font-size: 150%;
+	} */
+	</style>
 
 <script type="text/javascript">
-	$(function() {
-
-		//============= logon Event  처리 =============	
-		$("a:contains('Log In')").on("click" , function() {
-			$(self.location).attr("href","/user/loginView.jsp");
-		}); 
-		
-		//============= logout Event  처리 =============	
-		$("a:contains('Log Out')").on("click" , function() {
-			$(self.location).attr("href","/user/logout");
-		}); 
-		
-		//============= ListUser Event  처리 =============	
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$("a:contains('ListUser')").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
-			self.location = "/user/listUser"
-		}); 
-		
-		//=============  GetUser Event  처리 =============	
-		$( "a:contains('GetUser')" ).on("click" , function() {
+//============= logout Event  처리 =============	
+		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('Statistics')").on("click" , function() {
+				$(self.location).attr("href","/user/logout");
+				//self.location = "/user/logout"
+			}); 
+		 });
+		
+		//============= 회원정보조회 Event  처리 =============	
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("#projDesigner").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/project/getProject?projNo=18"
+			}); 
+		 });
+		
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 	$("#projDeveloper").on("click" , function() {
+					//$(self.location).attr("href","/user/logout");
+					self.location = "/project/getProject?projNo=18"
+				}); 
+			 });
+		
+		//=============  개인정보조회회 Event  처리 =============	
+	 	$( "a:contains('개인정보조회')" ).on("click" , function() {
+	 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
+		
+	 	$(function() {
+		 	$("a:contains('판매상품등록')").on("click" , function() {
+				self.location = "/product/addProductView.jsp"
+			}); 
+		});
+	 	
+	 	$(function() {
+		 	$("a:contains('판매상품관리')").on("click" , function() {
+				self.location = "/product/listProduct?menu=manage"
+			}); 
+		});
+	 	
+	 	$(function() {
+		 	$("a:contains('상 품 검 색')").on("click" , function() {
+				self.location = "/product/listProduct?menu=search"
+			}); 
+		});
+	 	
+	 	$(function() {
+		 	$(".totalList").on("click" , function() {
+				self.location = "/purchase/listSale"
+			}); 
+		});
+	 	
+	 	$(function() {
+		 	$("a:contains('구매이력조회')").on("click" , function() {
+				self.location = "/purchase/listPurchase"
+			}); 
+		});
+		
+</script>  
 
-		//=============  AddProductView Event  처리 =============	
-		$( "a:contains('AddProductView')" ).on("click" , function() {
-			$(self.location).attr("href","/product/addProductView.jsp");
-		});
 
-		//=============  ListProduct Event  처리 =============	
-		$( "a:contains('ListProduct')" ).on("click" , function() {
-			$(self.location).attr("href","/product/listProduct?menu=${user.role=='admin'?'manage':'search'}");
-		});
-		
-		//=============  ListPurchase Event  처리 =============	
-		$( "a:contains('ListPurchase')").on("click" , function() {
-			$(self.location).attr("href","/purchase/listPurchase")
-		});
-		
-		//=============  ListSalse Event  처리 =============	
-		$( "a:contains('ListSalse')").on("click" , function() {
-			$(self.location).attr("href","/purchase/listSales")
-		});
-		
-		//=============  History Event  처리 =============	
-		$( "a:contains('History')").on("click" , function() {
-			window.open("/history.jsp",
-					"popWin",
-					"left=300, top=200, width=300, height=200, marginwidth=0, marginheight=0, scrollbars=no, scrolling=no, menubar=no, resizable=no");
-			//dialog로 바꾸자 jquery ui 것도 괜찮지 움직여지니
-		});
-		
-		//=============  ListSalse Event  처리 =============	
-		$( ".navbar-brand").on("click" , function() {
-			$(self.location).attr("href","/index.jsp")
-		});
-	});
-</script>
