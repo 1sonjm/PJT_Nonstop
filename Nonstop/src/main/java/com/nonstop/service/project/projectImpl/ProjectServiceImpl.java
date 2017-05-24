@@ -16,6 +16,7 @@ public class ProjectServiceImpl implements ProjectService{
 	@Autowired
 	@Qualifier("projectDAOImpl")
 	private ProjectDAO projectDAO;
+	
 	public void setProjectDAO(ProjectDAO projectDAO){
 		this.projectDAO = projectDAO;
 	}
@@ -24,17 +25,26 @@ public class ProjectServiceImpl implements ProjectService{
 		System.out.println(this.getClass());
 	}
 	
-	/*public void addProduct(Product product) throws Exception {
-		productDao.addProduct(product);
+	public void addProject(Project project) throws Exception {
+		projectDAO.addProject(project);
 	}
 
-	*/
+	
 	
 	public Project getProject(int projNo) throws Exception {
 		
 		return projectDAO.getProject(projNo);
 	}
 
+	public void updateProject(Project project) throws Exception {
+		
+		projectDAO.updateProject(project);
+	}
+	
+	public void deleteProject(Project project) throws Exception{
+		
+		projectDAO.deleteProject(project);
+	}
 	
 	/*public Map<String, Object> getProductList(Search search) throws Exception {
 		List<Product> list = productDao.getProductList(search);
@@ -45,13 +55,10 @@ public class ProjectServiceImpl implements ProjectService{
 		map.put("totalCount", new Integer(totalCount));
 		
 		return map;
-	}
+	}*/
 
 	
-	public void updateProduct(Product product) throws Exception {
-		
-		productDao.updateProduct(product);
-	}*/
+	
 	
 
 }

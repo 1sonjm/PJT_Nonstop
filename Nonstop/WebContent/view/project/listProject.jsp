@@ -14,6 +14,16 @@
     <title>Thumbnail Gallery - Start Bootstrap Template</title>
 
     <!-- Bootstrap Core CSS -->
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<link href="/css/animate.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom CSS -->
@@ -30,6 +40,20 @@
 
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
+	function fncDeleteProject(){
+		alert('정말지우시겠습니가?')
+		
+		$("form").attr("method","POST").attr("action","/project/deleteProject").submit();
+	}
+	
+	$(function (){
+		$("a:contains('최신등록순')").on("click" , function() {
+			fncDeleteProject();
+		}); 
+	});
+	
+	
+	
 	</script>
 
 
@@ -118,14 +142,15 @@
 	</div>
 </nav>
 
-
+<form class="form-group" name="detailForm">
+<input type="hidden" id="projNo" name="projNo" value="${project.projNo}"/>
 <div class="container">
 	<hr class="margin-top-30"/>
 </div>
             
 <div class="container">
 	<ol class="breadcrumb">
-	  <li><a href="#">최신등록순</a></li>
+	  <li><a href="#" id="rmsid5">최신등록순</a></li>
 	  <li><a href="#">마감임박순</a></li>
 	  <li><a href="#">지원자순</a></li>
 	  <li><a href="#">조회순</a></li>
@@ -144,7 +169,6 @@
 							<hr/>
 						</div>
 						
-							<input type="hidden" name="projNo" value="${project.projNo}"/>
 						    <div class="w3-quarter w3-container" >
 						      <h5>${project.projTitle}</h5>  
 						    </div>
@@ -194,7 +218,7 @@
 						</table>															
 					</div>
 				</div>
-	
+	</form>
 	
 	             
 		
