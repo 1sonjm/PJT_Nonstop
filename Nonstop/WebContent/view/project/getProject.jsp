@@ -216,7 +216,21 @@
 	<script type="text/javascript">
 	$(function() {
 		$("#rmsid").on("click", function(){
-			self.location ="/project/getProject"
+			self.location ="/project/getProject?projNo=17"
+		});
+		
+	});
+	
+	$(function() {
+		$("#rmsid1").on("click", function(){
+			self.location ="/view/project/addProjectView.jsp"
+		});
+		
+	});
+	
+	$(function() {
+		$("#rmsid2").on("click", function(){
+			self.location ="/project/updateProjectView?projNo=17"
 		});
 		
 	});
@@ -256,13 +270,14 @@
 	                                    
 	                            <!-- Post Detail Start -->
 	                            <div class="post-info">
-	                            	<span>November 23, 2016 / by <a href="#" target="_blank">Alex Parker</a></span>
+	                            	<span>November 23, 2016 / by <a href="#" target="_blank" >Alex Parker</a></span>
 	                            </div>
 	                            <!-- Post Detail End -->
 	                            
 	                            <!-- Post Image Start -->
-                                <div class="post-image margin-top-40 margin-bottom-40">
+                                <div class="post-image margin-top-40 margin-bottom-40" id="rmsid2">
                                    <img src="http://placehold.it/800x500" alt="">
+                                   <input type="hidden" name="projNo" value="16"/>
                                    <!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
                                 </div>
                                 <!-- Post Image End -->
@@ -332,7 +347,7 @@
 				         <input class="btn btn-default" id="rmsid" type="button" value="Input">
 				      </div>
 				      <div class="row">
-				         <input class="btn btn-default" type="button" value="Input">
+				         <input class="btn btn-default" id="rmsid1" type="button" value="Input">
 				      </div>
 			
 			     </div>

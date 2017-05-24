@@ -27,19 +27,28 @@ public class ProjectDAOImpl implements ProjectDAO{
 		System.out.println(this.getClass());
 	}
 	
-	/*public void addProduct(Product product) throws Exception {
-		String manuDate=product.getManuDate().replace("-", "");
-		product.setManuDate(manuDate);
+	public void addProject(Project project) throws Exception {
 		
-		sqlSession.insert("ProductMapper.addProduct", product);
+		sqlSession.insert("ProjectMapper.addProject", project);
 		
 	}
-*/
+
 		
 	public Project getProject(int projNo) throws Exception {
 //		int comProdNo = prodNo;
 //		sqlSession.selectOne("CommentMapper.getComment", comProdNo);
 		return sqlSession.selectOne("ProjectMapper.getProject", projNo);
+	}
+	
+	public void updateProject(Project project) throws Exception {
+		
+		sqlSession.update("ProjectMapper.updateProject", project);
+		
+	}
+	
+	public void deleteProject(Project project) throws Exception{
+		
+		sqlSession.delete("ProjectMapper.deleteProject", project);
 	}
 
 	
@@ -49,13 +58,7 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 	
-	public void updateProduct(Product product) throws Exception {
-		
-		String manuDate=product.getManuDate().replace("-", "");
-		product.setManuDate(manuDate);
-		sqlSession.update("ProductMapper.updateProduct", product);
-		
-	}
+	
 	
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("ProductMapper.getTotalCount", search);

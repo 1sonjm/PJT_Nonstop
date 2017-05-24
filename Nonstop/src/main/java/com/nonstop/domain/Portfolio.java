@@ -121,11 +121,17 @@ public class Portfolio{
 		this.portScrFlag = portScrFlag;
 	}
 
+
+
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Portfolio [portNo=");
 		builder.append(portNo);
+		builder.append(", portUserId=");
+		builder.append(portUserId);
+		builder.append(", portDivision=");
+		builder.append(portDivision);
 		builder.append(", portTitle=");
 		builder.append(portTitle);
 		builder.append(", portRegdate=");
@@ -153,7 +159,7 @@ public class Portfolio{
 		builder.append("]");
 		return builder.toString();
 	}
-	
-	
+
+
 
 }
