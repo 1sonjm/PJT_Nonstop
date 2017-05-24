@@ -10,6 +10,9 @@ public class Portfolio{
 	private String portTitle;
 	private Date portRegdate;
 	private Date portUpdate;
+	private String portMonth;
+	private String portYear;
+	private String portDay;
 	private String portThumbnail;
 	private String portDetail;
 	private String portFile;
@@ -23,7 +26,6 @@ public class Portfolio{
 	public Portfolio() {
 
 	}
-	
 	
 	
 	public String getPortUserId() {
@@ -59,6 +61,24 @@ public class Portfolio{
 	}
 	public void setPortRegdate(Date portRegdate) {
 		this.portRegdate = portRegdate;
+	}	
+	public String getPortMonth() {
+		return portMonth;
+	}
+	public void setPortMonth(String portMonth) {
+		this.portMonth = portMonth;
+	}
+	public String getPortYear() {
+		return portYear;
+	}
+	public void setPortYear(String portYear) {
+		this.portYear = portYear;
+	}
+	public String getPortDay() {
+		return portDay;
+	}
+	public void setPortDay(String portDay) {
+		this.portDay = portDay;
 	}
 	public Date getPortUpdate() {
 		return portUpdate;
@@ -122,7 +142,6 @@ public class Portfolio{
 	}
 
 
-
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -138,6 +157,12 @@ public class Portfolio{
 		builder.append(portRegdate);
 		builder.append(", portUpdate=");
 		builder.append(portUpdate);
+		builder.append(", portMonth=");
+		builder.append(portMonth);
+		builder.append(", portYear=");
+		builder.append(portYear);
+		builder.append(", portDay=");
+		builder.append(portDay);
 		builder.append(", portThumbnail=");
 		builder.append(portThumbnail);
 		builder.append(", portDetail=");
@@ -159,7 +184,6 @@ public class Portfolio{
 		builder.append("]");
 		return builder.toString();
 	}
-
 
 
 }

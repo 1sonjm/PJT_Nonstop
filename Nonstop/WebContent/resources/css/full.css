@@ -22,7 +22,6 @@ Header Image Background - Change the URL below to your image path (example: ../i
 body, table, div, h1, h2, h3, h4, h5, h6 {font-family: 'Noto Sans KR', sans-serif;}
 
 body {
-  padding-top:30px;
   width: 100%;
   height: 100%;
   background-color: white;
@@ -32,29 +31,25 @@ html {
   height: 100%;
 }
 h1 {
-  text-transform: uppercase; /* ´ë¹®ÀÚ·Î ³ª¿È */
+  text-transform: uppercase; /* ï¿½ë¹®ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   font-size: 40px;
   font-weight: 900;
-  letter-spacing: 0.2em;
   color: black;
 }
 h2 {
-  text-transform: uppercase; /* ´ë¹®ÀÚ·Î ³ª¿È */
+  text-transform: uppercase; /* ï¿½ë¹®ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   font-size: 32px;
   font-weight: 700;
-  letter-spacing: 0.2em;
   color: black;
 }
 h3 {
   margin-top: 10px;
-  text-transform: uppercase; /* ´ë¹®ÀÚ·Î ³ª¿È */
   font-size: 24px;
   font-weight: 700;
-  letter-spacing: 0.2em;
   color: black;
 }
 h4 {
-  text-transform: uppercase; /* ´ë¹®ÀÚ·Î ³ª¿È */
+  text-transform: uppercase; /* ï¿½ë¹®ï¿½Ú·ï¿½ ï¿½ï¿½ï¿½ï¿½ */
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -143,13 +138,13 @@ a:focus {
   color: white;
 }
 
-/* 2¹øÂ° nav */
+/* 2ï¿½ï¿½Â° nav */
 .navbar-static-top {
   padding-top: 30px;
   height: 140px;
 }
 
-/* Ä«Å×°í¸® */
+/* Ä«ï¿½×°ï¿½ */
 .breadcrumb{
   margin-top: 30px;
   margin-bottom: 5px;	
@@ -307,7 +302,7 @@ a:focus {
   padding: 100px 0;
   text-align: center;
   color: white;
-  background: url(../img/test1.jpg) no-repeat bottom center scroll;
+  background: url(../../resources/images/layout/main.jpg) no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -411,7 +406,7 @@ a:focus {
   padding: 100px 0;
   text-align: center;
   color: white;
-  background: url(../img/test2.jpg) no-repeat bottom center scroll;
+  background: url(../../resources/images/layout/mainpage_1.jpg) no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -445,7 +440,7 @@ a:focus {
   padding: 100px 0;
   text-align: center;
   color: white;
-  background: url(../img/test3.jpg) no-repeat bottom center scroll;
+  background: url(../../resources/images/layout/mainpage_2.jpg) no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -480,7 +475,7 @@ a:focus {
   padding-top: 100px;
   text-align: center;
   color: white;
-  background: url(../img/test4.jpg) no-repeat bottom center scroll;
+  background: url(../../resources/images/layout/mainpage_3.jpg) no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -563,13 +558,13 @@ body {
   webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
 }
 
-/* Æ÷Æ®Æú¸®¿À Ä¸¼Ç */
+/* ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¸ï¿½ï¿½ */
 .caption {
 	width: 252.5px;
 	height: 80px;
 }
 
-/* Æ÷Æ®Æú¸®¿À ¸í¿¹ÀÇ Àü´ç pagination-dot */
+/* ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ pagination-dot */
 .dot_pagination {
   text-align: center;
 }
@@ -636,13 +631,13 @@ body {
 }
 
 
-/* Æ÷Æ®Æú¸®¿À glyphicon */
+/* ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ glyphicon */
 .glyphicon.glyphicon-tower {
   font-size: 30px;
   color: #cacaca;
 }
 
-/* Æ÷Æ®Æú¸®¿À second-nav ¹öÆ° */
+/* ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ second-nav ï¿½ï¿½Æ° */
 .button {
 	margin-top: 20px;
 	margin-left: 10px;
@@ -677,7 +672,7 @@ body {
     background-color: #555;
 }
 
-/* carousel Æ÷Æ®Æú¸®¿À ¸í¿¹ÀÇÀü´ç */
+/* carousel ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ */
 .media-carousel 
 {
   margin-bottom: 0;

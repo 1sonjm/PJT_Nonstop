@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko">
 
@@ -11,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+    <title>List_Portfolio</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
@@ -36,43 +37,37 @@
 		  });
 		});
 	</script>
+	<style>
+	.thumbnail-portImage { 
+		position: relative; 
+		padding-top: 75%; /* 4:3 ratio */ 
+		/* 1:1 : padding-top: 100%; */
+		/* 2:1 : padding-top: 50% */
+		/* 1:2 : padding-top: 200% */
+		/* 4:3 : padding-top: 75% */
+		/* 16:9 : padding-top: 56.25% */
 
+		overflow: hidden; 
+	} 
+	img { 
+		position: absolute; 
+		top: 0; 
+		left: 0; 
+		right: 0; 
+		bottom: 0; 
+		max-width: 100%; 
+		height: auto; 
+	}
+	</style>
 
 </head>
 
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/view/common/toolbar.jsp" />
+<!-- ToolBar End   /////////////////////////////////////-->
 
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -134,7 +129,7 @@
 	  <div class="text-center">	
 		<span class="glyphicon glyphicon-tower" aria-hidden="true"></span>	  
 	    <h3 class="text-center">portfolio-ranking</h3>
-	    <p class="text-center">2017.05.10 - 2017.08.10 占쏙옙占쏙옙</p>
+	    <p class="text-center">2017.05.10 - 2017.08.10 랭킹 순위</p>
 	  </div>
   </div>
   </div>
@@ -151,8 +146,8 @@
 	                <div class="thumbnail">
 	                    <img src="http://placehold.it/400x300" alt="">
 	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>               
+	                        <h5>포트폴리오타이틀</h5>
+	                        <p>유저아이디</p>               
 	                    </div>
 	                </div>
             	</div>          
@@ -294,157 +289,52 @@
             
 <div class="container">
 	<ol class="breadcrumb">
-	  <li class="active">筌ㅿ옙占쏙옙占쏙옙</li>
-	  <li><a href="#">�곤옙筌ｏ옙占쏙옙</a></li>
-	  <li><a href="#">鈺곌�占쏙옙占쏙옙</a></li>
+	  <li class="active">조회순</li>
+	  <li><a href="#">추천순</a></li>
+	  <li><a href="#">최신순</a></li>
 	</ol>			
 </div>
 
 
     <!-- Page Content -->
+    <c:set var="i" value="0"/>
+	<c:forEach var="portfolio" items="${list}" >
+	<c:set var="i" value="${i+1}"/>
+	
+	<c:if test="${i%4==1}">
     <div class="margin-bottom-30">
     	<div class="container">   	
         	<div class="row">	
-			
-	            <div class="col-md-3 col-sm-6 hero-feature">
+	</c:if>		
+	
+	            <div class="col-md-3 col-sm-6">
 	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
+	                	<div class="thumbnail-portImage">
+	                    	<img src="../../resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">
+	                    </div>	
 	                    <div class="caption">
 	                        <div class="media">
 							  <div class="media-left">
 						    	  <img class="media-object" src="http://placehold.it/50x50" alt="">
 							  </div>
 							  <div class="media-body">
-							    <h5 class="media-heading">Media heading</h5>
-							    <p>占쎈�占쏙옙占쏙옙占쏙옙?</p>
+							    <h5 class="media-heading">${portfolio.portTitle}</h5>
+							    <p>${portfolio.portUserId}</p>
 							  </div>							
 							</div> 	         
 	                    </div>
 	                </div>
 	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>
-            
+	         
+    <c:if test="${i%4==0}">        
 	         </div>
 	     </div>
 	</div>  
+	</c:if>
 	
-	<div class="margin-bottom-30">
-    	<div class="container">   	
-        	<div class="row">	
-			
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>
-            
-	         </div>
-	     </div>
-	</div>  
-	
-	<div class="margin-bottom-30">
-    	<div class="container">   	
-        	<div class="row">	
-			
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>
-            
-	         </div>
-	     </div>
-	</div>  
-	             
-		
+</c:forEach>
+
+
 	<!-- pagination -->
        <nav align="center">
 	  <ul class="pagination">
