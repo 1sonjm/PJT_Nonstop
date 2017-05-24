@@ -9,6 +9,7 @@ public class Statistics {
 	private double userRate;
 	private Date searchStartDate;
 	private Date searchEndDate;
+	private int techNo;
 	private String techName;
 	private int techClass;
 	private String location;
@@ -49,6 +50,12 @@ public class Statistics {
 	public void setSearchEndDate(Date searchEndDate) {
 		this.searchEndDate = searchEndDate;
 	}
+	public int getTechNo() {
+		return techNo;
+	}
+	public void setTechNo(int techNo) {
+		this.techNo = techNo;
+	}
 	public String getTechName() {
 		return techName;
 	}
@@ -82,6 +89,8 @@ public class Statistics {
 		builder.append(searchStartDate);
 		builder.append(", searchEndDate=");
 		builder.append(searchEndDate);
+		builder.append(", techNo=");
+		builder.append(techNo);
 		builder.append(", techName=");
 		builder.append(techName);
 		builder.append(", techClass=");
@@ -91,6 +100,5 @@ public class Statistics {
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 }
