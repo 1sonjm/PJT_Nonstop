@@ -130,6 +130,10 @@ public class PortfolioController {
 		//나중에 수정할 부분이다!!
 		portfolio.setPortUserId("user01");
 		
+		//getPortfolio.jsp에서 hidden 태그로 숨겨서 가져와야햇!!! 나중에수정햇!!
+		int portNo = 1;
+		portfolio.setPortNo(portNo);
+		
 		System.out.println("addPortfolio : "+portfolio);
 		
         try {
