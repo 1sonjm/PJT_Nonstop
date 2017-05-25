@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.User;
 import com.nonstop.service.profile.ProfileService;
 
 @Controller
@@ -45,13 +46,11 @@ public class ProfileController {
 	int pageSize;
 	
 	@RequestMapping(value="getUserProfile",method=RequestMethod.GET)
-	public String getUserProfile(@RequestParam("careerUserId") String careerUserId , Model model) throws Exception{
+	public String getUserProfile( Model model , HttpSession session) throws Exception{
 		
 		System.out.println("/profile/getUserProfile");
 		
-		//ProfileController profileController = new ProfileController();
-		
-		//profileController.getCareerList(careerUserId, model);
+		String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
 		Map<String , Object> map = profileService.getCareerList(careerUserId);
 		
@@ -77,17 +76,22 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="addCareer",method=RequestMethod.POST)
-	public String addCareer(@ModelAttribute("career") Career career , HttpSession session) throws Exception{
+	public String addCareer(@ModelAttribute("career") Career career , HttpSession session, Model model) throws Exception{
 		
 		System.out.println("/profile/addCareer : POST");
 		
-		//String careerUserId = ((User)session.getAttribute("user")).getUserId();
+		String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		career.setCareerUserId("user05");
+		career.setCareerUserId(careerUserId);
 		
 		profileService.addCareer(career);
-		System.out.println(1234);
-		return "redirect:/view/profile/profile.jsp";
+		
+		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		
+		model.addAttribute("list" , map.get("list"));
+		
+		return "forward:/view/profile/profile.jsp";
+		
 	}
 	
 	@RequestMapping(value="getCareerList")
@@ -115,41 +119,22 @@ public class ProfileController {
 		return "forward:/view/profile/updateCareerView.jsp";
 	}
 	
-	/*@RequestMapping(value="updateCareer",method=RequestMethod.POST)
+	@RequestMapping(value="updateCareer",method=RequestMethod.POST)
 	public String updateCareer(@ModelAttribute("career") Career career , Model model, HttpSession session) throws Exception{
 		
 		System.out.println("/profile/updateCareer : POST");
 		
-		//String careerUserId = ((User)session.getAttribute("user")).getUserId();
+		String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		career.setCareerUserId("user05");
-		
-		profileService.updateCareer(career,careerUserId);
-		
-		Map<String , Object> career2 = profileService.getCareerList(careerUserId);
-		
-		model.addAttribute("career", career2.get("list"));
-		
-		return "forward:/view/profile/listCareer.jsp";
-	}*/
-	
-	@RequestMapping(value="updateCareer",method=RequestMethod.POST)
-	public String updateCareer(@ModelAttribute("career") Career career ,@RequestParam int careerNo , Model model, HttpSession session) throws Exception{
-		
-		System.out.println("/profile/updateCareer : POST");
-		
-		//String careerUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		career.setCareerUserId("user05");
-		career.setCareerNo(careerNo);
+		career.setCareerUserId(careerUserId);
 		
 		profileService.updateCareer(career);
 		
-		Map<String , Object> map = profileService.getCareerList("user05");
+		Map<String , Object> career2 = profileService.getCareerList(careerUserId);
 		
-		model.addAttribute("list", map.get("list"));
+		model.addAttribute("list", career2.get("list"));
 		
-		return "forward:/view/profile/listCareer.jsp";
+		return "forward:/view/profile/profile.jsp";
 	}
 	
 	@RequestMapping(value="deleteCareer",method=RequestMethod.GET)
@@ -163,7 +148,7 @@ public class ProfileController {
 		
 		model.addAttribute("list", map.get("list"));
 		
-		return "forward:/view/profile/listCareer.jsp";
+		return "forward:/view/profile/profile.jsp";
 	}
 	
 	@RequestMapping(value="addFollow/{targetUserId}",method=RequestMethod.GET)

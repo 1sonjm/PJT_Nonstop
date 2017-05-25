@@ -23,9 +23,6 @@ import com.nonstop.domain.User;
 import com.nonstop.service.user.UserService;
 
 
-
-
-//==> ȸ������ Controller
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
@@ -34,7 +31,7 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	//setter Method ���� ����
+	//setter Method
 		
 	public UserController(){
 		System.out.println(this.getClass());
@@ -103,7 +100,7 @@ public class UserController {
 		System.out.println("/getJsonUser/getUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
-		// Model �� View ����
+		// Model
 		model.addAttribute("user", user);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -115,7 +112,7 @@ public class UserController {
 		System.out.println("/user/updateUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
-		// Model �� View ����
+		// Model
 		model.addAttribute("user", user);
 		
 		return "forward:/view/user/updateUser.jsp";

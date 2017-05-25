@@ -52,10 +52,23 @@
 <script type="text/javascript">
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#profile").on("click" , function() {
- 		self.location = "/profile/getUserProfile?careerUserId=user05";
+ 	$("span.profile").on("click" , function() {
+ 		
+ 		var careerUserId = $(this).attr('careerUserId');
+ 		
+ 		self.location = "/profile/getUserProfile?careerUserId";
 		//self.location = "/user/logout"
 	}); 
+	
+	$("span.login").on("click" , function() {
+ 		
+ 		var careerUserId = $(this).attr('careerUserId');
+ 		
+ 		self.location = "/user/login";
+		//self.location = "/user/logout"
+	}); 
+	
+	
  });
 
 </script>
@@ -135,7 +148,17 @@ font-family: 'Syncopate', sans-serif;
 				<div class="jumbotron">
 					<h1>Hello, world!</h1>
 					 <div class="col-sm-offset-4  col-sm-4 text-center">
+					 <span class="profile" careerUserId="${uesr.userId}">
 		      		<button type="button" class="btn btn-primary" id="profile" >프로필</button>
+		      		</span>
+		    		</div>
+		    		
+		    		<br/><br/>
+		    		
+		    		<div class="col-sm-offset-4  col-sm-4 text-center">
+					 <span class="login">
+		      		<button type="button" class="btn btn-primary" id="profile" >로그인</button>
+		      		</span>
 		    		</div>
 					<p>...</p>
 					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>

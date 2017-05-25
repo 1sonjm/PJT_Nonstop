@@ -32,7 +32,6 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			 $( "#addCareer" ).on("click" , function() {
-					alert("ㅇㅇ" );
 					fncAddCareer();
 				//self.location ="/profile/addCareer?techNo="+$(this).attr('techNo')+"&careerUseTerm="+$(this).attr('careerUseTerm');
 				//$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();

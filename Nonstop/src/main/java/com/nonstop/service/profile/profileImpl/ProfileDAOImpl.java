@@ -46,24 +46,10 @@ public class ProfileDAOImpl implements ProfileDAO{
 		return sqlSession.selectOne("CareerMapper.getCareer", careerNo);
 	}
 	
-	/*public void updateCareer(Career career,String careerUserId) throws Exception {
-		
-		Map<String , Object> map = new HashMap<String , Object>();
-		
-		map.put("career", career);
-		map.put("careerUserId", careerUserId);
-		
-		sqlSession.update("CareerMapper.updateCareer",map);
-	}*/
-	
 	public void updateCareer(Career career) throws Exception {
-		
-		
-		//map.put("careerUserId", careerUserId);
-		
 		sqlSession.update("CareerMapper.updateCareer",career);
 	}
-
+	
 	public void deleteCareer(int careerNo) throws Exception {
 		sqlSession.delete("CareerMapper.deleteCareer",careerNo);
 	}

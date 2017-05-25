@@ -58,6 +58,10 @@
 			self.location ="/profile/deleteCareer?careerNo="+careerNo;
 			
 			});
+		 
+		$("span.addCareer").on("click" , function() {
+		 		self.location = "/profile/addCareerView";
+			}); 
 	});	
 </script>
 </head>
@@ -76,6 +80,11 @@
             <th align="center">No</th>
             <th align="left" >기능명</th>
             <th align="left">경력</th>
+            <th align="left">
+            <span class="addCareer">
+			  <button type="button" class="btn btn-primary">등록</button>
+			   </span>
+            </th>
           </tr>
         </thead>
        

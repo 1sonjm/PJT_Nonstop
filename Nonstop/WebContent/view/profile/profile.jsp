@@ -35,7 +35,10 @@ $(function() {listCareer
 	}); 
 	
 $("#listCareer").on("click" , function() {
-		self.location = "/profile/getCareerList?careerUserId=user05";
+	
+	var userId = $(this).attr('userId');
+	
+		self.location = "/profile/getCareerList?careerUserId="+userId;
 }); 
  });
 

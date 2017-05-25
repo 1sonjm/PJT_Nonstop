@@ -44,7 +44,7 @@
           
 	 </select>
 	 
-	 <update id="updateCareer" parameterType="map">
+	 <update id="updateCareer" parameterType="career">
 		UPDATE career
 		<set>
 		career_tech_no = #{techNo:NUMERIC},
