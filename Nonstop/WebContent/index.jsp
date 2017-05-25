@@ -85,7 +85,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#portDesigner").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
-				self.location = "/portfolio/listPortfolio"
+				self.location = "/portfolio/listPortfolio?portDivision=2"
 			}); 
 		 });
 	
@@ -94,7 +94,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#portDeveloper").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
-				self.location = "/portfolio/listPortfolio"
+				self.location = "/portfolio/listPortfolio?portDivision=1"
 			}); 
 		 });
 	
