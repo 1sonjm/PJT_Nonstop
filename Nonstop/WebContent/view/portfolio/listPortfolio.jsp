@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko">
 
@@ -11,7 +12,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+    <title>List_Portfolio</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
@@ -19,6 +20,12 @@
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
 
+	<!-- jQuery -->
+    <script src="../../resources/javascript/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -29,50 +36,90 @@
 
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
+
 		$(document).ready(function() {
-		  $('#media').carousel({
-		    pause: true,
-		    interval: false,
-		  });
+		    $('#Carousel').carousel({
+		        interval: 5000
+		    })
+		});
+		
+		$(function() {
+			/*
+			$(".img-circle").on("click" , function() {
+				alert("께헤헿");
+				self.location="/portfolio/addPortfolio";
+			}); */
+			
+			$(".thumbnail").on("click" , function() {
+				alert($(this).find('input').val());				
+				self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();
+			});
+			
+			$("#button-all").on("click" , function() {
+				var portDivision = $(this).val();
+				
+				if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
+					self.location="/portfolio/listPortfolio?portDivision=10";
+				}else{
+					self.location="/portfolio/listPortfolio?portDivision=20";
+				}
+			});
+			
+			$("#button-web").on("click" , function() {
+				var portDivision = $(this).val();
+				
+				if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
+					self.location="/portfolio/listPortfolio?portDivision=11";
+				}else{
+					self.location="/portfolio/listPortfolio?portDivision=21";
+				}
+			});
+			
+			$("#button-app").on("click" , function() {
+				var portDivision = $(this).val();
+				
+				if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
+					self.location="/portfolio/listPortfolio?portDivision=12";
+				}else{
+					self.location="/portfolio/listPortfolio?portDivision=22";
+				}
+			});
+
 		});
 	</script>
+	<style>
+	
+	.thumbnail-portImage { 
+		position: relative; 
+		padding-top: 75%; /* 4:3 ratio */ 
+		/* 1:1 : padding-top: 100%; */
+		/* 2:1 : padding-top: 50% */
+		/* 1:2 : padding-top: 200% */
+		/* 4:3 : padding-top: 75% */
+		/* 16:9 : padding-top: 56.25% */
 
+		overflow: hidden; 
+	} 
+	
+	img { 
+		position: absolute; 
+		top: 0; 
+		left: 0; 
+		right: 0; 
+		bottom: 0; 
+		max-width: 100%; 
+		height: auto; 
+	}
+	</style>
 
 </head>
 
 <body>
 
 <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
+<!-- ToolBar Start /////////////////////////////////////-->
+<jsp:include page="/view/common/toolbar.jsp" />
+<!-- ToolBar End   /////////////////////////////////////-->
 
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -107,9 +154,10 @@
 		<!-- ALL/WEB/APP 甕곤옙占쏙옙 -->
 		<div class="row">	
 			<div class="col-md-6 col-md-offset-3" align="center">
-	        	<button class="button button-neutral" type="button">All</button>
-	        	<button class="button button-neutral" type="button">Web</button>
-	        	<button class="button button-neutral" type="button">App</button>
+	        	<button class="button button-neutral" type="button" id="button-all" value="${param.portDivision}">All</button>
+	        	<button class="button button-neutral" type="button" id="button-web" value="${param.portDivision}">Web</button>
+	        	<button class="button button-neutral" type="button" id="button-app" value="${param.portDivision}">App</button>
+	        	<input type="hidden" id="portDivision" name="portDivision" value="${param.portDivision}"/>
 			</div>
 
 			<!-- 占쏙옙占쏙옙 / 占쏙옙 占쏙옙占싼�占쏙옙 占쏙옙占쏙옙占쏙옙椰���占� 占쏙옙 占쏙옙 占쏙옙占쏙옙 
@@ -121,172 +169,74 @@
 				</ol>
 			</div> -->
 		</div>
-		
 	</div>
 </nav>
 
-<!-- Ranking -->
-<!-- type -->
-<div class="container">
-  
+<!-- Ranking type-->
+<div class="container"> 
   <div class="margin-top-70">
-  <div class="margin-bottom-10">
+  	<div class="margin-bottom-10">
 	  <div class="text-center">	
 		<span class="glyphicon glyphicon-tower" aria-hidden="true"></span>	  
 	    <h3 class="text-center">portfolio-ranking</h3>
-	    <p class="text-center">2017.05.10 - 2017.08.10 占쏙옙占쏙옙</p>
+	    <p class="text-center">2017.05.10 - 2017.08.10 랭킹 순위</p>
 	  </div>
+  	</div>
   </div>
-  </div>
-  
-  <!-- Ranking contents -->
-  <div class='row'>
-    <div class='col-md-12'>
-      <div class="carousel slide media-carousel" id="media">
-        <div class="carousel-inner">
-          <div class="item  active">
-          	
-            <div class="row">
-              	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>               
-	                    </div>
-	                </div>
-            	</div>          
-                <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>
-            	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>               
-	                    </div>
-	                </div>
-            	</div>
-            	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>   
-            </div>
-          </div>
-          
-          <div class="item">
-            <div class="row">
-              <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>          
-                <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>               
-	                    </div>
-	                </div>
-            	</div>
-            	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>
-            	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>          
-            </div>
-          </div>
-          
-          <div class="item">
-            <div class="row">
-              <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>               
-	                    </div>
-	                </div>
-            	</div>          
-                <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>
-            	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>             
-	                    </div>
-	                </div>
-            	</div>
-            	<div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-            	</div>        
-            </div>
-          </div>
-        </div>
+</div>  
+
+<!-- Ranking contents -->
+<div class="container">
+    <div class="row">
+		<div class="col-md-12">
+        	<div id="Carousel" class="carousel slide">
+                
+                <ol class="carousel-indicators">
+                    <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+                    <li data-target="#Carousel" data-slide-to="1"></li>
+                    <li data-target="#Carousel" data-slide-to="2"></li>
+                </ol>
+                 
+                <!-- Carousel items -->
+                <div class="carousel-inner">
+                    
+	                <div class="item active">
+	                	<div class="row">
+	                	  <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                	  <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                	  <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                	  <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                	</div><!--.row-->
+	                </div><!--.item-->
+	                 
+	                <div class="item">
+	                	<div class="row">
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                	</div><!--.row-->
+	                </div><!--.item-->
+	                 
+	                <div class="item">
+	                	<div class="row">
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                		<div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
+	                	</div><!--.row-->
+	                </div><!--.item-->
+                 
+                </div><!--.carousel-inner-->
+                
+                <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
+                <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
+            </div><!--.Carousel-->
+                 
+		</div>
+	</div>
+</div><!--.container-->
         
-        <!-- prev/next icon -->
-        <a data-slide="prev" href="#media" class="left carousel-control">占쏙옙
-        	<!-- <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> - 占쏙옙占쎈��占쏙옙�곤옙 占쏙�由� -->
-        </a>
-        <a data-slide="next" href="#media" class="right carousel-control">占쏙옙</a>
-        
-      </div>
-      
-      <!-- 占쏙옙占쏙옙 占썬�삼옙野�占쏙옙��占쏙옙 --> 
-      <div class="dot_pagination">
-		<div data-tooltip="Tooltip 1" class="pagination__dot pagination__dot--active"></div>
-		<div data-tooltip="Tooltip 2" class="pagination__dot"></div>
-		<div data-tooltip="Tooltip 3" class="pagination__dot"></div>
-	  </div>                         
-    
-    </div>
-  </div>
-</div>
 
 <div class="container">
 	<hr class="margin-top-30"/>
@@ -294,185 +244,82 @@
             
 <div class="container">
 	<ol class="breadcrumb">
-	  <li class="active">筌ㅿ옙占쏙옙占쏙옙</li>
-	  <li><a href="#">�곤옙筌ｏ옙占쏙옙</a></li>
-	  <li><a href="#">鈺곌�占쏙옙占쏙옙</a></li>
+	  <li class="active">조회순</li>
+	  <li><a href="#">추천순</a></li>
+	  <li><a href="#">최신순</a></li>
 	</ol>			
 </div>
 
 
-    <!-- Page Content -->
-    <div class="margin-bottom-30">
-    	<div class="container">   	
-        	<div class="row">	
-			
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <div class="media">
-							  <div class="media-left">
-						    	  <img class="media-object" src="http://placehold.it/50x50" alt="">
-							  </div>
-							  <div class="media-body">
-							    <h5 class="media-heading">Media heading</h5>
-							    <p>占쎈�占쏙옙占쏙옙占쏙옙?</p>
-							  </div>							
-							</div> 	         
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>
-            
-	         </div>
-	     </div>
-	</div>  
+<!-- Page Content -->
+<c:set var="i" value="0"/>
+<c:forEach var="portfolio" items="${list}" >
+<c:set var="i" value="${i+1}"/>
+
+<c:if test="${i%4==1}">
+<div class="margin-bottom-30">
+   	<div class="container">   	
+       	<div class="row">	
+</c:if>		
+
+            <div class="col-md-3 col-sm-6">
+                <div class="thumbnail">
+                <input type="hidden" id="portNo" name="portNo" value="${portfolio.portNo}"/>
+                	<div class="thumbnail-portImage">
+                    	<img src="../../resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">                    	
+                    </div>	
+                    <div class="caption">
+                        
+                        <blockquote>
+			              <div class="row">
+			                <div class="col-sm-3 text-center">
+			                  <img class="img-circle" src="http://placehold.it/50x50" style="width: 50px;height:50px;">
+			                  <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/>				             
+			                </div>
+			                <div class="col-sm-9">
+			                  <h6>${portfolio.portTitle}</h6>
+			                  <small>${portfolio.portUserId}</small>
+			                </div>
+			              </div>
+			            </blockquote>		  					
+					         
+                    </div>
+                </div>
+            </div>   
+         
+   <c:if test="${i%4==0}">        
+         </div>
+     </div>
+</div>  
+</c:if>
 	
-	<div class="margin-bottom-30">
-    	<div class="container">   	
-        	<div class="row">	
-			
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>
-            
-	         </div>
-	     </div>
-	</div>  
-	
-	<div class="margin-bottom-30">
-    	<div class="container">   	
-        	<div class="row">	
-			
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>   
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div> 
-	            <div class="col-md-3 col-sm-6 hero-feature">
-	                <div class="thumbnail">
-	                    <img src="http://placehold.it/400x300" alt="">
-	                    <div class="caption">
-	                        <h5>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</h5>
-	                        <p>占싼�占쎈�占쎈����占쏙옙 占쏙옙占쎈��占쏙옙</p>              
-	                    </div>
-	                </div>
-	            </div>
-            
-	         </div>
-	     </div>
-	</div>  
-	             
-		
-	<!-- pagination -->
-       <nav align="center">
-	  <ul class="pagination">
-	    <li>
-	      <a href="#" aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	      </a>
-	    </li>
-	    <li><a href="#">1</a></li>
-	    <li><a href="#">2</a></li>
-	    <li><a href="#">3</a></li>
-	    <li><a href="#">4</a></li>
-	    <li><a href="#">5</a></li>
-	    <li>
-	      <a href="#" aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	      </a>
-	    </li>
-	  </ul>
-	</nav>
+</c:forEach>
+
+
+<!-- pagination -->
+<nav align="center">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
 
     
 
-    <!-- jQuery -->
-    <script src="../../resources/javascript/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    
 
 </body>
 
