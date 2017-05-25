@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="UserMapper">
+ 	
+ 	
+	<resultMap id="userSelectMap" type="user">
+		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
+		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
+		<result property="password" 	column="user_pwd" 		jdbcType="VARCHAR" />
+		<result property="role" 				column="user_role" 					jdbcType="NUMERIC" />
+		<result property="tel" 				column="user_tel" 					jdbcType="NUMERIC" />
+		<result property="email" 			column="user_email" 		jdbcType="VARCHAR" />
+		<result property="addr" 				column="user_addr" 					jdbcType="VARCHAR" />
+		<result property="companyName" 			column="user_ceo" 				jdbcType="VARCHAR"  />
+		<result property="empNum" 		column="user_emp" 			jdbcType="NUMERIC" />
+		<result property="pubDate" 		column="user_est" 			jdbcType="DATE" />
+		<result property="image" 		column="user_img" 			jdbcType="VARCHAR" />
+	
+	
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addUser"		parameterType="user" >
+	 	INSERT
+		INTO users( user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_img) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 2 , #{tel} , 
+							#{email:VARCHAR} , #{addr} ,  #{image:VARCHAR} )
+	 </insert>
+	 
+	 <insert 	id="addCompany"		parameterType="user" >
+	 	INSERT
+		INTO users( user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img) 
+		VALUES	 (	#{userId} , #{userName} , #{password} , 3 , #{tel} , 
+							#{email:VARCHAR} , #{addr} , #{companyName} , #{empNum:VARCHAR}, #{pubDate:VARCHAR}, #{image:VARCHAR} )
+	 </insert>
+	 
+	 
+	   <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_img 		
+		FROM users 
+		WHERE user_id = #{value}
+	 </select>
+	 
+	  <select 	id="getCompany"		parameterType="string"	resultMap="companySelectMap" >
+	 	SELECT
+	    user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img 
+		FROM users
+		WHERE user_id = #{value}
+			 	
+	 </select>
+	 
+	 
+	 
+	 
+	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		user_name 	= #{userName} ,
+			user_tel	= #{tel},
+			user_addr 				= #{addr} ,
+			user_email				=	#{email}
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+		 
+
+	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_id , user_name , user_email
+											FROM users
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				user_id = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				user_name = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY user_id ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 	 
+				
+		
+	
+ 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT user_id , user_name , user_email
+						FROM users
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+						 			user_id = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+						 		user_name = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
+	 
+</mapper>

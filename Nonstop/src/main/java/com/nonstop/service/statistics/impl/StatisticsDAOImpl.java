@@ -1,4 +1,4 @@
-package com.nonstop.service.statistics.statisticsImpl;
+package com.nonstop.service.statistics.impl;
 
 import java.sql.SQLClientInfoException;
 import java.util.List;
