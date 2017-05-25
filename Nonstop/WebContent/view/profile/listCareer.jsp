@@ -44,12 +44,24 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	 $(function() {
-		 $( "#updateCareer" ).on("click" , function() {
-				alert("ㅇㅇ" );
-				
-			self.location ="/profile/updateCareer?careerUserId=user05";
+		 $("span.updateCareer").on("click" , function() {
+				var careerNo=$(this).attr('careerNo');
+				alert(careerNo);
+			self.location ="/profile/updateCareer?careerNo="+careerNo;
 			
 			});
+		 
+		 $("span.deleteCareer").on("click" , function() {
+				alert("ㅇㅇ" );
+				var careerNo=$(this).attr('careerNo');
+				alert(careerNo);
+			self.location ="/profile/deleteCareer?careerNo="+careerNo;
+			
+			});
+		 
+		$("span.addCareer").on("click" , function() {
+		 		self.location = "/profile/addCareerView";
+			}); 
 	});	
 </script>
 </head>
@@ -58,7 +70,7 @@
 	
 	<div class="container">
 	<div class="page-header text-center">
-	       <h3 class=" text-info">개인 기술정보</h3>
+	       <h5 class=" text-left" >개인 기술정보</h5>
 	    </div>
 
       <table class="table table-hover table-striped" >
@@ -68,6 +80,11 @@
             <th align="center">No</th>
             <th align="left" >기능명</th>
             <th align="left">경력</th>
+            <th align="left">
+            <span class="addCareer">
+			  <button type="button" class="btn btn-primary">등록</button>
+			   </span>
+            </th>
           </tr>
         </thead>
        
@@ -82,9 +99,22 @@
 			
 			 
 			 
-			  <td align="left">${career.techName }</td>
+			  <td align="left">
+			  <c:if test="${career.techNo == '1000' }">Java</c:if>
+			  <c:if test="${career.techNo == '1001' }">Python</c:if>
+			  <c:if test="${career.techNo == '1002' }">Php</c:if>
+			  </td>
 			 
-			  <td align="left">${career.careerUseTerm}개월</td>
+			  <td align="left">${career.careerUseTerm}개월  &nbsp; &nbsp;
+			  <c:if test="${career.careerUserId==param.careerUsesrId }">
+			  <span class="updateCareer" careerNo="${career.careerNo}">
+			  <button type="button" class="btn btn-primary">수정</button> &nbsp; &nbsp;
+			   </span>
+			  <span class="deleteCareer" careerNo="${career.careerNo}">
+			   <button type="button" class="btn btn-danger">삭제</button>
+			   </span>
+				</c:if>
+			  </td>
 			  
 			 
 			</tr>
@@ -97,7 +127,7 @@
 	  
  	</div>
  	
- 	<button type="button" class="btn btn-primary" id="updateCareer" >수정</button>
+ 	
 	
 </body>
 

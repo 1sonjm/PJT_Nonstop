@@ -37,21 +37,20 @@ public class ProfileDAOImpl implements ProfileDAO{
 		Map<String , Object>  map = new HashMap<String, Object>();
 		
 		List<Career> list = sqlSession.selectList("CareerMapper.getListCareer",careerUserId);
-		System.out.println("+++++"+list);
+
 		map.put("list", list);
 		return map;
 	}
-	
-	public void updateCareer(Career career,String careerUserId) throws Exception {
-		
-		Map<String , Object> map = new HashMap<String , Object>();
-		
-		map.put("career", career);
-		map.put("careerUserId", careerUserId);
-		
-		sqlSession.update("CareerMapper.updateCareer",map);
-	}
 
+	public Career getCareer(int careerNo) throws Exception {
+		return sqlSession.selectOne("CareerMapper.getCareer", careerNo);
+	}
+	
+	public void updateCareer(Career career) throws Exception {
+		
+		sqlSession.update("CareerMapper.updateCareer",career);
+	}
+	
 	public void deleteCareer(int careerNo) throws Exception {
 		sqlSession.delete("CareerMapper.deleteCareer",careerNo);
 	}
@@ -126,6 +125,8 @@ public class ProfileDAOImpl implements ProfileDAO{
 		sqlSession.delete("ScrapMapper.deleteScrap", map);
 		
 	}
+
+	
 
 	
 

@@ -165,7 +165,7 @@
 	    font-size: 14px;
 	    line-height: 30px;
 	    font-weight: 500;
-	    padding: 10px 0;
+	    padding: 0;
 	    color: #8c8c8c;
 	}
 	
@@ -271,25 +271,24 @@
 	                                    
 	                            <!-- Post Detail Start -->
 	                            <div class="post-info">
-	                            	<span>November 23, 2016 / by <a href="#" target="_blank">Alex Parker</a></span>
+	                            	<span>${portfolio.portMonth} ${portfolio.portDay}, ${portfolio.portYear} / by <a href="#" target="_blank">${portfolio.portUserId}</a></span>
 	                            </div>
 	                            <!-- Post Detail End -->
 	                            
 	                            <!-- Post Image Start -->
                                 <div class="post-image margin-top-40 margin-bottom-40">
-                                   <img src="http://placehold.it/800x500" alt="">
+                                   <img src="../../resources/images/upload/${portfolio.portFile}" alt="">
                                    <!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
                                 </div>
                                 <!-- Post Image End -->
 	                            
 	                            <!-- 상세설명 -->
-	                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at quam at orci commodo hendrerit vitae nec eros. Vestibulum neque est, imperdiet nec tortor nec, tempor semper metus. <b>Cras vel tempus velit</b>, et accumsan nisi. Duis laoreet pretium ultricies. Curabitur rhoncus auctor nunc congue sodales. Sed posuere nisi ipsum, eget dignissim nunc dapibus eget. Aenean elementum <b><a href="javascript:void(0)" data-toggle="popover" data-placement="top" data-content="You can write any text here">Click me</a></b> sollicitudin sapien ut sapien fermentum aliquet mollis. Curabitur ac quam orci sodales quam ut tempor. <b data-toggle="tooltip" data-placement="top" title="You can write any text here.">Hover me</b> suspendisse, gravida in augue in, interdum bibendum dui. Suspendisse sit amet justo sit amet diam fringilla commodo. Praesent ac magna at metus malesuada tincidunt non ac arcu. Nunc gravida eu felis vel elementum. Vestibulum sodales quam ut tempor tempor. Donec sollicitudin sapien ut sapien fermentum, non ultricies nulla gravida.</p>
+	                            <p>${portfolio.portDetail}</p>
 	                            
-	                            
-	                            
+	                            <div class="margin-top-50"></div>
 	                             <!-- Post Comment (Disqus) Start -->
                                   <div id="comment" class="comment">
-                                    <h3>Discuss about post</h3>
+                                    <h3>Discuss About Post</h3>
                                      
                                      
                                      <!-- Disqus Code Start  (Please Note: Disqus will not be load on local, You have to upload it on server.)-->
