@@ -3,16 +3,18 @@
   <display-name>Nonstop</display-name>
   
   <listener>
-    <listener-class>org.springframework.web.context.ContextLoaderListener   </listener-class>
+
+    <listener-class>org.springframework.web.context.ContextLoaderListener	</listener-class>
   </listener>
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
-         classpath:config/context-aspect.xml,
-         classpath:config/context-common.xml,
-         classpath:config/context-mybatis.xml,
-         classpath:config/context-transaction.xml
-      </param-value>
+			classpath:config/context-aspect.xml,
+			classpath:config/context-common.xml,
+			classpath:config/context-mybatis.xml,
+			classpath:config/context-transaction.xml
+		</param-value>
+
   </context-param>
   <filter>
     <filter-name>encodingFilter</filter-name>
