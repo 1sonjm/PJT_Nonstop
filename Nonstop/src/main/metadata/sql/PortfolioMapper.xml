@@ -41,10 +41,22 @@
 		WHERE port_no = #{portNo}
 	 </select>
 	 
-	 <select  id="getPortfolioList" resultMap="portfolioSelectMap">
+	 <select  id="getPortfolioList" parameterType="int" resultMap="portfolioSelectMap">
 	  	SELECT port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_viewcount
-	  	FROM portfolio 
-	  	ORDER BY port_no
+	  	FROM portfolio
+	  	<where> 
+	  		<if test="_parameter == 1">
+				port_division IN (10,11,12)	
+			</if>	
+			<if test="_parameter == 2">
+				port_division IN (20,21,22)	
+			</if>
+			<if test="_parameter != 1 and _parameter != 2">
+				port_division = #{value}
+			</if>		
+		</where>
+
+	  	ORDER BY port_viewcount
 	  	
 	  	<!-- SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq

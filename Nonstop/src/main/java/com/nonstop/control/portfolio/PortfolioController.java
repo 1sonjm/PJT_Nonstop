@@ -83,15 +83,9 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="listPortfolio")
-	public String listPortfolio(@ModelAttribute("search") Search search, Model model) throws Exception {
-
+	public String listPortfolio(@RequestParam("portDivision") int portDivision, Model model) throws Exception {
 		
-		if(search.getCurrentPage() == 0){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		List<Portfolio> portfolioList = portfolioService.getPortfolioList();
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision);
 		
 		model.addAttribute("list", portfolioList);
 		
@@ -99,12 +93,15 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="getPortfolio")
-	public String getPortfolio(Model model) throws Exception {
+	public String getPortfolio(@RequestParam("portNo") int portNo, Model model) throws Exception {
 	/*public String getPortfolio( @RequestParam("portNo") int portNo, Model model) throws Exception {*/
 		
 		System.out.println("getPortfolio Controller");
 		
-		int portNo = 10;
+		//완성되면 여기 지우기. 임시
+		if(portNo==0){
+			portNo = 10;
+		}
 		
 		Portfolio portfolio = portfolioService.getPortfolio(portNo);		
 		
