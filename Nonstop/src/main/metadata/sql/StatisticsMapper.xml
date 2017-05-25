@@ -5,24 +5,69 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="StatisticsMapper">
- 	<!-- 
  	
-	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
-		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
-		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
-		<result property="ssn" 				column="ssn" 					jdbcType="VARCHAR" />
-		<result property="phone" 			column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
-		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+	<resultMap id="statisticsSet" type="statistics">
+		<result property="techNo" 			column="stat_tech_no" 		jdbcType="VARCHAR"/>
+		<result property="techName"			column="tech_name" 				jdbcType="VARCHAR" />
+		<result property="demand" 			column="stat_demand" 			jdbcType="VARCHAR" />
+		<result property="supply" 			column="stat_supply" 			jdbcType="VARCHAR" />
+		<result property="userRate" 		column="stat_user_rate" 	jdbcType="VARCHAR" />
+		<result property="techClass" 		column="tech_class " 			jdbcType="VARCHAR" />
+		<result property="regdate" 			column="stat_date" 				jdbcType="DATE" />
 	</resultMap>
-	-->
+	
 	<insert id="addStatistics" parameterType="statistics">
 		INSERT INTO statistics(stat_no, stat_tech_name, stat_tech_class,
 												 stat_demand, stat_supply, stat_user_rate)
 		VALUES (seq_statisics_stat_no.nextval, #{techName}, #{techClass},
 						#{demand}, #{supply}, #{userRate})
 	</insert>
+	
+	
+	<insert id="addListStatisticsData" parameterType="java.util.List">
+		<if test="list.size != 0">
+			INSERT ALL
+			<foreach collection="list" index="index" item="statistics">
+			INTO statistics(stat_no,stat_tech_no,stat_demand,stat_supply,stat_user_rate)
+			VALUES((seq_statisics_stat_no.nextval+#{index}),#{statistics.techNo},#{statistics.demand},#{statistics.supply},#{statistics.userRate})
+			</foreach>
+			SELECT * FROM DUAL
+		</if>
+	</insert>
+	<select id="getListStatisticsData" resultMap="statisticsSet">
+		SELECT DISTINCT t.tech_no AS stat_tech_no, demand.stat_demand, supply.stat_supply, user_rate.stat_user_rate
+		FROM tech t,
+			(
+				SELECT DISTINCT t.tu_tech_no,COUNT(*)OVER(partition by tu_tech_no) AS stat_demand
+				FROM techuse t, project pj
+				WHERE t.tu_proj_no IS NOT NULL AND t.tu_proj_no = pj.proj_no
+			) demand,
+			(
+				SELECT DISTINCT t.tu_tech_no,COUNT(*)OVER(partition by tu_tech_no) AS stat_supply
+				FROM techuse t, portfolio pf
+				WHERE t.tu_port_no IS NOT NULL AND t.tu_port_no = pf.port_no
+								AND NVL(port_update,port_regdate) BETWEEN ADD_MONTHS(SYSDATE, -1) AND SYSDATE
+			) supply,
+			(
+				SELECT DISTINCT (COUNT(*)OVER(partition by c.career_tech_no)/u.personal_user_count*100) AS stat_user_rate,
+					c.career_tech_no
+				FROM career c, (SELECT DISTINCT COUNT(*)OVER() AS personal_user_count 
+													FROM users u
+													WHERE u.user_role = 2) u
+			) user_rate
+		WHERE t.tech_no = demand.tu_tech_no(+) 
+				AND t.tech_no = supply.tu_tech_no(+) 
+				AND t.tech_no = user_rate.career_tech_no(+)
+		ORDER BY t.tech_no
+	</select>
+
+	<select	id="getListTotalStatistics" parameterType="int" resultMap="statisticsSet">
+		SELECT stat_tech_no,tech_name,stat_demand,stat_supply,stat_user_rate,tech_class FROM statistics s, tech t
+		FROM statistics s, tech t
+		WHERE s.stat_tech_no = t.tech_no AND t.tech_class = #{techClass}
+					AND (s.stat_tech_no, s.stat_date) IN (SELECT stat_tech_no, MAX(stat_date)
+																								FROM statistics
+																								GROUP BY stat_tech_no) 
+	</select>
+	
 </mapper>

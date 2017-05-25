@@ -4,8 +4,11 @@ public class Scrap {
 	
 	private int scrapNo;
 	private String scrapUserId;
-	private int postNo; //게시물 번호
+	private int projNo;
+	private int portNo;
 	private int scrapDiv; //게시물 분류 번호
+	
+	
 	public int getScrapNo() {
 		return scrapNo;
 	}
@@ -18,11 +21,17 @@ public class Scrap {
 	public void setScrapUserId(String scrapUserId) {
 		this.scrapUserId = scrapUserId;
 	}
-	public int getPostNo() {
-		return postNo;
+	public int getProjNo() {
+		return projNo;
 	}
-	public void setPostNo(int postNo) {
-		this.postNo = postNo;
+	public void setProjNo(int projNo) {
+		this.projNo = projNo;
+	}
+	public int getPortNo() {
+		return portNo;
+	}
+	public void setPortNo(int portNo) {
+		this.portNo = portNo;
 	}
 	public int getScrapDiv() {
 		return scrapDiv;
@@ -37,8 +46,10 @@ public class Scrap {
 		builder.append(scrapNo);
 		builder.append(", scrapUserId=");
 		builder.append(scrapUserId);
-		builder.append(", postNo=");
-		builder.append(postNo);
+		builder.append(", projNo=");
+		builder.append(projNo);
+		builder.append(", portNo=");
+		builder.append(portNo);
 		builder.append(", scrapDiv=");
 		builder.append(scrapDiv);
 		builder.append("]");

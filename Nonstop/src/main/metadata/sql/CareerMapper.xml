@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="CareerMapper">
+ 	
+ 	
+	<resultMap id="careerSelectMap" type="career">
+		<result property="careerNo" 			column="career_no" 			jdbcType="NUMERIC"/>
+		<result property="careerUserId"			column="career_user_id" 			jdbcType="VARCHAR" />
+		<result property="techNo" 				column="career_tech_no" 		jdbcType="NUMERIC" />
+		<result property="careerUseTerm" 		column="career_use_month"	jdbcType="NUMERIC" />
+		<result property="techDiv" 				column="tech_class" 		jdbcType="NUMERIC" />
+		<result property="techName" 			column="tech_name"	jdbcType="VARCHAR" />
+		</resultMap>
+	
+	
+	
+	<insert 	id="addCareer"		parameterType="career" >
+		INSERT
+		INTO career
+		VALUES (seq_career_no.nextval,
+				#{careerUserId:VARCHAR},
+				#{techNo:NUMERIC},
+				#{careerUseTerm:NUMERIC})
+	 </insert>
+	 
+	 <select  id="getListCareer"  parameterType="String"	resultMap="careerSelectMap">
+			SELECT c.career_tech_no , c.career_use_month , c.career_no , c.career_user_id
+             FROM career c ,tech t
+             WHERE c.career_user_id=#{careerUserId} AND t.tech_no= c.career_tech_no 
+
+          
+	 </select>
+	 
+	  <select  id="getCareer"  parameterType="int"	resultMap="careerSelectMap">
+			SELECT c.career_tech_no , c.career_use_month
+             FROM career c ,tech t
+             WHERE c.career_no=#{careerNo} AND t.tech_no= c.career_tech_no 
+
+          
+	 </select>
+	 
+	 <update id="updateCareer" parameterType="career">
+		UPDATE career
+		<set>
+		career_tech_no = #{techNo:NUMERIC},
+		career_use_month = #{careerUseTerm:NUMERIC}
+		</set>
+		WHERE career_user_id = #{careerUserId:VARCHAR} AND career_no=#{careerNo:NUMERIC}
+	</update>
+	
+	<delete id="deleteCareer" parameterType="int">
+	 	DELETE
+	 	FROM career WHERE career_no=#{careerNo} 
+	 </delete>
+	 
+	
+</mapper>		
+		
