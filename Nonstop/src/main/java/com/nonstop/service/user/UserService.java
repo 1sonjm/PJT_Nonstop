@@ -19,7 +19,8 @@ public interface UserService {
 	
 	public User getUser(String userId) throws Exception;
 	
-
+	public User getProfileUser(String careerUserId) throws Exception;
+	
 	public Map<String , Object> getUserList(Search search) throws Exception;
 	
 

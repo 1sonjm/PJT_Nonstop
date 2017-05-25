@@ -47,6 +47,7 @@ public class ProfileDAOImpl implements ProfileDAO{
 	}
 	
 	public void updateCareer(Career career) throws Exception {
+		
 		sqlSession.update("CareerMapper.updateCareer",career);
 	}
 	

@@ -11,7 +11,7 @@ public interface ProfileDAO {
 	
 	public void addCareer(Career career) throws Exception;
 	
-	public Map<String , Object> getCareerList(String careerUserId) throws Exception;
+	public Map<String , Object> getCareerList(String userId) throws Exception;
 	
 	public Career getCareer(int careerNo) throws Exception;
 	

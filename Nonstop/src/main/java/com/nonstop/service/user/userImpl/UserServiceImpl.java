@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUser(userId);
 	}
 
+	public User getProfileUser(String careerUserId) throws Exception {
+		return userDAO.getProfileUser(careerUserId);
+	}
+
 	public Map<String , Object > getUserList(Search search) throws Exception {
 		List<User> list= userDAO.getUserList(search);
 		int totalCount = userDAO.getTotalCount(search);
@@ -81,4 +85,6 @@ public class UserServiceImpl implements UserService{
 	      }
 	      return result;
 	   }
+
+	
 }

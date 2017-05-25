@@ -106,14 +106,14 @@
 			  </td>
 			 
 			  <td align="left">${career.careerUseTerm}개월  &nbsp; &nbsp;
+			  <c:if test="${career.careerUserId==param.careerUsesrId }">
 			  <span class="updateCareer" careerNo="${career.careerNo}">
 			  <button type="button" class="btn btn-primary">수정</button> &nbsp; &nbsp;
 			   </span>
-			   
 			  <span class="deleteCareer" careerNo="${career.careerNo}">
 			   <button type="button" class="btn btn-danger">삭제</button>
-			  
-			  </span>
+			   </span>
+				</c:if>
 			  </td>
 			  
 			 

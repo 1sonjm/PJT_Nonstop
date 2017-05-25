@@ -56,9 +56,9 @@ $(function() {
  		
  		var careerUserId = $(this).attr('careerUserId');
  		
- 		self.location = "/profile/getUserProfile?careerUserId";
+ 		self.location = "/profile/getUserMineProfile?careerUserId";
 		//self.location = "/user/logout"
-	}); 
+	}); 	
 	
 	$("span.login").on("click" , function() {
  		
@@ -67,6 +67,14 @@ $(function() {
  		self.location = "/user/login";
 		//self.location = "/user/logout"
 	}); 
+	
+	$("span.profile2").on("click" , function() {
+ 		
+ 		//var careerUserId = $(this).attr('careerUserId');
+ 		
+ 		self.location ="/profile/getUserOtherProfile?careerUserId="+$(this).text().trim();
+		//self.location = "/user/logout"
+	}); 	
 	
 	
  });
@@ -148,8 +156,12 @@ font-family: 'Syncopate', sans-serif;
 				<div class="jumbotron">
 					<h1>Hello, world!</h1>
 					 <div class="col-sm-offset-4  col-sm-4 text-center">
-					 <span class="profile" careerUserId="${uesr.userId}">
+					 <span class="profile" careerUserId="${user.userId}">
 		      		<button type="button" class="btn btn-primary" id="profile" >프로필</button>
+		      		</span>
+		      		
+		      		<span class="profile2" careerUserId2="${param.userId}">
+		      		<button type="button" class="btn btn-primary" id="profile" >user05</button>
 		      		</span>
 		    		</div>
 		    		

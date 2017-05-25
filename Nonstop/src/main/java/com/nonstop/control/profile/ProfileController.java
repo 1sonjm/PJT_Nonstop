@@ -20,6 +20,7 @@ import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.User;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.user.UserService;
 
 @Controller
 @RequestMapping("/profile/*")
@@ -28,6 +29,10 @@ public class ProfileController {
 	@Autowired
 	@Qualifier("profileServiceImpl")
 	private ProfileService profileService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	public ProfileController(){
 		System.out.println(this.getClass());
@@ -45,16 +50,36 @@ public class ProfileController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
-	@RequestMapping(value="getUserProfile",method=RequestMethod.GET)
+	@RequestMapping(value="getUserMineProfile",method=RequestMethod.GET)
 	public String getUserProfile( Model model , HttpSession session) throws Exception{
 		
 		System.out.println("/profile/getUserProfile");
 		
 		String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
+		User user = userService.getProfileUser(careerUserId);
+		
 		Map<String , Object> map = profileService.getCareerList(careerUserId);
 		
 		model.addAttribute("list" , map.get("list"));
+		model.addAttribute("user", user);
+		
+		return "forward:/view/profile/profile.jsp";
+	}
+	
+	@RequestMapping(value="getUserOtherProfile",method=RequestMethod.GET)
+	public String getUserProfile(@RequestParam("careerUserId")String careerUserId, Model model , HttpSession session) throws Exception{
+		
+		System.out.println("/profile/getUserProfile");
+		
+		//String careerUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		User user = userService.getProfileUser(careerUserId);
+		
+		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		
+		model.addAttribute("list" , map.get("list"));
+		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
 	}

@@ -46,6 +46,13 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
+	 <select 	id="getProfileUser"	parameterType="string"	resultMap="userSelectMap">
+		SELECT
+		user_id , user_role, user_addr, user_img, user_ceo ,user_emp,user_est
+		FROM users 
+		WHERE user_id = #{careerUserId}
+	 </select>
+	 
 	  <select 	id="getCompany"		parameterType="string"	resultMap="userSelectMap" >
 	 	SELECT
 	    user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img 
