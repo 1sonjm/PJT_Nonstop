@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="ScrapMapper">
+ 	
+ 	
+	<resultMap id="scrapSelectMap" type="Scrap">
+		<result property="scrapNo" 			column="scrap_no" 		jdbcType="NUMERIC"/>
+		<result property="scrapUserId"		column="user_id" 		jdbcType="VARCHAR" />
+		<result property="projNo" 			column="proj_no" 		jdbcType="NUMERIC" />
+		<result property="portNo" 			column="port_no" 		jdbcType="NUMERIC" />
+		<result property="scrapDiv" 		column="scrap_div" 		jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addPortScrap"		parameterType="map" >
+		INSERT
+		INTO scrap
+		VALUES (seq_scrap_no.nextval,
+				#{scrapUserId},
+				#{projNo:NUMERIC},
+				#{portNo:NUMERIC},
+				1)
+	 </insert>
+	 
+	 <insert 	id="addProjScrap"		parameterType="map" >
+		INSERT
+		INTO scrap
+		VALUES (seq_scrap_no.nextval,
+				#{scrapUserId},
+				#{projNo:NUMERIC},
+				#{portNo:NUMERIC},
+				2)
+	 </insert>
+	 
+	  <select  id="getListScrap"  parameterType="map"	resultMap="scrapSelectMap">
+		SELECT *
+		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+			FROM(	SELECT user_id , post_no , scrap_div
+					FROM scrap
+					WHERE user_id = #{scrapUserId} AND post_no=#{postNo} AND scrap_div=#{scrapDiv})inner_table)
+	 </select>
+	 
+	 <delete id="deleteScrap" parameterType="map">
+	 	DELETE
+	 	FROM scrap WHERE user_id=#{scrapUserId} AND post_no=#{targetUserId} AND scrap_div=#{scrapDiv})
+	 </delete>
+	
+</mapper>		
+		

@@ -17,6 +17,32 @@
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {listCareer
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+ 	$("#addCareer").on("click" , function() {
+ 		self.location = "/profile/addCareerView";
+	}); 
+	
+$("#listCareer").on("click" , function() {
+	
+	var userId = $(this).attr('userId');
+	
+		self.location = "/profile/getCareerList?careerUserId="+userId;
+}); 
+ });
+
+</script>
 
 
 	<style>
@@ -152,7 +178,11 @@
 			
 					  <!-- Tab panes -->
 					  <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="home">sadasf</div>
+					    <div role="tabpanel" class="tab-pane active" id="home">
+					   
+					    <jsp:include page="/view/profile/listCareer.jsp" /> 					    
+					  					  
+					    </div>
 					    <div role="tabpanel" class="tab-pane" id="profile">
 							<%-- <jsp:include page="/portfolio.jsp" /> --%>
 						</div>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="FollowMapper">
+ 	
+ 	
+	<resultMap id="followSelectMap" type="Follow">
+		<result property="followNo" 		column="follow_no" 		jdbcType="NUMERIC"/>
+		<result property="reqUserId"		column="request_id" 	jdbcType="VARCHAR" />
+		<result property="targetUserId" 	column="recive_id"	 	jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addFollow"		parameterType="map" >
+		INSERT
+		INTO follow
+		VALUES (seq_follow_no.nextval,
+				#{reqUserId},
+				#{targetUserId})
+	 </insert>
+	 
+	 <select  id="getListFollow"  parameterType="String"	resultMap="followSelectMap">
+		SELECT *
+		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+				FROM(	SELECT request_id , recive_id 
+						FROM follow
+						WHERE request_id = #{reqUserId} )inner_table)
+	 </select>
+	 
+	 <delete id="deleteFollow" parameterType="map">
+	 	DELETE
+	 	FROM follow WHERE request_id=#{reqUserId} AND recive_id=#{targetUserId}
+	 </delete>
+	 
+	 
+	 
+	
+</mapper>		
+		
