@@ -34,30 +34,29 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 	public int addStatisticsDataList() {
 		List<Statistics> dataList = sqlSession.selectList("StatisticsMapper.getListStatisticsData");
 
-		for(Statistics statistics : dataList){
-			System.out.println("조회 data : "+statistics);
-		}
+//		for(Statistics statistics : dataList){
+//			System.out.println("조회 data : "+statistics);
+//		}
 		
 		return sqlSession.insert("StatisticsMapper.addListStatisticsData",dataList);
 	}
-
 	@Override
-	public List<Statistics> getJSONTotalStatisticsList() {
+	public List<Statistics> getTotalStatisticsList() {
 		return sqlSession.selectList("StatisticsMapper.getListTotalStatistics");
 	}
 
 	@Override
-	public List<Statistics> getJSONMajorStatisticsList(Statistics statistics) {
-		return sqlSession.selectList("StatisticsMapper.getListMajorStatistics", statistics);
+	public List<Statistics> getMajorStatisticsList(int techClass) {
+		return sqlSession.selectList("StatisticsMapper.getListMajorStatistics", techClass);
 	}
 
 	@Override
-	public List<Statistics> getJSONPeriodStatisticsList(Statistics statistics) {
+	public List<Statistics> getPeriodStatisticsList(Statistics statistics) {
 		return sqlSession.selectList("StatisticsMapper.getListPeriodStatistics", statistics);
 	}
 
 	@Override
-	public List<Statistics> getJSONRegionStatisticsList(Statistics statistics) {
+	public List<Statistics> getRegionStatisticsList(Statistics statistics) {
 		return sqlSession.selectList("StatisticsMapper.getListRegionStatistics", statistics);
 	}
 

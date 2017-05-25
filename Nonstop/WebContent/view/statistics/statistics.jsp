@@ -54,53 +54,59 @@
 }
 </style>
 <script type="text/javascript">
+function getJsonDataList(type,addr){
+	$.ajax("/statistics/"+addr,{
+		method : "POST" ,
+		dataType : "json" ,
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(jsonData) {
+			//console.log(JSON.stringify(jsonData));
+			switch(type){
+			case "total":
+				totalStatics(jsonData);
+				break;
+			case "major":
+				majorStatics(jsonData);
+				break;
+			case "period":
+				statisticsByPeriod(jsonData);
+				break;
+			case "region":
+				var highMap = new highMaps();
+				highMap.init();
+				break;
+			}
+		}				
+	});
+}
 
 $(function(){
-	totalStatics(JSON);
+	getJsonDataList("total","getJSONListTotalStatistics");
+	
 	$('input[name="start"]').val("");
 	$('input[name="end"]').val("");
 
 	$('li a:contains("전체 기술 집계")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			$.ajax("/product/listJsonProduct/",{
-				method : "GET" ,
-				dataType : "json" ,
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"
-				},/*
-				data:{
-					currentPage:page,
-					sortingTarget:$('#SortingTarget').val(),
-					sortingDESC:$('#SortingDESC').val(),
-					viewSoldItem:$('[name="viewSoldItem"]').val(),
-					searchCondition:$('[name="searchCondition"]').val(),
-					searchKeyword:$('[name="searchKeyword"]').val(),
-					searchValueLow:$('[name="searchValueLow"]').val(),
-					searchValueHigh:$('[name="searchValueHigh"]').val()
-				},*/
-				success : function(JSON , status) {
-						totalStatics(JSON);
-					}
-				}
-			});
-			
+			getJsonDataList("total","getJSONListTotalStatistics");
 		}
 	})
 	$('li a:contains("과반수 사용 기술")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			majorStatics(JSON);
+			getJsonDataList("major","getJSONListTotalStatistics");
 		}
 	})
 	$('li a:contains("기간별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			statisticsByPeriod(JSON);
+			getJsonDataList("period","getJSONListTotalStatistics");
 		}
 	})
 	$('li a:contains("지역별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			var highMap = new highMaps();
-			highMap.init();
+			getJsonDataList("region","getJSONListTotalStatistics");
 		}
 	})
 });
@@ -112,7 +118,7 @@ $(function(){
 <div class="container">
 	<h2>Dynamic Tabs</h2>
 	<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
-	
+
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>

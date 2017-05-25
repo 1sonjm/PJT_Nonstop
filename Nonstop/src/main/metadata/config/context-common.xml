@@ -14,9 +14,6 @@
 				http://www.springframework.org/schema/util/spring-util.xsd
 				http://www.springframework.org/schema/task
 				http://www.springframework.org/schema/task/spring-task.xsd">
-
-	
-	
 	
 	
 	<!-- common, jdbc properties를 xml에서 하나의 bean으로 선언해야 되서 합쳐짐	-->
@@ -38,8 +35,11 @@
 		<context:exclude-filter type="annotation" 	expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 	
+	
+	<!-- spring scheduler를 사용하여 데이터를 동기화 -->
 	<task:scheduled-tasks>
-		<task:scheduled ref="statisticsServiceImpl" method= "test" cron="${dataSync.interval}" />
+		<task:scheduled ref="statisticsServiceImpl" method= "addStatisticsDataList" cron="${dataSync.interval}" />
+		<!-- <task:scheduled ref="statisticsServiceImpl" method= "testSync" cron="${dataSync.interval}" /> -->
 	</task:scheduled-tasks> 
 				
 </beans>

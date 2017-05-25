@@ -1,5 +1,7 @@
 package controller.tdd;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,7 +26,7 @@ public class StatisticsServiceTest {
 	@Qualifier("statisticsServiceImpl")
 	private StatisticsService statisticsService;
 
-	@Test
+	//@Test
 	public void addStatisticsData() throws Exception {
 
 		Statistics statistics = new Statistics();
@@ -32,22 +34,29 @@ public class StatisticsServiceTest {
 		statistics.setSupply(20);
 		statistics.setUserRate(10.5);
 		statistics.setLocation("서울시");
-		statistics.setTechName("java");
-		statistics.setTechClass(1);
+		statistics.setTechNo(1000);
 		
 		int result = statisticsService.addStatisticsData(statistics);
 		
 		Assert.assertEquals(1, result);
 
 	}
-	//@Test
+	@Test
 	public void addStatisticsDataList()  throws Exception{
 		Assert.assertEquals(true, (statisticsService.addStatisticsDataList()!=0));		
 	}
 
 	//@Test
+	public void getTotalStatisticsList()  throws Exception{
+		List<Statistics> result = statisticsService.getTotalStatisticsList();
+		for(Statistics data : result){
+			System.out.println(data);
+		}
+	}
+
+	//@Test
 	public void getJSONTotalStatisticsList()  throws Exception{
-		//Statistics statistics
+		
 	}
 
 	//@Test

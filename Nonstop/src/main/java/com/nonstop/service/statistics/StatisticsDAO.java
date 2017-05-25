@@ -10,13 +10,13 @@ public interface StatisticsDAO {
 	
 	public int addStatisticsData(Statistics statistics);
 	
-	public List<Statistics> getJSONTotalStatisticsList();
+	public List<Statistics> getTotalStatisticsList();
 
-	public List<Statistics> getJSONMajorStatisticsList(Statistics statistics);
+	public List<Statistics> getMajorStatisticsList(int techClass);
 	
-	public List<Statistics> getJSONPeriodStatisticsList(Statistics statistics);
+	public List<Statistics> getPeriodStatisticsList(Statistics statistics);
 	
-	public List<Statistics> getJSONRegionStatisticsList(Statistics statistics);
+	public List<Statistics> getRegionStatisticsList(Statistics statistics);
 	
 	public List<Integer> getPostCountList();
 	
