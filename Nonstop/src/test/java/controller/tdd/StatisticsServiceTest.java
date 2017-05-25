@@ -24,7 +24,7 @@ public class StatisticsServiceTest {
 	@Qualifier("statisticsServiceImpl")
 	private StatisticsService statisticsService;
 
-	//@Test
+	@Test
 	public void addStatisticsData() throws Exception {
 
 		Statistics statistics = new Statistics();

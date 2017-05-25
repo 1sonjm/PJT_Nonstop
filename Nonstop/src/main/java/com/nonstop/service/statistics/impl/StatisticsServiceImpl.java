@@ -1,9 +1,12 @@
-package com.nonstop.service.statistics.statisticsImpl;
+package com.nonstop.service.statistics.impl;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.nonstop.domain.Statistics;
@@ -13,6 +16,15 @@ import com.nonstop.service.statistics.StatisticsService;
 @Service
 public class StatisticsServiceImpl implements StatisticsService {
 
+	@Value("#{commonProperties['dataSync.sec']?: }")
+	private int syncSec;
+	@Value("#{commonProperties['dataSync.min']?: }")
+	private int syncMin;
+	@Value("#{commonProperties['dataSync.hour']?: }")
+	private int syncHour;
+	@Value("#{commonProperties['dataSync.day']?: }")
+	private int syncDay;
+	
 	@Autowired
 	@Qualifier("statisticsDAOImpl")
 	private StatisticsDAO statisticsDAO;
@@ -65,8 +77,14 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public void test() {
-		System.out.println("호출됨");
+	public void test() {		
+		Calendar operatingTime = Calendar.getInstance();
+		operatingTime.setTime(new Date());
+		System.out.println("[DataSync]작동 시각:\t"+ operatingTime.getTime().toString());
+		
+		operatingTime.add(Calendar.SECOND, (syncDay*syncHour*syncMin*syncSec));
+		System.out.println("[DataSync]다음 작동 시각:\t"+ operatingTime.getTime().toString());
+		
 	}
 
 }
