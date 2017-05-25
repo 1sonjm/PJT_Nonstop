@@ -31,6 +31,11 @@ public class ProfileController {
 	public ProfileController(){
 		System.out.println(this.getClass());
 	}
+	
+	public ProfileController(int a , int b){
+		System.out.println(this.getClass());
+	}
+	
 	@Value("#{commonProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -40,11 +45,19 @@ public class ProfileController {
 	int pageSize;
 	
 	@RequestMapping(value="getUserProfile",method=RequestMethod.GET)
-	public String getUserProfile() throws Exception{
+	public String getUserProfile(@RequestParam("careerUserId") String careerUserId , Model model) throws Exception{
 		
 		System.out.println("/profile/getUserProfile");
 		
-		return "redirect:/view/profile/profile.jsp";
+		//ProfileController profileController = new ProfileController();
+		
+		//profileController.getCareerList(careerUserId, model);
+		
+		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		
+		model.addAttribute("list" , map.get("list"));
+		
+		return "forward:/view/profile/profile.jsp";
 	}
 	
 	@RequestMapping(value="getCompanyProfile",method=RequestMethod.GET)
@@ -91,40 +104,66 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="updateCareer",method=RequestMethod.GET)
-	public String updateCareer(@RequestParam("careerUserId")String careerUserId , Model model) throws Exception{
+	public String updateCareer(@RequestParam("careerNo")int careerNo , Model model) throws Exception{
 		
 		System.out.println("/profile/updateCareer : GET");
 		
-		Map<String , Object> career = profileService.getCareerList(careerUserId);
+		Career career = profileService.getCareer(careerNo);
 		
 		model.addAttribute("career", career);
 		
 		return "forward:/view/profile/updateCareerView.jsp";
 	}
 	
-	@RequestMapping(value="updateCareer",method=RequestMethod.POST)
+	/*@RequestMapping(value="updateCareer",method=RequestMethod.POST)
 	public String updateCareer(@ModelAttribute("career") Career career , Model model, HttpSession session) throws Exception{
 		
 		System.out.println("/profile/updateCareer : POST");
 		
 		//String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		//profileService.updateCareer(career,careerUserId);
+		career.setCareerUserId("user05");
 		
-		//List<Career> career2 = profileService.getCareerList(careerUserId);
+		profileService.updateCareer(career,careerUserId);
 		
-		//model.addAttribute("career", career2);
+		Map<String , Object> career2 = profileService.getCareerList(careerUserId);
 		
-		return "forward:/view/profile/getCareer.jsp";
+		model.addAttribute("career", career2.get("list"));
+		
+		return "forward:/view/profile/listCareer.jsp";
+	}*/
+	
+	@RequestMapping(value="updateCareer",method=RequestMethod.POST)
+	public String updateCareer(@ModelAttribute("career") Career career ,@RequestParam int careerNo , Model model, HttpSession session) throws Exception{
+		
+		System.out.println("/profile/updateCareer : POST");
+		
+		//String careerUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		career.setCareerUserId("user05");
+		career.setCareerNo(careerNo);
+		
+		profileService.updateCareer(career);
+		
+		Map<String , Object> map = profileService.getCareerList("user05");
+		
+		model.addAttribute("list", map.get("list"));
+		
+		return "forward:/view/profile/listCareer.jsp";
 	}
 	
-	@RequestMapping(value="deleteCareer/{careerNo}",method=RequestMethod.GET)
-	public void deleteCareer(@PathVariable int careerNo) throws Exception{
+	@RequestMapping(value="deleteCareer",method=RequestMethod.GET)
+	public String deleteCareer(@RequestParam int careerNo , Model model) throws Exception{
 		
 		System.out.println("/profile/deleteCareer : GET");
 		
 		profileService.deleteCareer(careerNo);
 		
+		Map<String , Object> map = profileService.getCareerList("user05");
+		
+		model.addAttribute("list", map.get("list"));
+		
+		return "forward:/view/profile/listCareer.jsp";
 	}
 	
 	@RequestMapping(value="addFollow/{targetUserId}",method=RequestMethod.GET)

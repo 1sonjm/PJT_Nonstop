@@ -9,6 +9,7 @@
 <html lang="ko">
 	
 <head>
+
 	<meta charset="EUC-KR">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -34,55 +35,33 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	function fncUpdateProduct(){
+	function fncUpdateCareer(){
 		//Form 유효성 검증
-	 	var name = $("input[name='prodName']").val();
-		var detail=$("input[name='prodDetail']").val();
-		var manuDate=$("input[name='manuDate']").val();
-		var price=$("input[name='price']").val();
-
-		if(name == null || name.length<1){
-			alert("상품명은 반드시 입력하여야 합니다.");
-			return;
-		}
-		if(detail == null || detail.length<1){
-			alert("상품상세정보는 반드시 입력하여야 합니다.");
-			return;
-		}
-		if(manuDate == null || manuDate.length<1){
-			alert("제조일자는 반드시 입력하셔야 합니다.");
-			return;
-		}
-		if(price == null || price.length<1){
-			alert("가격은 반드시 입력하셔야 합니다.");
-			return;
-		}
-			
-		$("form").attr("method" , "POST").attr("action" , "/product/updateProduct").submit();
-	}
-	$(function(){
-		$("#datepicker").datepicker(
-				
-			{dateFormat:"yy-mm-dd", 
-			dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
-			  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-					
-		});
+	 	var careerUseTerm = $("input[name='careerUseTerm']").val();
 		
-	});
+	 	if(careerUseTerm == null || careerUseTerm.length<1){
+			alert("기술 사용 경력은 반드시 입력하셔야 합니다.");
+			return;
+		}
+
+		
+			
+		$("form").attr("method" , "POST").attr("action" , "/profile/updateCareer?careerNo=${param.careerNo}").submit();
+	}
+	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
 		 $( "#update" ).on("click" , function() {
 			//Debug..
 			//alert("d");
-			fncUpdateProduct();
+			fncUpdateCareer();
 		});
 		
 		 $( "#back" ).bind("click" , function() {
 				//Debug..
 				//alert("d");
-				self.location="/product/listProduct?menu=manage";	
+				//self.location="/product/listProduct?menu=manage";	
 		});
 		 
 	});	
@@ -105,8 +84,29 @@
 		  <div class="form-group">
 		    <label for="techName" class="col-sm-offset-1 col-sm-3 control-label">기술명</label>
 		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="techName" name="techName" value="${career.techName}">
+		    <%--   <input type="text" class="form-control" id="techName" name="techName" value="${career.techName}"> --%>
 		      
+		      <select class="form-control" name="techNo" >
+		      <c:if test="${career.techNo == '1000'}">
+			 <option value="1000" selected="selected">Java</option>
+			 <option value="1001" >Python</option>
+			 <option value="1002" >PHP</option>
+			 </c:if>
+			 
+			  <c:if test="${career.techNo == '1001'}">
+			 <option value="1000">Java</option>
+			  <option value="1001" selected="selected">Python</option>
+			  <option value="1002">PHP</option>
+			 </c:if>
+			 
+			  <c:if test="${career.techNo == '1002'}">
+			   <option value="1000">Java</option>
+			 <option value="1001">Python</option>
+			 <option value="1002" selected="selected">PHP</option>
+			 </c:if>
+			 
+			</select>
+			
 		    </div>
 		  </div>
 		

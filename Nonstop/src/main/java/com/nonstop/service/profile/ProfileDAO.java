@@ -13,7 +13,11 @@ public interface ProfileDAO {
 	
 	public Map<String , Object> getCareerList(String careerUserId) throws Exception;
 	
-	public void updateCareer(Career career , String careerUserId) throws Exception;
+	public Career getCareer(int careerNo) throws Exception;
+	
+	//public void updateCareer(Career career , String careerUserId) throws Exception;
+	
+	public void updateCareer(Career career) throws Exception;
 	
 	public void deleteCareer(int careerNo) throws Exception;
 	

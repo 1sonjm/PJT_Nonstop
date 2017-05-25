@@ -1,6 +1,5 @@
 package com.nonstop.service.profile.profileImpl;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,8 +35,17 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileDAO.getCareerList(careerUserId);
 	}
 
-	public void updateCareer(Career career , String careerUserId) throws Exception {
+	public Career getCareer(int careerNo) throws Exception {
+		return profileDAO.getCareer(careerNo);
+	}
+
+	/*public void updateCareer(Career career , String careerUserId) throws Exception {
 		profileDAO.updateCareer(career,careerUserId);
+		
+	}*/
+	
+	public void updateCareer(Career career) throws Exception {
+		profileDAO.updateCareer(career);
 		
 	}
 
@@ -76,6 +84,7 @@ public class ProfileServiceImpl implements ProfileService {
 	public void deleteScrap(String scrapUserId, int postNo, int scrapDiv) throws Exception {
 		profileDAO.deleteScrap(scrapUserId, postNo, scrapDiv);
 	}
+	
 	
 	
 	

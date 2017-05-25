@@ -53,7 +53,7 @@
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
  	$("#profile").on("click" , function() {
- 		self.location = "/profile/getUserProfile";
+ 		self.location = "/profile/getUserProfile?careerUserId=user05";
 		//self.location = "/user/logout"
 	}); 
  });

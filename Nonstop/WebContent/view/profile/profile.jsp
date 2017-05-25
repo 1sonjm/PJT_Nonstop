@@ -176,12 +176,9 @@ $("#listCareer").on("click" , function() {
 					  <!-- Tab panes -->
 					  <div class="tab-content">
 					    <div role="tabpanel" class="tab-pane active" id="home">
-					    <h5>개인기술 정보</h5> <br/><br/>
-					     <div class="col-sm-offset-4  col-sm-4 text-center">
-		      				<button type="button" class="btn btn-primary" id="addCareer" >개인기술정보 등록</button>
-		      				<button type="button" class="btn btn-primary" id="listCareer" >개인기술정보 목록</button>
-		    			</div>
-					  
+					   
+					    <jsp:include page="/view/profile/listCareer.jsp" /> 					    
+					  					  
 					    </div>
 					    <div role="tabpanel" class="tab-pane" id="profile">
 							<%-- <jsp:include page="/portfolio.jsp" /> --%>
