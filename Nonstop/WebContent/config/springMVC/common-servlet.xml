@@ -52,13 +52,14 @@
 	
 		<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 	
-	
+
 	<!--	
 		■ / 형식의 Mapping 은 모든(정적,동적 자원) 요청시 처리책임
 		■ 정적자원 요청시 DispatcherServlet 에게 처리방법지정
 	    ■ 정적자원요청 (아래의 URI 포함 요청)시  처리 경로 location 지정
 	--> 
 	<mvc:resources mapping="/resources/**" location="/resources/" />
+
    	
 
 	<!-- 	:: exception resolver  선언 :: 서술적 / 선언적 예외처리 
@@ -105,5 +106,6 @@
              </list>
          </property>
      </bean>
+     
 	
 </beans>

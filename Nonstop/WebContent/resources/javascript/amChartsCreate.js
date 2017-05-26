@@ -2,17 +2,88 @@
  * 
  */
 
-function totalStatics(JSON){
+function totalStatics(jsonData){
+	var dataSet1 = [];
+	var dataSet2 = [];
+	var dataSet3 = [];
+	
+	for (var i=0; i<jsonData.dataList.length; i++){
+		console.log(jsonData.dataList[i].techNo
+				+"/"+jsonData.dataList[i].techName
+				+"/"+jsonData.dataList[i].techClass
+				+"/"+jsonData.dataList[i].demand
+				+"/"+jsonData.dataList[i].supply
+				+"/"+jsonData.dataList[i].userRate);
+		
+		switch(jsonData.dataList[i].techClass){
+			case 1:
+				dataSet1.push({
+					x: jsonData.dataList[i].demand,
+					y: jsonData.dataList[i].supply,
+					value: jsonData.dataList[i].userRate,
+					techName: jsonData.dataList[i].techName
+				});
+				break;
+			case 2:
+				dataSet2.push({
+					x2: jsonData.dataList[i].demand,
+					y2: jsonData.dataList[i].supply,
+					value2: jsonData.dataList[i].userRate,
+					techName2: jsonData.dataList[i].techName
+				});
+				break;
+			case 3:
+				dataSet3.push({
+					x3: jsonData.dataList[i].demand,
+					y3: jsonData.dataList[i].supply,
+					value3: jsonData.dataList[i].userRate,
+					techName3: jsonData.dataList[i].techName
+				});
+				break;
+		}
+	}
+
+	/*
+	"dataProvider": [
+		{
+			"y": 10,
+			"x": "16",
+			"value": "2",
+			"techName": "java",
+			"y2": 1,
+			"x2": 12,
+			"value2": 11,
+			"techName2": 73,
+			"y3": 11,
+			"x3": 12,
+			"value3": 11,
+			"techName3": 73
+		},{
+			"y": 10,
+			"x": "16",
+			"value": "2",
+			"techName": "java",
+			"y2": 1,
+			"x2": 12,
+			"value2": 11,
+			"techName2": 73,
+			"y3": 11,
+			"x3": 12,
+			"value3": 11,
+			"techName3": 73
+		}
+	]
+	*/
 	AmCharts.makeChart("chartdiv",{
 		"type": "xy",
 		"zoomOutButtonPadding": 20,
-		"zoomOutButtonRollOverAlpha": 0.4,
-		"zoomOutButtonColor":"#EEB3A7",
+		"zoomOutButtonRollOverAlpha": 0.5,
 		"zoomOutText": "전체보기",
-		"backgroundColor": "#E9E9E9",
+		"backgroundColor": "#F4F4F4",
+		"borderColor": "#F6F6F6",
 		"fontSize": 12,
-		"export": { "enabled": true },
-		"chartCursor": { "enabled": true },
+		"export": {"enabled": true},
+		"chartCursor": {"enabled": true},
 		"chartScrollbar": {
 			"enabled": true,
 			"dragIcon": "dragIconRectSmall",
@@ -21,42 +92,56 @@ function totalStatics(JSON){
 			"scrollbarHeight": 8,
 			"selectedBackgroundColor": "#EEB3A7"
 		},
-		"graphs": [{
-			"balloonText": "<b>[[techName]]</b> <br/>수요:<b>[[x]]</b> 공급:<b>[[y]]</b><br>회원비율:<b>[[value]]%</b>",
-			"bullet": "diamond",
-			"id": "AmGraph-1",
-			"lineAlpha": 0,
-			"lineColor": "#7CB064",
-			"minBulletSize": 10,
-			"valueField": "value",
-			"xField": "x",
-			"yField": "y"
-		}],
-		"valueAxes": [
+		"graphs": [
 			{
-				"id": "supply",
-				"axisAlpha": 0,
-				"title": "공급",
-				"titleFontSize": 15
+				"balloonText": "<b>[[techName]]</b> <br/>수요:<b>[[x]]</b> 공급:<b>[[y]]</b><br>회원비율:<b>[[value]]%</b>",
+				"bullet": "diamond",
+				"id": "AmGraph-1",
+				"labelPosition": "right",
+				"labelText": "[[techName]]",
+				"lineAlpha": 0,
+				"lineColor": "#7CB064",
+				"minBulletSize": 10,
+				"title": "Language",
+				"valueField": "value",
+				"xField": "x",
+				"yField": "y"
 			},
 			{
-				"id": "demand",
-				"position": "bottom",
-				"axisAlpha": 0,
-				"title": "수요",
-				"titleFontSize": 15
+				"balloonText": "<b>[[techName2]]</b> <br/>수요:<b>[[x]]</b> 공급:<b>[[y]]</b><br>회원비율:<b>[[value]]%</b>",
+				"bullet": "diamond",
+				"id": "AmGraph-2",
+				"labelPosition": "right",
+				"labelText": "[[techName2]]",
+				"lineAlpha": 0,
+				"lineColor": "#ad3456",
+				"minBulletSize": 10,
+				"title": "Framework",
+				"valueField": "value2",
+				"xField": "x2",
+				"yField": "y2"
+			},
+			{
+				"balloonText": "<b>[[techName3]]</b> <br/>수요:<b>[[x]]</b> 공급:<b>[[y]]</b><br>회원비율:<b>[[value]]%</b>",
+				"bullet": "diamond",
+				"id": "AmGraph-3",
+				"labelPosition": "right",
+				"labelText": "[[techName3]]",
+				"lineAlpha": 0,
+				"lineColor": "#4578bb",
+				"minBulletSize": 10,
+				"title": "DBMS",
+				"valueField": "value3",
+				"xField": "x3",
+				"yField": "y3"
 			}
 		],
-		"dataProvider": [
-			// 이 아래로
-			{"y": "10","x": "14","value": "1","techName": "java"},
-			{"y": "5","x": "2","value": "20","techName": "aa"},
-			{"y": "8","x": "3","value": "10","techName": "dd"},
-			{"y": "9","x": "7","value": "11","techName": "ff"},
-			{"y": "1","x": "3","value": "15","techName": "cc"},
-			{"y": "6","x": "5","value": "16","techName": "gg"}
-			// 이위로 반복문 통해 데이터 입력
-		]
+		"valueAxes": [
+			{"id": "xAxis","axisAlpha": 0,"title": "공급","titleBold": false,"titleFontSize": 15},
+			{"id": "yAxis","position": "bottom","axisAlpha": 0,"title": "수요","titleBold": false,"titleFontSize": 15}
+		],
+		"legend": {"enabled": true},
+		"dataProvider": dataSet1.concat(dataSet2.concat(dataSet3))
 	} );
 }
 function majorStatics(){

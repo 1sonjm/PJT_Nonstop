@@ -38,9 +38,15 @@ public class PortfolioServiceImpl implements PortfolioService{
 	}
 
 	@Override
-	public List<Portfolio> getPortfolioList() throws Exception {
-		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList();
+	public List<Portfolio> getPortfolioList(int portDivision) throws Exception {
+		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList(portDivision);
 		return portfolioList;
+	}
+
+	@Override
+	public void updatePortfolio(Portfolio portfolio) throws Exception {
+		// TODO Auto-generated method stub
+		portfolioDAO.updatePortfolio(portfolio);
 	}
 	
 	

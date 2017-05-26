@@ -13,10 +13,11 @@
 				 http://www.springframework.org/schema/aop/spring-aop.xsd">
 				 
 	<!-- PropertyPlaceholderConfigurer 로 로드된 resource 는 ${  } 로 접근 가능 -->
-	<bean	id="propertyConfigurer"
-				class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	<!-- 
+	<bean	id="propertyConfigurer"	class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="location" value="classpath:config/jdbc.properties" />
-	</bean>
+	</bean> 
+	-->
 
 	<!-- DBCP (Apache Commons Database Connection) 사용 -->
 	<bean id="dataSource"	
