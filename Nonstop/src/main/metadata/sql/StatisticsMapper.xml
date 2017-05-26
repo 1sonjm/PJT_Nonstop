@@ -16,6 +16,16 @@
 		<result property="regdate" 			column="stat_date" 				jdbcType="DATE" />
 	</resultMap>
 	
+	<select	id="getListTechClass" resultMap="statisticsSet">
+		SELECT tech_class FROM tech
+		GROUP BY tech_class
+	</select>
+	<select	id="getListTechData" parameterType="int" resultMap="statisticsSet">
+		SELECT tech_no AS stat_tech_no,tech_name FROM tech
+		WHERE tech_class = #{classValue}
+		ORDER BY tech_no
+	</select>
+	
 	<insert id="addStatistics" parameterType="statistics">
 		INSERT INTO statistics(stat_no, stat_tech_name, stat_tech_class
 												,stat_demand, stat_supply, stat_user_rate)
@@ -41,19 +51,19 @@
 		SELECT DISTINCT t.tech_no AS stat_tech_no, demand.stat_demand, supply.stat_supply, user_rate.stat_user_rate
 		FROM tech t
 			,(
-				SELECT DISTINCT pj.proj_annostart,t.tu_tech_no,COUNT(*)OVER(partition by tu_tech_no) AS stat_demand
+				SELECT DISTINCT pj.proj_annostart,t.tu_tech_no,COUNT(*)OVER(PARTITION BY tu_tech_no) AS stat_demand
 				FROM techuse t, project pj
 				WHERE t.tu_proj_no IS NOT NULL AND t.tu_proj_no = pj.proj_no
 							AND proj_annostart BETWEEN SYSDATE-7 AND SYSDATE
 			) demand
 			,(
-				SELECT DISTINCT t.tu_tech_no,COUNT(*)OVER(partition by tu_tech_no) AS stat_supply
+				SELECT DISTINCT t.tu_tech_no,COUNT(*)OVER(PARTITION BY tu_tech_no) AS stat_supply
 				FROM techuse t, portfolio pf
 				WHERE t.tu_port_no IS NOT NULL AND t.tu_port_no = pf.port_no
 							AND NVL(port_update,port_regdate) BETWEEN SYSDATE-7 AND SYSDATE
 			) supply
 			,(
-				SELECT DISTINCT (COUNT(*)OVER(partition by c.career_tech_no)/u.personal_user_count*100) AS stat_user_rate,
+				SELECT DISTINCT (COUNT(*)OVER(PARTITION BY c.career_tech_no)/u.personal_user_count*100) AS stat_user_rate,
 					c.career_tech_no
 				FROM career c, (SELECT DISTINCT COUNT(*)OVER() AS personal_user_count 
 													FROM users u
@@ -65,7 +75,7 @@
 		ORDER BY t.tech_no
 	</select>
 
-	<select	id="getListTotalStatistics" parameterType="int" resultMap="statisticsSet">
+	<select	id="getListTotalStatistics" resultMap="statisticsSet">
 		SELECT DISTINCT stat_tech_no,tech_name,tech_class
 					,SUM(stat_demand) AS stat_demand
 					,SUM(stat_supply) AS stat_supply
@@ -76,4 +86,25 @@
 		ORDER BY stat_tech_no
 	</select>
 	
+	<select	id="getListMajorStatistics" parameterType="int" resultMap="statisticsSet">
+	</select>
+	
+	<select	id="getListPeriodStatistics" parameterType="statistics" resultMap="statisticsSet">
+	</select>
+	
+	<select	id="getListRegionStatistics" parameterType="statistics" resultMap="statisticsSet">
+	</select>
+	
+	<select	id="getListPostCount" resultType="hashmap">
+		SELECT * FROM
+			(SELECT COUNT(CASE WHEN SUBSTR(port_division,1,1) = 1 THEN 1 END) AS develop
+							,COUNT(CASE WHEN SUBSTR(port_division,1,1) = 2 THEN 1 END) AS design
+			FROM portfolio) pf
+			,(SELECT COUNT(proj_no) project FROM project) pt
+	</select>
+	
+	<select	id="getListUserStatistics" parameterType="String" resultMap="statisticsSet">
+		SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
+		WHERE t.tech_no = c.career_tech_no AND career_user_id = 'user01'
+	</select>
 </mapper>

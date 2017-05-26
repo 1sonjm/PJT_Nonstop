@@ -1,15 +1,14 @@
 
+DROP TABLE scrap;
 DROP TABLE career;
 DROP TABLE follow;
 DROP TABLE letter;
 DROP TABLE statistics;
 DROP TABLE techuse;
-DROP TABLE proj_scrap;
 DROP TABLE proj_comment;
 DROP TABLE record_applicant;
 DROP TABLE project;
 DROP TABLE port_comment;
-DROP TABLE port_scrap;
 DROP TABLE port_like;
 DROP TABLE portfolio;
 DROP TABLE tech;
@@ -95,11 +94,9 @@ INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'SQLite',3);
 
 DROP SEQUENCE seq_portfolio_port_no;
 DROP SEQUENCE seq_port_like_port_like_no;
-DROP SEQUENCE seq_port_scrap_no;
 DROP SEQUENCE seq_port_comment_com_no;
 CREATE SEQUENCE seq_portfolio_port_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_like_port_like_no INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_port_scrap_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_comment_com_no INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE portfolio ( 
@@ -110,7 +107,6 @@ CREATE TABLE portfolio (
 	port_regdate 			DATE,
 	port_update 			DATE,
 	port_file 				VARCHAR2(100)			UNIQUE,
-	port_thumbnail 		VARCHAR2(100)			UNIQUE,
 	port_detail 			VARCHAR2(4000),
 	port_viewcount 		NUMBER(20),
 	PRIMARY KEY(port_no)
@@ -120,12 +116,6 @@ CREATE TABLE port_like (
 	port_no  					NUMBER 						NOT NULL REFERENCES portfolio(port_no),
 	user_id 					VARCHAR2(30) 			NOT NULL REFERENCES users(user_id),
 	PRIMARY KEY(port_like_no)
-);
-CREATE TABLE port_scrap (
-	port_scrap_no			NUMBER						NOT NULL,
-	port_no						NUMBER						NOT NULL REFERENCES portfolio(port_no) ON DELETE CASCADE,
-	user_id						VARCHAR2(30)			NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-	PRIMARY KEY(port_scrap_no)
 );
 CREATE TABLE port_comment ( 
 	com_no 						NUMBER 						NOT NULL,
@@ -163,7 +153,6 @@ INSERT INTO port_comment VALUES (seq_port_comment_com_no.nextval, 2, 'user04', S
 
 DROP SEQUENCE seq_project_proj_no;
 DROP SEQUENCE seq_record_applicant_rec_no;
-DROP SEQUENCE seq_proj_scrap_proj_scrap_no;
 DROP SEQUENCE seq_proj_comment_com_no;
 CREATE SEQUENCE seq_project_proj_no		 	INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_record_applicant_rec_no  	INCREMENT BY 1 START WITH 1;
@@ -191,12 +180,6 @@ CREATE TABLE record_applicant (
 	rec_status 				NUMBER(1),
 	PRIMARY KEY(rec_no)
 );
-CREATE TABLE proj_scrap ( 
-	proj_scrap_no  		NUMBER  					NOT NULL,
-	proj_no  					NUMBER  					NOT NULL REFERENCES project(proj_no),
-	user_id  					VARCHAR2(30)  		NOT NULL REFERENCES users(user_id),
-	PRIMARY KEY(proj_scrap_no)
-);
 CREATE TABLE proj_comment ( 
 	com_no  					NUMBER  					NOT NULL,
 	com_proj_no  			NUMBER  					NOT NULL REFERENCES project(proj_no),
@@ -222,11 +205,6 @@ INSERT INTO project
 VALUES (seq_project_proj_no.nextval,'com04', 22,'재밌는프로젝트4', SYSDATE, to_date('2017/06/26 13:04:31', 'YYYY/MM/DD HH24:MI:SS'),
 	to_date('2017/07/04 11:27:27', 'YYYY/MM/DD HH24:MI:SS'), to_date('2017/08/02 11:27:27', 'YYYY/MM/DD HH24:MI:SS'),
 	'서울영등포구', '이러이러한내용이있어서 정말좋앗는데 님들도 좋을꺼임 ㅋㅋㅋㅋㅋ 진짜좋음 한번와보셈4', 0);
-
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 1, 'user01');
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 2, 'user02');
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 3, 'user03');
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 4, 'user04');
 
 INSERT INTO proj_comment VALUES (seq_proj_comment_com_no.nextval, 1, 'user01', SYSDATE, '댓글은 댓글일뿐1');
 INSERT INTO proj_comment VALUES (seq_proj_comment_com_no.nextval, 2, 'user02', SYSDATE, '댓글은 댓글일뿐2');
@@ -308,12 +286,15 @@ INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3003,26,16,12,SYSDA
 /**************************************************************/
 /**************************    프로필      *************************/
 
+
 DROP SEQUENCE seq_career_no;
 DROP SEQUENCE seq_let_no;
 DROP SEQUENCE seq_follow_no;
+DROP SEQUENCE seq_scrap_no;
 CREATE SEQUENCE seq_career_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_let_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_follow_no INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_scrap_no INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE letter(
 	let_no	 					NUMBER 						NOT NULL,
@@ -331,12 +312,24 @@ CREATE TABLE follow (
 	PRIMARY KEY(follow_no)
 );
 CREATE TABLE career (
-	career_no 	 				NUMBER 					NOT NULL,
-	career_user_id 			VARCHAR2(30) 		NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-	career_tech_no 			NUMBER			 		NOT NULL,
-	career_use_month 		NUMBER	 				NOT NULL,
-	PRIMARY KEY(career_no)
+	career_no 	  				NUMBER 		 			NOT NULL,
+	career_user_id  			VARCHAR2(30) 	 	NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+	career_tech_no  			NUMBER		 	NOT NULL REFERENCES tech(tech_no) ON DELETE CASCADE,
+	career_use_month  		NUMBER	 	 	NOT NULL,
+	PRIMARY KEY(career_no) 
 );
+CREATE TABLE scrap (
+	scrap_no 		NUMBER 				NOT NULL,
+	user_id	 		VARCHAR2(30) 	NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+	port_no	 		NUMBER    		REFERENCES portfolio(port_no) ON DELETE CASCADE,
+	proj_no	 		NUMBER	 			REFERENCES project(proj_no) ON DELETE CASCADE,
+	scrap_div 	NUMBER(1) 	NOT NULL,
+	PRIMARY KEY(scrap_no)
+);
+
+
+INSERT INTO scrap VALUES (seq_scrap_no.nextval,'user01',1,'',1 );
+INSERT INTO scrap VALUES (seq_scrap_no.nextval,'user01','',1,2);
 
 INSERT INTO career VALUES (seq_career_no.nextval,'user01',1000,10);
 INSERT INTO career VALUES (seq_career_no.nextval,'user01',2000,10);

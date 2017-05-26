@@ -2,18 +2,18 @@
  * 
  */
 
-function totalStatics(jsonData){
+function totalStatistics(jsonData){
 	var dataSet1 = [];
 	var dataSet2 = [];
 	var dataSet3 = [];
 	
 	for (var i=0; i<jsonData.dataList.length; i++){
-		console.log(jsonData.dataList[i].techNo
-				+"/"+jsonData.dataList[i].techName
-				+"/"+jsonData.dataList[i].techClass
-				+"/"+jsonData.dataList[i].demand
-				+"/"+jsonData.dataList[i].supply
-				+"/"+jsonData.dataList[i].userRate);
+//		console.log(jsonData.dataList[i].techNo
+//				+"/"+jsonData.dataList[i].techName
+//				+"/"+jsonData.dataList[i].techClass
+//				+"/"+jsonData.dataList[i].demand
+//				+"/"+jsonData.dataList[i].supply
+//				+"/"+jsonData.dataList[i].userRate);
 		
 		switch(jsonData.dataList[i].techClass){
 			case 1:
@@ -42,43 +42,13 @@ function totalStatics(jsonData){
 				break;
 		}
 	}
-
-	/*
-	"dataProvider": [
-		{
-			"y": 10,
-			"x": "16",
-			"value": "2",
-			"techName": "java",
-			"y2": 1,
-			"x2": 12,
-			"value2": 11,
-			"techName2": 73,
-			"y3": 11,
-			"x3": 12,
-			"value3": 11,
-			"techName3": 73
-		},{
-			"y": 10,
-			"x": "16",
-			"value": "2",
-			"techName": "java",
-			"y2": 1,
-			"x2": 12,
-			"value2": 11,
-			"techName2": 73,
-			"y3": 11,
-			"x3": 12,
-			"value3": 11,
-			"techName3": 73
-		}
-	]
-	*/
 	AmCharts.makeChart("chartdiv",{
 		"type": "xy",
 		"zoomOutButtonPadding": 20,
 		"zoomOutButtonRollOverAlpha": 0.5,
 		"zoomOutText": "전체보기",
+		"startDuration": 0.55,
+		"startEffect": "easeOutSine",
 		"backgroundColor": "#F4F4F4",
 		"borderColor": "#F6F6F6",
 		"fontSize": 12,
@@ -144,7 +114,7 @@ function totalStatics(jsonData){
 		"dataProvider": dataSet1.concat(dataSet2.concat(dataSet3))
 	} );
 }
-function majorStatics(){
+function majorStatistics(){
 	AmCharts.makeChart("chartdiv",{
 		"type": "pie",
 		"angle": 30,
