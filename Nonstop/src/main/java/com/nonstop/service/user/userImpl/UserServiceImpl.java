@@ -61,14 +61,7 @@ public class UserServiceImpl implements UserService{
 		userDAO.updateUser(user);
 	}
 
-	public boolean checkDuplication(String userId) throws Exception {
-		boolean result=true;
-		User user=userDAO.getUser(userId);
-		if(user != null) {
-			result=false;
-		}
-		return result;
-	}
+	
 	
 	public boolean checkUserId(String userId) throws Exception{
 	      
@@ -81,4 +74,10 @@ public class UserServiceImpl implements UserService{
 	      }
 	      return result;
 	   }
+
+	@Override
+	public User getCompany(String userId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -20,13 +20,15 @@ public interface UserService {
 	public User getUser(String userId) throws Exception;
 	
 
+	public User getCompany(String userId) throws Exception;
+	
 	public Map<String , Object> getUserList(Search search) throws Exception;
 	
 
 	public void updateUser(User user) throws Exception;
 	
 
-	public boolean checkDuplication(String userId) throws Exception;
+
 	
 	public boolean checkUserId(String userId) throws Exception;
 	

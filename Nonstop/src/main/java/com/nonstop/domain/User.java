@@ -21,7 +21,7 @@ public class User {
 	private Date pubDate;
 	private String image;
 	private MultipartFile file;
-	
+	private MultipartFile file1;
 	
 	///Constructor
 	public User(){

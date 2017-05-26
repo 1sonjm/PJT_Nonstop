@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
@@ -45,7 +45,6 @@
 				$("form")[0].reset();
 			});
 		});	
-	
 		
 		function fncAddUser() {
 			
@@ -288,7 +287,6 @@
                   </div>
                </div>
 		  
-		  
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
@@ -321,7 +319,7 @@
 		  
 		  
 		 <div class="form-group">
-						<label class="col-md-4 control-label">파일</label>  
+						<label class="col-md-4 control-label">프로필 사진</label>  
 					 	<div class="col-md-5">
 						   <!-- image-preview-filename input [CUT FROM HERE]-->
 				           <div class="input-group image-preview">
