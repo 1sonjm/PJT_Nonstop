@@ -24,13 +24,13 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addProject"		parameterType="project" >
 	 	INSERT 
-		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
+		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, to_char(proj_annoend, 'YYYY/MM/DD 23:59:59') proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
 		VALUES ( seq_project_proj_no.nextval, 
 		'user01', 
 		#{projDivision:NUMERIC}, 
 		#{projTitle:VARCHAR}, 
 		SYSDATE, 
-		#{projAnnoEnd:DATE}, 
+		to_date(#{projAnnoEnd:DATE}, 'YYYY/MM/DD 23:59:59'),
 		#{projStartDate:DATE}, 
 		#{projEndDate:DATE},
 		#{projLocation:VARCHAR}, 
