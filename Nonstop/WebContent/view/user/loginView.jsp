@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 
 <!DOCTYPE html>
@@ -7,10 +7,10 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/>
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -26,7 +26,7 @@
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
   	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> 
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -39,24 +39,24 @@
     <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
-		//============= "·Î±×ÀÎ"  Event ¿¬°á =============
+		//============= "ë¡œê·¸ì¸"  Event ì—°ê²° =============
 		$( function() {
 			
 			$("#userId").focus();
 			
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("button").on("click" , function() {
 				var id=$("input:text").val();
 				var pw=$("input:password").val();
 				
 				if(id == null || id.length <1) {
-					alert('ID ¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
+					alert('ID ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
 					$("#userId").focus();
 					return;
 				}
 				
 				if(pw == null || pw.length <1) {
-					alert('ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
+					alert('íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
 					$("#password").focus();
 					return;
 				}
@@ -69,16 +69,16 @@
 		
 		
 		
-		//============= È¸¿ø¿ø°¡ÀÔÈ­¸éÀÌµ¿ =============
+		//============= íšŒì›ì›ê°€ì…í™”ë©´ì´ë™ =============
 		$( function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#addUser").on("click" , function() {
 				self.location = "/user/addUser"
 			});
 		});
 		
 		$( function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#addCompany").on("click" , function() {
 				self.location = "/user/addCompany"
 			});
@@ -100,7 +100,7 @@
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->	
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
 		<div class="row">
@@ -114,37 +114,37 @@
 		 	 	<br/><br/>
 				
 				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">·Î &nbsp;&nbsp;±× &nbsp;&nbsp;ÀÎ</h1>
+		 	 		<h1 class="text-center">ë¡œ &nbsp;&nbsp;ê·¸ &nbsp;&nbsp;ì¸</h1>
 
 			        <form class="form-horizontal">
 		  
 					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">¾Æ ÀÌ µğ</label>
+					    <label for="userId" class="col-sm-4 control-label">ì•„ ì´ ë””</label>
 					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="¾ÆÀÌµğ" >
+					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="ì•„ì´ë””" >
 					    </div>
 					  </div>
 					  
 					  <div class="form-group">
-					    <label for="password" class="col-sm-4 control-label">ÆĞ ½º ¿ö µå</label>
+					    <label for="password" class="col-sm-4 control-label">íŒ¨ ìŠ¤ ì›Œ ë“œ</label>
 					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="ÆĞ½º¿öµå" >
+					      <input type="password" class="form-control" name="password" id="password" placeholder="íŒ¨ìŠ¤ì›Œë“œ" >
 					    </div>
 					  </div>
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-primary"  >·Î ±× ÀÎ</button>
+					      <button type="button" class="btn btn-primary"  >ë¡œ ê·¸ ì¸</button>
 					      <br/><br/>
-					      <a class="btn btn-primary btn" href="#" role="button" id = "addUser">°³ ÀÎ È¸ ¿ø °¡ ÀÔ</a>	
+					      <a class="btn btn-primary btn" href="#" role="button" id = "addUser">ê°œ ì¸ íšŒ ì› ê°€ ì…</a>	
 					      <br/><br/>
-					      <a class="btn btn-primary btn" href="#" role="button" id = "addCompany">±â ¾÷ È¸ ¿ø °¡ ÀÔ</a>			      					      
+					      <a class="btn btn-primary btn" href="#" role="button" id = "addCompany">ê¸° ì—… íšŒ ì› ê°€ ì…</a>			      					      
 					    </div>
 					  </div>
 					  
 					  
 					  
-					<a id="kakao-login-btn"></a>
+					<!-- <a id="kakao-login-btn"></a>
 <a href="http://developers.kakao.com/logout"></a>
 <script type='text/javascript'>
   //<![CDATA[
@@ -196,11 +196,12 @@
     alert(naver_id_login.getProfileData('nickname'));
     alert(naver_id_login.getProfileData('age'));
   }
+  -->
 </script>
   
   
   
-			
+			 
 					</form>
 			   	 </div>
 			
@@ -210,7 +211,7 @@
   	 	<!--  row Start /////////////////////////////////////-->
   	 	
  	</div>
- 	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 
 </body>
 

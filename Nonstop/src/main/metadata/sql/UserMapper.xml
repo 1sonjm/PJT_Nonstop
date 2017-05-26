@@ -26,14 +26,14 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_img) 
+		INTO users( user_id , user_name , user_pwd , user_role , user_tel , user_email , user_addr , user_img ) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 2 , #{tel} , 
-							#{email:VARCHAR} , #{addr} ,  #{image:VARCHAR} )
+							#{email:VARCHAR} , #{addr} , #{image:VARCHAR} )
 	 </insert>
 	 
 	 <insert 	id="addCompany"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img) 
+		INTO users( user_id , user_name , user_pwd , user_role , user_tel , user_email , user_addr , user_ceo , user_emp, user_est , user_img) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 3 , #{tel} , 
 							#{email:VARCHAR} , #{addr} , #{companyName} , #{empNum:VARCHAR}, #{pubDate:VARCHAR}, #{image:VARCHAR} )
 	 </insert>
@@ -46,13 +46,13 @@
 		WHERE user_id = #{value}
 	 </select>
 	 
-	  <select 	id="getCompany"		parameterType="string"	resultMap="companySelectMap" >
+	  <!-- <select 	id="getCompany"		parameterType="string"	resultMap="userSelectMap" >
 	 	SELECT
 	    user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img 
 		FROM users
 		WHERE user_id = #{value}
 			 	
-	 </select>
+	 </select> -->
 	 
 	 
 	 

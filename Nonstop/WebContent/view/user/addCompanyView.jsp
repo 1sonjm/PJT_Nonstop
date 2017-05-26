@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -17,6 +18,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -127,7 +133,14 @@
 			 
 		});	
 		
-		
+		 $(function(){
+				$("#datepicker").datepicker({dateFormat:"yy-mm-dd", 
+					dayNamesMin: ['월', '화', '수', '목', '금', '토', '일'], 
+					  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+
+				});
+		 });
+			
 	   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	   //==> 주민번호 유효성 check 는 이해정도로....
 		
@@ -228,33 +241,7 @@
                         <div id="checkpw" style="color:red; font-size:12px;"></div>
                   </div>
                </div>
-		  <!-- <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" placeholder="중복확인하세요"  readonly>
-		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">입력전 중복확인 부터..</strong>
-		      </span>
-		    </div>
-		    <div class="col-sm-3">
-		      <button type="button" class="btn btn-info">중복확인</button>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-		    </div>
-		  </div> -->
-		  
+		
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
@@ -290,6 +277,16 @@
 		    <label for="empNum" class="col-sm-offset-1 col-sm-3 control-label">직원수</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="empNum" name="empNum" placeholder="직원수">
+		    </div>
+		  </div>
+		  
+		 <div class="form-group">
+		    <label for="pubDate" class="col-sm-offset-1 col-sm-3 control-label">설립일</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control"  id="datepicker" name="pubDate" placeholder="이곳을 클릭하여 설립일을 선택해 주세요"  readonly>
+		       <span id="helpBlock" class="help-block">
+		      	<strong class="text-danger" >설립일을 선택하세요</strong>
+		      </span>
 		    </div>
 		  </div>
 		  

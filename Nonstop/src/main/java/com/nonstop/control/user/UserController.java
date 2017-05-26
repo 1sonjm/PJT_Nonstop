@@ -1,5 +1,7 @@
 package com.nonstop.control.user;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.nonstop.domain.Page;
 import com.nonstop.domain.Search;
@@ -55,15 +58,48 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser( @ModelAttribute("user") User user ) throws Exception {
+	public String addUser( @ModelAttribute("user") User user,@RequestParam("file") MultipartFile file, Model model) throws Exception {
 
 		System.out.println("/user/addUser : POST");
+		
+		String image=file.getOriginalFilename();
+		
+		
+		user.setImage(image);
+		
+		//user.setUserId("user");
+		
+		
+		
+        try {
+            // 1. FileOutputStream 사용
+            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
+             
+            // 2. File 사용
+            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
+            file.transferTo(uploadFile);
+            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
+            //문제2. 실제 파일 이름과 업로드되는 파일의 이름이 다르다. 앞에 upload가 붙는다. 그냥 붙여서 넣으면되네
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+		
 		//Business Logic
+		// userService.addUser(user);
+		/*MultipartFile file=user.getFile();
+		if(file !=null){
+			String image=file.getOriginalFilename();
+			user.setImage(image);
+			
+			File filetemp=new File(session.getServletContext().getRealPath("/")+"images\\uploadFiles\\" + user.getImage());
+		}*/
 		userService.addUser(user);
 		
 		return "redirect:/view/user/loginView.jsp";
+		
 	}
-	
+		
+		
 	@RequestMapping( value="addCompany", method=RequestMethod.GET )
 	public String addCompany() throws Exception{
 	
@@ -239,6 +275,45 @@ public class UserController {
 	      model.addAttribute("result", new Boolean(result));
 	      
 	   }
+	
+	
+	/*@RequestMapping(value="addImage", method=RequestMethod.POST)
+	   public String addImage(@ModelAttribute("user") User user, @RequestParam("imageName") MultipartFile file, Model model) throws Exception {
+	            
+	      String image=file.getOriginalFilename();
+	      
+	      System.out.println("image : "+image);
+	      
+	      user.setImage(image);
+	      
+	      //user를 세션을 통해 받아와야 하는데 아직 로그인을 할 수 없으니 임시로 넣는다
+	      //나중에 수정할 부분이다!!
+	      user.setUserId("user");
+	      
+	      System.out.println("addUser : "+user);
+	      
+	        try {
+	            // 1. FileOutputStream 사용
+	            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
+	             
+	            // 2. File 사용
+	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
+	            file.transferTo(uploadFile);
+	            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
+	            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
+	            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	   
+	      userService.addUser(user);
+	      
+	      model.addAttribute("user",user);
+	      
+	      return "forward:/view/portfolio/getUser.jsp";
+	   }*/
+	   
+	
 	
 	
 }
