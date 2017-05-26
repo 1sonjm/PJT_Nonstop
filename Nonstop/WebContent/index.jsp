@@ -1,207 +1,247 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
 
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!-- ///////////////////////////// �α��ν� Forward  /////////////////////////////////////// -->
-<%-- 
- <c:if test="${ ! empty user }">
- 	<jsp:forward page="main.jsp"/>
- </c:if>
-  --%>
- <!-- //////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<html class="full" lang="ko">
+<!-- Make sure the <html> tag is set to the .full CSS class. Change the background image in the full.css file. -->
 
-
-<!DOCTYPE html>
-
-<html lang="ko">
-	
 <head>
-	<meta charset="EUC-KR">
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Nonstop</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../resources/css/full.css" rel="stylesheet">
+    
+    <!-- jQuery -->
+    <script src="../../resources/javascript/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../resources/javascript/bootstrap.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="../../resources/javascript/mainpage.js"></script>
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+    <style>
+    body {
+    	padding-top: 0; 
+    }
+    
+   	#center {
+		margin-left:20%;
+        margin-right:10%;
+	}
+    </style>
+    <script type="text/javascript">
+	//============= logout Event  처리 =============	
+	 $(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("a:contains('Statistics')").on("click" , function() {
+			$(self.location).attr("href","/user/logout");
+			//self.location = "/user/logout"
+		}); 
+	 });
 	
-
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<!-- ���� : http://getbootstrap.com/css/   ���� -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!--  ///////////////////////// Font ////////////////////////// -->
-<link href="https://fonts.googleapis.com/css?family=Oxygen|Syncopate" rel="stylesheet">
-
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
-<link rel="stylesheet" href="/css/theme.min.css" >
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-
-
-<!-- Bootstrap Dropdown Hover CSS -->
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-
-
-<!-- jQuery UI CSS-->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<!-- jQuery UI JS-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<!-- Bootstrap custom Theme-->
-<link rel="stylesheet" href="/css/custom-theme.css" >
-
-<!-- 
-font-family: 'Advent Pro', sans-serif;
-font-family: 'Syncopate', sans-serif;
- -->
-<style>
-</style>
+	//============= toolbar project 이동 Event 처리 =============	
+	 $(function() {
+		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	 	$("#projDesigner").on("click" , function() {
+			//$(self.location).attr("href","/user/logout");
+			self.location = "/project/getProject?projNo=18"
+		}); 
+	 });
+	
+	//============= toolbar project 이동 Event 처리 =============
+	 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("#projDeveloper").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/project/getProject?projNo=18"
+			}); 
+		 });
+	
+	//============= toolbar portfolio 이동 Event 처리 =============
+	 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("#portDesigner").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/portfolio/listPortfolio?portDivision=2"
+			}); 
+		 });
+	
+	//============= toolbar portfolio 이동 Event 처리 =============
+	 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("#portDeveloper").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/portfolio/listPortfolio?portDivision=1"
+			}); 
+		 });
+	
+	//=============  개인정보조회회 Event  처리 =============	
+ 	$( "a:contains('개인정보조회')" ).on("click" , function() {
+ 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
+	});
+			
+			
+	</script> 
 
 </head>
 
-<body>
-	<!-- ToolBar Start /////////////////////////////////////-->
- 	<jsp:include page="/view/common/toolbar.jsp" /> 
-	<!-- ToolBar End   /////////////////////////////////////-->
-	
-	<!-- MainSlide Start /////////////////////////////////////-->
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
-		<!-- Indicators -->
-		<ol class="carousel-indicators">
-			<li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-			<li data-target="#myCarousel" data-slide-to="1"></li>
-			<li data-target="#myCarousel" data-slide-to="2"></li>
-		</ol>
-			<div class="carousel-inner" role="listbox">
-				<div class="item active">
-					<img class="first-slide" src="/images/layer/mainSlider1.jpg" alt="First slide" style="opacity: 0.4;">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Example headline.</h1>
-							<p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-							<p><a class="btn btn-lg btn-copper" href="#" role="button">Sign up today</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<img class="second-slide" src="/images/layer/mainSlider2.jpg" alt="Second slide" style="opacity: 0.4;">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Another example headline.</h1>
-							<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-							<p><a class="btn btn-lg btn-copper" href="#" role="button">Learn more</a></p>
-						</div>
-					</div>
-				</div>
-				<div class="item">
-					<img class="third-slide" src="/images/layer/mainSlider3.jpg" alt="Third slide" style="opacity: 0.4;">
-					<div class="container">
-						<div class="carousel-caption">
-							<h1>Example headline.</h1>
-							<p>Note: If you're viewing this page via a <code>file://</code> URL, the "next" and "previous" Glyphicon buttons on the left and right might not load/display properly due to web browser security rules.</p>
-							<p><a class="btn btn-lg btn-copper" href="#" role="button">Sign up today</a></p>
-						</div>
-					</div>
-				</div>
-			</div>
-			<a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-				<span aria-hidden="true"></span>
-				<span class="sr-only">Previous</span>
-			</a>
-			<a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-				<span	aria-hidden="true"></span>
-				<span class="sr-only">Next</span>
-			</a>
-		</div>
-	<!-- MainSlide End   /////////////////////////////////////-->
-	
-	<!-- itemContent Start /////////////////////////////////////-->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-12">
-				<div class="jumbotron">
-					<h1>Hello, world!</h1>
-					<p>...</p>
-					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-md-12">
-				<div class="jumbotron">
-					<h1>Hello, world!</h1>
-					
-					<p>...</p>
-					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- itemContent End   /////////////////////////////////////-->
-	
-	<!-- ImageContent Start /////////////////////////////////////-->
-	<div class="container-fluid">
-		<!-- <div class="row imageContentBox" style="background:transparent url('images/layer/4394b2b689cfe3dc06f8109ce5e8b621.jpg') no-repeat center center /cover"> -->
-		<div class="row imageContentBox" style="background:url('images/layer/4394b2b689cfe3dc06f8109ce5e8b621.jpg') no-repeat center center fixed ">
-			<div class="imageCover">
-				<div class="col-md-6">
-				</div>
-				<div class="col-md-6 imageContent">
-						<h1>One more for good measure.</h1>
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-				</div>
-			</div>
-		</div>
-		<div class="row imageContentBox" style="background:url('images/layer/5ab08837cb294ad24e77c30b55540e7a.jpg') no-repeat center center fixed">
-			<div class="imageCover">
-				<div class="col-md-6 imageContent">
-						<p>Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-						<h1>Another example headline</h1>
-				</div>
-				<div class="col-md-6">
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- ImageContent End   /////////////////////////////////////-->
-	
-	<br/><br/><br/>
-	
-	<!-- itemContent Start /////////////////////////////////////-->
-	<div class="container">
-		<div class="row">
-			<div class="col-md-4">
-				<div class="jumbotron">
-					<h1>Hello, world!</h1>
-					<p>...</p>
-					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="jumbotron">
-					<h1>Hello, world!</h1>
-					<p>...</p>
-					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
-				</div>
-			</div>
-			<div class="col-md-4">
-				<div class="jumbotron">
-					<h1>Hello, world!</h1>
-					<p>...</p>
-					<p><a class="btn btn-copper btn-lg" href="#" role="button">Learn more</a></p>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- itemContent End   /////////////////////////////////////-->
+<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
-	<!-- footer Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/footer.jsp" /> --%>
-	<!-- footer end   /////////////////////////////////////-->
+<!-- ToolBar Start /////////////////////////////////////-->
+<%-- <jsp:include page="/view/common/toolbar.jsp" /> --%>
+<!-- ToolBar End   /////////////////////////////////////-->
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                    Menu <i class="fa fa-bars"></i>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">
+                    <i class="fa fa-play-circle"></i> NONSTOP
+                </a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-main-collapse">
+                <ul class="nav navbar-nav" id="center">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Portfolio</a>
+				       <ul class="dropdown-menu">
+				         <li><a href="#" id="portDesigner">Designer</a></li>
+				         <li><a href="#" id="portDeveloper">Developer</a></li>
+				       </ul>
+				    </li>
+
+				    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Project </a>
+				       <ul class="dropdown-menu">
+				         <li><a href="#" id="projDesigner">Designer</a></li>
+				         <li><a href="#" id="projDeveloper">Developer</a></li>
+				       </ul>
+				    </li>
+				      
+				      
+				    <li><a href="#">Statistics</a></li>
+				</ul>
+				
+				<ul class="nav navbar-nav navbar-right">
+			      <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
+				   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>김준영님 환영합니다.</a></li>
+				   	  <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+				      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
+				        <ul class="dropdown-menu">
+				          <li><a href="#">프로필</a></li>
+				          <li><a href="#">내정보보기</a></li>
+				          <li><a href="#">내정보수정</a></li>
+				          <li><a href="#">팔로우 목록보기</a></li>
+				          <li><a href="#">로그아웃</a></li>
+				        </ul>
+				      </li>
+				      
+				      
+				      
+				     <!--  <li><a href="#"><span class="glyphicon glyphicon-align-justify"></span></a></li> -->
+			     <%--  </c:if> --%>
+			      
+			      <%-- <c:if test="${sessionScope.user.role != '1' || ${sessionScope.user.role != '2' || ${sessionScope.user.role != '3'}">
+			      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+				      <li><a href="#"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
+				  </c:if> --%>
+			    </ul>
+	         </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+    <!-- Intro Header -->
+    <header class="intro">
+        <div class="intro-body">
+            <div class="container">
+                <div class="row">
+                	<div class="col-md-8 col-md-offset-2">
+                        <h1 class="brand-heading">NONSTOP</h1>
+                        <p class="intro-text">A free, responsive, one page Bootstrap theme.
+                            <br>Created by Start Bootstrap.</p> -->
+                        <a href="#about" class="btn btn-circle page-scroll">
+                            <i class="fa fa-angle-double-down animated"></i>
+                        </a>
+                	</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <div class="about-section">
+       		<div class="container">
+	      		<div class="col-lg-8 col-lg-offset-2">
+	                <h2>About Grayscale</h2>
+	                <p>Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any purpose, personal or commercial.</p>
+	                <p>This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a href="http://snazzymaps.com/">Snazzy Maps</a>.</p>
+	                <p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
+	            </div> 
+	         </div> 
+        </div>
+    </section>
+
+    <!-- Download Section -->
+    <section id="download" class="download">
+        <div class="download-section">
+            <div class="container">
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="contact-section">
+            <div class="container">             
+            </div>
+        </div>
+    </section>
+
+  
+    <!-- Footer -->
+    <footer>
+        <div class="container text-center">
+            <p>Copyright &copy; Your Website 2016</p>
+        </div>
+    </footer>
+
+
+
 </body>
 
 </html>

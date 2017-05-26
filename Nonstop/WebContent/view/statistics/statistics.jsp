@@ -1,7 +1,15 @@
+﻿<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
+
+<!-- 지도오오오오오오오오ㅗ오오오 -->
+<!-- http://jsfiddle.net/gh/get/jquery/1.11.0/highslide-software/highcharts.com/tree/master/samples/mapdata/countries/kr/kr-all -->
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -10,14 +18,14 @@
 
 <!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="../../resources/css/bootstrap-theme.css">
+<link rel="stylesheet" href="/resources/css/bootstrap-theme.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 <!-- highcharts javascript sources -->
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-<script src="../../resources/javascript/highmap_chart.js"></script>
+<script src="/resources/javascript/highmap_chart.js"></script>
 
 <meta name="description" content="chart created using amCharts live editor" />
 <!-- amCharts javascript sources -->
@@ -31,7 +39,7 @@
 <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css">
 
 <!-- amCharts CreateData -->
-<script src="../../resources/javascript/amChartsCreate.js"></script>
+<script src="/resources/javascript/amChartsCreate.js"></script>
 
 
 <!-- Include Required Prerequisites -->
@@ -46,34 +54,63 @@
 }
 </style>
 <script type="text/javascript">
+function getJsonDataList(type,addr){
+	$.ajax("/statistics/"+addr,{
+		method : "POST" ,
+		dataType : "json" ,
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"
+		},
+		success : function(jsonData) {
+			//console.log(JSON.stringify(jsonData));
+			switch(type){
+			case "total":
+				totalStatics(jsonData);
+				break;
+			case "major":
+				majorStatics(jsonData);
+				break;
+			case "period":
+				statisticsByPeriod(jsonData);
+				break;
+			case "region":
+				var highMap = new highMaps();
+				highMap.init();
+				break;
+			}
+		}				
+	});
+}
 
 $(function(){
-	totalStatics(JSON);
+	getJsonDataList("total","getJSONListTotalStatistics");
+	
 	$('input[name="start"]').val("");
 	$('input[name="end"]').val("");
 
 	$('li a:contains("전체 기술 집계")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			totalStatics(JSON);
+			getJsonDataList("total","getJSONListTotalStatistics");
 		}
 	})
 	$('li a:contains("과반수 사용 기술")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			majorStatics(JSON);
+			getJsonDataList("major","getJSONListTotalStatistics");
 		}
 	})
 	$('li a:contains("기간별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			statisticsByPeriod(JSON);
+			getJsonDataList("period","getJSONListTotalStatistics");
 		}
 	})
 	$('li a:contains("지역별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			var highMap = new highMaps();
-			highMap.init();
+			getJsonDataList("region","getJSONListTotalStatistics");
 		}
 	})
 });
+
 </script>
 </head>
 <body>
@@ -81,7 +118,7 @@ $(function(){
 <div class="container">
 	<h2>Dynamic Tabs</h2>
 	<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
-	
+
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>

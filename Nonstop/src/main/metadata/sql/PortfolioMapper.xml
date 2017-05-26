@@ -15,6 +15,7 @@
 		<result property="portRegdate" 		column="port_regdate" 		jdbcType="DATE" />
 		<result property="portUpdate" 		column="port_update" 		jdbcType="DATE" />
 		<result property="portThumbnail" 	column="port_thumbnail" 	jdbcType="VARCHAR" />
+		<result property="portFile" 		column="port_file" 			jdbcType="VARCHAR" />
 		<result property="portDetail" 		column="port_detail" 		jdbcType="VARCHAR"  />
 		<result property="totalPortView" 	column="reg_date" 			jdbcType="NUMERIC" />
 	</resultMap>
@@ -24,12 +25,12 @@
 	 	INSERT 
 		INTO portfolio ( port_no, port_user_id, port_division, port_title, port_regdate, port_file, port_detail) 
 		VALUES ( seq_portfolio_port_no.nextval, 
-		#{portUserId:VARCHAR}, 
-		#{portDivision:NUMERIC}, 
-		#{portTitle:VARCHAR}, 
+		#{portUserId}, 
+		#{portDivision}, 
+		#{portTitle}, 
 		SYSDATE, 
-		#{portFile:VARCHAR}, 
-		#{portDetail:VARCHAR})
+		#{portFile}, 
+		#{portDetail})
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -40,11 +41,59 @@
 		WHERE port_no = #{portNo}
 	 </select>
 	 
-	 <select  id="getPortfolioList" resultMap="portfolioSelectMap">
-	  	SELECT *
-	  	FROM portfolio 
+	 <select  id="getPortfolioList" parameterType="int" resultMap="portfolioSelectMap">
+	  	SELECT port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_viewcount
+	  	FROM portfolio
+	  	<where> 
+	  		<if test="_parameter == 1">
+				port_division IN (10,11,12)	
+			</if>	
+			<if test="_parameter == 2">
+				port_division IN (20,21,22)	
+			</if>
+			<if test="_parameter != 1 and _parameter != 2">
+				port_division = #{value}
+			</if>		
+		</where>
+
+	  	ORDER BY port_viewcount
+	  	
+	  	<!-- SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT p.prod_no , p.prod_name , p.prod_detail , p.manufacture_day , p.price , p.image_file , p.reg_date , NVL(t.tran_status_code,'0') tran_status_code
+											FROM product p, transaction t
+											<where>
+											p.prod_no = t.prod_no(+)
+												<if test="searchCondition != null">			
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				AND p.prod_no = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				AND p.prod_name = #{searchKeyword}LIKE %#{SearchKeyword}%
+													</if>
+													<if test="searchCondition == 2 and searchKeyword !='' ">
+										 				AND p.price = #{searchKeyword}
+													</if>
+												</if>
+											</where>
+											
+											ORDER BY prod_no ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
 	 </select>
 	 
+	<!-- SQL : INSERT -->
+	<update 	id="updatePortfolio"		parameterType="portfolio" >
+	 	UPDATE portfolio
+		<set>
+		port_division=#{portDivision}, 
+		port_title=#{portTitle}, 
+		port_update=SYSDATE, 
+		port_file=#{portFile}, 
+		port_detail=#{portDetail}
+		</set>
+		WHERE port_no=#{portNo}
+	 </update>
 	
 	 
 </mapper>

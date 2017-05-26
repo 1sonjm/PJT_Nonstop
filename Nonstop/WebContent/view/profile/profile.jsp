@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
     pageEncoding="EUC-KR"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
   <head>
     <meta charset="utf-8">
@@ -17,6 +17,32 @@
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+$(function() {listCareer
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+ 	$("#addCareer").on("click" , function() {
+ 		self.location = "/profile/addCareerView";
+	}); 
+	
+$("#listCareer").on("click" , function() {
+	
+	var careerUserId = $(this).text().trim();
+	
+		self.location = "/profile/getCareerList?careerUserId="+careerUserId;
+}); 
+ });
+
+</script>
 
 
 	<style>
@@ -122,8 +148,16 @@
         <!-- sidebar menu start-->
               <ul class="sidebar-menu">
               
-              	  <p class="center"><a href="profile.html"><img src="http://placehold.it/500x500" class="img-circle" width="60"></a></p>
-              	  <h5 class="center">Marcel Newman</h5>
+              	  <p class="center"><a href="profile.html"><img src="resources/images/upload/${user.image}" class="img-circle" width="60"></a></p>
+              	  <h5 class="center">${user.userId}</h5>
+              	  <h5 class="center">${user.addr}</h5>
+              	  
+              	  <c:if test="${user.role=='3'}">
+              	  <h5 class="center">기업대표자 : ${user.companyName}</h5>
+              	  <h5 class="center">직원수 : ${user.empNum}</h5>
+              	  <h5 class="center">설립일 : ${user.pubDate}</h5>
+              	  </c:if>
+              	  
 
               </ul>
               <!-- sidebar menu end-->
@@ -144,15 +178,27 @@
 				
 					  <!-- Nav tabs -->
 					  <ul class="nav nav-tabs" role="tablist">
-					    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-					    <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-					    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-					    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+					    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
+					    
+					    <c:if test="${user.role=='3'}">
+					    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Project</a></li>
+					    </c:if>
+					    
+					    <c:if test="${user.role=='2'}">
+					    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Portfolio</a></li>
+					    </c:if>
+					     <c:if test="${user.userId.trim()==param.userId.trim()}">
+					    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Scrap</a></li>
+					 	</c:if>
 					  </ul>
 			
 					  <!-- Tab panes -->
 					  <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="home">sadasf</div>
+					    <div role="tabpanel" class="tab-pane active" id="home">
+					   <c:if test="${user.role=='2'}">
+					    <jsp:include page="/view/profile/listCareer.jsp" /> 					    
+					  	</c:if>				  
+					    </div>
 					    <div role="tabpanel" class="tab-pane" id="profile">
 							<%-- <jsp:include page="/portfolio.jsp" /> --%>
 						</div>
