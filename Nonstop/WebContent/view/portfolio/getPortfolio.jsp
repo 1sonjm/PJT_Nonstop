@@ -20,6 +20,17 @@
     <link href="../../resources/css/full.css" rel="stylesheet">
     
     <style>
+    /* 버튼 */
+    .btn-lg{
+    	margin-left: 5px;
+    	padding: 10px, 14px;
+    	font-size: 16px;
+    	font-weight: 500;
+    	background-color: #ececec;
+    	border: 0;
+    	border-radius:0;
+    }
+    
     .preloader {
 	    background: #ffffff;
 	    bottom: 0;
@@ -254,8 +265,10 @@
 	            		
 	            		<div class="sub-title">
                       		<!-- <a href="index.html" title="Go to Home Page"><h2>Back Home</h2></a>
-                        	<a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->
-                        	좋아요버튼, 추천버튼, 스크랩버튼, 맨 오른쪽 댓글버튼
+                        	<a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->         
+                        	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
+                        	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
+                        	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩</button>
                         </div>
                         
                         <div class="col-md-12 content-page">
