@@ -1,5 +1,8 @@
 package com.nonstop.control.project;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +11,13 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nonstop.domain.Page;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.service.project.ProjectService;
 
 //==> ȸ������ Controller
@@ -140,11 +144,11 @@ public class ProjectController {
 		return "forward:/view/project/listProject.jsp";
 	}
 	
-	/*
-	@RequestMapping(value="listProduct")
-	public String listProduct( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	
+	@RequestMapping(value="listProject")
+	public String listProject( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
-		System.out.println("/listProduct");
+		System.out.println("/project/listProject");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -152,19 +156,18 @@ public class ProjectController {
 		search.setPageSize(pageSize);
 		
 		// Business logic ����
-		Map<String , Object> map=productService.getProductList(search);
+		Map<String , Object> map=projectService.listProject(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
-		// Model �� View ����
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
-		return "forward:/product/listProduct.jsp";
+		return "forward:/view/project/listProject.jsp";
 	}
-	
+	/*
 	@RequestMapping(value="addComment", method=RequestMethod.POST)
 	public String addComment( @ModelAttribute("comment") Comment comment, Model model) throws Exception {
 		
@@ -186,6 +189,15 @@ public class ProjectController {
 		
 		System.out.println("GetProductAction��2");
 		return "forward:/product/getProduct.jsp";
+	}
+	
+	@RequestMapping(value="deleteComment", method=RequestMethod.POST)
+	public String deleteComment( @ModelAttribute("comment") Comment comment, Model model ) throws Exception {
+
+		commentService.deleteComment(comment);
+		model.addAttribute("comment", comment);
+		
+		return "redirect:/product/listProduct?menu=search";
 	}
 	
 	

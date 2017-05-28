@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -32,15 +33,15 @@
 	    
 	    <ul class="nav navbar-nav navbar-right">
 	      <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
-		   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>±èÁØ¿µ´Ô È¯¿µÇÕ´Ï´Ù.</a></li>
+		   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>ê¹€ì¤€ì˜ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.</a></li>
 		   	  <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
 		      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
 		        <ul class="dropdown-menu">
-		          <li><a href="#">ÇÁ·ÎÇÊ</a></li>
-		          <li><a href="#">³»Á¤º¸º¸±â</a></li>
-		          <li><a href="#">³»Á¤º¸¼öÁ¤</a></li>
-		          <li><a href="#">ÆÈ·Î¿ì ¸ñ·Ïº¸±â</a></li>
-		          <li><a href="#">·Î±×¾Æ¿ô</a></li>
+		          <li><a href="#">í”„ë¡œí•„</a></li>
+		          <li><a href="#">ë‚´ì •ë³´ë³´ê¸°</a></li>
+		          <li><a href="#">ë‚´ì •ë³´ìˆ˜ì •</a></li>
+		          <li><a href="#">íŒ”ë¡œìš° ëª©ë¡ë³´ê¸°</a></li>
+		          <li><a href="#">ë¡œê·¸ì•„ì›ƒ</a></li>
 		        </ul>
 		      </li>
 		      
@@ -50,8 +51,8 @@
 	      <%-- </c:if> --%>
 	      
 	      <%-- <c:if test="${sessionScope.user.role != '1' || ${sessionScope.user.role != '2' || ${sessionScope.user.role != '3'}">
-	      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>·Î±×ÀÎ</a></li>
-		      <li><a href="#"><span class="glyphicon glyphicon-user"></span> È¸¿ø°¡ÀÔ</a></li>
+	      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>ë¡œê·¸ì¸</a></li>
+		      <li><a href="#"><span class="glyphicon glyphicon-user"></span> íšŒì›ê°€ì…</a></li>
 		  </c:if> --%>
 	    </ul>
 	  </div>
@@ -76,41 +77,41 @@
 
 <script type="text/javascript">
 
-		//============= ¸ŞÀÎÆäÀÌÁö ÀÌµ¿ Event  Ã³¸® =============   
+		//============= ë©”ì¸í˜ì´ì§€ ì´ë™ Event  ì²˜ë¦¬ =============   
 		$(function() {
 		   $("#logo").on("click" , function() {
 		      self.location = "/index.jsp";
 		   }); 
 		});
 		
-		//============= toolbar portfolio ÀÌµ¿ Event Ã³¸® =============
+		//============= toolbar portfolio ì´ë™ Event ì²˜ë¦¬ =============
 	    $(function() {
-	         //==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	         //==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	          $("#portDesigner").on("click" , function() {
 	            //$(self.location).attr("href","/user/logout");
 	            self.location = "/portfolio/listPortfolio"
 	          }); 
 	    });
 	   
-	   //============= toolbar portfolio ÀÌµ¿ Event Ã³¸® =============
+	   //============= toolbar portfolio ì´ë™ Event ì²˜ë¦¬ =============
 	    $(function() {
-	         //==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	         //==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	          $("#portDeveloper").on("click" , function() {
 	            //$(self.location).attr("href","/user/logout");
 	            self.location = "/portfolio/listPortfolio"
 	          }); 
 	    });
 		
-	   //============= toolbar user login ÀÌµ¿ Event Ã³¸® =============
+	   //============= toolbar user login ì´ë™ Event ì²˜ë¦¬ =============
 	   
 	    $(function() {
-	          $("a:contains('·Î±×ÀÎ')").on("click" , function() {
+	          $("a:contains('ë¡œê·¸ì¸')").on("click" , function() {
 	            //$(self.location).attr("href","/user/logout");
 	            self.location = "/user/login"
 	          }); 
 	    });
 	   
-	  //============= toolbar statistics getListTotalStatistics ÀÌµ¿ Event Ã³¸® =============
+	  //============= toolbar statistics getListTotalStatistics ì´ë™ Event ì²˜ë¦¬ =============
 		   
 	    $(function() {
 	          $("a:contains('Statistics')").on("click" , function() {
@@ -120,58 +121,27 @@
 	    });
 	  
 		
-		//============= È¸¿øÁ¤º¸Á¶È¸ Event  Ã³¸® =============	
+		//============= íšŒì›ì •ë³´ì¡°íšŒ Event  ì²˜ë¦¬ =============	
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDesigner").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=1"
+				self.location = "/project/listProject"
 			}); 
 		 });
 		
 		 $(function() {
-				//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDeveloper").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=1"
+				self.location = "/project/listProject"
 			}); 
 		 });
 		
-		//=============  °³ÀÎÁ¤º¸Á¶È¸È¸ Event  Ã³¸® =============	
-	 	$( "a:contains('°³ÀÎÁ¤º¸Á¶È¸')" ).on("click" , function() {
-	 		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		//=============  ê°œì¸ì •ë³´ì¡°íšŒíšŒ Event  ì²˜ë¦¬ =============	
+	 	$( "a:contains('ê°œì¸ì •ë³´ì¡°íšŒ')" ).on("click" , function() {
+	 		//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
 		});
 		
-	 	$(function() {
-		 	$("a:contains('ÆÇ¸Å»óÇ°µî·Ï')").on("click" , function() {
-				self.location = "/product/addProductView.jsp"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$("a:contains('ÆÇ¸Å»óÇ°°ü¸®')").on("click" , function() {
-				self.location = "/product/listProduct?menu=manage"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$("a:contains('»ó Ç° °Ë »ö')").on("click" , function() {
-				self.location = "/product/listProduct?menu=search"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$(".totalList").on("click" , function() {
-				self.location = "/purchase/listSale"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$("a:contains('±¸¸ÅÀÌ·ÂÁ¶È¸')").on("click" , function() {
-				self.location = "/purchase/listPurchase"
-			}); 
-		});
 		
 </script>  
 

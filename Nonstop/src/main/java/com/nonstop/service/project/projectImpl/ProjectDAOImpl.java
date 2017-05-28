@@ -1,12 +1,15 @@
 package com.nonstop.service.project.projectImpl;
 
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.service.project.ProjectDAO;
 
 
@@ -52,16 +55,13 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 	
-/*	public List<Product> getProductList(Search search) throws Exception {
+	public List<Project> listProject(Search search) throws Exception {
 		
-		return sqlSession.selectList("ProductMapper.getProductList", search);
+		return sqlSession.selectList("ProjectMapper.listProject", search);
 	}
-
-	
-	
 	
 	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
+		return sqlSession.selectOne("ProjectMapper.getTotalCount", search);
 	}
-*/
+
 }
