@@ -16,7 +16,8 @@ public class Project {
 	private String projLocation;
 	private String projDetail;
 	private int projViewcount;
-	
+	private int projExpectDate;
+	private int projDday;
 	
 	
 	public int getProjNo() {
@@ -85,6 +86,21 @@ public class Project {
 	public void setProjViewcount(int projViewcount) {
 		this.projViewcount = projViewcount;
 	}
+	public int getProjExpectDate() {
+		return projExpectDate;
+	}
+	public void setProjExpectDate(int projExpectDate) {
+		this.projExpectDate = projExpectDate;
+	}
+	public int getProjDday() {
+		return projDday;
+	}
+	public void setProjDday(int projDday) {
+		this.projDday = projDday;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "Project [projNo=" + projNo + ", projUserId=" + projUserId + ", projDivision=" + projDivision

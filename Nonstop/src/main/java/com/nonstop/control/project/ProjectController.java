@@ -75,7 +75,7 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value="getProject", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("projNo") int projNo , 
+	public String getProject( @RequestParam("projNo") int projNo , 
 							  Model model, HttpSession session ) throws Exception {
 		
 		System.out.println("/project/getProject : GET");
@@ -90,7 +90,7 @@ public class ProjectController {
 //		model.addAttribute("comment", comment);
 		
 	
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/view/project/getProject.jsp";
 	}
 	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

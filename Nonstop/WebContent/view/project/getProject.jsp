@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 <html lang="ko">
 
@@ -18,8 +19,10 @@
 	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+	<script src="../../resources/javascript/jquery.js"></script>
 
-    <title>Thumbnail Gallery - Start Bootstrap Template</title>
+	<script src="../../resources/javascript/bootstrap.min.js"></script>
 
 
     <!-- Bootstrap Core CSS -->
@@ -55,7 +58,9 @@
 	    animation: spinner 700ms infinite linear;
 	    z-index: 10000;
 	}
-	
+	.row {
+		border : 0;
+	}
 	/* 미니프로필 */
 	.about-fixed {
 	    position: fixed;
@@ -110,7 +115,7 @@
 	}
 	
 	.sub-title {
-	    padding: 30px;
+	    padding: 10px;
 	}
 	
 	.sub-title h2 {
@@ -132,7 +137,6 @@
 	    padding-top: 30px;
 	    padding-bottom: 60px;
 	    border-top: 1px dashed #dedede;
-	    border-bottom: 1px dashed #dedede;
 	}
 	
 	/* Blog Post & Single Blog Page */
@@ -210,11 +214,46 @@
 	       font-size: 25px;
 	    }
 	}
+	
+     	
+   	.glyphicon.glyphicon-star{
+        	background-color: rgba( 255, 255, 255, 0.5 );
+      		border : 0;
+   	}
+	
+	#shape1{
+       	margin:0;
+       	padding:5px;
+       	background-color: #dddddd;
+       	width : 100px;
+       	heigth : 60px;
+       	float : right;
+   	}
+   	
+   	#shape2{
+       	margin:0;
+       	padding:5px;
+       	background-color: orange;
+       	width : 100px;
+        heigth : 60px;
+        float : right;
+        text-align: center;
+        font-size : 20px;
+   	}
+   	
+   	th, tr {
+	    padding: 7px;
+	    text-overflow:ellipsis
+	}
+	
+	#gab{
+		margin:20px;
+	}
 
     </style>
 
 	<script type="text/javascript">
-	$(function() {
+/* 	$(function() {
 		$("#rmsid").on("click", function(){
 			self.location ="/project/getProject?projNo=17"
 		});
@@ -233,7 +272,7 @@
 			self.location ="/project/updateProjectView?projNo=17"
 		});
 		
-	});
+	}); */
 	
 	
     
@@ -242,89 +281,140 @@
 
 <body>
 
+<jsp:include page="/view/common/toolbar.jsp" />
+
 <div id="main">
     <div class="container">
+    	
         <div class="row">
-        
+        	<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" /> 
 	        <!-- Blog Post (Left Body) Start -->
 	        <div class="col-md-9">
 	        	<div class="col-md-12 page-body">
 	        		<div class="row">
 	            		
 	            		<div class="sub-title">
-                      		<!-- <a href="index.html" title="Go to Home Page"><h2>Back Home</h2></a>
-                        	<a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->
-                        	좋아요버튼, 추천버튼, 스크랩버튼, 맨 오른쪽 댓글버튼
+                      		<h1>Project</h1>
                         </div>
                         
                         <div class="col-md-12 content-page">
                             <div class="col-md-12 blog-post">
                               
-                              <!-- 왜 안나오는거야아아아ㅏ워ㅠㅜㅠㅜㅠㅜ -->
-	                            <!-- Post Headline Start -->
+	                            <div class="post-title" style="padding-bottom : 10px;">
+	                            	<button type="button" class="glyphicon glyphicon-star" style="font-size: 25px; padding-bottom:15px;"></button>
+										<strong style="font-size : 25px; ">${project.projTitle}</strong>
+										<c:choose>
+											<c:when test="${project.projDday<=0}">
+												<div class="w3-panel w3-round-large" id="shape1">
+												    <font color=black>마감</font>
+												</div>
+											</c:when>
+											<c:when test="${project.projDday>=1}">
+												<div class="w3-panel w3-round-large" id="shape2">
+													<font color=white>모집중</font>
+												</div>
+										</c:when>
+										</c:choose>
+	                            </div>
+	                            
 	                            <div class="post-title">
-	                            	<h1>How to make your company website 이놈에 h1태그를 어떻게하나</h1> 
+		                            <table style="width:100%">
+			                            <tr style="text-align: center; border-top: 2px solid rgb(147, 144, 144); margin-top:10px; font-size:14px">
+											<td colspan="3">공고기간</td>
+											<td colspan="3">예상기간</td>
+											<td colspan="3">지원자수</td>
+											<td colspan="3">개발지역</td>
+										</tr>
+										
+										<tr style="font-size:15px">
+
+											<th colspan="3" style="border-right: 1px solid #ddd; text-align: center;" id="thatDay" value="">
+												<c:choose>
+													<c:when test="${project.projDday<=0}">
+														<font color=#ff607f>마감</font>
+													</c:when>
+													<c:when test="${project.projDday==1}">
+														<font color=#ff607f>마감 임박</font>
+													</c:when>
+													<c:when test="${project.projDday>1}">
+														<font color=#ff607f>${project.projDday}</font>일 남음
+												</c:when>
+												</c:choose>
+											</th>
+											<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value="">${project.projExpectDate}일</th>
+											<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">sdsdfsdf</th>
+											<th colspan="3" style="text-align: center">${project.projLocation}</th>
+										</tr>
+										
+										<tr style="border-bottom: 1px solid #ddd; padding-bottom:5px;">
+											<th colspan="12"></th>
+										</tr>
+										
+										<tr>
+											<th colspan="12"></th>
+										</tr>
+										
+										<tr>
+											<th colspan="12" style="background-color : rgb(236, 231, 231) ">
+											<c:choose>
+												<c:when test="${project.projDivision==11}">
+											  		개발 분야 : 개발>WEB
+											  	</c:when>
+												<c:when test="${project.projDivision==12}">
+											  		개발 분야 : 개발>APP
+											  	</c:when>
+												<c:when test="${project.projDivision==21}">
+											  		개발 분야 : 디자이너>WEB
+											  	</c:when>
+												<c:when test="${project.projDivision==22}">
+											  		개발 분야 : 디자이너>APP
+											  	</c:when>
+											</c:choose>
+											</th>
+										</tr>
+
+										<tr>
+											<th colspan="12" style="background-color : rgb(236, 231, 231)" >개발 기술 : java</th>
+										</tr>
+										
+										
+										
+									</table>
 	                            </div>
 	                            <!-- Post Headline End -->
 	                                    
-	                                    
 	                            <!-- Post Detail Start -->
-	                            <div class="post-info">
-	                            	<span>November 23, 2016 / by <a href="#" target="_blank" >Alex Parker</a></span>
+	                            <div class="post-info" style="font-color : orange">
+	                            	<span><font color=orange>상세정보</font></span>
 	                            </div>
-	                            <!-- Post Detail End -->
 	                            
-	                            <!-- Post Image Start -->
-                                <div class="post-image margin-top-40 margin-bottom-40" id="rmsid2">
-                                   <img src="http://placehold.it/800x500" alt="">
-                                   <input type="hidden" name="projNo" value="16"/>
-                                   <!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
-                                </div>
                                 <!-- Post Image End -->
 	                            
 	                            <!-- 상세설명 -->
-	                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin at quam at orci commodo hendrerit vitae nec eros. Vestibulum neque est, imperdiet nec tortor nec, tempor semper metus. <b>Cras vel tempus velit</b>, et accumsan nisi. Duis laoreet pretium ultricies. Curabitur rhoncus auctor nunc congue sodales. Sed posuere nisi ipsum, eget dignissim nunc dapibus eget. Aenean elementum <b><a href="javascript:void(0)" data-toggle="popover" data-placement="top" data-content="You can write any text here">Click me</a></b> sollicitudin sapien ut sapien fermentum aliquet mollis. Curabitur ac quam orci sodales quam ut tempor. <b data-toggle="tooltip" data-placement="top" title="You can write any text here.">Hover me</b> suspendisse, gravida in augue in, interdum bibendum dui. Suspendisse sit amet justo sit amet diam fringilla commodo. Praesent ac magna at metus malesuada tincidunt non ac arcu. Nunc gravida eu felis vel elementum. Vestibulum sodales quam ut tempor tempor. Donec sollicitudin sapien ut sapien fermentum, non ultricies nulla gravida.</p>
+	                            <p>${project.projDetail}</p>
 	                            
 	                            
-	                            
-	                             <!-- Post Comment (Disqus) Start -->
-                                  <div id="comment" class="comment">
-                                    <h3>Discuss about post</h3>
-                                     
-                                     
-                                     <!-- Disqus Code Start  (Please Note: Disqus will not be load on local, You have to upload it on server.)-->
-                                     <div id="disqus_thread"></div>
-							          <script>
-					
-					/***  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables.
-							
-							var disqus_config = function () {
-							this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-							this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-							};
-							*/
-							
-									
-							           (function() { // DON'T EDIT BELOW THIS LINE
-							           var d = document, s = d.createElement('script');
-							           s.src = '//uipasta.disqus.com/embed.js';   // Please change the url from your own disqus id
-							           s.setAttribute('data-timestamp', +new Date());
-							           (d.head || d.body).appendChild(s);
-							           })();
-							          </script>
-			  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-              <!-- Disqus Code End -->
-              
-                                   </div>
-                                   <!-- Post Comment (Disqus) End -->
-	
-	                            
-	                            		
 	            			</div>
 	            		</div>
 	            	</div>
 	            </div>
 	         </div>
+	         
+	         <div class="col-md-9" id="gab">
+	        	<div class="col-md-12">
+	        		<div class="row">
+	        			<p></p>
+	        		</div>
+        		</div>
+       		</div>
+       		
+       		<div class="col-md-9">
+	        	<div class="col-md-12 page-body">
+	        		<div class="row">
+	        		asdfsdafdsafdsf
+	        		</div>
+        		</div>
+       		</div>
         	<!-- Blog Post (Right Sidebar) End -->
                
                
@@ -367,10 +457,7 @@
 <!-- Back to Top End -->
     
 <!-- jQuery -->
-<script src="../../resources/javascript/jquery.js"></script>
 
-<!-- Bootstrap Core JavaScript -->
-<script src="../../resources/javascript/bootstrap.min.js"></script>
 
 </body>
 </html>

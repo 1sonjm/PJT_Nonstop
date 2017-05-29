@@ -5,7 +5,28 @@
 
 <head>
 
-    <meta charset="utf-8">
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>List_Portfolio</title>
+
+    <!-- Bootstrap Core CSS -->
+    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link href="../../resources/css/full.css" rel="stylesheet">
+
+	<!-- jQuery -->
+    <script src="../../resources/javascript/jquery.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+<!--     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
@@ -23,11 +44,11 @@
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
     <link href="../../resources/css/full.css" rel="stylesheet">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	  <!-- jQuery -->
+	  jQuery
     <script src="../../resources/javascript/jquery.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    Bootstrap Core JavaScript
+    <script src="../../resources/javascript/bootstrap.min.js"></script> -->
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
@@ -48,7 +69,8 @@
 		th, tr {
 		    padding: 8px;
 		    text-align: left;
-		  
+		   
+		    text-overflow:ellipsis
 		}
 		
 	   .thumbnail:hover{
@@ -63,6 +85,29 @@
         .thumbnail{
         	/* background-color:#fffffa; */
         }
+        
+        .glyphicon.glyphicon-plus-sign{
+        	background-color: rgba( 255, 255, 255, 0.5 );
+      		float : right;
+      		border : 0;
+     	}
+     	
+     	.glyphicon.glyphicon-star{
+        	background-color: rgba( 255, 255, 255, 0.5 );
+      		border : 0;
+     	}
+     	
+     	#shape1{
+        	margin:0;
+        	padding:5px;
+        	background-color: #dddddd;
+     	}
+     	#shape2{
+        	margin:0;
+        	padding:5px;
+        	background-color: orange;
+     	}
+     	
 	</style>
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
@@ -72,6 +117,7 @@
 		        interval: 5000
 		    })
 		});
+		
 		
 		function d_day() {
 			var nowDate = new Date();
@@ -95,6 +141,23 @@
 			$("#expectDay").append('<font>'+days+'</font>');
 		}
 		
+		
+		$(function() {
+			$(".glyphicon.glyphicon-plus-sign").on("click", function(){
+				self.location ="/view/project/addProjectView.jsp"
+			});
+			
+			$(".detailButton").on("click", function(){
+				self.location ="/project/getProject?projNo="+$(this).attr("value");
+			});
+			
+
+		
+			
+		});
+		
+		
+		
 	    
 	</script>
 
@@ -103,7 +166,7 @@
 
 <body>
 
-<%-- <jsp:include page="/view/common/toolbar.jsp" /> --%>
+<jsp:include page="/view/common/toolbar.jsp" />
 
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
@@ -115,7 +178,7 @@
 				<!-- 카테고리 선택 -->		
 				
 				<div class="input-group-btn">
-	   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">sdfsdf <span class="caret"></span></button>
+	   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">검색어 <span class="caret"></span></button>
 	       			<ul class="dropdown-menu" role="menu">
 						<li><a href="#">제목</a></li>
 						<li><a href="#">개발기술</a></li>
@@ -154,7 +217,7 @@
   <div class="row">
 	  <div class="margin-top-20">
 		  <div class="text">	
-		    <h2 class="text-left">Project</h2>
+		    <h2 class="text">Project<button type="button" class="glyphicon glyphicon-plus-sign" style="font-size: 35px"/></h2>
 		  </div>
 	  </div>
   </div>
@@ -178,84 +241,114 @@
     <div class="margin-bottom-40">
     	<div class="container">   	
         	<div class="row">
-	            <div class="col-md-6 col-sm-6 hero-feature" style="height:400px">
-	            <input type="hidden" name="projNo" id="projNo" value="${project.projNo}" />
-	            <input type="hidden" name="projAnnoEnd" id="projAnnoEnd" value="${project.projAnnoEnd}" />
-				<input type="hidden" name="projStartDate" id="projStartDate" value="${project.projStartDate}" />
-				<input type="hidden" name="projEndDate" id="projEndDate" value="${project.projEndDate}" />
-	            <div class="thumbnail">
-	               <table style="height:400px;">
-	                <c:set var="i" value="0" />
-					<c:forEach var="project" items="${list}">
-					<c:set var="i" value="${ i+1 }" />
-					  <tr style="height:40px; border-bottom: 1px solid #ddd">
-					    <th colspan="10" style="font-size:25px;  table-layout : fixed;" height="40px;"> 
-					    	<p class="glyphicon glyphicon-star" style="font-size:25px">
-					    	aaaaaaaaaaaaaaaaaaaa
-					    	</p>
-					   	</th>
-					    <th colspan="2" style="text-align : center">모집중</th>
-					  </tr>
-					  
-					  <tr style="height:10px; font-size:15px; text-align : center">
-					  	<td colspan="3">공고기간</td>
-					    <td colspan="3">예상기간</td>
-					    <td colspan="3">지원자수</td>
-					    <td colspan="3">개발지역</td>
-					  </tr>
-                      
-					  <tr style="height:50px">
-					  	
-					  	<th colspan="3" style="border-right: 1px solid #ddd; text-align : center" id="thatDay"><script language=javascript>d_day()</script>일 남음</th>
-					    <th colspan="3" style="border-right: 1px solid #ddd; text-align : center" id="expectDay"><script language=javascript>expect_day()</script>일</th>
-					    <th colspan="3" style="border-right: 1px solid #ddd; text-align : center">sdsdfsdf</th>
-					    <th colspan="3" style="text-align : center">${project.projLocation}</th>
-					  </tr>
-                      
-                      <tr style="height:10px; border-bottom: 1px solid #ddd">
-					  	<th colspan="12"></th>
-					  </tr>
-					  
-					  <tr style="height:20px">
-					 	 <th colspan="12">
-					 	 <c:choose>
-						  	<c:when test="${project.projDivision==11}">
-						  		개발/WEB
-						  	</c:when>
-						  	<c:when test="${project.projDivision==12}">
-						  		개발/APP
-						  	</c:when>
-						  	<c:when test="${project.projDivision==21}">
-						  		디자이너/WEB
-						  	</c:when>
-						  	<c:when test="${project.projDivision==22}">
-						  		디자이너/APP
-						  	</c:when>
-						  </c:choose>
-					  	</th>
-					  </tr>
-					  
-                      
-                      <tr style="height:20px; border-bottom: 1px solid #ddd">
-					  	<th colspan="12">java</th>
-					  </tr>
-					  
-					  <tr style="height:150px; text-align : top-left" >
-					  	<th colspan="12" >${project.projDetail}</th>
-					  </tr>
-					  
-					  <tr>
-					  	<th colspan="12" style= "background-color: #dddddd; text-align : center">상세보기</th>
-					  </tr>
-					 </c:forEach>
-					 </table>
-					 </div>
+        		<c:set var="i" value="0" />
+				<c:forEach var="project" items="${list}">
+				<c:set var="i" value="${ i+1 }" />
+					<div class="col-md-6 col-sm-6 hero-feature" style="margin-top: 30px; margin-bottom: 20px; height: 400px">
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" /> 
+						<input type="hidden" name="projAnnoEnd" id="projAnnoEnd" value="${project.projAnnoEnd}" /> 
+						<input type="hidden" name="projStartDate" id="projStartDate" value="${project.projStartDate}" /> 
+						<input type="hidden" name="projEndDate" id="projEndDate" value="${project.projEndDate}" />
+						<div class="thumbnail">
+							<table style="height: 400px;">
+								<tr style="height: 40px; border-bottom: 1px solid #ddd">
+									<th colspan="10" style="font-size: 25px; table-layout: fixed; height: 40px;  white-space:nowrap;">
+										<button type="button" class="glyphicon glyphicon-star" style="font-size: 25px"></button>
+										${project.projTitle}
+									</th>
+									<th colspan="2" style="text-align: center">
+										<c:choose>
+											<c:when test="${project.projDday<=0}">
+												<div class="w3-panel w3-round-large" id="shape1">
+												    <font color=black>마감</font>
+												</div>
+											</c:when>
+											<c:when test="${project.projDday>=1}">
+												<div class="w3-panel w3-round-large" id="shape2">
+													<font color=white>모집중</font>
+												</div>
+											</c:when>
+										</c:choose>
+									</th>
+								</tr>
+
+								<tr style="height: 10px; font-size: 15px; text-align: center">
+									<td colspan="3">공고기간</td>
+									<td colspan="3">예상기간</td>
+									<td colspan="3">지원자수</td>
+									<td colspan="3">개발지역</td>
+								</tr>
+
+								<tr style="height: 50px">
+
+									<!-- <th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="thatDay" value=""><script language=javascript>d_day()</script>일 남음</th>
+									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value=""><script language=javascript>expect_day()</script>일</th> -->
+									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="thatDay" value="">
+										<c:choose>
+											<c:when test="${project.projDday<=0}">
+												<font color=#ff607f>마감</font>
+											</c:when>
+											<c:when test="${project.projDday==1}">
+												<font color=#ff607f>마감 임박</font>
+											</c:when>
+											<c:when test="${project.projDday>1}">
+												<font color=#ff607f>${project.projDday}</font>일 남음
+											</c:when>
+										</c:choose>
+									</th>
+									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value="">${project.projExpectDate}일</th>
+									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">sdsdfsdf</th>
+									<th colspan="3" style="text-align: center">${project.projLocation}</th>
+								</tr>
+
+								<tr style="height: 10px; border-bottom: 1px solid #ddd">
+									<th colspan="12"></th>
+								</tr>
+
+								<tr style="height: 20px">
+									<th colspan="12">
+									<c:choose>
+										<c:when test="${project.projDivision==11}">
+									  		개발 분야 : 개발>WEB
+									  	</c:when>
+										<c:when test="${project.projDivision==12}">
+									  		개발 분야 : 개발>APP
+									  	</c:when>
+										<c:when test="${project.projDivision==21}">
+									  		개발 분야 : 디자이너>WEB
+									  	</c:when>
+										<c:when test="${project.projDivision==22}">
+									  		개발 분야 : 디자이너>APP
+									  	</c:when>
+									</c:choose></th>
+								</tr>
+
+
+								<tr style="height: 20px; border-bottom: 1px solid #ddd">
+									<th colspan="12">개발 기술 : java</th>
+								</tr>
+
+								<tr style="height: 150px; text-align: top-left">
+									<td colspan="12">
+										<p>
+											<strong>상세내용</strong>
+										</p> 
+										${project.projDetail}
+									</td>
+								</tr>
+
+								<tr>
+									<th colspan="4" ></th>
+									<th colspan="4" style="background-color: #dddddd; text-align: center" class="detailButton" value="${project.projNo}">상세보기</th>
+									<th colspan="4" ></th>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</c:forEach>
 	            </div>
-	            
-	            
 	         </div>
 	      </div>
-	    </div>
 	        
 	             
 	<div class="container text-center">
@@ -345,6 +438,10 @@
 			'<input type="checkbox" value='+jsondata[i].techNo+'>'+jsondata[i]techName
 		}
 	}
+
+
+
+안녕하세요김준영입니다새롭게보게되   타이틀 최대숫자
 
  -->
 
