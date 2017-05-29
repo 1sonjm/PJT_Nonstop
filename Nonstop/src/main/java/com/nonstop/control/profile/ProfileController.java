@@ -62,10 +62,10 @@ public class ProfileController {
 		
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		//Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
 		
 		model.addAttribute("list" , map.get("list"));
-		model.addAttribute("list2"  ,map2.get("list2"));
+		//model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+
 <html lang="ko">
 
 <head>
@@ -20,6 +21,19 @@
     <link href="../../resources/css/full.css" rel="stylesheet">
     
     <style>
+    
+    .comment-div{
+    border:1px solid gold;
+    height: 100%; width: 100%;
+    padding: 10px, 5px;
+    }
+    
+    hr.thick-line{
+		border-color: #e7e9ee;
+		border-width: 2px; 
+		margin-top: 5px;
+		margin-bottom: 20px;
+    }
     /* 버튼 */
     .btn-lg{
     	margin-left: 5px;
@@ -268,7 +282,14 @@
                         	<a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->         
                         	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
                         	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
-                        	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩</button>
+                        	<c:if test="${portfolio.scrapNo == 0}">
+                           		<button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;add to scrap</button>
+                           	</c:if>
+                           
+                           	<c:if test="${portfolio.scrapNo != 0}">
+                           		<button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;delete to scrap</button>
+                           	</c:if>
+                  
                         </div>
                         
                         <div class="col-md-12 content-page">
@@ -302,9 +323,23 @@
 	                             <!-- Post Comment (Disqus) Start -->
                                   <div id="comment" class="comment">
                                     <h3>Discuss About Post</h3>
+                                    <div class="margin-top-20"></div>
+                                    <h6>22 Comments</h6>
+                                    <hr class="thick-line">
                                      
-                                     
-                                     
+                                     <div class="media">
+									  <div class="media-left">
+									    <a href="#">
+									      <img src="http://placehold.it/50x50" alt="">
+									    </a>
+									  </div>
+									  <div class="media-body">
+									  	<div class="comment-div">
+									  		<h5>댓글을 달아보세염</h5>
+									  	</div>
+									  </div>
+									</div>
+									                                     
                                     	
    									<div id="disqus_thread">
    										<iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%"  style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 390px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe>
