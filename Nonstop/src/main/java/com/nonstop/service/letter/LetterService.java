@@ -3,16 +3,19 @@ package com.nonstop.service.letter;
 import java.util.Map;
 
 import com.nonstop.domain.Letter;
-import com.nonstop.domain.Search;
 
 public interface LetterService {
 	
 	public void addLetter(Letter letter) throws Exception;
 	
-	//public Map<String, Object> listLetter(Search search) throws Exception;
+	public Map<String, Object> getReceiveLetterList(String receiveId) throws Exception;
 	
-//	public Letter getLetter(int letterNo) throws Exception;
+	public Map<String, Object> getSendLetterList(String sendId) throws Exception;
 	
-//	public void deleteLetter(int letterNo) throws Exception;
+	public Letter getLetter(int letNo) throws Exception;
+	
+	public void deleteLetter(int letNo) throws Exception;
+	
+	public void updateReadDate(int letNo) throws Exception;
 
 }

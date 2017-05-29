@@ -3,7 +3,8 @@ package com.nonstop.control.portfolio;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,10 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nonstop.domain.Portfolio;
-import com.nonstop.domain.Search;
+import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
-
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
+import com.nonstop.service.profile.ProfileService;
 
 @Controller
 @RequestMapping("/portfolio/*")
@@ -29,6 +29,10 @@ public class PortfolioController {
 	@Autowired
 	@Qualifier("portfolioServiceImpl")
 	private PortfolioService portfolioService;
+	
+	@Autowired
+	@Qualifier("profileServiceImpl")
+	private ProfileService profileService;
 	
 	public PortfolioController() {
 
@@ -83,17 +87,19 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="listPortfolio")
-	public String listPortfolio(@RequestParam("portDivision") int portDivision, Model model) throws Exception {
+	public String listPortfolio(@RequestParam("portDivision") int portDivision,HttpSession session, Model model) throws Exception {
 		
-		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision);
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision,scrapUserId);
+
 		model.addAttribute("list", portfolioList);
-		
+
 		return "forward:/view/portfolio/listPortfolio.jsp";
 	}
 	
 	@RequestMapping(value="getPortfolio")
-	public String getPortfolio(@RequestParam("portNo") int portNo, Model model) throws Exception {
+	public String getPortfolio(@RequestParam("portNo") int portNo, HttpSession session, Model model) throws Exception {
 	/*public String getPortfolio( @RequestParam("portNo") int portNo, Model model) throws Exception {*/
 		
 		System.out.println("getPortfolio Controller");
@@ -102,9 +108,22 @@ public class PortfolioController {
 		if(portNo==0){
 			portNo = 10;
 		}
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		Portfolio portfolio = portfolioService.getPortfolio(portNo);		
+		Portfolio portfolio = portfolioService.getPortfolio(portNo,scrapUserId);
 		
+		//클릭시 조회수 추가
+		int portViewCount = portfolio.getTotalPortView();
+		portfolio.setTotalPortView(++portViewCount);
+		portfolio.setPortViewFlag(true);		
+		portfolioService.updatePortfolio(portfolio);
+		
+		//수정된 게시물의 경우 
+		if(portfolio.getPortUpdate() != null){
+			portfolio.setPortRegdate(portfolio.getPortUpdate());
+		}
+		
+		//날짜계산
 		String regdate = portfolio.getPortRegdate().toString();
 		String portMonth = regdate.substring(5, 7);
 		
@@ -139,14 +158,16 @@ public class PortfolioController {
 	}
 
 	@RequestMapping(value="updatePortfolio", method=RequestMethod.GET)
-	public String updatePortfolio(Model model) throws Exception {
+	public String updatePortfolio(Model model, HttpSession session) throws Exception {
 		
 		System.out.println("updatePortfolio Controller");
 		
 		//getPortfolio.jsp에서 hidden 태그로 숨겨서 가져와야햇!!! 나중에수정햇!!
 		int portNo = 10;
 		
-		Portfolio portfolio = portfolioService.getPortfolio(portNo);
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		Portfolio portfolio = portfolioService.getPortfolio(portNo,scrapUserId);
 		
 		System.out.println("getPortfolio portfolio : "+portfolio);
 		

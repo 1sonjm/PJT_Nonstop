@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,9 +10,9 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="utf-8">
 	
-	<!-- ¬¸¡∂ : http://getbootstrap.com/css/   ¬¸¡∂ -->
+	<!-- Ï∞∏Ï°∞ : http://getbootstrap.com/css/   Ï∞∏Ï°∞ -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -23,15 +23,12 @@
 	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip ªÁøÎ CSS-->
+   
+   <!-- jQuery UI toolTip ÏÇ¨Ïö© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip ªÁøÎ JS-->
+  <!-- jQuery UI toolTip ÏÇ¨Ïö© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -52,16 +49,12 @@
 			});
 		 
 		 $("span.deleteCareer").on("click" , function() {
-				alert("§∑§∑" );
+				alert("„Öá„Öá" );
 				var careerNo=$(this).attr('careerNo');
 				alert(careerNo);
 			self.location ="/profile/deleteCareer?careerNo="+careerNo;
 			
 			});
-		 
-		$("span.addCareer").on("click" , function() {
-		 		self.location = "/profile/addCareerView";
-			}); 
 	});	
 </script>
 </head>
@@ -70,7 +63,7 @@
 	
 	<div class="container">
 	<div class="page-header text-center">
-	       <h5 class=" text-left" >∞≥¿Œ ±‚º˙¡§∫∏</h5>
+	       <h5 class=" text-left" >Í∞úÏù∏ Í∏∞Ïà†Ï†ïÎ≥¥</h5>
 	    </div>
 
       <table class="table table-hover table-striped" >
@@ -78,11 +71,13 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >±‚¥…∏Ì</th>
-            <th align="left">∞Ê∑¬</th>
+            <th align="left" >Í∏∞Îä•Î™Ö</th>
+            <th align="left">Í≤ΩÎ†•</th>
             <th align="left">
             <span class="addCareer">
-			  <button type="button" class="btn btn-primary">µÓ∑œ</button>
+            <c:if test="${user.userId==sessionScope.user.userId }">
+			  <button type="button" class="btn btn-primary">Îì±Î°ù</button>
+			  </c:if>
 			   </span>
             </th>
           </tr>
@@ -105,15 +100,20 @@
 			  <c:if test="${career.techNo == '1002' }">Php</c:if>
 			  </td>
 			 
-			  <td align="left">${career.careerUseTerm}∞≥ø˘  &nbsp; &nbsp;
-			  <c:if test="${career.careerUserId==param.careerUsesrId }">
-			  <span class="updateCareer" careerNo="${career.careerNo}">
-			  <button type="button" class="btn btn-primary">ºˆ¡§</button> &nbsp; &nbsp;
-			   </span>
-			  <span class="deleteCareer" careerNo="${career.careerNo}">
-			   <button type="button" class="btn btn-danger">ªË¡¶</button>
-			   </span>
+			  <td align="left">${career.careerUseTerm}Í∞úÏõî  &nbsp; &nbsp;
+			  
+			  	<c:if test="${career.careerUserId==sessionScope.user.userId }">
+			  
+			  		<span class="updateCareer" careerNo="${career.careerNo}">
+			  			<button type="button" class="btn btn-primary">ÏàòÏ†ï</button> &nbsp; &nbsp;
+			   		</span>
+			   
+			  		<span class="deleteCareer" careerNo="${career.careerNo}">
+			   			<button type="button" class="btn btn-danger">ÏÇ≠Ï†ú</button>
+			   		</span>
+			   
 				</c:if>
+				
 			  </td>
 			  
 			 

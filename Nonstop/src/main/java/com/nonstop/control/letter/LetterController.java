@@ -42,7 +42,19 @@ public class LetterController {
 		
 		System.out.println("/letter/addLetter : GET");
 		
-		return "redirect:/letter/addLetterView.jsp";
+		return "forward:/view/letter/addLetterView.jsp";
+	}
+	
+	@RequestMapping(value="addReturnLetter", method=RequestMethod.GET)
+	public String addReturnLetter(@RequestParam("letNo")int letNo, Model model) throws Exception{
+		
+		System.out.println("/letter/addReturnLetter : GET");
+		
+		Letter letter = letterService.getLetter(letNo);
+		
+		model.addAttribute("letter",letter);
+		
+		return "forward:/view/letter/addReturnLetterView.jsp";
 	}
 	
 	@RequestMapping(value="addLetter", method=RequestMethod.POST)
@@ -52,58 +64,60 @@ public class LetterController {
 		
 		letterService.addLetter(letter);
 		
-		return "redirect:/letter/addLetterResult.html";
+		return "redirect:/letter/addLetterResult.jsp";
 	}
 	
-	/*@RequestMapping(value="listLetter")
-	public String listLetter(@ModelAttribute("search")Search search , Model model ) throws Exception{
+	@RequestMapping(value="getReceiveLetterList")
+	public String getReceiveLetterList(@RequestParam("receiveId")String receiveId , Model model ) throws Exception{
 		
-		System.out.println("/letter/listLetter : GET/POST");
+		System.out.println("/letter/getReceiveLetterList");
 		
-		if(search.getCurrentPage() ==0){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		Map<String,Object> map = letterService.listLetter(search);
-		
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		Map<String,Object> map = letterService.getReceiveLetterList(receiveId);
 		
 		model.addAttribute("list",map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
 		
-		return null;
+		return "forward:/view/letter/listReceiveLetter.jsp";
+
+	}
+	
+	@RequestMapping(value="getSendLetterList")
+	public String getSendLetterList(@RequestParam("sendId")String sendId , Model model ) throws Exception{
+		
+		System.out.println("/letter/getSendLetterList");
+		
+		Map<String,Object> map = letterService.getSendLetterList(sendId);
+		
+		model.addAttribute("list",map.get("list"));
+		
+		return "forward:/view/letter/listSendLetter.jsp";
 
 	}
 	
 	@RequestMapping(value="getLetter", method=RequestMethod.GET)
-	public String getLetter(@RequestParam("letterNo") int letterNo,Model model) throws Exception{
+	public String getLetter(@RequestParam("letNo") int letNo,Model model) throws Exception{
 		
 		System.out.println("/letter/getLetter:GET");
 		
-		Letter letter = letterService.getLetter(letterNo);
+		letterService.updateReadDate(letNo);
+		
+		Letter letter = letterService.getLetter(letNo);
 		
 		model.addAttribute("letter",letter);
 		
-		return null;
+		return "forward:/view/letter/getLetter.jsp";
 		
 	}
 	@RequestMapping(value="deleteLetter", method=RequestMethod.GET)
-	public String deleteLetter(@RequestParam("letterNo") int letterNo, Model model)throws Exception{
+	public String deleteLetter(@RequestParam("letNo") int letNo,@RequestParam("receiveId") String receiveId, Model model)throws Exception{
 		
 		System.out.println("/letter/deleteLetter:GET");
 		
-		letterService.deleteLetter(letterNo);
+		letterService.deleteLetter(letNo);
 		
-		return null;
+		Map<String,Object> map = letterService.getReceiveLetterList(receiveId);
 		
-	}*/
+		model.addAttribute("list",map.get("list"));
+		
+		return "forward:/view/letter/listLetter.jsp";
+	}
 }
-
-
-
-
-
-

@@ -18,7 +18,9 @@ public interface UserDAO {
 	// SELECT ONE
 	public User getUser(String userId) throws Exception ;
 	
-	public User getProfileUser(String careerUserId) throws Exception;
+	public User getProfileMine(String careerUserId) throws Exception;
+	
+	public User getProfileOther(String userId) throws Exception;
 
 	// SELECT LIST
 	public List<User> getUserList(Search search) throws Exception ;

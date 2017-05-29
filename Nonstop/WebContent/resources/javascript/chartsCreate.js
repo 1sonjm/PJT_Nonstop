@@ -2,18 +2,18 @@
  * 
  */
 
-function totalStatics(jsonData){
+function totalStatistics(jsonData){
 	var dataSet1 = [];
 	var dataSet2 = [];
 	var dataSet3 = [];
 	
 	for (var i=0; i<jsonData.dataList.length; i++){
-		console.log(jsonData.dataList[i].techNo
-				+"/"+jsonData.dataList[i].techName
-				+"/"+jsonData.dataList[i].techClass
-				+"/"+jsonData.dataList[i].demand
-				+"/"+jsonData.dataList[i].supply
-				+"/"+jsonData.dataList[i].userRate);
+//		console.log(jsonData.dataList[i].techNo
+//				+"/"+jsonData.dataList[i].techName
+//				+"/"+jsonData.dataList[i].techClass
+//				+"/"+jsonData.dataList[i].demand
+//				+"/"+jsonData.dataList[i].supply
+//				+"/"+jsonData.dataList[i].userRate);
 		
 		switch(jsonData.dataList[i].techClass){
 			case 1:
@@ -42,43 +42,13 @@ function totalStatics(jsonData){
 				break;
 		}
 	}
-
-	/*
-	"dataProvider": [
-		{
-			"y": 10,
-			"x": "16",
-			"value": "2",
-			"techName": "java",
-			"y2": 1,
-			"x2": 12,
-			"value2": 11,
-			"techName2": 73,
-			"y3": 11,
-			"x3": 12,
-			"value3": 11,
-			"techName3": 73
-		},{
-			"y": 10,
-			"x": "16",
-			"value": "2",
-			"techName": "java",
-			"y2": 1,
-			"x2": 12,
-			"value2": 11,
-			"techName2": 73,
-			"y3": 11,
-			"x3": 12,
-			"value3": 11,
-			"techName3": 73
-		}
-	]
-	*/
-	AmCharts.makeChart("chartdiv",{
+	AmCharts.makeChart("total",{
 		"type": "xy",
 		"zoomOutButtonPadding": 20,
 		"zoomOutButtonRollOverAlpha": 0.5,
 		"zoomOutText": "전체보기",
+		"startDuration": 0.55,
+		"startEffect": "easeOutSine",
 		"backgroundColor": "#F4F4F4",
 		"borderColor": "#F6F6F6",
 		"fontSize": 12,
@@ -92,6 +62,14 @@ function totalStatics(jsonData){
 			"scrollbarHeight": 8,
 			"selectedBackgroundColor": "#EEB3A7"
 		},
+		"allLabels": [ {
+				"align": "right",
+				"id": "Label-1",
+				"size": 12,
+				"text": "크기: 해당 기술을 쓸 수있는 회원비율",
+				"x": "95%",
+				"y": "0%"
+		} ],
 		"graphs": [
 			{
 				"balloonText": "<b>[[techName]]</b> <br/>수요:<b>[[x]]</b> 공급:<b>[[y]]</b><br>회원비율:<b>[[value]]%</b>",
@@ -144,8 +122,40 @@ function totalStatics(jsonData){
 		"dataProvider": dataSet1.concat(dataSet2.concat(dataSet3))
 	} );
 }
-function majorStatics(){
-	AmCharts.makeChart("chartdiv",{
+function majorStatistics(jsonData,target){
+	var dataSet = [];
+	for (var i=0; i<jsonData.dataList.length; i++){
+//		console.log(jsonData.dataList[i].techNo
+//				+"/"+jsonData.dataList[i].techName
+//				+"/"+jsonData.dataList[i].techClass
+//				+"/"+jsonData.dataList[i].demand
+//				+"/"+jsonData.dataList[i].supply
+//				+"/"+jsonData.dataList[i].userRate);
+		
+		switch (target) {
+		case '1':
+			dataSet.push({
+				techName: jsonData.dataList[i].techName,
+				ratio: jsonData.dataList[i].demand
+			});
+			break;
+		case '2':
+			dataSet.push({
+				techName: jsonData.dataList[i].techName,
+				ratio: jsonData.dataList[i].supply
+			});
+			break;
+		case '3':
+			dataSet.push({
+				techName: jsonData.dataList[i].techName,
+				ratio: jsonData.dataList[i].userRate
+			});
+			break;
+		}
+		
+	}
+	
+	AmCharts.makeChart("major",{
 		"type": "pie",
 		"angle": 30,
 		"balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
@@ -173,22 +183,28 @@ function majorStatics(){
 			"valueText": ": [[value]]",
 			"valueWidth": 40
 		},
-		"dataProvider": [
-			// 이 아래로
-			{"techName": "java","ratio": 8},
-			{"techName": "spring","ratio": 6},
-			{"techName": "cwr","ratio": "3"},
-			{"techName": "qwe","ratio": "2"},
-			{"techName": "asdf","ratio": "2"},
-			{"techName": "기타","ratio": "1"}
-			// 이위로 반복문 통해 데이터 입력
-		]
+		"dataProvider": dataSet
 	});
 }
 
-function statisticsByPeriod(){
-	
-	AmCharts.makeChart("chartdiv",
+function statisticsByPeriod(jsonData){
+	var dataSet = [];
+	for (var i=0; i<jsonData.dataList.length; i++){
+		console.log(jsonData.dataList[i].techNo
+				+"/"+jsonData.dataList[i].techName
+				+"/"+jsonData.dataList[i].techClass
+				+"/"+jsonData.dataList[i].demand
+				+"/"+jsonData.dataList[i].supply
+		+"/"+jsonData.dataList[i].userRate
+		+"/"+jsonData.dataList[i].date);
+		
+		dataSet.push({
+			date: jsonData.dataList[i].regdate,
+			demand: jsonData.dataList[i].demand,
+			supply: jsonData.dataList[i].supply
+		});
+	}
+	AmCharts.makeChart("period",
 			{
 				"type": "serial",
 				"categoryField": "date",
@@ -240,13 +256,13 @@ function statisticsByPeriod(){
 				"valueAxes": [
 					{
 						"id": "ValueAxis-1",
+						"position": "right",
+						"gridAlpha": 0,
 						"title": "수요",
 						"titleBold": false
 					},
 					{
 						"id": "ValueAxis-2",
-						"position": "right",
-						"gridAlpha": 0,
 						"title": "공급",
 						"titleBold": false
 					}
@@ -262,18 +278,127 @@ function statisticsByPeriod(){
 					"enabled": true,
 					"useGraphSettings": true
 				},
-				"dataProvider": [
-					// 이 아래로
-					{"date": "2017.1","demand": "21","supply": "20"},
-					{"date": "2017.2","demand": "11","supply": "100"},
-					{"date": "2017.3","demand": "15","supply": "30"},
-					{"date": "2017.4","demand": "123","supply": "20"}
-					// 이위로 반복문 통해 데이터 입력
-				]
+				"dataProvider": dataSet
 			}
 		);
 }
 
+/*
+ *  - Highmaps
+ * 	Example : http://www.highcharts.com/maps/demo/map-drilldown
+ *  Document : http://api.highcharts.com/highmaps
+ * */
+function highMaps() {
+    
+	var me = this;
+	me.chart = null;
+	me.event = {
+		drillup : function(){
+			
+		}
+	};
+	
+	this.init();
+};
+highMaps.prototype.init = function(){
+	var me = this;
+	// 전국단위 지도 로드
+	$.getJSON('../../resources/json/0.json', function (geojson) {
+        var data = Highcharts.geojson(geojson, 'map');
+        $.each(data, function (i) {
+        	this.drilldown = this.properties['code'];
+        	this.value = i;
+        	console.log(this.drilldown);
+        });
+        $('#region').highcharts('Map', {
+        	credits: { enabled: false },
+        	colorAxis: {
+        		min : 0,
+                minColor: '#6d64d1',
+                maxColor: '#d16464'},
+            chart : {
+                events: {
+                	// drilldown : 클릭시 하위레벨로 진입
+                    drilldown: function (e) {
+                        if (!e.seriesOptions) {
+                        	// 상위레벨에서 선택한 부분의 코드값에 따라 하위레벨이 결정
+                            var chart = this, mapKey = e.point.drilldown;
+                            $.getJSON('../../resources/json/' + mapKey + '.json', function (geojson2) {
+                                data = Highcharts.geojson(geojson2, 'map');
+                                $.each(data, function (i) {
+                                    this.value = i;
+                                });
+                                chart.addSeriesAsDrilldown(e.point, {
+                                    name: e.point.name,
+                                    data: data,
+                                    showInLegend: false,
+                                    cursor: 'pointer',
+                                    dataLabels: {
+                                        enabled: true,
+                                        allowOverlap: false,
+                                        format: '{point.name}',
+                                    },
+                                    tooltip: {
+                                    	headerFormat: '',
+                                        pointFormat: '{point.name}<br/>'
+                                    }
+                                });
+                            });
+                        }
+                    },
+                    drillup: function (e) {
+                    	me.event.drillup();
+                    }
+                }
+            },
+            series : [{
+                data : data,
+                showInLegend: false,
+                name: '전국',
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    allowOverlap: false,
+                    shadow: false,
+                    format: '{point.properties.name}'
+                },
+                tooltip: {
+                	headerFormat: '',
+                    pointFormat: '{point.properties.name}'
+                },
+            }],
+            // 제목 제거
+            title: null,
+            // 부제목 제거
+            subtitle: null,
+            // 줌 설정
+            mapNavigation: {
+                enableMouseWheelZoom: true,
+                enableTouchZoom : true
+            },
+            // 지역 선택시 하위 지도 띄우는 기능 설정
+            drilldown: {
+            	// 상위 지도 레이블 스타일 설정
+                activeDataLabelStyle: {
+                	color : '#000',
+                	shadow: false,
+                    textShadow: '0 0 0px #000000',
+                    fontWeight: "none",
+                    textDecoration: 'none'
+                },
+                // 상위 지도 버튼 스타일 설정
+                drillUpButton: {
+                    relativeTo: 'spacingBox'
+                }
+            },
+        });
+        me.chart = $("#chartdiv").highcharts();
+    });
+};
+
+
+
+/*
 function statisticsByRegion(){
 	var data = [
 	    ['kr-so', 15],//서울
@@ -321,4 +446,4 @@ function statisticsByRegion(){
 	        }
 	    }]
 	});
-}
+}*/

@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.nonstop.domain.Letter;
-import com.nonstop.domain.Search;
 import com.nonstop.service.letter.LetterDAO;
 import com.nonstop.service.letter.LetterService;
 
@@ -30,24 +29,39 @@ public class LetterServiceImpl implements LetterService {
 		letterDAO.addLetter(letter);
 	}
 
-	/*public Map<String, Object> listLetter(Search search) throws Exception {
-		List<Letter> list = letterDAO.listLetter(search);
-		int totalCount = letterDAO.getTotalCount(search);
+	public Map<String, Object> getReceiveLetterList(String receiveId) throws Exception {
+			
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		List<Letter> list =letterDAO.getReceiveLetterList(receiveId);
+		
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	public Map<String, Object> getSendLetterList(String sendId) throws Exception {
 		
 		Map<String , Object> map = new HashMap<String , Object>();
+		
+		List<Letter> list =letterDAO.getSendLetterList(sendId);
+		
 		map.put("list", list);
-		map.put("totalCount", new Integer(totalCount));
 		
 		return map;
 	}
 
-	public Letter getLetter(int letterNo) throws Exception {
-		return letterDAO.getLetter(letterNo);
+	public Letter getLetter(int letNo) throws Exception {
+		return letterDAO.getLetter(letNo);
 	}
 
-	public void deleteLetter(int letterNo) throws Exception {
-		letterDAO.deleteLetter(letterNo);
+	public void deleteLetter(int letNo) throws Exception {
+		letterDAO.deleteLetter(letNo);
 	}
-	*/
+	
+	public void updateReadDate(int letNo) throws Exception{
+		letterDAO.updateReadDate(letNo);
+	}
+	
 
 }
