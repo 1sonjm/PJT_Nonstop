@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.RecordApplicant;
 import com.nonstop.domain.Scrap;
 import com.nonstop.service.profile.ProfileDAO;
 
@@ -41,6 +42,16 @@ public class ProfileDAOImpl implements ProfileDAO{
 		map.put("list", list);
 		return map;
 	}
+	
+	public Map<String , Object> getCareerList2(String userId) throws Exception {
+		
+		Map<String , Object>  map = new HashMap<String, Object>();
+		
+		List<Career> list = sqlSession.selectList("CareerMapper.getListCareer",userId);
+
+		map.put("list", list);
+		return map;
+	}
 
 	public Career getCareer(int careerNo) throws Exception {
 		return sqlSession.selectOne("CareerMapper.getCareer", careerNo);
@@ -62,13 +73,22 @@ public class ProfileDAOImpl implements ProfileDAO{
 		map.put("reqUserId", reqUserId);
 		map.put("targetUserId", targetUserId);
 		
-		sqlSession.insert("FollowMapper.addCareer",map);
+		sqlSession.insert("FollowMapper.addFollow",map);
 	}
 
 	public List<Follow> getFollowList(String reqUserId) throws Exception {
 		
-		return sqlSession.selectList("FollowMapper.getListFollw",reqUserId);
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("reqUserId", reqUserId);
+		
+		return sqlSession.selectList("FollowMapper.getListFollow",map);
 	}
+
+	public Follow getFollow(String reqUserId) throws Exception {
+		return sqlSession.selectOne("FollowMapper.getFollow", reqUserId);
+	}
+
 	
 	public void deleteFollow(String reqUserId, String targetUserId) throws Exception {
 		
@@ -80,12 +100,13 @@ public class ProfileDAOImpl implements ProfileDAO{
 		sqlSession.delete("FollowMapper.deleteFollow",map);
 	}
 
-	public void addPortScrap(int portNo, String scrapUserId) throws Exception {
+	public void addPortScrap(int portNo,String scrapUserId) throws Exception {
 
 		Map<String , Object> map = new HashMap<String , Object>();
 		
-		map.put("scrapUserId", scrapUserId);
 		map.put("portNo", portNo);
+		map.put("scrapUserId", scrapUserId);
+		
 		
 		sqlSession.insert("ScrapMapper.addPortScrap",map);
 	}
@@ -126,19 +147,16 @@ public class ProfileDAOImpl implements ProfileDAO{
 		
 	}
 
-	
-
-	
-
-	
-	
-
-
-	
-	
-	
-
-	
+	public Map<String, Object> getRecordProjectList(String recUserId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		List<RecordApplicant> list = sqlSession.selectList("RecordProjectMapper.getListRecordProject", recUserId);
+		
+		map.put("list", list);
+		
+		return map;
+	}
 
 }
 

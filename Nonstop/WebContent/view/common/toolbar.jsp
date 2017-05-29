@@ -172,7 +172,7 @@
 				self.location = "/purchase/listPurchase"
 			}); 
 		});
-		
+	 	
 </script>  
 
 

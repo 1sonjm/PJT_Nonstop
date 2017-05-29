@@ -40,7 +40,7 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	 $(function() {
+	/*  $(function() {
 		 $("span.updateCareer").on("click" , function() {
 				var careerNo=$(this).attr('careerNo');
 				alert(careerNo);
@@ -55,7 +55,11 @@
 			self.location ="/profile/deleteCareer?careerNo="+careerNo;
 			
 			});
-	});	
+		 
+		$("span.addCareer").on("click" , function() {
+		 		self.location = "/profile/addCareerView";
+			}); 
+	});	 */
 </script>
 </head>
 
@@ -63,7 +67,7 @@
 	
 	<div class="container">
 	<div class="page-header text-center">
-	       <h5 class=" text-left" >개인 기술정보</h5>
+	       <h5 class=" text-left" >팔로우한 회원 목록</h5>
 	    </div>
 
       <table class="table table-hover table-striped" >
@@ -71,49 +75,44 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >기능명</th>
-            <th align="left">경력</th>
-            <th align="left">
-            <span class="addCareer">
-            <c:if test="${user.userId==sessionScope.user.userId }">
-			  <button type="button" class="btn btn-primary">등록</button>
-			  </c:if>
-			   </span>
-            </th>
+            <th align="center" >회원명</th>
+            <th align="center">팔로우 삭제/등록</th>
+            <th align="center">쪽지</th>
           </tr>
         </thead>
        
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="career" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			<td align="center">${ i }</td>
-			
-			
+		  	<c:forEach var="follow" items="${list}">
+				<c:set var="i" value="${ i+1 }" />
+				<tr>
+					<td align="center">${ i }</td>
+					<td align="center">${follow.targetUserId}</td>
+					<td align="center">
+			 			<c:if test="${follow.followNo != null}">
+			 				<div class="col-sm-offset-4  col-sm-4 text-center">
+					 			<span class="follow" targetUserId="${user.userId}" id="follow">
+		      						<button type="button" class="btn btn-primary" id="profile" >언팔로우</button>
+		      					</span>
+		     				</div>
+		      			</c:if>
+		      
+		      			<c:if test="${follow.followNo == null}">
+		      				<div class="col-sm-offset-4  col-sm-4 text-center">
+					 			<span class="follow" targetUserId="${user.userId}" id="follow">
+		      						<button type="button" class="btn btn-primary" id="profile" >팔로우</button>
+		      					</span>
+		      				</div>
+		      			</c:if>
+			 		</td>
 			 
-			 
-			  <td align="left">
-			  <c:if test="${career.techNo == '1000' }">Java</c:if>
-			  <c:if test="${career.techNo == '1001' }">Python</c:if>
-			  <c:if test="${career.techNo == '1002' }">Php</c:if>
-			  </td>
-			 
-			  <td align="left">${career.careerUseTerm}개월  &nbsp; &nbsp;
-			  
-			  	<c:if test="${career.careerUserId==sessionScope.user.userId }">
-			  
-			  		<span class="updateCareer" careerNo="${career.careerNo}">
-			  			<button type="button" class="btn btn-primary">수정</button> &nbsp; &nbsp;
-			   		</span>
-			   
-			  		<span class="deleteCareer" careerNo="${career.careerNo}">
-			   			<button type="button" class="btn btn-danger">삭제</button>
-			   		</span>
-			   
-				</c:if>
-				
+			  <td align="center">
+			  <div class="col-sm-offset-4  col-sm-4 text-center">
+				<span class="follow" targetUserId="${user.userId}" id="follow">
+		      		<button type="button" class="btn btn-primary" id="profile" >쪽지작성</button>
+		      	</span>
+		      </div>
 			  </td>
 			  
 			 

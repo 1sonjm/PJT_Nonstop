@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.Letter;
-import com.nonstop.domain.Search;
 import com.nonstop.service.letter.LetterDAO;
 
 @Repository("letterDAOImpl")
@@ -29,20 +28,24 @@ public class LetterDAOImpl implements LetterDAO{
 		sqlSession.insert("LetterMapper.addLetter",letter);
 	}
 
-	/*public List<Letter> listLetter(Search search) throws Exception {
-		return sqlSession.selectList("LetterMapper.getListLetter",search);
+	public List<Letter> getReceiveLetterList(String receiveId) throws Exception {
+		return sqlSession.selectList("LetterMapper.getReceiveLetterList",receiveId);
+	}
+	
+	public List<Letter> getSendLetterList(String sendId) throws Exception {
+		return sqlSession.selectList("LetterMapper.getListSendLetter",sendId);
 	}
 
-	public Letter getLetter(int letterNo) throws Exception {
-		return sqlSession.selectOne("LetterMapper.getLetter",letterNo);
+	public Letter getLetter(int letNo) throws Exception {
+		return sqlSession.selectOne("LetterMapper.getLetter",letNo);
 	}
 
-	public void deleteLetter(int letterNo) throws Exception {
-		sqlSession.delete("LetterMapper.deleteLetter", letterNo);
+	public void deleteLetter(int letNo) throws Exception {
+		sqlSession.delete("LetterMapper.deleteLetter", letNo);
 	}
-
-	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("LetterMapper.getTotalCount",search);
-	}*/
+	
+	public void updateReadDate(int letNo) throws Exception{
+		sqlSession.update("LetterMapper.updateReadDate",letNo);
+	}
 
 }

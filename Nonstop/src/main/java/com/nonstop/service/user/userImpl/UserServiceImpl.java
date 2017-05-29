@@ -46,8 +46,12 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUser(userId);
 	}
 
-	public User getProfileUser(String careerUserId) throws Exception {
-		return userDAO.getProfileUser(careerUserId);
+	public User getProfileMine(String careerUserId) throws Exception {
+		return userDAO.getProfileMine(careerUserId);
+	}
+	
+	public User getProfileOther(String userId) throws Exception {
+		return userDAO.getProfileOther(userId);
 	}
 
 	public Map<String , Object > getUserList(Search search) throws Exception {

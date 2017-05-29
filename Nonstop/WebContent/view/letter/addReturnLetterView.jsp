@@ -66,7 +66,7 @@
 	
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">쪽지작성</h1>
+		<h1 class="bg-primary text-center">답장하기</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
@@ -83,7 +83,7 @@
 		  <div class="form-group">
 		    <label for="receiveId" class="col-sm-offset-1 col-sm-3 control-label">수신자</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="receiveId" name="receiveId">
+		      <input type="text" class="form-control" id="receiveId" name="receiveId" value="${letter.sendId}" readOnly>
 		    </div>
 		  </div>
 		  

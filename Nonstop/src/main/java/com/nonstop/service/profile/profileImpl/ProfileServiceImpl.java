@@ -34,6 +34,11 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		return profileDAO.getCareerList(careerUserId);
 	}
+	
+	public Map<String , Object> getCareerList2(String userId) throws Exception {
+		
+		return profileDAO.getCareerList(userId);
+	}
 
 	public Career getCareer(int careerNo) throws Exception {
 		return profileDAO.getCareer(careerNo);
@@ -53,8 +58,12 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception {
-		List<Follow> list = profileDAO.getFollowList(reqUserId);
-		return list;
+	
+		return profileDAO.getFollowList(reqUserId);
+	}
+
+	public Follow getFollow(String reqUserId) throws Exception {
+		return profileDAO.getFollow(reqUserId);
 	}
 	
 	public void deleteFollow(String reqUserId, String targetUserId) throws Exception {
@@ -62,7 +71,7 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	public void addPortScrap(int portNo, String scrapUserId) throws Exception {
-		profileDAO.addPortScrap(portNo, scrapUserId);
+		profileDAO.addPortScrap(portNo,scrapUserId);
 	}
 	
 	public void addProjScrap(int projNo, String scrapUserId) throws Exception {
@@ -79,11 +88,9 @@ public class ProfileServiceImpl implements ProfileService {
 	public void deleteScrap(String scrapUserId, int postNo, int scrapDiv) throws Exception {
 		profileDAO.deleteScrap(scrapUserId, postNo, scrapDiv);
 	}
-	
-	
-	
-	
-	
-	
 
+	public Map<String , Object> getRecordProjectList(String recUserId) throws Exception{
+		
+		return profileDAO.getRecordProjectList(recUserId);
+	}
 }
