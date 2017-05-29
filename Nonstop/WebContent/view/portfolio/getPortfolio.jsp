@@ -304,40 +304,35 @@
                                     <h3>Discuss About Post</h3>
                                      
                                      
-                                     <!-- Disqus Code Start  (Please Note: Disqus will not be load on local, You have to upload it on server.)-->
-                                     <div id="disqus_thread"></div>
-							          <script>
-					
-					/***  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS. LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables.
-							
-							var disqus_config = function () {
-							this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
-							this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
-							};
-							*/
-							
-							           (function() { // DON'T EDIT BELOW THIS LINE
-							           var d = document, s = d.createElement('script');
-							           s.src = '//uipasta.disqus.com/embed.js';   // Please change the url from your own disqus id
-							           s.setAttribute('data-timestamp', +new Date());
-							           (d.head || d.body).appendChild(s);
-							           })();
-							          </script>
-			  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-              <!-- Disqus Code End -->
-              
-                                   </div>
-                                   <!-- Post Comment (Disqus) End -->
+                                     
+                                    	
+   									<div id="disqus_thread">
+   										<iframe id="dsq-app1" name="dsq-app1" allowtransparency="true" frameborder="0" scrolling="no" tabindex="0" title="Disqus" width="100%"  style="width: 1px !important; min-width: 100% !important; border: none !important; overflow: hidden !important; height: 390px !important;" horizontalscrolling="no" verticalscrolling="no"></iframe>
+   									</div>
+   									
+					                <script type="text/javascript">
+					                    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+					                    var disqus_shortname = 'bootsnipp'; // required: replace example with your forum shortname
+					                    var disqus_identifier = '67OaM';
+					                    /* * * DON'T EDIT BELOW THIS LINE * * */
+					                    (function() {
+					                        var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+					                        dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+					                        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					                    })();
+					                </script>
+       								<noscript>Please enable JavaScript to view the &lt;a href="http://disqus.com/?ref_noscript"&gt;comments powered by Disqus.&lt;/a&gt;</noscript>
+            							
+                                   	<!-- Post Comment (Disqus) End -->
 	
-	                            
+	                            </div>
 	                            		
 	            			</div>
 	            		</div>
 	            	</div>
 	            </div>
 	         </div>
-        	<!-- Blog Post (Right Sidebar) End -->
-               
+        	<!-- Blog Post (Right Sidebar) End -->                                         
                
 			<!-- About Me (Right Sidebar) Start -->
 			<div class="col-md-3">

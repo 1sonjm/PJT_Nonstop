@@ -86,10 +86,45 @@
 			});
 			
 			
-			$("#addScrap").on("click", function() {
-				alert("가까운 미래에");
-			});
+			/* 스크랩추가 */
+			$("#addScrap").on("click" , function() {
+		         
+				alert();
+				
+		         var flag = $(this).text().trim();
+		         var requestTarget;
+		         var asdf;
+		         
+		         if(flag="add to scrap"){
+		            requestTarget = "addJsonPortScrap";
+		            asdf = "스크랩해제";
+		         }else{
+		            requestTarget = "deleteJsonPortScrap";
+		            asdf ="스크랩"
+		         }
+
+		          var portNo=$(this).attr('portNo');
+
+		          $.ajax(
+		             {
+		                url : "profile/"+requestTarget+"/"+portNo,
+		                method : "GET",
+		                dateType : "json",
+		                headers : {
+		                   "Accept" : "application/json",
+		                  "Content-Type" : "application/json"   
+		              },
+		                success : function(JSONData , status){
+		                   var displatValue = 
+		                   "<button type='button' id='addScrap' portNo='${portfolio.portNo}'>"+asdf+"</button>";
+		                   
+		                   $("#addScrap").html(displayValue);
+	                   }
+	                });
+	             });
 		});
+		
+		
 	</script>
 	<style>
 	
@@ -395,7 +430,9 @@
 				                	<p class="hover__active">
 				                    	<span class="glyphicon glyphicon-search" aria-hidden="false"></span>
 				                    	view portfolio<br/>
-				                    	<button type="button" id="addScrap">add to scrap</button>
+				                    	<button type="button" id="addScrap" portNo="${portfolio.portNo}">add to scrap</button>
+				                    	
+				                    					                    
 				                  	</p>
 									<p class="text-center">									 
 										<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> ${portfolio.totalPortView} &ensp;&ensp;&ensp;&ensp;&ensp;
