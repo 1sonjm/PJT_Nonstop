@@ -1,6 +1,8 @@
 package controller.tdd;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -41,11 +43,20 @@ public class StatisticsServiceTest {
 		Assert.assertEquals(1, result);
 
 	}
-	@Test
+	//@Test
 	public void addStatisticsDataList()  throws Exception{
 		Assert.assertEquals(true, (statisticsService.addStatisticsDataList()!=0));		
 	}
 
+	//@Test
+	public void getTechClassList(){
+		System.out.println(statisticsService.getTechClassList());
+	}
+	//@Test
+	public void getTechDataList(){
+		System.out.println(statisticsService.getTechDataList(1));
+	}
+	
 	//@Test
 	public void getTotalStatisticsList()  throws Exception{
 		List<Statistics> result = statisticsService.getTotalStatisticsList();
@@ -55,28 +66,32 @@ public class StatisticsServiceTest {
 	}
 
 	//@Test
-	public void getJSONTotalStatisticsList()  throws Exception{
+	public void getMajorStatisticsList()  throws Exception{
+		System.out.println(statisticsService.getMajorStatisticsList(1));
+	}
+
+	@Test
+	public void getPeriodStatisticsList()  throws Exception{
+		Statistics statistics = new Statistics();
+		statistics.setTechClass(1);
+		statistics.setTechNo(1000);
+		statistics.setSearchStartDate("2017/05/24");
+		statistics.setSearchEndDate("2017/05/29");
 		
+		System.out.println(statisticsService.getPeriodStatisticsList(statistics));
 	}
 
 	//@Test
-	public void getJSONMajorStatisticsList()  throws Exception{
-		//Statistics statistics
-	}
-
-	//@Test
-	public void getJSONPeriodStatisticsList()  throws Exception{
-		//Statistics statistics
-	}
-
-	//@Test
-	public void getJSONRegionStatisticsList()  throws Exception{
+	public void getRegionStatisticsList()  throws Exception{
 		//Statistics statistics
 	}
 
 	//@Test
 	public void getPostCountList()  throws Exception{
-
+		Map<String, Integer> result = statisticsService.getPostCountList();
+		System.out.println(result.get("DESIGN"));
+		System.out.println(result.get("DEVELOP"));
+		System.out.println(result.get("PROJECT"));
 	}
 
 	//@Test

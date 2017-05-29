@@ -1,14 +1,12 @@
 package com.nonstop.domain;
 
-import java.util.Date;
-
 public class Statistics {
 	private int demand;
 	private int supply;
-	private Date regdate;
+	private String regdate;
 	private double userRate;
-	private Date searchStartDate;
-	private Date searchEndDate;
+	private String searchStartDate;
+	private String searchEndDate;
 	private int techNo;
 	private String techName;
 	private int techClass;
@@ -26,10 +24,10 @@ public class Statistics {
 	public void setSupply(int supply) {
 		this.supply = supply;
 	}
-	public Date getRegdate() {
+	public String getRegdate() {
 		return regdate;
 	}
-	public void setRegdate(Date regdate) {
+	public void setRegdate(String regdate) {
 		this.regdate = regdate;
 	}
 	public double getUserRate() {
@@ -38,16 +36,16 @@ public class Statistics {
 	public void setUserRate(double userRate) {
 		this.userRate = userRate;
 	}
-	public Date getSearchStartDate() {
+	public String getSearchStartDate() {
 		return searchStartDate;
 	}
-	public void setSearchStartDate(Date searchStartDate) {
+	public void setSearchStartDate(String searchStartDate) {
 		this.searchStartDate = searchStartDate;
 	}
-	public Date getSearchEndDate() {
+	public String getSearchEndDate() {
 		return searchEndDate;
 	}
-	public void setSearchEndDate(Date searchEndDate) {
+	public void setSearchEndDate(String searchEndDate) {
 		this.searchEndDate = searchEndDate;
 	}
 	public int getTechNo() {

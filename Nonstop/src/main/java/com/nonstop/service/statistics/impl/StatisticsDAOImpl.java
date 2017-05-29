@@ -1,7 +1,7 @@
 package com.nonstop.service.statistics.impl;
 
-import java.sql.SQLClientInfoException;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +40,16 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 		
 		return sqlSession.insert("StatisticsMapper.addListStatisticsData",dataList);
 	}
+
+	@Override
+	public List<Statistics> getTechClassList(){
+		return sqlSession.selectList("StatisticsMapper.getListTechClass");
+	}
+	@Override
+	public List<Statistics> getTechDataList(int classDiv){
+		return sqlSession.selectList("StatisticsMapper.getListTechData",classDiv);
+	}
+	
 	@Override
 	public List<Statistics> getTotalStatisticsList() {
 		return sqlSession.selectList("StatisticsMapper.getListTotalStatistics");
@@ -61,8 +71,9 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 	}
 
 	@Override
-	public List<Integer> getPostCountList() {
-		return sqlSession.selectList("StatisticsMapper.getListPostCount");
+	@SuppressWarnings("unchecked")
+	public Map<String, Integer> getPostCountList() {
+		return (Map<String, Integer>)sqlSession.selectList("StatisticsMapper.getListPostCount").get(0);
 	}
 
 	@Override
