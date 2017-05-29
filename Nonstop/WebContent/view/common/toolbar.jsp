@@ -3,10 +3,10 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<nav class="navbar navbar-inverse" id="floater">
+	<nav class="navbar navbar-inverse navbar-fixed-top" id="floater">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" href="#">NONSTOP</a>
+	      <a class="navbar-brand" id="logo">NONSTOP</a>
 	    </div>
 	    
 	    <ul class="nav navbar-nav" id="center">
@@ -47,10 +47,10 @@
 		      
 		      
 		     <!--  <li><a href="#"><span class="glyphicon glyphicon-align-justify"></span></a></li> -->
-	     <%--  </c:if> --%>
+	      <%-- </c:if> --%>
 	      
 	      <%-- <c:if test="${sessionScope.user.role != '1' || ${sessionScope.user.role != '2' || ${sessionScope.user.role != '3'}">
-	      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
+	      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>로그인</a></li>
 		      <li><a href="#"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
 		  </c:if> --%>
 	    </ul>
@@ -75,31 +75,67 @@
 	</style>
 
 <script type="text/javascript">
-//============= logout Event  처리 =============	
-		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('Statistics')").on("click" , function() {
-				$(self.location).attr("href","/user/logout");
-				//self.location = "/user/logout"
-			}); 
-		 });
+
+		//============= 메인페이지 이동 Event  처리 =============   
+		$(function() {
+		   $("#logo").on("click" , function() {
+		      self.location = "/index.jsp";
+		   }); 
+		});
+		
+		//============= toolbar portfolio 이동 Event 처리 =============
+	    $(function() {
+	         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	          $("#portDesigner").on("click" , function() {
+	            //$(self.location).attr("href","/user/logout");
+	            self.location = "/portfolio/listPortfolio"
+	          }); 
+	    });
+	   
+	   //============= toolbar portfolio 이동 Event 처리 =============
+	    $(function() {
+	         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	          $("#portDeveloper").on("click" , function() {
+	            //$(self.location).attr("href","/user/logout");
+	            self.location = "/portfolio/listPortfolio"
+	          }); 
+	    });
+		
+	   //============= toolbar user login 이동 Event 처리 =============
+	   
+	    $(function() {
+	          $("a:contains('로그인')").on("click" , function() {
+	            //$(self.location).attr("href","/user/logout");
+	            self.location = "/user/login"
+	          }); 
+	    });
+	   
+	  //============= toolbar statistics getListTotalStatistics 이동 Event 처리 =============
+		   
+	    $(function() {
+	          $("a:contains('Statistics')").on("click" , function() {
+	            //$(self.location).attr("href","/user/logout");
+	            self.location = "/statistics/getListTotalStatistics"
+	          }); 
+	    });
+	  
 		
 		//============= 회원정보조회 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDesigner").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=18"
+				self.location = "/project/getProject?projNo=1"
 			}); 
 		 });
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 	$("#projDeveloper").on("click" , function() {
-					//$(self.location).attr("href","/user/logout");
-					self.location = "/project/getProject?projNo=18"
-				}); 
-			 });
+		 	$("#projDeveloper").on("click" , function() {
+				//$(self.location).attr("href","/user/logout");
+				self.location = "/project/getProject?projNo=1"
+			}); 
+		 });
 		
 		//=============  개인정보조회회 Event  처리 =============	
 	 	$( "a:contains('개인정보조회')" ).on("click" , function() {

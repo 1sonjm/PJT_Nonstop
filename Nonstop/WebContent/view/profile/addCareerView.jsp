@@ -32,24 +32,17 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			 $( "#addCareer" ).on("click" , function() {
-					alert("ㅇㅇ" );
 					fncAddCareer();
 				//self.location ="/profile/addCareer?techNo="+$(this).attr('techNo')+"&careerUseTerm="+$(this).attr('careerUseTerm');
 				//$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
 				});
+ 
 		});	
-		
-			
 		 function fncAddCareer(){
 		 	
 		 	$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
 		 }
-
-		 	//function resetData(){
-		 	//	document.detailForm.reset();
-		 	//}.ct_btn01:contains('등록')
-		 	
-		
+	
 	</script>		
     
 </head>
@@ -65,17 +58,17 @@
 		<form class="form-horizontal">
 		
 		  <div class="form-group">
-		    <label for="techNo" class="col-sm-offset-1 col-sm-3 control-label">기술명</label>
-		    <div class="col-sm-4">
-		      <!-- <input type="text" class="form-control" id="techNo" name="techNo"> -->
-		       <select class="form-control" name="techNo" >
+		  
+		    <label for="techNo" class="col-sm-offset-1 col-sm-3 control-label">기술명</label> 
+		    <div class="col-sm-4" id="techNo">
+		     
+		    <select class="form-control" name="techNo" >
 			 <option value="1000">JAVA</option>
 			 <option value="1001">python</option>
 			 <option value="1002">php</option>
 			</select>
 		    </div>
-		  </div>
-		  
+		  </div>  
 		  
 		  <div class="form-group">
 		    <label for="careerUseTerm" class="col-sm-offset-1 col-sm-3 control-label">사용기간</label>
@@ -83,6 +76,8 @@
 		      <input type="text" class="form-control" id="careerUseTerm" name="careerUseTerm" placeholder="기술사용기간">
 		    </div>
 		  </div>
+		  
+		  
 		  
 		  
 		  <div class="form-group">

@@ -30,6 +30,8 @@ import com.nonstop.service.user.UserService;
 
 
 
+
+
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
@@ -38,6 +40,8 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+
+	//setter Method
 
 		
 	public UserController(){
@@ -129,7 +133,9 @@ public class UserController {
 		System.out.println("/getJsonUser/getUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
+
 	
+
 		model.addAttribute("user", user);
 	}
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -163,7 +169,7 @@ public class UserController {
 		System.out.println("/user/updateUser : GET");
 		//Business Logic
 		User user = userService.getUser(userId);
-		
+
 		model.addAttribute("user", user);
 		
 		return "forward:/view/user/updateUser.jsp";

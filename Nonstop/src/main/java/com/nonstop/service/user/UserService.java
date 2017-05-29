@@ -16,19 +16,15 @@ public interface UserService {
 	
 	public void addCompany(User user) throws Exception;
 	
-	
 	public User getUser(String userId) throws Exception;
-	
 
 	public User getCompany(String userId) throws Exception;
+
+	public User getProfileUser(String careerUserId) throws Exception;
 	
 	public Map<String , Object> getUserList(Search search) throws Exception;
 	
-
 	public void updateUser(User user) throws Exception;
-	
-
-
 	
 	public boolean checkUserId(String userId) throws Exception;
 	

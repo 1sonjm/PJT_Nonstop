@@ -29,7 +29,7 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	public void addPortfolio(Portfolio portfolio) throws Exception {		
 		sqlSession.insert("PortfolioMapper.addPortfolio", portfolio);		
 	}
-
+	
 	@Override
 	public Portfolio getPortfolio(int portNo) throws Exception {
 
@@ -39,8 +39,8 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		return sqlSession.selectOne("PortfolioMapper.getPortfolio", portNo);
 	}
 
-	public List<Portfolio> getPortfolioList() throws Exception {
-		return sqlSession.selectList("PortfolioMapper.getPortfolioList");
+	public List<Portfolio> getPortfolioList(int portDivision) throws Exception {
+		return sqlSession.selectList("PortfolioMapper.getPortfolioList", portDivision);
 	}
 
 	@Override

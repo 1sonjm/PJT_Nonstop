@@ -11,7 +11,7 @@ public interface PortfolioService {
 
 	public Portfolio getPortfolio(int portNo) throws Exception;
 	
-	public List<Portfolio> getPortfolioList() throws Exception;
+	public List<Portfolio> getPortfolioList(int portDivision) throws Exception;
 	
 	public void updatePortfolio(Portfolio portfolio) throws Exception;
 

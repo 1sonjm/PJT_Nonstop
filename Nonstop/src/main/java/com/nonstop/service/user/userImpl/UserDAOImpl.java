@@ -42,6 +42,11 @@ public class UserDAOImpl implements UserDAO{
 		return sqlSession.selectOne("UserMapper.getUser", userId);
 	}
 	
+
+	public User getProfileUser(String careerUserId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getProfileUser",careerUserId );
+	}
+	
 	public void updateUser(User user) throws Exception {
 		sqlSession.update("UserMapper.updateUser", user);
 	}

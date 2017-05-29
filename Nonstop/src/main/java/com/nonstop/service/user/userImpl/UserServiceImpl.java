@@ -46,6 +46,10 @@ public class UserServiceImpl implements UserService{
 		return userDAO.getUser(userId);
 	}
 
+	public User getProfileUser(String careerUserId) throws Exception {
+		return userDAO.getProfileUser(careerUserId);
+	}
+
 	public Map<String , Object > getUserList(Search search) throws Exception {
 		List<User> list= userDAO.getUserList(search);
 		int totalCount = userDAO.getTotalCount(search);
@@ -60,8 +64,6 @@ public class UserServiceImpl implements UserService{
 	public void updateUser(User user) throws Exception {
 		userDAO.updateUser(user);
 	}
-
-	
 	
 	public boolean checkUserId(String userId) throws Exception{
 	      
@@ -77,7 +79,8 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User getCompany(String userId) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
+
 }

@@ -25,7 +25,7 @@ CREATE SEQUENCE seq_tech_tech_no1 INCREMENT BY 1 START WITH 1000 MAXVALUE 1999;
 CREATE SEQUENCE seq_tech_tech_no2 INCREMENT BY 1 START WITH 2000 MAXVALUE 2999;
 CREATE SEQUENCE seq_tech_tech_no3 INCREMENT BY 1 START WITH 3000 MAXVALUE 3999;
 
-CREATE TABLE users (
+CREATE TABLE users(
 	user_id 					VARCHAR2(30)  		NOT NULL,
 	user_name 				VARCHAR2(10)  		NOT NULL,
 	user_pwd 					VARCHAR2(50)  		NOT NULL,
@@ -41,7 +41,7 @@ CREATE TABLE users (
 	UNIQUE(user_img)
 );
 
-CREATE TABLE tech (
+CREATE TABLE tech(
 	tech_no 					NUMBER 				 		NOT NULL,
 	tech_name 				VARCHAR2(30)  		NOT NULL,
 	tech_class				NUMBER(1)					NOT NULL,
@@ -75,17 +75,20 @@ VALUES ('com04','기업4','1234','qwe4@naver,com','com04img',3,010-1234-5678,
 				20,to_date('2012/08/01 11:27:27', 'YYYY/MM/DD HH24:MI:SS'),'ceo4','서울 강남구');
 
 
-INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'java',1);
-INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'python',1);
-INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'php',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'Java',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'Python',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'PHP',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'JavaScript',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'Swift',1);
 
-INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'spring',2);
-INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'django',2);
-INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'symfony',2);
+INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'Spring',2);
+INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'Django',2);
+INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'Symfony',2);
 
-INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'oracle',3);
-INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'mssql',3);
-INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'mysql',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'Oracle',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'MsSQL',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'MySQL',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'SQLite',3);
 
 /**************************************************************/
 /*************************   포트폴리오     *************************/
@@ -287,17 +290,20 @@ INSERT INTO techuse (tu_no,tu_proj_no,tu_tech_no) VALUES (seq_techuse_tu_no.next
 INSERT INTO techuse (tu_no,tu_proj_no,tu_tech_no) VALUES (seq_techuse_tu_no.nextval,3,3002);
 
 
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1000,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1001,20,30,15,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1002,20,30,35,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1000,10,27,20,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1001,9,15,15,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1002,2,10,35,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1003,22,18,35,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1004,11,10,35,SYSDATE);
 
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2000,20,30,30,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2001,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2002,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2000,7,30,30,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2001,21,12,20,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2002,16,17,32,SYSDATE);
 
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3000,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3001,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3002,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3000,12,16,5,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3001,18,13,8,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3002,21,9,12,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3003,26,16,12,SYSDATE);
 
 /**************************************************************/
 /**************************    프로필      *************************/
