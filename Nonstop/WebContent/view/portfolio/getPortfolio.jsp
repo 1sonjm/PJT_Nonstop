@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-    
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <html lang="ko">
 
 <head>
@@ -248,6 +248,53 @@
 		      });
 	    });
 	    })(jQuery);
+	
+	$(function() {
+	      /* 스크랩추가 */
+	      $("#sarap").on("click" , function() {
+
+	            var flag = $(this).text().trim();
+	            var requestTarget;
+	            var asdf;
+	            
+	            alert(flag);
+	            
+	            
+	            if(flag=="add to scrap"){
+	            	requestTarget = "addJsonPortScrap";
+	               asdf = "delete to scrap";  
+	               alert(1);
+	            }else if(flag=="delete to scrap"){
+	            	requestTarget = "deleteJsonPortScrap";
+	               asdf ="add to scrap"
+	            	   alert(2);
+	            }else{
+	            	requestTarget == "deleteJsonPortScrap";
+	                asdf ="add to scrap"
+	                	alert(3);
+	            }
+	            alert(requestTarget+"컨트롤러 어디로가니");
+	            alert(asdf);
+	            
+	             var portNo=$(this).attr('portNo');
+	             $.ajax(
+	                {
+	                   url : "/profile/"+requestTarget+"/"+portNo,
+	                   method : "GET",
+	                   dateType : "json",
+	                   headers : {
+	                      "Accept" : "application/json",
+	                     "Content-Type" : "application/json"   
+	                 },
+	                   success : function(JSONData , status){
+	                      var displatValue = 
+	                      "<button type='button' id='Scrap' portNo='${portfolio.portNo}'>"+asdf+"</button>";
+	                      
+	                      $(".Scrap").html(displayValue);
+	                   }
+	                });
+	             });
+	      });
     
 	</script>
 </head>
@@ -268,7 +315,13 @@
                         	<a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->         
                         	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
                         	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
-                        	<button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩</button>
+                        	<c:if test="${portfolio.scrapNo == 0}">
+                        	<button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;add to scrap</button>
+                        	</c:if>
+                        	
+                        	<c:if test="${portfolio.scrapNo != 0}">
+                        	<button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;delete to scrap</button>
+                        	</c:if>
                         </div>
                         
                         <div class="col-md-12 content-page">

@@ -133,18 +133,27 @@ public class ProfileDAOImpl implements ProfileDAO{
 	
 		return sqlSession.selectList("ScrapMapper.getListScrap" , map);
 	}
+	
+	public Map<String , Object> getPortScrapList(String scrapUserId) throws Exception{
 
-
-	public void deleteScrap(String scrapUserId, int postNo , int scrapDiv) throws Exception {
+		List<Scrap> list = sqlSession.selectList("ScrapMapper.getListPortScrap", scrapUserId);
 		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
+		map.put("list2", list);
+		
+		return map;
+	}
+
+
+	public void deleteJsonPortScrap( int portNo , String scrapUserId)throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("portNo", portNo);
 		map.put("scrapUserId", scrapUserId);
-		map.put("scrapNo", postNo);
-		map.put("scrapDiv", scrapDiv);
-		
-		sqlSession.delete("ScrapMapper.deleteScrap", map);
-		
+
+		sqlSession.delete("ScrapMapper.deleteScrap", map);	
 	}
 
 	public Map<String, Object> getRecordProjectList(String recUserId) throws Exception {

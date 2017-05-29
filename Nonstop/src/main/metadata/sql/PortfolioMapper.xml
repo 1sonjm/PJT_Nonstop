@@ -8,15 +8,18 @@
  	
  	
 	<resultMap id="portfolioSelectMap" type="portfolio">
-		<result property="portNo" 			column="port_no" 			jdbcType="NUMERIC"/>
-		<result property="portUserId"		column="port_user_id" 		jdbcType="VARCHAR" />
-		<result property="portDivision" 	column="port_division" 		jdbcType="NUMERIC" />
-		<result property="portTitle" 		column="port_title" 		jdbcType="VARCHAR" />
-		<result property="portRegdate" 		column="port_regdate" 		jdbcType="DATE" />
-		<result property="portUpdate" 		column="port_update" 		jdbcType="DATE" />
-		<result property="portFile" 		column="port_file" 			jdbcType="VARCHAR" />
-		<result property="portDetail" 		column="port_detail" 		jdbcType="VARCHAR"  />
-		<result property="totalPortView" 	column="port_viewcount" 			jdbcType="NUMERIC" />
+		<result property="portNo" 			column="port_no" 				jdbcType="NUMERIC"/>
+		<result property="portUserId"		column="port_user_id" 			jdbcType="VARCHAR" />
+		<result property="portDivision" 	column="port_division" 			jdbcType="NUMERIC" />
+		<result property="portTitle" 		column="port_title" 			jdbcType="VARCHAR" />
+		<result property="portRegdate" 		column="port_regdate" 			jdbcType="DATE" />
+		<result property="portUpdate" 		column="port_update" 			jdbcType="DATE" />
+		<result property="portFile" 		column="port_file" 				jdbcType="VARCHAR" />
+		<result property="portDetail" 		column="port_detail" 			jdbcType="VARCHAR"  />
+		<result property="totalPortView" 	column="port_viewcount" 		jdbcType="NUMERIC" />
+		<result property="scrapUserId"		column="user_id"				jdbcType="VARCHAR"/>
+		<result property="scrapNo"			column="scrap_no"				jdbcType="NUMERIC"/>
+
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -34,27 +37,34 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getPortfolio"	parameterType="int"	resultMap="portfolioSelectMap">
-		SELECT
+		<!-- SELECT
 		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_viewcount	
 		FROM portfolio
-		WHERE port_no = #{portNo}
+		WHERE port_no = #{portNo} -->
+		
+		
+		SELECT P.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount,a.scrap_no
+		FROM portfolio p,(SELECT scrap_no,port_no
+     		  			  FROM scrap
+     		  		 	  WHERE user_id=#{scrapUserId}) a
+		WHERE p.port_no=a.port_no(+) AND p.port_no=#{portNo}
 	 </select>
-	 
-	 <select  id="getPortfolioList" parameterType="int" resultMap="portfolioSelectMap">
-	  	SELECT port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_viewcount
-	  	FROM portfolio
-	  	<where> 
-	  		<if test="_parameter == 1">
-				port_division IN (10,11,12)	
-			</if>	
-			<if test="_parameter == 2">
-				port_division IN (20,21,22)	
-			</if>
-			<if test="_parameter != 1 and _parameter != 2">
-				port_division = #{value}
-			</if>		
-		</where>
 
+	 <select  id="getPortfolioList" parameterType="map" resultMap="portfolioSelectMap">
+	  	 select p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
+     	from portfolio p, (select * from scrap where user_id=#{scrapUserId}) a
+     <where>
+        p.port_no=a.port_no(+) AND
+        <if test="portDivision == 1">
+         p.port_division IN (10,11,12)   
+      </if>   
+      <if test="portDivision == 2">
+         p.port_division IN (20,21,22)   
+      </if>
+      <if test="portDivision != 1 and portDivision != 2">
+         p.port_division = #{value}
+      </if>   
+     </where>
 	  	ORDER BY port_viewcount
 	  	
 	  	<!-- SELECT *

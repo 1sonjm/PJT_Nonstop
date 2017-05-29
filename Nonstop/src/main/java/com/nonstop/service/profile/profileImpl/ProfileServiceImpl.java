@@ -85,12 +85,19 @@ public class ProfileServiceImpl implements ProfileService {
 		return list;
 	}
 
-	public void deleteScrap(String scrapUserId, int postNo, int scrapDiv) throws Exception {
-		profileDAO.deleteScrap(scrapUserId, postNo, scrapDiv);
+	public Map<String, Object> getPortScrapList(String scrapUserId) throws Exception {
+		
+		return profileDAO.getPortScrapList(scrapUserId);
+	}
+
+	public void deleteJsonPortScrap(int portNo, String scrapUserId) throws Exception {
+		profileDAO.deleteJsonPortScrap(portNo,scrapUserId );
 	}
 
 	public Map<String , Object> getRecordProjectList(String recUserId) throws Exception{
 		
 		return profileDAO.getRecordProjectList(recUserId);
 	}
+	
+	
 }

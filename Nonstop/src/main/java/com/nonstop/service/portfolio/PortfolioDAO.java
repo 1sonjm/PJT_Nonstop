@@ -9,9 +9,9 @@ public interface PortfolioDAO {
 
 	public void addPortfolio(Portfolio portfolio) throws Exception;
 
-	public Portfolio getPortfolio(int portNo) throws Exception;
+	public Portfolio getPortfolio(int portNo, String scrapUserId) throws Exception;
 	
-	public List<Portfolio> getPortfolioList(int portDivision) throws Exception;
+	public List<Portfolio> getPortfolioList(int portDivision,String scrapUserId) throws Exception;
 	
 	public void updatePortfolio(Portfolio portfolio) throws Exception;
 	

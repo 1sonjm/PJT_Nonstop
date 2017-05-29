@@ -32,14 +32,14 @@ public class PortfolioServiceImpl implements PortfolioService{
 	}
 
 	@Override
-	public Portfolio getPortfolio(int portNo) throws Exception {
+	public Portfolio getPortfolio(int portNo , String scrapUserId) throws Exception {
 		// TODO Auto-generated method stub
-		return portfolioDAO.getPortfolio(portNo);
+		return portfolioDAO.getPortfolio(portNo,scrapUserId);
 	}
 
 	@Override
-	public List<Portfolio> getPortfolioList(int portDivision) throws Exception {
-		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList(portDivision);
+	public List<Portfolio> getPortfolioList(int portDivision, String scrapUserId) throws Exception {
+		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList(portDivision,scrapUserId);
 		return portfolioList;
 	}
 
