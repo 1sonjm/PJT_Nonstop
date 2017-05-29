@@ -43,27 +43,34 @@ public class StatisticsServiceImpl implements StatisticsService {
 
 	@Override
 	public int addStatisticsDataList() {
+		Calendar operatingTime = Calendar.getInstance();
+		operatingTime.setTime(new Date());
+		System.out.println("[DataSync]작동 시각:\t"+ operatingTime.getTime().toString());
+		
+		operatingTime.add(Calendar.SECOND, (syncDay*syncHour*syncMin*syncSec));
+		System.out.println("[DataSync]다음 작동 시각:\t"+ operatingTime.getTime().toString());
+		
 		return statisticsDAO.addStatisticsDataList();
 	}
-
+	
 	@Override
-	public List<Statistics> getJSONTotalStatisticsList() {
-		return statisticsDAO.getJSONTotalStatisticsList();
+	public List<Statistics> getTotalStatisticsList() {
+		return statisticsDAO.getTotalStatisticsList();
 	}
 
 	@Override
-	public List<Statistics> getJSONMajorStatisticsList(Statistics statistics) {
-		return statisticsDAO.getJSONMajorStatisticsList(statistics);
+	public List<Statistics> getMajorStatisticsList(int techClass) {
+		return statisticsDAO.getMajorStatisticsList(techClass);
 	}
 
 	@Override
-	public List<Statistics> getJSONPeriodStatisticsList(Statistics statistics) {
-		return statisticsDAO.getJSONPeriodStatisticsList(statistics);
+	public List<Statistics> getPeriodStatisticsList(Statistics statistics) {
+		return statisticsDAO.getPeriodStatisticsList(statistics);
 	}
 
 	@Override
-	public List<Statistics> getJSONRegionStatisticsList(Statistics statistics) {
-		return statisticsDAO.getJSONRegionStatisticsList(statistics);
+	public List<Statistics> getRegionStatisticsList(Statistics statistics) {
+		return statisticsDAO.getRegionStatisticsList(statistics);
 	}
 
 	@Override
@@ -77,14 +84,13 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public void test() {		
+	public void testSync() {		
 		Calendar operatingTime = Calendar.getInstance();
 		operatingTime.setTime(new Date());
 		System.out.println("[DataSync]작동 시각:\t"+ operatingTime.getTime().toString());
 		
 		operatingTime.add(Calendar.SECOND, (syncDay*syncHour*syncMin*syncSec));
 		System.out.println("[DataSync]다음 작동 시각:\t"+ operatingTime.getTime().toString());
-		
 	}
 
 }

@@ -103,8 +103,20 @@ public class PortfolioController {
 			portNo = 10;
 		}
 		
-		Portfolio portfolio = portfolioService.getPortfolio(portNo);		
+		Portfolio portfolio = portfolioService.getPortfolio(portNo);
 		
+		//클릭시 조회수 추가
+		int portViewCount = portfolio.getTotalPortView();
+		portfolio.setTotalPortView(++portViewCount);
+		portfolio.setPortViewFlag(true);		
+		portfolioService.updatePortfolio(portfolio);
+		
+		//수정된 게시물의 경우 
+		if(portfolio.getPortUpdate() != null){
+			portfolio.setPortRegdate(portfolio.getPortUpdate());
+		}
+		
+		//날짜계산
 		String regdate = portfolio.getPortRegdate().toString();
 		String portMonth = regdate.substring(5, 7);
 		

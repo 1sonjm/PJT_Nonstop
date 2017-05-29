@@ -189,13 +189,41 @@
         <div class="intro-body">
             <div class="container">
                 <div class="row">
-                	<div class="col-md-8 col-md-offset-2">
+                	<div class="col-md-10 col-md-offset-1">
                         <h1 class="brand-heading">NONSTOP</h1>
-                        <p class="intro-text">A free, responsive, one page Bootstrap theme.
-                            <br>Created by Start Bootstrap.</p> -->
-                        <a href="#about" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
+                        <div class="margin-bottom-30"></div>
+                        <ul class="main-ul">
+                        	<li>
+                        		<h2>123</h2>
+                        		<p>개발자 포트폴리오</p>
+                        	</li>
+                        	<li>
+								<div class="verticle-line"><br/><br/><br/></div>
+                        	</li>                        	
+                        	<li>
+                        		<h2>123</h2>
+                        		<p>디자인 포트폴리오</p>
+                        	</li>
+                        	<li>
+                        		<div class="verticle-line"><br/><br/><br/></div>
+                        	</li>
+                        	<li>
+                        		<h2>123</h2>
+                        		<p>등록된 프로젝트</p>
+                        	</li>
+                        </ul>
+
+
+                       	<p class="intro-text">개발자, 디자이너 모집 및 프로젝트 진행을 논스톱에서 한번에 해결하세요.<br/> 뭐라고 써야할지 모르겠다 도움 필요.</p>
+
+                        <button class="sq_button" type="button">회원가입</button>
+						<button class="sq_button" type="button">일단, 둘러볼게요</button>			                        
+                    
+                       	<div class="margin-top-30">
+                        <a href="#about" class="btn btn-circle page-scroll"> 
+                            <i class="fa fa-angle-double-down animated"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </i>
                         </a>
+						</div>
                 	</div>
                 </div>
             </div>

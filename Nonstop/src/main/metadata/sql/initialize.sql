@@ -1,15 +1,14 @@
 
+DROP TABLE scrap;
 DROP TABLE career;
 DROP TABLE follow;
 DROP TABLE letter;
 DROP TABLE statistics;
 DROP TABLE techuse;
-DROP TABLE proj_scrap;
 DROP TABLE proj_comment;
 DROP TABLE record_applicant;
 DROP TABLE project;
 DROP TABLE port_comment;
-DROP TABLE port_scrap;
 DROP TABLE port_like;
 DROP TABLE portfolio;
 DROP TABLE tech;
@@ -25,7 +24,7 @@ CREATE SEQUENCE seq_tech_tech_no1 INCREMENT BY 1 START WITH 1000 MAXVALUE 1999;
 CREATE SEQUENCE seq_tech_tech_no2 INCREMENT BY 1 START WITH 2000 MAXVALUE 2999;
 CREATE SEQUENCE seq_tech_tech_no3 INCREMENT BY 1 START WITH 3000 MAXVALUE 3999;
 
-CREATE TABLE users (
+CREATE TABLE users(
 	user_id 					VARCHAR2(30)  		NOT NULL,
 	user_name 				VARCHAR2(10)  		NOT NULL,
 	user_pwd 					VARCHAR2(50)  		NOT NULL,
@@ -41,7 +40,7 @@ CREATE TABLE users (
 	UNIQUE(user_img)
 );
 
-CREATE TABLE tech (
+CREATE TABLE tech(
 	tech_no 					NUMBER 				 		NOT NULL,
 	tech_name 				VARCHAR2(30)  		NOT NULL,
 	tech_class				NUMBER(1)					NOT NULL,
@@ -75,28 +74,29 @@ VALUES ('com04','기업4','1234','qwe4@naver,com','com04img',3,010-1234-5678,
 				20,to_date('2012/08/01 11:27:27', 'YYYY/MM/DD HH24:MI:SS'),'ceo4','서울 강남구');
 
 
-INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'java',1);
-INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'python',1);
-INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'php',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'Java',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'Python',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'PHP',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'JavaScript',1);
+INSERT INTO tech VALUES (seq_tech_tech_no1.nextval,'Swift',1);
 
-INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'spring',2);
-INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'django',2);
-INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'symfony',2);
+INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'Spring',2);
+INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'Django',2);
+INSERT INTO tech VALUES (seq_tech_tech_no2.nextval,'Symfony',2);
 
-INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'oracle',3);
-INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'mssql',3);
-INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'mysql',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'Oracle',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'MsSQL',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'MySQL',3);
+INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'SQLite',3);
 
 /**************************************************************/
 /*************************   포트폴리오     *************************/
 
 DROP SEQUENCE seq_portfolio_port_no;
 DROP SEQUENCE seq_port_like_port_like_no;
-DROP SEQUENCE seq_port_scrap_no;
 DROP SEQUENCE seq_port_comment_com_no;
 CREATE SEQUENCE seq_portfolio_port_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_like_port_like_no INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_port_scrap_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_comment_com_no INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE portfolio ( 
@@ -107,7 +107,6 @@ CREATE TABLE portfolio (
 	port_regdate 			DATE,
 	port_update 			DATE,
 	port_file 				VARCHAR2(100)			UNIQUE,
-	port_thumbnail 		VARCHAR2(100)			UNIQUE,
 	port_detail 			VARCHAR2(4000),
 	port_viewcount 		NUMBER(20),
 	PRIMARY KEY(port_no)
@@ -117,12 +116,6 @@ CREATE TABLE port_like (
 	port_no  					NUMBER 						NOT NULL REFERENCES portfolio(port_no),
 	user_id 					VARCHAR2(30) 			NOT NULL REFERENCES users(user_id),
 	PRIMARY KEY(port_like_no)
-);
-CREATE TABLE port_scrap (
-	port_scrap_no			NUMBER						NOT NULL,
-	port_no						NUMBER						NOT NULL REFERENCES portfolio(port_no) ON DELETE CASCADE,
-	user_id						VARCHAR2(30)			NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-	PRIMARY KEY(port_scrap_no)
 );
 CREATE TABLE port_comment ( 
 	com_no 						NUMBER 						NOT NULL,
@@ -160,7 +153,6 @@ INSERT INTO port_comment VALUES (seq_port_comment_com_no.nextval, 2, 'user04', S
 
 DROP SEQUENCE seq_project_proj_no;
 DROP SEQUENCE seq_record_applicant_rec_no;
-DROP SEQUENCE seq_proj_scrap_proj_scrap_no;
 DROP SEQUENCE seq_proj_comment_com_no;
 CREATE SEQUENCE seq_project_proj_no		 	INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_record_applicant_rec_no  	INCREMENT BY 1 START WITH 1;
@@ -188,12 +180,6 @@ CREATE TABLE record_applicant (
 	rec_status 				NUMBER(1),
 	PRIMARY KEY(rec_no)
 );
-CREATE TABLE proj_scrap ( 
-	proj_scrap_no  		NUMBER  					NOT NULL,
-	proj_no  					NUMBER  					NOT NULL REFERENCES project(proj_no),
-	user_id  					VARCHAR2(30)  		NOT NULL REFERENCES users(user_id),
-	PRIMARY KEY(proj_scrap_no)
-);
 CREATE TABLE proj_comment ( 
 	com_no  					NUMBER  					NOT NULL,
 	com_proj_no  			NUMBER  					NOT NULL REFERENCES project(proj_no),
@@ -219,11 +205,6 @@ INSERT INTO project
 VALUES (seq_project_proj_no.nextval,'com04', 22,'재밌는프로젝트4', SYSDATE, to_date('2017/06/26 13:04:31', 'YYYY/MM/DD HH24:MI:SS'),
 	to_date('2017/07/04 11:27:27', 'YYYY/MM/DD HH24:MI:SS'), to_date('2017/08/02 11:27:27', 'YYYY/MM/DD HH24:MI:SS'),
 	'서울영등포구', '이러이러한내용이있어서 정말좋앗는데 님들도 좋을꺼임 ㅋㅋㅋㅋㅋ 진짜좋음 한번와보셈4', 0);
-
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 1, 'user01');
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 2, 'user02');
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 3, 'user03');
-INSERT INTO proj_scrap VALUES (seq_proj_scrap_proj_scrap_no.nextval, 4, 'user04');
 
 INSERT INTO proj_comment VALUES (seq_proj_comment_com_no.nextval, 1, 'user01', SYSDATE, '댓글은 댓글일뿐1');
 INSERT INTO proj_comment VALUES (seq_proj_comment_com_no.nextval, 2, 'user02', SYSDATE, '댓글은 댓글일뿐2');
@@ -287,27 +268,33 @@ INSERT INTO techuse (tu_no,tu_proj_no,tu_tech_no) VALUES (seq_techuse_tu_no.next
 INSERT INTO techuse (tu_no,tu_proj_no,tu_tech_no) VALUES (seq_techuse_tu_no.nextval,3,3002);
 
 
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1000,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1001,20,30,15,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1002,20,30,35,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1000,10,27,20,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1001,9,15,15,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1002,2,10,35,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1003,22,18,35,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,1004,11,10,35,SYSDATE);
 
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2000,20,30,30,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2001,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2002,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2000,7,30,30,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2001,21,12,20,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,2002,16,17,32,SYSDATE);
 
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3000,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3001,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
-INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3002,20,30,20,to_date('2012/12/14 02:00:00','YYYY/MM/DD HH24:MI:SS'));
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3000,12,16,5,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3001,18,13,8,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3002,21,9,12,SYSDATE);
+INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,3003,26,16,12,SYSDATE);
 
 /**************************************************************/
 /**************************    프로필      *************************/
 
+
 DROP SEQUENCE seq_career_no;
 DROP SEQUENCE seq_let_no;
 DROP SEQUENCE seq_follow_no;
+DROP SEQUENCE seq_scrap_no;
 CREATE SEQUENCE seq_career_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_let_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_follow_no INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_scrap_no INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE letter(
 	let_no	 					NUMBER 						NOT NULL,
@@ -325,12 +312,24 @@ CREATE TABLE follow (
 	PRIMARY KEY(follow_no)
 );
 CREATE TABLE career (
-	career_no 	 				NUMBER 					NOT NULL,
-	career_user_id 			VARCHAR2(30) 		NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
-	career_tech_no 			NUMBER			 		NOT NULL,
-	career_use_month 		NUMBER	 				NOT NULL,
-	PRIMARY KEY(career_no)
+	career_no 	  				NUMBER 		 			NOT NULL,
+	career_user_id  			VARCHAR2(30) 	 	NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+	career_tech_no  			NUMBER		 	NOT NULL REFERENCES tech(tech_no) ON DELETE CASCADE,
+	career_use_month  		NUMBER	 	 	NOT NULL,
+	PRIMARY KEY(career_no) 
 );
+CREATE TABLE scrap (
+	scrap_no 		NUMBER 				NOT NULL,
+	user_id	 		VARCHAR2(30) 	NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+	port_no	 		NUMBER    		REFERENCES portfolio(port_no) ON DELETE CASCADE,
+	proj_no	 		NUMBER	 			REFERENCES project(proj_no) ON DELETE CASCADE,
+	scrap_div 	NUMBER(1) 	NOT NULL,
+	PRIMARY KEY(scrap_no)
+);
+
+
+INSERT INTO scrap VALUES (seq_scrap_no.nextval,'user01',1,'',1 );
+INSERT INTO scrap VALUES (seq_scrap_no.nextval,'user01','',1,2);
 
 INSERT INTO career VALUES (seq_career_no.nextval,'user01',1000,10);
 INSERT INTO career VALUES (seq_career_no.nextval,'user01',2000,10);

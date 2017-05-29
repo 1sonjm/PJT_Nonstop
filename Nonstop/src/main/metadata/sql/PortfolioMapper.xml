@@ -14,10 +14,9 @@
 		<result property="portTitle" 		column="port_title" 		jdbcType="VARCHAR" />
 		<result property="portRegdate" 		column="port_regdate" 		jdbcType="DATE" />
 		<result property="portUpdate" 		column="port_update" 		jdbcType="DATE" />
-		<result property="portThumbnail" 	column="port_thumbnail" 	jdbcType="VARCHAR" />
 		<result property="portFile" 		column="port_file" 			jdbcType="VARCHAR" />
 		<result property="portDetail" 		column="port_detail" 		jdbcType="VARCHAR"  />
-		<result property="totalPortView" 	column="reg_date" 			jdbcType="NUMERIC" />
+		<result property="totalPortView" 	column="port_viewcount" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -36,7 +35,7 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getPortfolio"	parameterType="int"	resultMap="portfolioSelectMap">
 		SELECT
-		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_thumbnail, port_viewcount	
+		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_viewcount	
 		FROM portfolio
 		WHERE port_no = #{portNo}
 	 </select>
@@ -87,8 +86,13 @@
 	 	UPDATE portfolio
 		<set>
 		port_division=#{portDivision}, 
-		port_title=#{portTitle}, 
-		port_update=SYSDATE, 
+		port_title=#{portTitle},
+		<if test="portViewFlag == true">
+			port_viewcount=#{totalPortView},	
+		</if>	
+		<if test="portViewFlag == false">	 
+			port_update=SYSDATE,
+		</if> 
 		port_file=#{portFile}, 
 		port_detail=#{portDetail}
 		</set>

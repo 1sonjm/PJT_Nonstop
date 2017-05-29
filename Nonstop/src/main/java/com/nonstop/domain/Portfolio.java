@@ -13,12 +13,12 @@ public class Portfolio{
 	private String portMonth;
 	private String portYear;
 	private String portDay;
-	private String portThumbnail;
 	private String portDetail;
 	private String portFile;
 	private int totalPortView;
 	private int totalPortLike;
 	private int totalPortComment;
+	private boolean portViewFlag;
 	private boolean portLikeFlag;
 	private boolean portFollowFlag;
 	private boolean portScrFlag;
@@ -86,12 +86,6 @@ public class Portfolio{
 	public void setPortUpdate(Date portUpdate) {
 		this.portUpdate = portUpdate;
 	}
-	public String getPortThumbnail() {
-		return portThumbnail;
-	}
-	public void setPortThumbnail(String portThumbnail) {
-		this.portThumbnail = portThumbnail;
-	}
 	public String getPortDetail() {
 		return portDetail;
 	}
@@ -121,6 +115,13 @@ public class Portfolio{
 	}
 	public void setTotalPortComment(int totalPortComment) {
 		this.totalPortComment = totalPortComment;
+	}
+	
+	public boolean isPortViewFlag() {
+		return portViewFlag;
+	}
+	public void setPortViewFlag(boolean portViewFlag) {
+		this.portViewFlag = portViewFlag;
 	}
 	public boolean isPortLikeFlag() {
 		return portLikeFlag;
@@ -163,8 +164,6 @@ public class Portfolio{
 		builder.append(portYear);
 		builder.append(", portDay=");
 		builder.append(portDay);
-		builder.append(", portThumbnail=");
-		builder.append(portThumbnail);
 		builder.append(", portDetail=");
 		builder.append(portDetail);
 		builder.append(", portFile=");
@@ -175,6 +174,8 @@ public class Portfolio{
 		builder.append(totalPortLike);
 		builder.append(", totalPortComment=");
 		builder.append(totalPortComment);
+		builder.append(", portViewFlag=");
+		builder.append(portViewFlag);
 		builder.append(", portLikeFlag=");
 		builder.append(portLikeFlag);
 		builder.append(", portFollowFlag=");
@@ -184,6 +185,7 @@ public class Portfolio{
 		builder.append("]");
 		return builder.toString();
 	}
-
-
 }
+
+
+	
