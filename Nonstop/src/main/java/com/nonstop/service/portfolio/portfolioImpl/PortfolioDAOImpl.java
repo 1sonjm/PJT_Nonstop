@@ -1,6 +1,8 @@
 package com.nonstop.service.portfolio.portfolioImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,16 +33,28 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	}
 	
 	@Override
-	public Portfolio getPortfolio(int portNo) throws Exception {
+	public Portfolio getPortfolio(int portNo,String scrapUserId) throws Exception {
 
 		System.out.println("포트폴리오 디에오임쁠 여기들어오냣!");
 		System.out.println(portNo);
 		
-		return sqlSession.selectOne("PortfolioMapper.getPortfolio", portNo);
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("portNo", portNo);
+		map.put("scrapUserId", scrapUserId);
+		
+		return sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
 	}
 
-	public List<Portfolio> getPortfolioList(int portDivision) throws Exception {
-		return sqlSession.selectList("PortfolioMapper.getPortfolioList", portDivision);
+	public List<Portfolio> getPortfolioList(int portDivision,String scrapUserId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("scrapUserId", scrapUserId);
+		map.put("portDivision", portDivision);
+		
+		
+		return sqlSession.selectList("PortfolioMapper.getPortfolioList", map);
 	}
 
 	@Override

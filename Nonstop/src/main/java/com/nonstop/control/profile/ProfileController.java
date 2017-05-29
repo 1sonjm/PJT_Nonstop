@@ -18,8 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Scrap;
 import com.nonstop.domain.User;
+import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.user.UserService;
 
@@ -34,6 +36,10 @@ public class ProfileController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("portfolioServiceImpl")
+	private PortfolioService portfolioService;
 	
 	public ProfileController(){
 		System.out.println(this.getClass());
@@ -272,14 +278,16 @@ public class ProfileController {
 		return "forward:/view/profile/listScrap.jsp";
 	}
 	
-	@RequestMapping(value="deleteScrpa/{postNo}/{scrapDiv}",method=RequestMethod.POST)
-	public void deleteScrap(@PathVariable int postNo ,@PathVariable int scrapDiv) throws Exception{
+	@RequestMapping(value="deleteJsonPortScrap/{portNo}",method=RequestMethod.GET)
+	public void deleteJsonPortScrap(@PathVariable int portNo , HttpSession session , Model model) throws Exception{
 		
-		System.out.println("/profile/deleteScrap : POST");
+		System.out.println("/profile/deleteScrap : GET");
 		
-		//String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		//profileService.deleteScrap(scrapUserId, scrapNo, scrapDiv);
+		System.out.println(scrapUserId+"++++++++++++++++++++++++++++++++++++++");
+		
+		profileService.deleteJsonPortScrap(portNo , scrapUserId);
 	}
 	
 }

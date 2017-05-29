@@ -3,6 +3,7 @@ package com.nonstop.service.statistics.impl;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -54,6 +55,15 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 	
 	@Override
+	public List<Statistics> getTechClassList(){
+		return statisticsDAO.getTechClassList();
+	}
+	@Override
+	public List<Statistics> getTechDataList(int classDiv){
+		return statisticsDAO.getTechDataList(classDiv);
+	}
+	
+	@Override
 	public List<Statistics> getTotalStatisticsList() {
 		return statisticsDAO.getTotalStatisticsList();
 	}
@@ -74,7 +84,7 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public List<Integer> getPostCountList() {
+	public Map<String, Integer> getPostCountList() {
 		return statisticsDAO.getPostCountList();
 	}
 
