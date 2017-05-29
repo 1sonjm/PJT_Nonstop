@@ -55,6 +55,10 @@
 			self.location ="/profile/deleteCareer?careerNo="+careerNo;
 			
 			});
+		 
+		$("span.addCareer").on("click" , function() {
+		 		self.location = "/profile/addCareerView";
+			}); 
 	});	
 </script>
 </head>
@@ -63,7 +67,7 @@
 	
 	<div class="container">
 	<div class="page-header text-center">
-	       <h5 class=" text-left" >개인 기술정보</h5>
+	       <h5 class=" text-left" >프로젝트 작업이력</h5>
 	    </div>
 
       <table class="table table-hover table-striped" >
@@ -71,15 +75,9 @@
         <thead>
           <tr>
             <th align="center">No</th>
-            <th align="left" >기능명</th>
-            <th align="left">경력</th>
-            <th align="left">
-            <span class="addCareer">
-            <c:if test="${user.userId==sessionScope.user.userId }">
-			  <button type="button" class="btn btn-primary">등록</button>
-			  </c:if>
-			   </span>
-            </th>
+            <th align="left" >기업명</th>
+            <th align="left">프로젝트 명</th>
+            <th align="left">프로젝트 기간</th>
           </tr>
         </thead>
        
@@ -90,31 +88,12 @@
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			<td align="center">${ i }</td>
-			
-			
+
+			  <td align="left">${recordApplicant.recUserName}</td>
 			 
-			 
-			  <td align="left">
-			  <c:if test="${career.techNo == '1000' }">Java</c:if>
-			  <c:if test="${career.techNo == '1001' }">Python</c:if>
-			  <c:if test="${career.techNo == '1002' }">Php</c:if>
-			  </td>
-			 
-			  <td align="left">${career.careerUseTerm}개월  &nbsp; &nbsp;
+			  <td align="left">${project.projTitle}</td>
 			  
-			  	<c:if test="${career.careerUserId==sessionScope.user.userId }">
-			  
-			  		<span class="updateCareer" careerNo="${career.careerNo}">
-			  			<button type="button" class="btn btn-primary">수정</button> &nbsp; &nbsp;
-			   		</span>
-			   
-			  		<span class="deleteCareer" careerNo="${career.careerNo}">
-			   			<button type="button" class="btn btn-danger">삭제</button>
-			   		</span>
-			   
-				</c:if>
-				
-			  </td>
+			  <td align="left">${project.projStartDate} ~ ${project.projEndDate}</td>
 			  
 			 
 			</tr>

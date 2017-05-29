@@ -8,7 +8,7 @@
 <mapper namespace="FollowMapper">
  	
  	
-	<resultMap id="followSelectMap" type="Follow">
+	<resultMap id="followSelectMap" type="follow">
 		<result property="followNo" 		column="follow_no" 		jdbcType="NUMERIC"/>
 		<result property="reqUserId"		column="request_id" 	jdbcType="VARCHAR" />
 		<result property="targetUserId" 	column="recive_id"	 	jdbcType="VARCHAR" />
@@ -23,12 +23,18 @@
 				#{targetUserId})
 	 </insert>
 	 
-	 <select  id="getListFollow"  parameterType="String"	resultMap="followSelectMap">
+	 <select  id="getListFollow"  parameterType="map"	resultMap="followSelectMap">
 		SELECT *
 		FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM(	SELECT request_id , recive_id 
+				FROM(	SELECT request_id , recive_id ,follow_no
 						FROM follow
-						WHERE request_id = #{reqUserId} )inner_table)
+						WHERE request_id = #{reqUserId:VARCHAR} )inner_table)
+	 </select>
+	 
+	 <select  id="getFollow"  parameterType="String"	resultMap="followSelectMap">
+		SELECT *
+		FROM follow
+		WHERE request_id=#{reqUserId}
 	 </select>
 	 
 	 <delete id="deleteFollow" parameterType="map">

@@ -43,8 +43,12 @@ public class UserDAOImpl implements UserDAO{
 	}
 	
 
-	public User getProfileUser(String careerUserId) throws Exception {
+	public User getProfileMine(String careerUserId) throws Exception {
 		return sqlSession.selectOne("UserMapper.getProfileUser",careerUserId );
+	}
+	
+	public User getProfileOther(String userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getProfileUser",userId );
 	}
 	
 	public void updateUser(User user) throws Exception {

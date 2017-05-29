@@ -1,8 +1,15 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+
+<!DOCTYPE html>
+
 <html lang="ko">
+
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,19 +35,72 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-$(function() {listCareer
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+$(function() {
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
  	$("#addCareer").on("click" , function() {
  		self.location = "/profile/addCareerView";
 	}); 
 	
-$("#listCareer").on("click" , function() {
+ 	$("span.listFollow").on("click" , function() {
+ 		
+		var reqUserId = $(this).attr('reqUserId');
 	
-	var careerUserId = $(this).text().trim();
+		self.location = "/profile/getFollowList?reqUserId="+reqUserId;
+		
+	  	 popWin 
+		= window.open("/view/profile/listFollow.jsp",
+								"popWin", 
+								"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
+								"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
+		});
 	
-		self.location = "/profile/getCareerList?careerUserId="+careerUserId;
-}); 
- });
+	$("#follow").on("click" ,function() {
+		
+		var flag = $(this).text().trim();
+		var requestTarget;
+		var asdf;
+		
+		//alert(flag);
+		if(flag == "íŒ”ë¡œìš°"){
+			requestTarget = "addJsonFollow";
+			asdf = "ì–¸íŒ”ë¡œìš°";
+		}else{
+			requestTarget = "deleteJsonFollow";
+			asdf = "íŒ”ë¡œìš°";
+		}
+		//alert(1);
+		var targetUserId = $(this).attr('targetUserId');
+		//alert(targetUserId);
+		$.ajax(
+			{
+				url : "/profile/"+requestTarget+"/"+targetUserId,
+				method : "GET" ,
+				dateType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"	
+				},
+				success : function(JSONData , status) {
+					$(document).on("click", "#unFollow", function(){
+						var targetUserId = $(this).attr('targetUserId');
+						self.location="/profile/deleteJsonFollow?targetUserId="+targetUserId;	
+						});
+					
+					var displayValue =  
+						"<div class='col-sm-offset-4  col-sm-4 text-center'>"
+						+"<span class='follow' targetUserId='${user.userId}' id='follow'>"
+			      		+"<button type='button' class='btn btn-primary' id='profile' >"+asdf+"</button>"
+			      		+"</span>"
+			      		+"</div>";
+		    
+			      		
+				$( "span.follow" ).html(displayValue);
+				}
+			});
+		});
+	
+});
+
 
 </script>
 
@@ -148,17 +208,44 @@ $("#listCareer").on("click" , function() {
         <!-- sidebar menu start-->
               <ul class="sidebar-menu">
               
-              	  <p class="center"><a href="profile.html"><img src="resources/images/upload/${user.image}" class="img-circle" width="60"></a></p>
+              	  <%-- <p class="center"><a href="profile.html"><img src="resources/images/upload/${user.image}" class="img-circle" width="60"></a></p> --%>
               	  <h5 class="center">${user.userId}</h5>
               	  <h5 class="center">${user.addr}</h5>
               	  
               	  <c:if test="${user.role=='3'}">
-              	  <h5 class="center">±â¾÷´ëÇ¥ÀÚ : ${user.companyName}</h5>
-              	  <h5 class="center">Á÷¿ø¼ö : ${user.empNum}</h5>
-              	  <h5 class="center">¼³¸³ÀÏ : ${user.pubDate}</h5>
+              	  <h5 class="center">ê¸°ì—…ëŒ€í‘œì : ${user.companyName}</h5>
+              	  <h5 class="center">ì§ì›ìˆ˜ : ${user.empNum}</h5>
+              	  <h5 class="center">ì„¤ë¦½ì¼ : ${user.pubDate}</h5>
               	  </c:if>
-              	  
-
+				  
+				  <br/><br/><br/>
+				  
+				<c:if test="${user.userId != sessionScope.user.userId }">
+				  <c:if test="${follow.reqUserId==sessionScope.user.userId && career.careerUserId==targetUserId }">
+				  <div class="col-sm-offset-4  col-sm-4 text-center">
+					 <span class="follow" targetUserId="${user.userId}" id="follow">
+		      		<button type="button" class="btn btn-primary" id="profile" >ì–¸íŒ”ë¡œìš°</button>
+		      		</span>
+		      		</div>
+		      		</c:if>
+		      		
+		      		<c:if test="${follow.reqUserId != sessionScope.user.userId}">
+		      		<div class="col-sm-offset-4  col-sm-4 text-center">
+					 <span class="follow" targetUserId="${user.userId}" id="follow">
+		      		<button type="button" class="btn btn-primary" id="profile" >íŒ”ë¡œìš°</button>
+		      		</span>
+		      		</div>
+		      		</c:if>
+		      	</c:if>
+		      		
+		      		<c:if test="${follow.reqUserId  == career.careerUserId}"> 
+		      		<div class="col-sm-offset-4  col-sm-4 text-center">
+					 <span class="listFollow" reqUserId="${user.userId}">
+		      		<button type="button" class="btn btn-primary" id="listFollow" >íŒ”ë¡œìš°ëª©ë¡ë³´ê¸°</button>
+		      		</span>
+		      		</div>
+		      		</c:if>
+		      		
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -178,32 +265,35 @@ $("#listCareer").on("click" , function() {
 				
 					  <!-- Nav tabs -->
 					  <ul class="nav nav-tabs" role="tablist">
-					    <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Profile</a></li>
+					    <li role="presentation" class="active"><a href="#Profile" aria-controls="Profile" role="tab" data-toggle="tab">Profile</a></li>
 					    
 					    <c:if test="${user.role=='3'}">
-					    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Project</a></li>
+					    <li role="presentation"><a href="#Project" aria-controls="Project" role="tab" data-toggle="tab">Project</a></li>
 					    </c:if>
 					    
 					    <c:if test="${user.role=='2'}">
 					    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Portfolio</a></li>
 					    </c:if>
-					     <c:if test="${user.userId.trim()==param.userId.trim()}">
-					    <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Scrap</a></li>
+					    <c:if test="${follow.reqUserId  == career.careerUserId}"> 
+					    <li role="presentation"><a href="#Scrap" aria-controls="Scrap" role="tab" data-toggle="tab">Scrap</a></li>
 					 	</c:if>
 					  </ul>
 			
 					  <!-- Tab panes -->
 					  <div class="tab-content">
-					    <div role="tabpanel" class="tab-pane active" id="home">
+					    <div role="tabpanel" class="tab-pane active" id="Profile">
 					   <c:if test="${user.role=='2'}">
-					    <jsp:include page="/view/profile/listCareer.jsp" /> 					    
+					    <jsp:include page="/view/profile/listCareer.jsp" /> 
+					    
+					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    
 					  	</c:if>				  
 					    </div>
-					    <div role="tabpanel" class="tab-pane" id="profile">
+					    <div role="tabpanel" class="tab-pane" id="Portfolio">
 							<%-- <jsp:include page="/portfolio.jsp" /> --%>
 						</div>
-					    <div role="tabpanel" class="tab-pane" id="messages">ggtfdgdh</div>
-					    <div role="tabpanel" class="tab-pane" id="settings">rffherg</div>
+						 <div role="tabpanel" class="tab-pane" id="Project">rffherg</div>
+					    <div role="tabpanel" class="tab-pane" id="Scrap">ìŠ¤í¬ë˜ì—¡</div>
+					   
 					  </div>
 					
 					</div>
