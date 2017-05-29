@@ -54,16 +54,19 @@
 }
 </style>
 <script type="text/javascript">
-function getJsonDataList(type,addr,sendData){
+function getJsonDataList(type,addr){
 	$.ajax("/statistics/"+addr,{
 		method : "POST" ,
 		dataType : "json" ,
 		headers : {
-			"Accept" : "application/json",
-			"Content-Type" : "application/json"
+			"Accept" : "application/json"//,
+			//"Content-Type" : "application/json"
 		},
 		data:{
-			classValue : 1
+			techClass : $('#selectTechClass').val(),
+			techNo : $('#selectTechData').val(),
+			searchStartDate : $('input[name="dateStart"]').val(),
+			searchEndDate : $('input[name="dateEnd"]').val()
 		},
 		success : function(jsonData) {
 			if(jsonData.length != 0){
@@ -73,7 +76,7 @@ function getJsonDataList(type,addr,sendData){
 					totalStatistics(jsonData);
 					break;
 				case "major":
-					majorStatistics(jsonData);
+					majorStatistics(jsonData,$('#selectViewDiv').val());
 					break;
 				case "period":
 					statisticsByPeriod(jsonData);
@@ -92,33 +95,70 @@ function getJsonDataList(type,addr,sendData){
 		}
 	});
 }
+function combineDate(input,count){
+	var d = new Date(input);
+	d.setMonth(d.getMonth()+1+count);
+	return d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
+}
 
-$(function(){	
+$(function(){
+	var nowDate = combineDate(new Date(),0);
 	getJsonDataList("total","getJSONListTotalStatistics");
 	
-	$('input[name="start"]').val("");
-	$('input[name="end"]').val("");
+	$('input[name="dateStart"]').val(combineDate(nowDate,-1));
+	$('input[name="dateEnd"]').val(nowDate);
 
 	$('li a:contains("전체 기술 집계")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
+			$('#searchInfo').css('display','none');
 			getJsonDataList("total","getJSONListTotalStatistics");
+			$('#tabIndex').val('1');
 		}
 	})
 	$('li a:contains("과반수 사용 기술")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			getJsonDataList("major","getJSONListTotalStatistics");//json 경로 변경
+			$('#selectTechData').attr('disabled',true);
+			$('#searchInfo').css('display','block');
+			$('#searchTarget').css('display','block');
+			$('#searchDate').css('display','none');
+			$('#tabIndex').val('2');
 		}
 	})
 	$('li a:contains("기간별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			getJsonDataList("period","getJSONListTotalStatistics");//json 경로 변경
+			$('#selectTechData').attr('disabled',false);
+			$('#searchInfo').css('display','block');
+			$('#searchTarget').css('display','none');
+			$('#searchDate').css('display','block');
+			$('#tabIndex').val('3');
 		}
 	})
 	$('li a:contains("지역별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			getJsonDataList("region","getJSONListTotalStatistics");//json 경로 변경
+			$('#selectTechData').attr('disabled',false);
+			$('#searchInfo').css('display','block');
+			$('#searchTarget').css('display','none');
+			$('#searchDate').css('display','block');
+			$('#tabIndex').val('4');
 		}
 	})
+	$('#search').on('click',function(){
+		switch ($('#tabIndex').val()) {
+		case '2':
+			getJsonDataList("major","getJSONMajorStatisticsList");
+			break;
+		case '3':
+			getJsonDataList("period","getJSONPeriodStatisticsList");
+			break;
+		case '4':
+			var highMap = new highMaps();
+			highMap.init();
+			//highMap.init(getJsonDataList("region","getJSONRegionStatisticsList"));
+			break;
+		}
+	})
+	
+	//동적 기술목록 호출
 	$('#selectTechClass').on('change',function(){
 		var a = "?techClass="+document.querySelector('#selectTechClass').value
 		$.ajax("/statistics/getJSONListTechData"+a,{
@@ -137,24 +177,11 @@ $(function(){
 									+jsonData.techDataList[i].techName
 								+"</option>";
 				}
-				document.querySelector('#selectTechData').removeAttribute("disabled");
 			}
 		});
 	})
-});
-
-</script>
-<script type="text/javascript">
-$(function(){
-	function combineDate(input,count){
-			var d = new Date(input);
-			d.setMonth(d.getMonth()+1+count);
-			return d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
-	}
 	
-	var d = new Date();
-	nowDate = combineDate(d,0);
-	
+	//달력 생성
 	$('#daterange').daterangepicker({
 			"showDropdowns": true,
 			"showWeekNumbers": true,
@@ -183,71 +210,81 @@ $(function(){
 			"maxDate": nowDate,
 			"opens": "left"
 	}, function(start, end, label) {
-		console.log('New date range selected: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
+		//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
 	});
- });
- </script>
+});
+</script>
 
 </head>
 <body>
 
+<jsp:include page="/view/common/toolbar.jsp" />
+
 <div class="container">
 	<h2>Dynamic Tabs</h2>
 	<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
-
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>
 		<li><a data-toggle="tab" href="#period">기간별 수요/공급</a></li>
 		<li><a data-toggle="tab" href="#region">지역별 수요/공급</a></li>
 	</ul>
-	<div class="tab-content">
-		<div id="total" class="tab-pane active" style="background-color: #E9E9E9;">
-		</div>
-		<div id="major" class="tab-pane" style="background-color: #E9E9E9;">
-		</div>
-		<div id="period" class="tab-pane" style="background-color: #E9E9E9;">
-			<div class="row">
-				<div class="col-md-2">
-					<div class="form-group">
-						<span>분류</span>
-						<select class="form-control" id="selectTechClass">
-							<option disabled selected>분류 선택</option>
-							<c:set var="divClass" value="0"/>
-							<c:forEach var="classValue" items="${techClassList}" begin="0" step="1">
-								<option value="${classValue.techClass}">
-									<c:choose>
-										<c:when test="${classValue.techClass == 1}">Language</c:when>
-										<c:when test="${classValue.techClass == 2}">Framework</c:when>
-										<c:when test="${classValue.techClass == 3}">DBMS</c:when>
-									</c:choose>
-								</option>
-							</c:forEach>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-3">
-					<div class="form-group">
-						<span>기술명</span>
-						<select class="form-control" id="selectTechData" disabled>
-							<option>분류를 선택하세요.</option>
-						</select>
-					</div>
-				</div>
-				<div class="col-md-2">
-					<button type="button" class="btn btn-primary btn-lg btn-block">조회</button>
-				</div>
-				<div class="col-md-5">
-					<span class="text-left">조회 기간</span>
-					<input class="form-control" type="text" id="daterange"/>
-					<input type="hidden" name="start" value="">
-					<input type="hidden" name="end" value="">
-				</div>
+	<input type="hidden" id="tabIndex" value="0">
+	<div class="row" id="searchInfo" style="display: none;">
+		<div class="col-md-2">
+			<div class="form-group">
+				<span>분류</span>
+				<select class="form-control" id="selectTechClass">
+					<c:forEach var="classValue" items="${techClassList}" begin="0" step="1">
+						<option value="${classValue.techClass}">
+							<c:choose>
+								<c:when test="${classValue.techClass == 1}">Language</c:when>
+								<c:when test="${classValue.techClass == 2}">Framework</c:when>
+								<c:when test="${classValue.techClass == 3}">DBMS</c:when>
+							</c:choose>
+						</option>
+					</c:forEach>
+				</select>
 			</div>
 		</div>
-		<div id="region" class="tab-pane" style="background-color: #E9E9E9;"></div>
+		<div class="col-md-3">
+			<div class="form-group" id="TechData">
+				<span>기술명</span>
+				<select class="form-control" id="selectTechData">
+					<c:forEach var="dataValue" items="${techDataList}" begin="0" step="1">
+						<option value="${dataValue.techNo}">${dataValue.techName}</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		<div class="col-md-2">
+			<button type="button" class="btn btn-primary btn-lg btn-block" id="search">조회</button>
+		</div>
+		<div class="col-md-5" id="searchTarget">
+			<span class="text-left">조회 대상</span>
+			<select class="form-control" id="selectViewDiv">
+				<option value="1">수요</option>
+				<option value="2">공급</option>
+				<option value="3">회원비율</option>
+			</select>
+		</div>
+		<div class="col-md-5" id="searchDate">
+			<span class="text-left">조회 기간</span>
+			<input class="form-control" type="text" id="daterange"/>
+			<input type="hidden" name="dateStart" value="">
+			<input type="hidden" name="dateEnd" value="">
+		</div>
 	</div>
-	<div id="chartdiv" style=" width: 100%; height: 600px; background-color: #E9E9E9;" ></div>
+	<div class="tab-content">
+		<div id="total" class="tab-pane active" style="width: 100%; height: 600px;">
+		<span>기술 가진 회원에 따라 그림의 크기가 커집니다</span>
+		</div>
+		<div id="major" class="tab-pane" style="width: 100%; height: 600px;">
+		</div>
+		<div id="period" class="tab-pane" style="width: 100%; height: 600px;">
+		</div>
+		<div id="region" class="tab-pane" style="width: 100%; height: 600px;"></div>
+	</div>
 </div>
 </body>
 </html>

@@ -16,16 +16,19 @@
 		<result property="regdate" 			column="stat_date" 				jdbcType="DATE" />
 	</resultMap>
 	
+	<!-- 기술 분류 목록 조회 -->
 	<select	id="getListTechClass" resultMap="statisticsSet">
 		SELECT tech_class FROM tech
 		GROUP BY tech_class
 	</select>
+	<!-- 세부 기술 목록 조회 -->
 	<select	id="getListTechData" parameterType="int" resultMap="statisticsSet">
 		SELECT tech_no AS stat_tech_no,tech_name FROM tech
 		WHERE tech_class = #{classValue}
 		ORDER BY tech_no
 	</select>
 	
+	<!-- 자료 개별등록 테스트 -->
 	<insert id="addStatistics" parameterType="statistics">
 		INSERT INTO statistics(stat_no, stat_tech_name, stat_tech_class
 												,stat_demand, stat_supply, stat_user_rate)
@@ -33,7 +36,7 @@
 						,#{demand}, #{supply}, #{userRate})
 	</insert>
 	
-	
+	<!-- 자료 동기화 -->
 	<insert id="addListStatisticsData" parameterType="java.util.List">
 		<if test="list.size != 0">
 			insert into statistics(stat_no,stat_tech_no,stat_demand,stat_supply,stat_user_rate)
@@ -47,6 +50,7 @@
 			) inner_view
 		</if>
 	</insert>
+	<!-- 동기화 대상 조회 -->
 	<select id="getListStatisticsData" resultMap="statisticsSet">
 		SELECT DISTINCT t.tech_no AS stat_tech_no, demand.stat_demand, supply.stat_supply, user_rate.stat_user_rate
 		FROM tech t
@@ -75,6 +79,7 @@
 		ORDER BY t.tech_no
 	</select>
 
+	<!-- 전체 조회 -->
 	<select	id="getListTotalStatistics" resultMap="statisticsSet">
 		SELECT DISTINCT stat_tech_no,tech_name,tech_class
 					,SUM(stat_demand) AS stat_demand
@@ -86,23 +91,48 @@
 		ORDER BY stat_tech_no
 	</select>
 	
-	<select	id="getListMajorStatistics" parameterType="int" resultMap="statisticsSet">
-	</select>
+	<!-- 과반수 조회 -->
+	<select id="getListMajorStatistics" parameterType="int" resultMap="statisticsSet">
+		SELECT DISTINCT stat_tech_no,tech_name,tech_class
+			<choose>
+				<when test="value == 1">,SUM(stat_demand) AS stat_demand</when>
+				<when test="value == 2">,SUM(stat_supply) AS stat_supply</when>
+				<when test="value == 3">,ROUND(AVG(stat_user_rate),3) AS stat_user_rate</when>
+			</choose>
+		FROM statistics s, tech t
+		WHERE s.stat_tech_no = t.tech_no 
+		AND t.tech_class = #{value}
+		AND rownum &lt;= 3
+		GROUP BY stat_tech_no,tech_name,tech_class
+		ORDER BY stat_tech_no
+	 </select>
+	 
+	 <!-- 기간별 조회 -->
+	 <select id="getListPeriodStatistics" parameterType="map" resultMap="statisticsSet">
+		SELECT DISTINCT stat_tech_no,tech_name,tech_class
+			 ,SUM(stat_demand) AS stat_demand
+			 ,SUM(stat_supply) AS stat_supply
+			 ,TO_CHAR(stat_date,'yyyy/mm') AS stat_date
+		FROM statistics s, tech t
+		WHERE s.stat_tech_no = t.tech_no AND t.tech_no = #{techNo} AND s.stat_date BETWEEN #{searchStartDate} AND #{searchEndDate}
+		GROUP BY stat_tech_no,tech_name,tech_class,stat_date
+		ORDER BY stat_tech_no
+	 </select>
 	
-	<select	id="getListPeriodStatistics" parameterType="statistics" resultMap="statisticsSet">
-	</select>
-	
+	 <!-- 지역별 조회 -->
 	<select	id="getListRegionStatistics" parameterType="statistics" resultMap="statisticsSet">
 	</select>
 	
+	 <!-- 메인화면 게시물 개수 표기 -->
 	<select	id="getListPostCount" resultType="hashmap">
 		SELECT * FROM
 			(SELECT COUNT(CASE WHEN SUBSTR(port_division,1,1) = 1 THEN 1 END) AS develop
 							,COUNT(CASE WHEN SUBSTR(port_division,1,1) = 2 THEN 1 END) AS design
-			FROM portfolio) pf
-			,(SELECT COUNT(proj_no) project FROM project) pt
+		FROM portfolio) pf
+				,(SELECT COUNT(proj_no) project FROM project) pt
 	</select>
 	
+	 <!-- 개인 기술 통계 -->
 	<select	id="getListUserStatistics" parameterType="String" resultMap="statisticsSet">
 		SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
 		WHERE t.tech_no = c.career_tech_no AND career_user_id = 'user01'

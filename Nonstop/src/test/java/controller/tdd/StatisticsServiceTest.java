@@ -1,5 +1,6 @@
 package controller.tdd;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,7 +52,7 @@ public class StatisticsServiceTest {
 	public void getTechClassList(){
 		System.out.println(statisticsService.getTechClassList());
 	}
-	@Test
+	//@Test
 	public void getTechDataList(){
 		System.out.println(statisticsService.getTechDataList(1));
 	}
@@ -66,12 +67,18 @@ public class StatisticsServiceTest {
 
 	//@Test
 	public void getMajorStatisticsList()  throws Exception{
-		//Statistics statistics
+		System.out.println(statisticsService.getMajorStatisticsList(1));
 	}
 
-	//@Test
+	@Test
 	public void getPeriodStatisticsList()  throws Exception{
-		//Statistics statistics
+		Statistics statistics = new Statistics();
+		statistics.setTechClass(1);
+		statistics.setTechNo(1000);
+		statistics.setSearchStartDate("2017/05/24");
+		statistics.setSearchEndDate("2017/05/29");
+		
+		System.out.println(statisticsService.getPeriodStatisticsList(statistics));
 	}
 
 	//@Test

@@ -41,8 +41,9 @@ public class StatisticsController {
 	@RequestMapping(value="getListTotalStatistics", method=RequestMethod.GET)
 	public String getListTotalStatistics(Model model){
 		System.out.println("/statstics/getListTotalStatistics");
-		
+
 		model.addAttribute("techClassList",statisticsService.getTechClassList());
+		model.addAttribute("techDataList",statisticsService.getTechDataList(1));
 		
 		return "forward:/view/statistics/getStatistics.jsp";
 	}
@@ -54,9 +55,9 @@ public class StatisticsController {
 	}
 	
 	@RequestMapping(value="getJSONMajorStatisticsList", method=RequestMethod.POST)
-	public void getJSONMajorStatisticsList(Model model, @RequestParam("techClass") int techClass){
+	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics){
 		System.out.println("/statstics/getJSONMajorStatisticsList");
-		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(techClass));
+		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass()));
 	}
 	
 	@RequestMapping(value="getJSONPeriodStatisticsList", method=RequestMethod.POST)
