@@ -102,17 +102,17 @@
             
             
             if(flag=="add to scrap"){
-            	requestTarget = "addJsonPortScrap";
+               requestTarget = "addJsonPortScrap";
                asdf = "delete to scrap";  
                alert(1);
             }else if(flag=="delete to scrap"){
-            	requestTarget = "deleteJsonPortScrap";
+               requestTarget = "deleteJsonPortScrap";
                asdf ="add to scrap"
-            	   alert(2);
+                  alert(2);
             }else{
-            	requestTarget == "deleteJsonPortScrap";
+               requestTarget == "deleteJsonPortScrap";
                 asdf ="add to scrap"
-                	alert(3);
+                   alert(3);
             }
             alert(requestTarget+"컨트롤러 어디로가니");
             alert(asdf);
