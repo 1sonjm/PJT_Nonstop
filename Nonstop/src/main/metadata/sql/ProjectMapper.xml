@@ -19,18 +19,20 @@
 		<result property="projLocation" 	column="proj_location" 		jdbcType="VARCHAR" />
 		<result property="projDetail" 		column="proj_detail" 		jdbcType="VARCHAR" />
 		<result property="projViewcount" 	column="proj_viewcount" 	jdbcType="NUMERIC" />
+		<result property="projExpectDate" 	column="proj_expectdate" 	jdbcType="NUMERIC" />
+		<result property="projDday" 	column="proj_dday" 	jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addProject"		parameterType="project" >
 	 	INSERT 
-		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, to_char(proj_annoend, 'YYYY/MM/DD 23:59:59') proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
+		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
 		VALUES ( seq_project_proj_no.nextval, 
-		'user01', 
+		'com02', 
 		#{projDivision:NUMERIC}, 
 		#{projTitle:VARCHAR}, 
 		SYSDATE, 
-		to_date(#{projAnnoEnd:DATE}, 'YYYY/MM/DD 23:59:59'),
+		#{projAnnoEnd:DATE},
 		#{projStartDate:DATE}, 
 		#{projEndDate:DATE},
 		#{projLocation:VARCHAR}, 
@@ -40,11 +42,62 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProject"	parameterType="int"	resultMap="projectSelectMap">
-		SELECT
-		proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount	
+		SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount,
+											round((TO_DATE(concat(proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-
+											TO_DATE(proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+											round((TO_DATE(concat(proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-
+											TO_DATE(proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday		
 		FROM project
 		WHERE proj_no = #{value}
 	 </select>
+	 
+	 <select  id="listProject"  parameterType="search"	resultMap="projectSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount,
+											round((TO_DATE(concat(proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-
+											TO_DATE(proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+											round((TO_DATE(concat(proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-
+											TO_DATE(proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday	
+											FROM project
+											<where>
+												<if test="searchCondition != null">
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				AND proj_title like '%' || #{searchKeyword} ||'%'
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				AND proj_location like '%' || #{searchKeyword} ||'%'
+													</if>
+												</if>
+											</where>
+											
+										<!-- 	GROUP BY p.prod_name, p.prod_no, p.prod_detail, 
+											p.manufacture_day, p.price, p.image_file, p.reg_date, 
+											tran_status_code, p.tran_prod_stock ORDER BY prod_no --> ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>
+	 
+	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount
+						FROM project
+						<if test="searchCondition != null">
+							<where>
+								<if test="searchCondition == 0 and searchKeyword !='' ">
+									proj_title = #{searchKeyword}
+								</if>
+								<if test="searchCondition == 1 and searchKeyword !='' ">
+									proj_location = #{searchKeyword}
+								</if>
+							</where>
+						</if> ) countTable						
+	 </select>
+	 
+	 
+	 
+	 
+	 
 	 
 	 
 	 <update	id="updateProject"	parameterType="project" >
@@ -63,7 +116,7 @@
 	 <!-- <select  id="listProject" resultMap="projectSelectMap">
 	  	
 	 </select> -->
-	  <delete id="deleteProject" parameterType="project">
+	 <delete id="deleteProject" parameterType="project">
 		DELETE from project
 		where proj_no=#{projNo}
 	 </delete>

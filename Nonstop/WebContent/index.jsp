@@ -149,7 +149,7 @@
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	 	$("#projDesigner").on("click" , function() {
 			//$(self.location).attr("href","/user/logout");
-			self.location = "/project/getProject?projNo=18"
+			self.location = "/project/listProject"
 		}); 
 	 });
 	
@@ -158,7 +158,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDeveloper").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=18"
+				self.location = "/project/listProject"
 			}); 
 		 });
 	
