@@ -146,15 +146,50 @@
 			$(".detailButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
-			
 
-		
-			
 		});
 		
-		
-		
-	    
+		$(function() {
+		      /* 스크랩추가 */
+		      $(".glyphicon.glyphicon-star").on("click" , function() {
+
+		            var flag = $(this).attr('value');
+		            var requestTarget;
+		            var asdf;
+		            var qwer;
+		            alert(flag);
+		            
+		            
+		            if(flag=="addScrap"){
+		               requestTarget = "addJsonProjScrap";
+					   asdf = "스크랩 해제";
+					   qwer = "deleteScrap";
+		            }else{
+		               requestTarget = "deleteJsonProjScrap";
+		               asdf = "스크랩 추가";
+		               qwer = "addScrap";
+		            }
+		            alert(requestTarget+"컨트롤러 어디로가니");
+
+		             var projNo=$(this).attr('projNo');
+		             alert(projNo);
+		             $.ajax(
+		                {
+		                   url : "/profile/"+requestTarget+"/"+projNo,
+		                   method : "GET",
+		                   dateType : "json",
+		                   headers : {
+		                      "Accept" : "application/json",
+		                     "Content-Type" : "application/json"   
+		                 },
+		                   success : function(JSONData , status){
+		                      var displatValue = 
+		                     "<button type='button' title='"+asdf+"' class='glyphicon glyphicon-star' style='font-size: 25px' id='deleteScrap' projNo='${project.projNo}' value='"+qwer+"'></button>"
+		                      $(".glyphicon.glyphicon-star").html(displayValue);
+		                   }
+		                });
+		             });
+		      });
 	</script>
 
 
@@ -249,7 +284,13 @@
 							<table style="height: 400px;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">
 									<th colspan="10" style="font-size: 25px; table-layout: fixed; height: 40px;  white-space:nowrap;">
-										<button type="button" class="glyphicon glyphicon-star" style="font-size: 25px"></button>
+									
+										<c:if test="${project.scrapNo==0}">
+										<button type="button" title="스크랩 추가" class="glyphicon glyphicon-star" style="font-size: 25px" id="addScrap" projNo="${project.projNo}" value="addScrap"></button>
+										</c:if>
+										<c:if test="${project.scrapNo!=0}">
+										<button type="button" title="스크랩 해제" class="glyphicon glyphicon-star" style="font-size: 25px" id="deleteScrap" projNo="${project.projNo}" value="deleteScrap"></button>
+										</c:if>
 										${project.projTitle}
 									</th>
 									<th colspan="2" style="text-align: center">

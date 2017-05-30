@@ -10,9 +10,9 @@ public interface ProjectDAO {
 	
 	public void addProject(Project project) throws Exception;
 
-	public Project getProject(int projNo) throws Exception;
+	public Project getProject(int projNo , String scrapUserId) throws Exception;
 
-	public List<Project> listProject(Search search) throws Exception;
+	public List<Project> listProject(Search search , String scrapUserId) throws Exception;
 //
 	public void updateProject(Project project) throws Exception;
 	

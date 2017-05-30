@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
-import com.nonstop.domain.Scrap;
 
 public interface ProfileDAO {
 	
@@ -33,11 +32,11 @@ public interface ProfileDAO {
 	
 	public void addProjScrap(int projNo,String scrapUserId) throws Exception;
 	
-	public List<Scrap> getScrapList(int scrapDiv , String scrapUserId , int postNo) throws Exception;
-	
 	public Map<String , Object> getPortScrapList(String scrapUserId) throws Exception;
 	
 	public void deleteJsonPortScrap(int portNo , String scrapUserId) throws Exception;
+	
+	public void deleteJsonProjScrap(int projNo , String scrapUserId) throws Exception;
 	
 	public Map<String , Object> getRecordProjectList(String recUserId) throws Exception;
 }

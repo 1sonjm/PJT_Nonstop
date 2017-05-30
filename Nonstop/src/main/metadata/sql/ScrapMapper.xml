@@ -33,7 +33,7 @@
 		VALUES (seq_scrap_no.nextval,
 				#{scrapUserId},
 				#{portNo:NUMERIC},
-				#{projNo:NUMERIC},
+				#{projNo},
 				2)
 	 </insert>
 	 
@@ -53,9 +53,14 @@
 	 
 	 
 	 
-	 <delete id="deleteScrap" parameterType="map">
+	 <delete id="deletePortScrap" parameterType="map">
 	 	DELETE
 	 	FROM scrap WHERE port_no=#{portNo} AND user_id=#{scrapUserId}
+	 </delete>
+	 
+	 <delete id="deleteProjScrap" parameterType="map">
+	 	DELETE
+	 	FROM scrap WHERE proj_no=#{projNo} AND user_id=#{scrapUserId}
 	 </delete>
 	
 </mapper>		

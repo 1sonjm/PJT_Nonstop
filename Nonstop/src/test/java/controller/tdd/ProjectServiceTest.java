@@ -24,7 +24,7 @@ import com.nonstop.service.project.ProjectService;
 													"classpath:config/context-transaction.xml" })
 public class ProjectServiceTest {
 
-	@Autowired
+	/*@Autowired
 	@Qualifier("projectServiceImpl")
 	private ProjectService projectService;
 
@@ -90,5 +90,5 @@ public class ProjectServiceTest {
 	 	
 	 	totalCount = (Integer)map.get("totalCount");
 	 	System.out.println(totalCount);
-	 }
+	 }*/
 }

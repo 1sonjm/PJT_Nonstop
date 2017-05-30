@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
-import com.nonstop.domain.Scrap;
 import com.nonstop.service.profile.ProfileDAO;
 import com.nonstop.service.profile.ProfileService;
 
@@ -78,13 +77,6 @@ public class ProfileServiceImpl implements ProfileService {
 		profileDAO.addProjScrap(projNo, scrapUserId);
 	}
 	
-	public List<Scrap> getScrapList(int scrapDiv, String scrapUserId, int postNo) throws Exception {
-		
-		List<Scrap> list = profileDAO.getScrapList(scrapDiv, scrapUserId, postNo);
-		
-		return list;
-	}
-
 	public Map<String, Object> getPortScrapList(String scrapUserId) throws Exception {
 		
 		return profileDAO.getPortScrapList(scrapUserId);
@@ -92,6 +84,10 @@ public class ProfileServiceImpl implements ProfileService {
 
 	public void deleteJsonPortScrap(int portNo, String scrapUserId) throws Exception {
 		profileDAO.deleteJsonPortScrap(portNo,scrapUserId );
+	}
+	
+	public void deleteJsonProjScrap(int projNo, String scrapUserId) throws Exception {
+		profileDAO.deleteJsonProjScrap(projNo,scrapUserId );
 	}
 
 	public Map<String , Object> getRecordProjectList(String recUserId) throws Exception{
