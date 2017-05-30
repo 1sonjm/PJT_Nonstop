@@ -20,6 +20,23 @@
     <link href="../../resources/css/full.css" rel="stylesheet">
     
     <style>
+   	.comment-input{
+	    border:2px solid #dbdfe4;
+	    border-radius: 4px;
+	    height: 50px; width: 100%;
+	    padding: 5px 10px;
+	    color: #7f919e;
+    }
+    .comment-input h5{
+	    font-weight: 500;
+    }
+
+    hr.thick-line{
+		border-color: #e7e9ee;
+		border-width: 2px; 
+		margin-top: 5px;
+		margin-bottom: 20px;
+    }
     /* 버튼 */
     .btn-lg{
        margin-left: 5px;
@@ -216,6 +233,13 @@
     </style>
 
    <script type="text/javascript">
+   
+   $(function() {		
+		$( ".comment-input" ).on("click" , function() {
+			$( ".comment-input" ).css("height" , "100px");
+		});
+	});	
+   
    (function ($) {
        'use strict';
 
@@ -366,9 +390,7 @@
 									    </a>
 									  </div>
 									  <div class="media-body">
-									  	<div class="comment-div">
-									  		<h5>댓글을 달아보세염</h5>
-									  	</div>
+									  		<input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">									  	
 									  </div>
 									</div>
 									                                     
