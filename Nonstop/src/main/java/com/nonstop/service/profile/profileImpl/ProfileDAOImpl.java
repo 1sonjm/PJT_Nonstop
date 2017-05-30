@@ -115,25 +115,13 @@ public class ProfileDAOImpl implements ProfileDAO{
 		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
-		map.put("postNo", projNo);
+		map.put("projNo", projNo);
 		map.put("scrapUserId", scrapUserId);
 		
 		
 		sqlSession.insert("ScrapMapper.addProjScrap",map);
 	}
 
-	public List<Scrap> getScrapList(int scrapDiv, String scrapUserId, int postNo) throws Exception {
-		
-		Map<String , Object> map = new HashMap<String , Object>();
-		
-		
-		map.put("scrapUserId", scrapUserId);
-		map.put("postNo", postNo);
-		map.put("scrapDiv",scrapDiv);
-	
-		return sqlSession.selectList("ScrapMapper.getListScrap" , map);
-	}
-	
 	public Map<String , Object> getPortScrapList(String scrapUserId) throws Exception{
 
 		List<Scrap> list = sqlSession.selectList("ScrapMapper.getListPortScrap", scrapUserId);
@@ -153,7 +141,17 @@ public class ProfileDAOImpl implements ProfileDAO{
 		map.put("portNo", portNo);
 		map.put("scrapUserId", scrapUserId);
 
-		sqlSession.delete("ScrapMapper.deleteScrap", map);	
+		sqlSession.delete("ScrapMapper.deletePortScrap", map);	
+	}
+	
+	public void deleteJsonProjScrap( int projNo , String scrapUserId)throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("projNo", projNo);
+		map.put("scrapUserId", scrapUserId);
+
+		sqlSession.delete("ScrapMapper.deleteProjScrap", map);	
 	}
 
 	public Map<String, Object> getRecordProjectList(String recUserId) throws Exception {

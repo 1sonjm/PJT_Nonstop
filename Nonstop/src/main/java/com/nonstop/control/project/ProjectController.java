@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nonstop.domain.Page;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.User;
 import com.nonstop.service.project.ProjectService;
 
 //==> ȸ������ Controller
@@ -80,7 +81,10 @@ public class ProjectController {
 		
 		System.out.println("/project/getProject : GET");
 //	int comProdNo=prodNo;
-		Project project = projectService.getProject(projNo);
+		
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		System.out.println(scrapUserId);
+		Project project = projectService.getProject(projNo ,scrapUserId);
 //		Comment comment = commentService.getComment(product.getProdNo());
 		
 //		session.setAttribute("comProdNo", comProdNo);
@@ -109,11 +113,14 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value="updateProjectView", method=RequestMethod.GET)
-	public String updateProjectView( @RequestParam("projNo") int projNo , Model model ) throws Exception{
+	public String updateProjectView( @RequestParam("projNo") int projNo , HttpSession session, Model model ) throws Exception{
 
 		System.out.println("/view/project/updateProjectView.jsp : GET");
 		//Business Logic
-		Project project = projectService.getProject(projNo);
+		
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		Project project = projectService.getProject(projNo,scrapUserId);
 		// Model �� View ����
 		model.addAttribute("project", project);
 		
@@ -146,7 +153,7 @@ public class ProjectController {
 	
 	
 	@RequestMapping(value="listProject")
-	public String listProject( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listProject( @ModelAttribute("search") Search search , Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/project/listProject");
 		
@@ -155,8 +162,10 @@ public class ProjectController {
 		}
 		search.setPageSize(pageSize);
 		
+		
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		// Business logic ����
-		Map<String , Object> map=projectService.listProject(search);
+		Map<String , Object> map=projectService.listProject(search,scrapUserId);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
