@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>List_Portfolio</title>
+    <title>프로젝트 목록보기</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
@@ -77,10 +77,6 @@
 	    	background-color:#ffffe6;
 	    	border: 2px solid orange;
 	    }
-        
-        .breadcrumb{
-        	/* background-color:#fffffa; */
-        }
         
         .thumbnail{
         	/* background-color:#fffffa; */
@@ -170,7 +166,7 @@
 
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
-	<div class="container"> <!-- <div class="container"> 獄�占쏙옙占쏙옙占� �⑨옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 / <div class="container-fluid"> ��怨�占싼�占쏙옙 占쏙옙筌ｋ��占쏙옙繹�占쏙�占� 占쏙옙占쎈��占쏙옙占쏙옙 筌ㅿ옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 -->
+	<div class="container">
 		
 		<div class="margin-top-5">
 			<!-- Search-bar -->
@@ -224,12 +220,12 @@
 </div>
 
 <div class="container">
-	<hr class="margin-top-30"/>
+	<hr class="margin-top-10"/>
 </div>
             
 <div class="container">
 	<ol class="breadcrumb">
-	  <li><a href="#" id="rmsid5">최신등록순</a></li>
+	  <li><a href="#" >최신등록순</a></li>
 	  <li><a href="#">마감임박순</a></li>
 	  <li><a href="#">지원자순</a></li>
 	  <li><a href="#">조회순</a></li>

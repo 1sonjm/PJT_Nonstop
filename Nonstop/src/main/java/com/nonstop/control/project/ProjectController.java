@@ -15,10 +15,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nonstop.domain.Comment;
 import com.nonstop.domain.Page;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.User;
+import com.nonstop.service.comment.CommentService;
 import com.nonstop.service.project.ProjectService;
+import com.nonstop.service.user.UserService;
 
 //==> ȸ������ Controller
 @Controller
@@ -30,15 +34,15 @@ public class ProjectController {
 	@Qualifier("projectServiceImpl")
 	private ProjectService projectService;
 	
-	/*@Autowired
+	@Autowired
 	@Qualifier("commentServiceImpl")
-	private CommentService commentService;*/
+	private CommentService commentService;
 	
-	/*@Autowired
+	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	//setter Method
-	*/
+	
 	
 	public ProjectController(){
 		System.out.println(this.getClass());
@@ -81,13 +85,15 @@ public class ProjectController {
 		System.out.println("/project/getProject : GET");
 //	int comProdNo=prodNo;
 		Project project = projectService.getProject(projNo);
-//		Comment comment = commentService.getComment(product.getProdNo());
+		Comment comment = commentService.getComment(project.getProjNo());
+		User user = userService.getUser(project.getProjUserId());
 		
 //		session.setAttribute("comProdNo", comProdNo);
 		session.setAttribute("projNo", projNo);
 //		model.addAttribute("comProdNo", comProdNo);
 		model.addAttribute("project", project);
-//		model.addAttribute("comment", comment);
+		model.addAttribute("comment", comment);
+		model.addAttribute("user", user);
 		
 	
 		return "forward:/view/project/getProject.jsp";
@@ -130,7 +136,6 @@ public class ProjectController {
 		
 		model.addAttribute("project", project);
 		
-		
 		return "forward:/view/project/listProject.jsp";
 	}
 	
@@ -167,18 +172,17 @@ public class ProjectController {
 		
 		return "forward:/view/project/listProject.jsp";
 	}
-	/*
+	
 	@RequestMapping(value="addComment", method=RequestMethod.POST)
 	public String addComment( @ModelAttribute("comment") Comment comment, Model model) throws Exception {
 		
-		System.out.println("����� addComment : "+comment);
+		System.out.println("여기는 addComment : "+comment);
 		
 		commentService.addComment(comment);
 		model.addAttribute("comment", comment);
 		
-		return "redirect:/product/listProduct?menu=search";
+		return "redirect:/project/listProject";
 	}
-	
 	@RequestMapping(value="getComment", method=RequestMethod.GET)
 	public String getComment( @RequestParam("comNo") int comNo, Model model, HttpSession session ) throws Exception {
 		
@@ -187,8 +191,8 @@ public class ProjectController {
 		session.setAttribute("comNo", comNo);
 		model.addAttribute("comNo", comNo);
 		
-		System.out.println("GetProductAction��2");
-		return "forward:/product/getProduct.jsp";
+		System.out.println("GetProductAction끝2");
+		return "redirect:/view/project/listProject.jsp";
 	}
 	
 	@RequestMapping(value="deleteComment", method=RequestMethod.POST)
@@ -197,11 +201,8 @@ public class ProjectController {
 		commentService.deleteComment(comment);
 		model.addAttribute("comment", comment);
 		
-		return "redirect:/product/listProduct?menu=search";
+		return "redirect:/project/listProject";
 	}
-	
-	
-	*/
 
 	
 	
