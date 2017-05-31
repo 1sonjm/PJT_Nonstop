@@ -18,17 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nonstop.domain.Page;
 import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
 import com.nonstop.service.user.UserService;
-
-
-
-
 
 
 
@@ -152,16 +147,16 @@ public class UserController {
 	}
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	/*@RequestMapping( value="getJsonCompany/{userId}", method=RequestMethod.GET )
+	@RequestMapping( value="getJsonCompany/{userId}", method=RequestMethod.GET )
 	public void getJsonCompany(	@PathVariable String userId, 
 									 			Model model) throws Exception{
 		
-		System.out.println("/getJson/getUser : GET");
+		System.out.println("/getJson/getCompany : GET");
 		//Business Logic
-		User user = userService.getUser(userId);
+		User user = userService.getCompany(userId);
 		
 		model.addAttribute("user", user);
-	}*/
+	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
 	public String updateUser( @RequestParam("userId") String userId , Model model ) throws Exception{
@@ -176,8 +171,8 @@ public class UserController {
 	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
-
+	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateFile") MultipartFile file) throws Exception{
+		
 		System.out.println("/user/updateUser : POST");
 		//Business Logic
 		userService.updateUser(user);
@@ -187,9 +182,62 @@ public class UserController {
 			session.setAttribute("user", user);
 		}
 		
-		return "redirect:/view/user/getUser?userId="+user.getUserId();
+			String image=file.getOriginalFilename();
+
+			user.setImage(image);
+			
+			//user.setUserId("user");
+	        try {
+	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
+	            file.transferTo(uploadFile);
+	        } catch (IOException e) {
+	            e.printStackTrace();	
+		}
+		
+	        
+	        return "forward:/view/user/getUser.jsp";
+		/*return "redirect:/view/user/getUser?userId="+user.getUserId();*/
 	}
 	
+	@RequestMapping( value="updateCompany", method=RequestMethod.GET )
+	public String updateCompany( @RequestParam("userId") String userId , Model model ) throws Exception{
+
+		System.out.println("/user/updateCompny : GET");
+		//Business Logic
+		User user = userService.getCompany(userId);
+
+		model.addAttribute("user", user);
+		
+		return "forward:/view/user/updateCompany.jsp";
+	}
+
+	@RequestMapping( value="updateCompany", method=RequestMethod.POST )
+	public String updateCompany( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateCompany") MultipartFile file) throws Exception{
+		
+		System.out.println("/user/updateCompany : POST");
+		//Business Logic
+		userService.updateCompany(user);
+		
+		String sessionId=((User)session.getAttribute("user")).getUserId();
+		if(sessionId.equals(user.getUserId())){
+			session.setAttribute("user", user);
+		}
+		
+			String image=file.getOriginalFilename();
+
+			user.setImage(image);
+			
+			//user.setUserId("user");
+	        try {
+	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
+	            file.transferTo(uploadFile);
+	        } catch (IOException e) {
+	            e.printStackTrace();	
+		}
+		
+	       return "forward:/view/user/getCompany.jsp";
+	       
+	}
 	
 	@RequestMapping( value="login", method=RequestMethod.GET )
 	public String login() throws Exception{
@@ -198,8 +246,26 @@ public class UserController {
 
 		return "redirect:/view/user/loginView.jsp";
 	}
-	
 	@RequestMapping( value="login", method=RequestMethod.POST )
+	   public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
+	      
+	      System.out.println("/user/login : POST");
+
+	      String destinate = "redirect:/user/login";
+	      
+	      User dbUser=userService.getUser(user.getUserId());
+	      System.out.println("user 뭐닝" + dbUser);
+	      
+	      if( user.getPassword().equals(dbUser.getPassword())){
+	         session.setAttribute("user", dbUser);
+	         destinate="forward:/index.jsp";
+	      }       
+	      System.out.println(session.getAttribute("user"));
+	      
+	      return destinate;
+//	      return "redirect:/user/getUser?userId="+dbUser.getUserId();
+	   }
+	/*@RequestMapping( value="login", method=RequestMethod.POST )
 	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 		
 		System.out.println("/user/login : POST");
@@ -211,7 +277,7 @@ public class UserController {
 		}
 		return "redirect:/index.jsp";
 		//return "redirect:/index.jsp";
-	}
+	}*/
 	
 	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping( value="jsonLogin", method=RequestMethod.POST )
@@ -272,6 +338,30 @@ public class UserController {
 		return "forward:/view/user/listUser.jsp";
 	}
 	
+	@RequestMapping( value="listCompany" )
+	public String listCompany( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+		
+		System.out.println("/user/listCompany : GET / POST");
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		
+		
+		Map<String , Object> map=userService.getCompanyList(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println(resultPage);
+		
+		
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		
+		return "forward:/view/user/listCompany.jsp";
+	}
+	
 	@RequestMapping( value="checkUserId/{userId}", method=RequestMethod.GET)
 	   public void checkUserId(  @PathVariable String userId, Model model) throws Exception {
 	      
@@ -282,6 +372,41 @@ public class UserController {
 	      model.addAttribute("result", new Boolean(result));
 	      
 	   }
+	
+	
+	
+	@RequestMapping( value="deleteUser", method=RequestMethod.POST )
+	   public String deleteUser(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
+	      
+	      System.out.println("/user/login : POST");
+
+	      String destinate = "forward:/view/user/deleteUserView.jsp";
+	      
+	      User dbUser=userService.getUser(user.getUserId());
+	      System.out.println("user 뭐닝" + dbUser);
+	      
+	      if( user.getPassword().equals(dbUser.getPassword())){
+	         session.setAttribute("user", dbUser);
+	         userService.deleteUser(user);
+	         destinate="forward:/view/user/deleteUser.jsp";
+	      }       
+	      System.out.println(session.getAttribute("user"));
+	      
+	      return destinate;
+//	      return "redirect:/user/getUser?userId="+dbUser.getUserId();
+	   }
+	/*@RequestMapping(value="deleteUser" , method=RequestMethod.POST)
+	public String deleteUser(@RequestParam("password") String password,  HttpSession session) throws Exception{
+		
+		System.out.println("/user/deleteUser : POST");
+		String userId= ((User)session.getAttribute("user")).getUserId();
+		
+		userService.deleteUser(userId , password);
+		
+		return "forward:/view/user/deleteUser.jsp";
+	}*/
+	
+	
 	
 	
 	/*@RequestMapping(value="addImage", method=RequestMethod.POST)

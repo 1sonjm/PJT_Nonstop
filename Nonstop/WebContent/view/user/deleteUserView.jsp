@@ -62,27 +62,19 @@
 				}
 				
 				
-				$("form").attr("method","POST").attr("action","/user/login").attr("target","_parent").submit();
+				$("form").attr("method","POST").attr("action","/user/deleteUser").attr("target","_parent").submit();
 			});
 		});	
 		
 		
-		
-		
-		//============= 회원원가입화면이동 =============
 		$( function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#addUser").on("click" , function() {
-				self.location = "/user/addUser"
+				self.location = ""
 			});
 		});
+	
 		
-		$( function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#addCompany").on("click" , function() {
-				self.location = "/user/addCompany"
-			});
-		});
 		
 		
 		
@@ -114,7 +106,7 @@
 		 	 	<br/><br/>
 				
 				<div class="jumbotron">	 	 	
-		 	 		<h1 class="text-center">로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h1>
+		 	 		<h1 class="text-center">회원탈퇴</h1>
 
 			        <form class="form-horizontal">
 		  
@@ -134,11 +126,10 @@
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-primary"  >로 그 인</button>
+					      <button type="button" class="btn btn-primary"  >회원 탈퇴</button>
 					      <br/><br/>
-					      <a class="btn btn-primary btn" href="#" role="button" id = "addUser">개 인 회 원 가 입</a>	
-					      <br/><br/>
-					      <a class="btn btn-primary btn" href="#" role="button" id = "addCompany">기 업 회 원 가 입</a>			      					      
+					      <a class="btn btn-primary btn" href="#" role="button" id = "index">메인으로</a>	
+					      			      					      
 					    </div>
 					  </div>
 					  

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 
 <!DOCTYPE html>
@@ -7,9 +7,9 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="utf-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -35,24 +35,24 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 		
-		//============= È¸¿øÁ¤º¸¼öÁ¤ Event  Ã³¸® =============	
+		//============= íšŒì›ì •ë³´ìˆ˜ì • Event  ì²˜ë¦¬ =============	
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button" ).on("click" , function() {
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			 $( "#updateUser" ).on("click" , function() {
 					self.location = "/user/updateUser?userId=${user.userId}"
 				});
 		});
 		
 		 $(function() {
-				//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "button" ).on("click" , function() {
+				//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( "#listUser" ).on("click" , function() {
 						self.location = "/user/listUser"
 					});
 			});
 		 
 		 $(function() {
-				//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "button" ).on("click" , function() {
+				//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( "#deleteUser" ).on("click" , function() {
 						self.location = "/user/deleteUser"
 					});
 			});
@@ -67,53 +67,51 @@
 	<%-- <jsp:include page="/layout/toolbar.jsp" />
    	 --%><!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">È¸¿øÁ¤º¸Á¶È¸</h3>
-	       <h5 class="text-muted">³» Á¤º¸¸¦ <strong class="text-danger">ÃÖ½ÅÁ¤º¸·Î °ü¸®</strong>ÇØ ÁÖ¼¼¿ä.</h5>
+	       <h3 class=" text-info">íšŒì›ì •ë³´ì¡°íšŒ</h3>
+	       <h5 class="text-muted">ë‚´ ì •ë³´ë¥¼ <strong class="text-danger">ìµœì‹ ì •ë³´ë¡œ ê´€ë¦¬</strong>í•´ ì£¼ì„¸ìš”.</h5>
 	    </div>
 	    
 	    
 	    
 	    
 	    <div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>ÇÁ·ÎÇÊ »çÁø</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>í”„ë¡œí•„ ì‚¬ì§„</strong></div>
 			<img src="/resources/images/upload/${user.image}" class="img-square" width="200">
 		</div>
 		<hr/>
 	
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>ÀÌ ¸§</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ì´ ë¦„</strong></div>
 			<div class="col-xs-8 col-md-4">${user.userName}</div>
 		</div>
 		
 		<hr/>
 	
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>¾Æ ÀÌ µğ</strong></div>
+	  		<div class="col-xs-4 col-md-2"><strong>ì•„ ì´ ë””</strong></div>
 			<div class="col-xs-8 col-md-4">${user.userId}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>¿¬¶ôÃ³</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ì—°ë½ì²˜</strong></div>
 			<div class="col-xs-8 col-md-4">${ !empty user.tel ? user.tel : ''}	</div>
 		</div>
 		<hr/>
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>ÁÖ¼Ò</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ì£¼ì†Œ</strong></div>
 			<div class="col-xs-8 col-md-4">${user.addr}</div>
 		</div>
 		
 		<hr/>	
-		
-		
-		
+			
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>ÀÌ ¸Ş ÀÏ</strong></div>
+	  		<div class="col-xs-4 col-md-2"><strong>ì´ ë©” ì¼</strong></div>
 			<div class="col-xs-8 col-md-4">${user.email}</div>
 		</div>
 		
@@ -123,26 +121,29 @@
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">È¸¿øÁ¤º¸¼öÁ¤</button>
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "updateUser">íšŒì›ì •ë³´ìˆ˜ì •</a>	
 	  		</div>
 		</div>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">µ¹¾Æ°¡±â</button>
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "listUser">ëŒì•„ê°€ê¸°</a>
 	  		</div>
 		</div>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">È¸¿øÅ»Åğ</button>
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser">íšŒì›íƒˆí‡´</a>
 	  		</div>
 		</div>
 		
 		<br/>
 		
  	</div>
- 	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 
 </body>
 

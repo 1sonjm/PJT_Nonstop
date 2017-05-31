@@ -39,17 +39,64 @@
 	 </insert>
 	 
 	 
-	   <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+	   
+	 
+	 
+	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		user_name 				= #{userName} ,
+			user_tel				= #{tel},
+			user_addr 				= #{addr} ,
+			user_email				= #{email},
+			user_pwd				= #{password},
+			user_img				= #{image:VARCHAR}
+			
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 
+	 
+	 <update	id="updateCompany"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		user_name 				= #{userName} ,
+			user_tel				= #{tel},
+			user_addr 				= #{addr} ,
+			user_email				= #{email},
+			user_pwd				= #{password},
+			user_img				= #{image:VARCHAR}, 
+			user_emp				= #{empNum},
+			user_est				= #{pubDate},
+			user_ceo				= #{companyName}
+			
+			
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 
+	 
+	 
+	 
+	<select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
 		user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_img 		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
 	 
-
-
-
-	 <select 	id="getProfileUser"	parameterType="string"	resultMap="userSelectMap">
+	
+	<delete id="deleteUser"	parameterType="user">
+		DELETE 
+		FROM users
+		WHERE user_id = #{userId} AND user_pwd = #{password}
+	</delete>
+	
+		 
+		 
+<select 	id="getProfileUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
 		user_id , user_role, user_addr, user_img, user_ceo ,user_emp,user_est
 		FROM users 
@@ -64,21 +111,7 @@
 		WHERE user_id = #{value}
 			 	
 	 </select>
-	 
-	 
-	 
-	 
-	 <update	id="updateUser"	parameterType="user" >
-	   	UPDATE users
-	   	<set>
-	   		user_name 	= #{userName} ,
-			user_tel	= #{tel},
-			user_addr 				= #{addr} ,
-			user_email				=	#{email}
-	   	</set>
-	   	WHERE user_id = #{userId}
-	 </update>
-		 
+
 
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
@@ -100,7 +133,25 @@
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
 	 	 
-				
+		<select  id="getCompanyList"  parameterType="search"	resultMap="userSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT user_id , user_ceo , user_email
+											FROM users
+											<if test="searchCondition != null">
+												<where>
+													<if test="searchCondition == 0 and searchKeyword !='' ">
+										 				user_id = #{searchKeyword}
+													</if>
+													<if test="searchCondition == 1 and searchKeyword !='' ">
+										 				user_name = #{searchKeyword}
+													</if>
+												</where>
+											</if>
+											ORDER BY user_id ) inner_table
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+	 </select>		
 		
 	
  
@@ -119,5 +170,7 @@
 							</where>
 						</if> ) countTable						
 	 </select>
+	 
+	 
 	 
 </mapper>

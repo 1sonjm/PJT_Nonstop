@@ -2,6 +2,8 @@ package com.nonstop.service.user;
 
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+
 import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
 
@@ -26,6 +28,21 @@ public interface UserService {
 	
 	public void updateUser(User user) throws Exception;
 	
+	public void updateCompany(User user) throws Exception;
+	
 	public boolean checkUserId(String userId) throws Exception;
+
+	public void deleteUser(User user) throws Exception;
+
+	public Map<String, Object> getCompanyList(Search search) throws Exception;
+
+
+
+
+
+	
+	
+
+
 	
 }

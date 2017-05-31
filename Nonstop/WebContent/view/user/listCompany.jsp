@@ -45,9 +45,9 @@
 	<script type="text/javascript">
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
-		function fncGetUserList(currentPage) {
+		function fncGetCompanyList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
+			$("form").attr("method" , "POST").attr("action" , "/user/listCompany").submit();
 		}
 		
 		
@@ -130,7 +130,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>개인회원목록조회</h3>
+	       <h3>기업회원목록조회</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -179,7 +179,7 @@
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
             <th align="left">이메일</th>
-            <th align="left">간략정보</th>
+            <th align="left">간략정보</th >
           </tr>
         </thead>
        
@@ -189,7 +189,7 @@
 		  <c:forEach var="user" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
-			<c:if test="${user.role==2}">
+			<c:if test="${user.role==3}">
 			  <td align="center">${ i }</td>
 			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
 			  <td align="left">${user.userName}</td>

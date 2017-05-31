@@ -5,7 +5,7 @@ import java.sql.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 
-//==>ȸ�������� �𵨸�(�߻�ȭ/ĸ��ȭ)�� Bean
+
 public class User {
 	
 	///Field
@@ -21,7 +21,7 @@ public class User {
 	private Date pubDate;
 	private String image;
 	private MultipartFile file;
-	private MultipartFile file1;
+
 	
 	///Constructor
 	public User(){

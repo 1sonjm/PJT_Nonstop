@@ -36,12 +36,31 @@
 	<script type="text/javascript">
 		
 		//============= 회원정보수정 Event  처리 =============	
-		 $(function() {
+		  $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button" ).on("click" , function() {
-					self.location = "/user/updateUser?userId=${user.userId}"
+			 $( "#updateCompany" ).on("click" , function() {
+					self.location = "/user/updateCompany?userId=${user.userId}"
 				});
 		});
+		
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( "#listCompany" ).on("click" , function() {
+						self.location = "/user/listCompany"
+					});
+			});
+		 
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( "#deleteUser" ).on("click" , function() {
+						self.location = "/view/user/deleteUserView.jsp"
+						
+					});
+			});
+		
+		
+		
+		
 		
 	</script>
 	
@@ -62,9 +81,10 @@
 	    </div>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>프로필 사진</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userName}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>기업 로고</strong></div>
+			<img src="/resources/images/upload/${user.image}" class="img-square" width="200">
 		</div>
+		
 		
 	<hr/>
 		<div class="row">
@@ -92,11 +112,34 @@
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>연락처</strong></div>
 			<div class="col-xs-8 col-md-4">${ !empty user.tel ? user.tel : ''}	</div>
 		</div>
 		
 		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>기업명</strong></div>
+			<div class="col-xs-8 col-md-4">${user.companyName}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>직원수</strong></div>
+			<div class="col-xs-8 col-md-4">${user.empNum}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>설립일</strong></div>
+			<div class="col-xs-8 col-md-4">${user.pubDate}</div>
+		</div>
+		
+		<hr/>
+		
+		
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
@@ -105,15 +148,31 @@
 		
 		<hr/>
 		
-		
-		
-		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "updateCompany">회원정보수정</a>	
+	  		</div>
+		</div>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">회원정보수정</button>
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "listCompany">돌아가기</a>
 	  		</div>
 		</div>
+		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser">회원탈퇴</a>
+	  		</div>
+		</div>		
+		
+		
+		
+		
+
 		
 		<br/>
 		
