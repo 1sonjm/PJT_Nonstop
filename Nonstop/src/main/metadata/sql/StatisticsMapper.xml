@@ -102,7 +102,7 @@
 		FROM statistics s, tech t
 		WHERE s.stat_tech_no = t.tech_no 
 		AND t.tech_class = #{value}
-		AND rownum &lt;= 3
+		AND rownum &lt;= 5
 		GROUP BY stat_tech_no,tech_name,tech_class
 		ORDER BY stat_tech_no
 	 </select>
