@@ -70,7 +70,8 @@
 		    padding: 8px;
 		    text-align: left;
 		   
-		    text-overflow:ellipsis
+		    text-overflow:ellipsis;
+		    overflow:hidden;
 		}
 		
 	   .thumbnail:hover{
@@ -115,7 +116,7 @@
 		});
 		
 		
-		function d_day() {
+		/* function d_day() {
 			var nowDate = new Date();
 			var projAnnoEnd = new Date($("#projAnnoEnd").val());
 			var thatDay = projAnnoEnd.getTime('YYYY/MM/DD 23:59:59') - nowDate.getTime('YYYY/MM/DD 00:00:00');
@@ -136,7 +137,7 @@
 			var days = Math.abs(Math.floor(expectDay / (1000*60*60*24))+1);
 			$("#expectDay").append('<font>'+days+'</font>');
 		}
-		
+		 */
 		
 		$(function() {
 			$(".glyphicon.glyphicon-plus-sign").on("click", function(){
@@ -146,8 +147,10 @@
 			$(".detailButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
-
+			
+		
 		});
+		
 		
 		$(function() {
 		      /* 스크랩추가 */
@@ -281,7 +284,7 @@
 						<input type="hidden" name="projStartDate" id="projStartDate" value="${project.projStartDate}" /> 
 						<input type="hidden" name="projEndDate" id="projEndDate" value="${project.projEndDate}" />
 						<div class="thumbnail">
-							<table style="height: 400px;">
+							<table style="height: 400px; overflow:hidden;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">
 									<th colspan="10" style="font-size: 25px; table-layout: fixed; height: 40px;  white-space:nowrap;">
 									
@@ -365,12 +368,12 @@
 									<th colspan="12">개발 기술 : java</th>
 								</tr>
 
-								<tr style="height: 150px; text-align: top-left">
+								<tr style="height: 150px; text-align: top-left;" class="projDetail">
 									<td colspan="12">
 										<p>
 											<strong>상세내용</strong>
 										</p> 
-										${project.projDetail}
+									${project.projDetail}
 									</td>
 								</tr>
 

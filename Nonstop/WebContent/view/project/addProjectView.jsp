@@ -33,6 +33,7 @@
 		body {
             padding-top : 50px;
         }
+        
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -82,6 +83,8 @@
 
 		$("input:hidden[name='projLocation']").val( projLocation );
 		
+		$("textarea[name='projDetail']").val().replace(/\n/gi, '<br>');
+		
 		$("form").attr("method", "POST").attr("action", "/project/addProject").submit();
 		
 	}
@@ -116,8 +119,8 @@
 		
 		
 		
-		
-	
+
+
 	});
 	
 

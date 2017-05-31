@@ -24,6 +24,8 @@ import com.nonstop.service.comment.CommentService;
 import com.nonstop.service.project.ProjectService;
 import com.nonstop.service.user.UserService;
 
+import jdk.nashorn.internal.ir.RuntimeNode.Request;
+
 //==> ȸ������ Controller
 @Controller
 @RequestMapping("/project/*")
@@ -67,40 +69,46 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="addProject", method=RequestMethod.POST)
-	public String addProject( @ModelAttribute("project") Project project, Model model) throws Exception {
+	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
 		
 		System.out.println("여기는 addProject : "+project);
 		
+//		projDetail.replaceAll("\r\n", "<br>");
+//		session.setAttribute("projDetail", projDetail);
 		projectService.addProject(project);
+		
 		model.addAttribute("project", project);
 		
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/project/listProject";
 	}
 	
 	
 	@RequestMapping(value="getProject", method=RequestMethod.GET)
-	public String getProject( @RequestParam("projNo") int projNo , 
+	public String getProject( @RequestParam("projNo") int projNo ,
 							  Model model, HttpSession session ) throws Exception {
 		
 		System.out.println("/project/getProject : GET");
-//	int comProdNo=prodNo;
-
-//		Project project = projectService.getProject(projNo);
-//		Comment comment = commentService.getComment(project.getProjNo());
-//		User user = userService.getUser(project.getProjUserId());
-
 		
+		Project project = new Project();
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+//		String projDetail = project.getProjDetail();
+		
+//		Project project = projectService.getProject(projNo);
+		project = projectService.getProject(projNo ,scrapUserId);
+		Comment comment = commentService.getComment(project.getProjNo());
+		User user = userService.getUser(project.getProjUserId());
+		
+//		project.getProjDetail().replaceAll("\r\n", "<br>");
+		
 		System.out.println(scrapUserId);
-		Project project = projectService.getProject(projNo ,scrapUserId);
-//		Comment comment = commentService.getComment(product.getProdNo());
+		
 		
 //		session.setAttribute("comProdNo", comProdNo);
 		session.setAttribute("projNo", projNo);
 //		model.addAttribute("comProdNo", comProdNo);
 		model.addAttribute("project", project);
-//		model.addAttribute("comment", comment);
-//		model.addAttribute("user", user);
+		model.addAttribute("comment", comment);
+		model.addAttribute("user", user);
 		
 	
 		return "forward:/view/project/getProject.jsp";
@@ -129,7 +137,7 @@ public class ProjectController {
 		
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		Project project = projectService.getProject(projNo,scrapUserId);
+		Project project = projectService.getProject(projNo, scrapUserId);
 		// Model �� View ����
 		model.addAttribute("project", project);
 		
@@ -164,12 +172,11 @@ public class ProjectController {
 	public String listProject( @ModelAttribute("search") Search search , Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/project/listProject");
-		
+		Project project = new Project();
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
 		
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		// Business logic ����

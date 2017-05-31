@@ -60,7 +60,7 @@
 							 round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
 					  FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
 					 <where>
-					 p.proj_no=a.proj_no(+) 
+					 p.proj_no=a.proj_no(+)
 						 <!-- <if test="searchCondition != null">
 						 	<if test="searchCondition == 0 and searchKeyword !='' ">
 						 		AND proj_title like '%' || #{searchKeyword} ||'%'
@@ -70,6 +70,8 @@
 							</if>
 						</if>  -->
 					 </where>
+					 
+					 
 											
 										<!-- 	GROUP BY p.prod_name, p.prod_no, p.prod_detail, 
 											p.manufacture_day, p.price, p.image_file, p.reg_date, 

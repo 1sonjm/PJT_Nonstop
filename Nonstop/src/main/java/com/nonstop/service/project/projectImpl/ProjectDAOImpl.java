@@ -40,8 +40,6 @@ public class ProjectDAOImpl implements ProjectDAO{
 
 		
 	public Project getProject(int projNo , String scrapUserId) throws Exception {
-//		int comProdNo = prodNo;
-//		sqlSession.selectOne("CommentMapper.getComment", comProdNo);
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("projNo", projNo);
