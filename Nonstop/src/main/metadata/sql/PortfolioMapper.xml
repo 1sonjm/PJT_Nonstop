@@ -22,6 +22,16 @@
 
 	</resultMap>
 	
+	 <resultMap id="commentSelectMap" type="portComment">
+		<result property="comNo" 			column="com_no" 				jdbcType="INTEGER"/>
+		<result property="comPortNo" 		column="com_port_no" 			jdbcType="INTEGER" />
+		<result property="comUserId" 		column="com_user_id" 			jdbcType="VARCHAR" />
+		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
+		<result property="comRegDate" 		column="com_port_regdate" 		jdbcType="DATE" />
+		<result property="comContent" 		column="com_port_content" 		jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
 	<!-- SQL : INSERT -->
 	<insert 	id="addPortfolio"		parameterType="portfolio" >
 	 	INSERT 
@@ -51,8 +61,8 @@
 	 </select>
 
 	 <select  id="getPortfolioList" parameterType="map" resultMap="portfolioSelectMap">
-	  	 select p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
-     	from portfolio p, (select * from scrap where user_id=#{scrapUserId}) a
+	  	SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
+     	FROM portfolio p, (select * from scrap where user_id=#{scrapUserId}) a
      <where>
         p.port_no=a.port_no(+) AND
         <if test="portDivision == 1">
@@ -62,7 +72,7 @@
          p.port_division IN (20,21,22)   
       </if>
       <if test="portDivision != 1 and portDivision != 2">
-         p.port_division = #{value}
+         p.port_division = #{portDivision}
       </if>   
      </where>
 	  	ORDER BY port_viewcount
@@ -107,7 +117,46 @@
 		port_detail=#{portDetail}
 		</set>
 		WHERE port_no=#{portNo}
-	 </update>
+	</update>
+	
+	<insert 	id="addComment"		parameterType="portComment" >
+	 	INSERT INTO 
+	 	port_comment( com_no , com_port_no , com_user_id , com_port_regdate , com_port_content) 
+		VALUES	 (	seq_port_comment_com_no.nextVal, 
+		#{comPortNo}, 
+		#{comUserId}, 
+		SYSDATE, 
+		#{comContent})
+		<selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
+        SELECT seq_port_comment_com_no.currval FROM dual
+    	</selectKey>
+	 </insert>
+	 
+	<select  id="getComment"  parameterType="int"	resultMap="commentSelectMap">
+		SELECT c.com_no, c.com_port_no, c.com_user_id, c.com_port_regdate, c.com_port_content, u.user_id, u.user_img
+		FROM port_comment c, users u 
+		WHERE c.com_no = #{comNo} 
+		AND u.user_id = c.com_user_id
+	</select>
+	 
+ 
+
+	<delete id="deleteComment" parameterType="int">
+		DELETE from port_comment
+		where com_no = #{value}
+	</delete>
+	 
+	 
+	<select  id="getCommentList"  parameterType="int"	resultMap="commentSelectMap">
+
+		SELECT c.com_no, c.com_port_no, c.com_user_id, c.com_port_regdate, c.com_port_content, u.user_id, u.user_img
+		FROM port_comment c, users u 
+		WHERE c.com_port_no = #{comPortNo} 
+		AND u.user_id = c.com_user_id
+		ORDER BY com_port_regdate DESC
+		
+	</select>
+	
 	
 	 
 </mapper>
