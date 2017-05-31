@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nonstop.domain.PortComment;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
@@ -104,13 +105,13 @@ public class PortfolioController {
 		
 		System.out.println("getPortfolio Controller");
 		
-		//완성되면 여기 지우기. 임시
-		if(portNo==0){
-			portNo = 10;
-		}
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
+		//스크랩
 		Portfolio portfolio = portfolioService.getPortfolio(portNo,scrapUserId);
+		
+		//댓글
+		List<PortComment> portCommentList = portfolioService.getCommentList(portNo);
 		
 		//클릭시 조회수 추가
 		int portViewCount = portfolio.getTotalPortView();
@@ -151,7 +152,9 @@ public class PortfolioController {
 		portfolio.setPortDay(regdate.substring(8, 10));
 		
 		System.out.println("getPortfolio portfolio : "+portfolio);
+
 		
+		model.addAttribute("portCommentList", portCommentList);
 		model.addAttribute("portfolio", portfolio);
 		
 		return "forward:/view/portfolio/getPortfolio.jsp";
@@ -215,5 +218,27 @@ public class PortfolioController {
 		return "forward:/view/portfolio/getPortfolio.jsp";
 	}
 	
+	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
+	public void addJsonComment( @ModelAttribute("portComment") PortComment portComment, HttpSession session, Model model ) throws Exception {
+		
+		System.out.println("/addJsonComment");
+		
+		System.out.println("portComment : "+portComment);
+		
+		portfolioService.addComment(portComment);
+		
+		portComment = portfolioService.getComment(portComment.getComNo());
+		
+		model.addAttribute("portComment", portComment);
+	}
 	
+	@RequestMapping(value="deleteComment")
+	public String deleteComment(@RequestParam("comNo") int comNo, @RequestParam("comPortNo") int comPortNo, Model model) throws Exception{
+		
+		portfolioService.deleteComment(comNo);
+		/*AJAX로 삭제하는 법 고려해보기*/
+		/*List<PortComment> portCommentList = portfolioService.getCommentList(comPortNo);*/
+		
+		return "forward:/portfolio/getPortfolio?portNo="+comPortNo;
+	}
 }

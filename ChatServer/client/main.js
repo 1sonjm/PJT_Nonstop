@@ -38,49 +38,49 @@ window.onload = function () {
     selfView = document.getElementById("self_view");
     remoteView = document.getElementById("remote_view");
     callButton = document.getElementById("call_but");
-    var joinButton = document.getElementById("join_but");
     audioCheckBox = document.getElementById("audio_cb");
     videoCheckBox = document.getElementById("video_cb");
-    audioOnlyView = document.getElementById("audio-only-container");
     var shareView = document.getElementById("share-container");
     chatText = document.getElementById("chat_txt");
     chatButton = document.getElementById("chat_but");
     chatDiv = document.getElementById("chat_div");
     chatCheckBox = document.getElementById("chat_cb");
 
-    // Store media preferences
-    audioCheckBox.onclick = videoCheckBox.onclick = chatCheckBox.onclick = function(evt) {
-        localStorage.setItem(this.id, this.checked);
-    };
+    audioCheckBox.checked = "true";
+    videoCheckBox.checked = "true";
+    chatCheckBox.checked = "true";
 
-    audioCheckBox.checked = localStorage.getItem("audio_cb") == "true";
-    videoCheckBox.checked = localStorage.getItem("video_cb") == "true";
+    
+    var hash = location.hash.substr(1);
+    if (hash) {// 주소로 들어온 사람
+        document.getElementById("session_txt").value = hash;
+        //log("Auto-joining session: " + hash);
+        // 채팅만 설정할때 바로 콜되네?
+    } else {// 최초 방 생성자
+        // set a random session id
+        document.getElementById("session_txt").value = Math.random().toString(16).substr(4);//방ID 부여 (여기에 사용자 id넣으면 되겠다.)
+    }
+    
+    //채팅방 개설
+        // get a local stream
+        navigator.mediaDevices.getUserMedia({ 
+        	"audio": true,
+            "video": true})
+            .then(function (stream) {
+            // .. show it in a self-view
+            selfView.srcObject = stream;
+            // .. and keep it to be sent later
+            localStream = stream;
 
-    chatCheckBox.checked = localStorage.getItem("chat_cb") == "true";
+            
+            selfView.style.visibility = "visible";
 
-    // Check video box if no preferences exist
-    if (!localStorage.getItem("video_cb"))
-        videoCheckBox.checked = true;
-
-    joinButton.disabled = !navigator.mediaDevices.getUserMedia;
-    joinButton.onclick = function (evt) {
-        if (!(audioCheckBox.checked || videoCheckBox.checked || chatCheckBox.checked)) {
-            alert("Choose at least audio, video or chat.");
-            return;
-        }
-
-        audioCheckBox.disabled = videoCheckBox.disabled = chatCheckBox.disabled = joinButton.disabled = true;
-
-        // only chat
-        if (!(videoCheckBox.checked || audioCheckBox.checked)) peerJoin();
-
-        function peerJoin() {
-        	var sessionId = document.getElementById("session_txt").value;
-            signalingChannel = new SignalingChannel(sessionId);
+            var userId = document.getElementById("session_txt").value;
+            signalingChannel = new SignalingChannel(userId);
 
             // show and update share link
             var link = document.getElementById("share_link");
-            var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
+            var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + userId);
             link.href = link.textContent = window.location.href + maybeAddHash;
             shareView.style.visibility = "visible";
 
@@ -99,52 +99,17 @@ window.onload = function () {
                 peer.ondisconnect = function () {
                     callButton.disabled = true;
                     remoteView.style.visibility = "hidden";
+                    alert('연결 종료');
                     if (pc)
                         pc.close();
                     pc = null;
                 };
             };
+        }).catch(logError);
+        
+        if (hash) {
+        	//start(true);
         }
-
-        // video/audio with our without chat
-        if (videoCheckBox.checked || audioCheckBox.checked) {
-            // get a local stream
-            navigator.mediaDevices.getUserMedia({ "audio": audioCheckBox.checked,
-                "video": videoCheckBox.checked}).then(function (stream) {
-                // .. show it in a self-view
-                selfView.srcObject = stream;
-                // .. and keep it to be sent later
-                localStream = stream;
-
-                joinButton.disabled = true;
-                chatButton.disabled = true;
-
-                if (videoCheckBox.checked)
-                    selfView.style.visibility = "visible";
-                else if (audioCheckBox.checked && !(chatCheckBox.checked))
-                    audioOnlyView.style.visibility = "visible";
-
-                peerJoin();
-            }).catch(logError);
-        }
-    };
-
-    document.getElementById("owr-logo").onclick = function() {
-        window.location.assign("http://www.openwebrtc.org");
-    };
-
-    var hash = location.hash.substr(1);
-    if (hash) {
-    	// 주소로 들어온 사람
-        document.getElementById("session_txt").value = hash;
-        log("Auto-joining session: " + hash);
-        joinButton.click();
-        //start(true);// 채팅만 설정할때 바로 콜되네?
-    } else {
-        // set a random session id
-    	// 최초 방 생성자
-        document.getElementById("session_txt").value = Math.random().toString(16).substr(4);
-    }
 };
 
 // handle signaling messages received from the other peer
@@ -184,14 +149,14 @@ function handleMessage(evt) {
         pc.addIceCandidate(new RTCIceCandidate(message.candidate), function () {}, logError);
     }
 }
-
+var userId;
 // call start() to initiate
 function start(isInitiator) {	
     callButton.disabled = true;
     pc = new RTCPeerConnection(configuration);
-    var userId = document.getElementById("user_id").value;//call 되면 유저의 아이디를 가져옴
-    document.getElementById("init-section").style.visibility= 'hidden';
-    document.getElementById("main-room").style.visibility= 'visible';
+    
+    document.getElementById("init-section").style.display= 'none';
+    document.getElementById("main-room").style.display= 'block';
 
     // send any ice candidates to the other peer
     pc.onicecandidate = function (evt) {
@@ -208,17 +173,14 @@ function start(isInitiator) {
         }
     };
 
-    // start the chat
-    if (chatCheckBox.checked) {
-        if (isInitiator) {
-            channel = pc.createDataChannel("chat");
+    if (isInitiator) {//채팅을 위한 dataChannel 생성
+        channel = pc.createDataChannel("chat");
+        setupChat();
+    } else { //생성된 dataChannel 사용
+        pc.ondatachannel = function (evt) {
+            channel = evt.channel;
             setupChat();
-        } else {
-            pc.ondatachannel = function (evt) {
-                channel = evt.channel;
-                setupChat();
-            };
-        }
+        };
     }
 
     // once the remote stream arrives, show it in the remote video element
@@ -287,9 +249,10 @@ function log(msg) {
 // setup chat
 function setupChat() {
     channel.onopen = function () {
-        chatDiv.style.visibility = "visible";
+    	chatDiv.style.visibility = "visible";
         chatText.style.visibility = "visible";
         chatButton.style.visibility = "visible";
+        chatText.disabled = false;
         chatButton.disabled = false;
 
         //On enter press - send text message.
@@ -302,8 +265,7 @@ function setupChat() {
         chatButton.onclick = function () {
             if(chatText.value) {
                 postChatMessage(chatText.value, true);
-                //그냥 userid 하니까 불러와지긴 하지만 저장된값이아닌 다른 무언가가 온다. 주소값?
-                channel.send(document.getElementById("user_id").value+": "+chatText.value);//송신메세지
+                channel.send(/*document.getElementById("user_id").value*/"userId"+": "+chatText.value);//송신메세지
                 chatText.value = "";
                 chatText.placeholder = "";
             }

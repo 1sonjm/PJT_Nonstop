@@ -49,7 +49,6 @@ function totalStatistics(jsonData){
 		"zoomOutText": "전체보기",
 		"startDuration": 0.55,
 		"startEffect": "easeOutSine",
-		"backgroundColor": "#F4F4F4",
 		"borderColor": "#F6F6F6",
 		"fontSize": 12,
 		"export": {"enabled": true},
@@ -62,14 +61,23 @@ function totalStatistics(jsonData){
 			"scrollbarHeight": 8,
 			"selectedBackgroundColor": "#EEB3A7"
 		},
-		"allLabels": [ {
+		"allLabels": [ 
+			{
 				"align": "right",
 				"id": "Label-1",
 				"size": 12,
 				"text": "크기: 해당 기술을 쓸 수있는 회원비율",
 				"x": "95%",
 				"y": "0%"
-		} ],
+			},{
+				"align": "right",
+				"id": "Label-2",
+				"size": 11,
+				"text": "지난 주간의 통계",
+				"x": "98%",
+				"y": "95%"
+			}
+		],
 		"graphs": [
 			{
 				"balloonText": "<b>[[techName]]</b> <br/>수요:<b>[[x]]</b> 공급:<b>[[y]]</b><br>회원비율:<b>[[value]]%</b>",
@@ -122,6 +130,8 @@ function totalStatistics(jsonData){
 		"dataProvider": dataSet1.concat(dataSet2.concat(dataSet3))
 	} );
 }
+
+
 function majorStatistics(jsonData,target){
 	var dataSet = [];
 	for (var i=0; i<jsonData.dataList.length; i++){
@@ -174,6 +184,16 @@ function majorStatistics(jsonData,target){
 		"backgroundColor": "#E9E9E9",
 		"fontSize": 12,
 		"theme": "default",
+		"allLabels": [ 
+			{
+				"align": "right",
+				"id": "Label-1",
+				"size": 12,
+				"text": "지난 주간의 통계",
+				"x": "95%",
+				"y": "0%"
+			}
+		],
 		"export": {	"enabled": true },
 		"legend": {
 			"enabled": true,
@@ -288,7 +308,7 @@ function statisticsByPeriod(jsonData){
  * 	Example : http://www.highcharts.com/maps/demo/map-drilldown
  *  Document : http://api.highcharts.com/highmaps
  * */
-function highMaps() {
+function highMaps(jsonData) {
     
 	var me = this;
 	me.chart = null;
@@ -298,23 +318,81 @@ function highMaps() {
 		}
 	};
 	
-	this.init();
 };
-highMaps.prototype.init = function(){
+highMaps.prototype.init = function (jsonData){
+	//alert(jsonData);
 	var me = this;
 	// 전국단위 지도 로드
-	$.getJSON('../../resources/json/0.json', function (geojson) {
+	$.getJSON('/resources/json/0.json', function (geojson) {
         var data = Highcharts.geojson(geojson, 'map');
         $.each(data, function (i) {
         	this.drilldown = this.properties['code'];
-        	this.value = i;
-        	console.log(this.drilldown);
+        	/*
+        	if(this.properties['name'] == '1'){
+        		
+        	}
+        	*/
+        	
+        	switch(this.properties['name']){
+        	case '서울특별시':
+            	this.value = 123;
+        		break;
+        	case '부산광역시':
+            	this.value = 445;
+        		break;
+        	case '대구광역시':
+            	this.value = 789;
+        		break;
+        	case '인천광역시':
+            	this.value = 756;
+        		break;
+        	case '광주광역시':
+            	this.value = 154;
+        		break;
+        	case '대전광역시':
+            	this.value = 783;
+        		break;
+        	case '울산광역시':
+            	this.value = 453;
+        		break;
+        	case '세종특별자치시':
+            	this.value = 195;
+        		break;
+        	case '경기도':
+            	this.value = 45;
+        		break;
+        	case '강원도':
+            	this.value = 59;
+        		break;
+        	case '충청북도':
+            	this.value = 97;
+        		break;
+        	case '충청남도':
+            	this.value = 210;
+        		break;
+        	case '전라북도':
+            	this.value = 80;
+        		break;
+        	case '전라남도':
+            	this.value = 70;
+        		break;
+        	case '경상북도':
+            	this.value = 90;
+        		break;
+        	case '경상남도':
+            	this.value = 375;
+        		break;
+        	case '제주특별자치도':
+            	this.value = 678;
+        		break;
+        	}
+        	
         });
         $('#region').highcharts('Map', {
         	credits: { enabled: false },
         	colorAxis: {
         		min : 0,
-                minColor: '#6d64d1',
+                minColor: '#d6d6d6',
                 maxColor: '#d16464'},
             chart : {
                 events: {
@@ -323,7 +401,7 @@ highMaps.prototype.init = function(){
                         if (!e.seriesOptions) {
                         	// 상위레벨에서 선택한 부분의 코드값에 따라 하위레벨이 결정
                             var chart = this, mapKey = e.point.drilldown;
-                            $.getJSON('../../resources/json/' + mapKey + '.json', function (geojson2) {
+                            $.getJSON('/resources/json/' + mapKey + '.json', function (geojson2) {
                                 data = Highcharts.geojson(geojson2, 'map');
                                 $.each(data, function (i) {
                                     this.value = i;
