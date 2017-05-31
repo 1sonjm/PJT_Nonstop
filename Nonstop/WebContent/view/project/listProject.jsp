@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>List_Portfolio</title>
+    <title>프로젝트 목록보기</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
@@ -77,10 +77,6 @@
 	    	background-color:#ffffe6;
 	    	border: 2px solid orange;
 	    }
-        
-        .breadcrumb{
-        	/* background-color:#fffffa; */
-        }
         
         .thumbnail{
         	/* background-color:#fffffa; */
@@ -150,15 +146,50 @@
 			$(".detailButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
-			
 
-		
-			
 		});
 		
-		
-		
-	    
+		$(function() {
+		      /* 스크랩추가 */
+		      $(".glyphicon.glyphicon-star").on("click" , function() {
+
+		            var flag = $(this).attr('value');
+		            var requestTarget;
+		            var asdf;
+		            var qwer;
+		            alert(flag);
+		            
+		            
+		            if(flag=="addScrap"){
+		               requestTarget = "addJsonProjScrap";
+					   asdf = "스크랩 해제";
+					   qwer = "deleteScrap";
+		            }else{
+		               requestTarget = "deleteJsonProjScrap";
+		               asdf = "스크랩 추가";
+		               qwer = "addScrap";
+		            }
+		            alert(requestTarget+"컨트롤러 어디로가니");
+
+		             var projNo=$(this).attr('projNo');
+		             alert(projNo);
+		             $.ajax(
+		                {
+		                   url : "/profile/"+requestTarget+"/"+projNo,
+		                   method : "GET",
+		                   dateType : "json",
+		                   headers : {
+		                      "Accept" : "application/json",
+		                     "Content-Type" : "application/json"   
+		                 },
+		                   success : function(JSONData , status){
+		                      var displatValue = 
+		                     "<button type='button' title='"+asdf+"' class='glyphicon glyphicon-star' style='font-size: 25px' id='deleteScrap' projNo='${project.projNo}' value='"+qwer+"'></button>"
+		                      $(".glyphicon.glyphicon-star").html(displayValue);
+		                   }
+		                });
+		             });
+		      });
 	</script>
 
 
@@ -170,7 +201,7 @@
 
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
-	<div class="container"> <!-- <div class="container"> 獄�占쏙옙占쏙옙占� �⑨옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 / <div class="container-fluid"> ��怨�占싼�占쏙옙 占쏙옙筌ｋ��占쏙옙繹�占쏙�占� 占쏙옙占쎈��占쏙옙占쏙옙 筌ㅿ옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 -->
+	<div class="container">
 		
 		<div class="margin-top-5">
 			<!-- Search-bar -->
@@ -224,12 +255,12 @@
 </div>
 
 <div class="container">
-	<hr class="margin-top-30"/>
+	<hr class="margin-top-10"/>
 </div>
             
 <div class="container">
 	<ol class="breadcrumb">
-	  <li><a href="#" id="rmsid5">최신등록순</a></li>
+	  <li><a href="#" >최신등록순</a></li>
 	  <li><a href="#">마감임박순</a></li>
 	  <li><a href="#">지원자순</a></li>
 	  <li><a href="#">조회순</a></li>
@@ -253,7 +284,13 @@
 							<table style="height: 400px;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">
 									<th colspan="10" style="font-size: 25px; table-layout: fixed; height: 40px;  white-space:nowrap;">
-										<button type="button" class="glyphicon glyphicon-star" style="font-size: 25px"></button>
+									
+										<c:if test="${project.scrapNo==0}">
+										<button type="button" title="스크랩 추가" class="glyphicon glyphicon-star" style="font-size: 25px" id="addScrap" projNo="${project.projNo}" value="addScrap"></button>
+										</c:if>
+										<c:if test="${project.scrapNo!=0}">
+										<button type="button" title="스크랩 해제" class="glyphicon glyphicon-star" style="font-size: 25px" id="deleteScrap" projNo="${project.projNo}" value="deleteScrap"></button>
+										</c:if>
 										${project.projTitle}
 									</th>
 									<th colspan="2" style="text-align: center">

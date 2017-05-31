@@ -49,8 +49,7 @@
                       <li><a href="#" id="login">로그인</a></li>
                       <li><a href="#" id="addUser">회원가입</a></li>
                     </c:if>
-                 <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
-                 <c:if test="${!empty sessionScope.user.userId }">
+               <c:if test="${!empty sessionScope.user.userId }">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
                     <li><a href="#" id="listLetter"><span class="glyphicon glyphicon-envelope"></span></a></li>
                   <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
@@ -179,7 +178,7 @@
       //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
        $("#projDesigner").on("click" , function() {
          //$(self.location).attr("href","/user/logout");
-         self.location = "/project/getProject?projNo=18"
+         self.location = "/project/listProject"
       }); 
     });
    
@@ -188,7 +187,7 @@
          //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
           $("#projDeveloper").on("click" , function() {
             //$(self.location).attr("href","/user/logout");
-            self.location = "/project/getProject?projNo=18"
+            self.location = "/project/listProject"
          }); 
        });
    

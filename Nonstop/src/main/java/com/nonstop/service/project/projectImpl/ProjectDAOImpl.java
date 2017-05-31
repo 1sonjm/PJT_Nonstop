@@ -1,7 +1,9 @@
 package com.nonstop.service.project.projectImpl;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,10 +39,15 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 		
-	public Project getProject(int projNo) throws Exception {
+	public Project getProject(int projNo , String scrapUserId) throws Exception {
 //		int comProdNo = prodNo;
 //		sqlSession.selectOne("CommentMapper.getComment", comProdNo);
-		return sqlSession.selectOne("ProjectMapper.getProject", projNo);
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("projNo", projNo);
+		map.put("scrapUserId", scrapUserId);
+		
+		return sqlSession.selectOne("ProjectMapper.getProject", map);
 	}
 	
 	public void updateProject(Project project) throws Exception {
@@ -55,9 +62,14 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 	
-	public List<Project> listProject(Search search) throws Exception {
+	public List<Project> listProject(Search search , String scrapUserId) throws Exception {
 		
-		return sqlSession.selectList("ProjectMapper.listProject", search);
+		//Map<String , Object> map = new HashMap<String , Object>();
+		
+		//map.put("search", search);
+		//map.put("scrapUserId", scrapUserId);
+		
+		return sqlSession.selectList("ProjectMapper.listProject", scrapUserId);
 	}
 	
 	public int getTotalCount(Search search) throws Exception {

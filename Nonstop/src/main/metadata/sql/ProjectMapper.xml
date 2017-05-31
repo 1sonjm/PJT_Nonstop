@@ -20,7 +20,9 @@
 		<result property="projDetail" 		column="proj_detail" 		jdbcType="VARCHAR" />
 		<result property="projViewcount" 	column="proj_viewcount" 	jdbcType="NUMERIC" />
 		<result property="projExpectDate" 	column="proj_expectdate" 	jdbcType="NUMERIC" />
-		<result property="projDday" 	column="proj_dday" 	jdbcType="NUMERIC" />
+		<result property="projDday" 		column="proj_dday" 			jdbcType="NUMERIC" />
+		<result property="scrapUserId" 		column="user_id" 			jdbcType="VARCHAR" />
+		<result property="scrapNo" 			column="scrap_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -41,41 +43,39 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getProject"	parameterType="int"	resultMap="projectSelectMap">
-		SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount,
-											round((TO_DATE(concat(proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-
-											TO_DATE(proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-											round((TO_DATE(concat(proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-
-											TO_DATE(proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday		
-		FROM project
-		WHERE proj_no = #{value}
+	 <select 	id="getProject"	parameterType="map"	resultMap="projectSelectMap">
+	SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location,p.proj_detail, p.proj_viewcount,
+	round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+	round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
+	FROM project p , (SELECT * FROM scrap WHERE user_id=#{scrapUserId:VARCHAR}) a
+	WHERE p.proj_no=a.proj_no(+) AND p.proj_no=#{projNo}
+	
 	 </select>
 	 
-	 <select  id="listProject"  parameterType="search"	resultMap="projectSelectMap">
+	 <select  id="listProject"  parameterType="String"	resultMap="projectSelectMap">
 	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount,
-											round((TO_DATE(concat(proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-
-											TO_DATE(proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-											round((TO_DATE(concat(proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-
-											TO_DATE(proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday	
-											FROM project
-											<where>
-												<if test="searchCondition != null">
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				AND proj_title like '%' || #{searchKeyword} ||'%'
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				AND proj_location like '%' || #{searchKeyword} ||'%'
-													</if>
-												</if>
-											</where>
+	  	FROM (	SELECT inner_table.* <!-- , ROWNUM AS row_seq -->
+	  			FROM( SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
+							 round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+							 round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
+					  FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
+					 <where>
+					 p.proj_no=a.proj_no(+) 
+						 <!-- <if test="searchCondition != null">
+						 	<if test="searchCondition == 0 and searchKeyword !='' ">
+						 		AND proj_title like '%' || #{searchKeyword} ||'%'
+						 	</if>
+					    	<if test="searchCondition == 1 and searchKeyword !='' ">
+							    AND proj_location like '%' || #{searchKeyword} ||'%'
+							</if>
+						</if>  -->
+					 </where>
 											
 										<!-- 	GROUP BY p.prod_name, p.prod_no, p.prod_detail, 
 											p.manufacture_day, p.price, p.image_file, p.reg_date, 
-											tran_status_code, p.tran_prod_stock ORDER BY prod_no --> ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+											tran_status_code, p.tran_prod_stock ORDER BY prod_no --> ) inner_table)
+						<!-- WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
 	 </select>
 	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">

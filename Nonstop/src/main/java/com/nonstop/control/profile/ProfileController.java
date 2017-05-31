@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
-import com.nonstop.domain.Portfolio;
-import com.nonstop.domain.Scrap;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
@@ -263,21 +261,7 @@ public class ProfileController {
 		
 		profileService.addProjScrap(projNo,scrapUserId);
 	}
-	
-	@RequestMapping(value="getScrapList/{postNo}/{scrapDiv}")
-	public String getScrapList(@PathVariable int postNo ,@PathVariable int scrapDiv , HttpSession session , Model model) throws Exception{
-		
-		System.out.println("profile/getScrapList");
-		
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		List<Scrap> list = profileService.getScrapList(scrapDiv, scrapUserId, postNo);
-		
-		model.addAttribute("list",list);
-		
-		return "forward:/view/profile/listScrap.jsp";
-	}
-	
+
 	@RequestMapping(value="deleteJsonPortScrap/{portNo}",method=RequestMethod.GET)
 	public void deleteJsonPortScrap(@PathVariable int portNo , HttpSession session , Model model) throws Exception{
 		
@@ -285,9 +269,17 @@ public class ProfileController {
 		
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		System.out.println(scrapUserId+"++++++++++++++++++++++++++++++++++++++");
-		
 		profileService.deleteJsonPortScrap(portNo , scrapUserId);
+	}
+	
+	@RequestMapping(value="deleteJsonProjScrap/{projNo}",method=RequestMethod.GET)
+	public void deleteJsonProjScrap(@PathVariable int projNo , HttpSession session , Model model) throws Exception{
+		
+		System.out.println("/profile/deleteProjScrap : GET");
+		
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		profileService.deleteJsonProjScrap(projNo , scrapUserId);
 	}
 	
 }
