@@ -21,24 +21,21 @@
 <link rel="stylesheet" href="/resources/css/bootstrap-theme.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
+
 <!-- highcharts javascript sources -->
 <script src="https://code.highcharts.com/maps/highmaps.js"></script>
 <script src="https://code.highcharts.com/maps/modules/drilldown.js"></script>
 <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
-<script src="/resources/javascript/highmap_chart.js"></script>
-
-<meta name="description" content="chart created using amCharts live editor" />
 <!-- amCharts javascript sources -->
 <script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/3/xy.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
 <script type="text/javascript" src="https://www.amcharts.com/lib/3/serial.js"></script>
-
 <!-- amCharts plugins -->
 <script type="text/javascript" src="https://www.amcharts.com/lib/3/plugins/export/export.min.js"></script>
 <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css">
 
-<!-- amCharts CreateData -->
+<!-- CreatChart -->
 <script src="/resources/javascript/chartsCreate.js"></script>
 
 
@@ -83,7 +80,7 @@ function getJsonDataList(type,addr){
 					break;
 				case "region":
 					var highMap = new highMaps();
-					highMap.init();
+					highMap.init('???');
 					break;
 				case "techData":
 					return jsonData;
@@ -135,10 +132,10 @@ $(function(){
 	})
 	$('li a:contains("지역별 수요/공급")').on('click',function(){
 		if($(this).attr('aria-expanded') != "true"){
-			$('#selectTechData').attr('disabled',false);
+			$('#selectTechData').attr('disabled',true);
 			$('#searchInfo').css('display','block');
-			$('#searchTarget').css('display','none');
-			$('#searchDate').css('display','block');
+			$('#searchTarget').css('display','block');
+			$('#searchDate').css('display','none');
 			$('#tabIndex').val('4');
 		}
 	})
@@ -213,6 +210,10 @@ $(function(){
 		//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
 	});
 });
+
+function aa(){
+	self.location = "https://192.168.0.16:8444/";
+}
 </script>
 
 </head>
@@ -222,6 +223,7 @@ $(function(){
 
 <div class="container">
 	<h2>Dynamic Tabs</h2>
+	<button onclick="aa()">채팅창으로 이동</button>
 	<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>

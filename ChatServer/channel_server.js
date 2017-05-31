@@ -6,14 +6,15 @@ var path = require("path");
 var sessions = {};
 var usersInSessionLimit = 2;
 
-var port = process.env.PORT || 8080;
-var httpsPort = process.env.HTTPS_PORT || 8443;
-var httpsKeyPath = process.env.HTTPS_KEY || '';
-var httpsCertPath = process.env.HTTPS_CERT || '';
+//var port = process.env.PORT || 8081;
+//var httpsPort = process.env.HTTPS_PORT || 8443;
+var httpsPort = process.env.HTTPS_PORT || 8444;//test
+var httpsKeyPath = process.env.HTTPS_KEY || './ssl/key.pem';
+var httpsCertPath = process.env.HTTPS_CERT || './ssl/cert.pem';
 var httpsCACertPath = process.env.HTTPS_CA_CERT || '';
 
 if (process.argv.length >= 3) {
-    port = process.argv[2];
+    //port = process.argv[2];
 }
 if (process.argv.length >= 6) {
     httpsPort = process.argv[3];
@@ -139,7 +140,8 @@ function requestListener(request, response) {
     var url = request.url.split("?", 1)[0];
     var filePath = path.join(clientDir, url);
     if (filePath.indexOf(clientDir) != 0 || filePath == clientDir)
-        filePath = path.join(clientDir, "/webrtc_example.html");
+        filePath = path.join(clientDir, "/webrtc.html");
+    	//filePath = path.join(clientDir, "screenSharing/index.html");//화면공유 test
 
     fs.stat(filePath, function (err, stats) {
         if (err || !stats.isFile()) {
@@ -160,9 +162,11 @@ function requestListener(request, response) {
     });
 };
 
-console.log('The HTTP server is listening on port ' + port);
-http.createServer(requestListener).listen(port);
+//http 서버 open
+//console.log('The HTTP server is listening on port ' + port);
+//http.createServer(requestListener).listen(port);
 
+//https 서버 open
 if (httpsKeyPath && httpsCertPath) {
     var options = {
         key: fs.readFileSync(httpsKeyPath),
