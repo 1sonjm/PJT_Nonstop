@@ -18,4 +18,16 @@ public interface LetterDAO {
 	
 	public void updateReadDate(int letNo) throws Exception;
 
+	public void updateSave(int letNo) throws Exception;
+	
+	public void addSave(int letNo) throws Exception;
+	
+	public void deleteSave(int letNo) throws Exception;
+	
+	public void updateRecView(int letNo , String userId) throws Exception;
+	
+	public void updateSendView(int letNo , String userId) throws Exception;
+	
+	public List<Letter> getSaveLetterList(String userId) throws Exception;
+	
 }

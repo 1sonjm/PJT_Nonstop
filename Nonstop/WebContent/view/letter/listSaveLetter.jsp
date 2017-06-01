@@ -436,12 +436,6 @@ ul {
 			 $("form").attr("method" , "POST").attr("action" , "/letter/updateRecView").submit();
 			});
 		 
-		 $("#saveBox").on("click" , function() {
-			 var userId = $(this).attr('userId');
-			 self.location = "/letter/getSaveLetterList?userId="+userId;
-			
-			});
-		 
 		 $("i.fa").on("click" ,function() {
 				
 				var flag = $(this).attr('save');
@@ -497,9 +491,7 @@ ul {
                               <h5><a href="#">${user.userId}</a></h5>
                               
                           </div>
-                          <a class="mail-dropdown pull-right" href="javascript:;">
-                              <i class="fa fa-chevron-down"></i>
-                          </a>
+                          
                       </div>
                       <div class="inbox-body">
                           <a href="#myModal" data-toggle="modal"  title="Compose"    class="btn btn-compose">
@@ -570,7 +562,7 @@ ul {
                               <a href="#"><i class="fa fa-envelope-o" id="sendBox" sendId="${sessionScope.user.userId}">보낸 메일함</i></a>
                           </li>
                           <li>
-                              <a href="#"  id="saveBox" userId="${sessionScope.user.userId}"><i class="fa fa-bookmark-o"></i>보관메일함</a>
+                              <a href="#"><i class="fa fa-bookmark-o" id="save"></i>메일보관함</a>
                           </li>
                           <!-- <li>
                               <a href="#"><i class=" fa fa-external-link"></i> Drafts <span class="label label-info pull-right">30</span></a>
@@ -634,7 +626,7 @@ ul {
                   </aside>
                   <aside class="lg-side">
                       <div class="inbox-head">
-                          <h3>받은 메일함</h3>
+                          <h3>메일보관함</h3>
                           <form action="#" class="pull-right position">
                               <div class="input-append">
                                   <input type="text" class="sr-input" placeholder="Search Mail">
@@ -705,7 +697,6 @@ ul {
                             <c:set var="i" value="0" />
 		  					<c:forEach var="letter" items="${list}">
 							<c:set var="i" value="${ i+1 }" />
-							
 							<c:if test="${letter.letRecView==0}"> <!-- 삭제여부 확인 조건문 -->
 							 <c:if test="${letter.letReaddate==null}"> <!-- 읽음여부 확인 조건문 -->
                               <tr class="unread">
@@ -740,7 +731,7 @@ ul {
                               </tr>
                               </c:if>
                              
-                              
+                             
                               </c:forEach>
                               
                               <!--   <tr class="unread">

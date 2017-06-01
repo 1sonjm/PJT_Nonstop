@@ -58,6 +58,15 @@
 
 	<style>
 	
+		.fa-star.inbox-started, .fa-star:hover {
+    		color: #f78a09;
+		}
+		
+		.fa-star {
+    		color: #d5d5d5;
+		}
+
+	
 		table {
         	border-collapse: collapse;
 		    border: collapse;
@@ -155,28 +164,18 @@
 		
 		$(function() {
 		      /* 스크랩추가 */
-		      $(".glyphicon.glyphicon-star").on("click" , function() {
+		      $("i.fa").on("click" , function() {
 
-		            var flag = $(this).attr('value');
+		            var flag = $(this).attr('scrap');
 		            var requestTarget;
-		            var asdf;
-		            var qwer;
 		            alert(flag);
-		            
-		            
-		            if(flag=="addScrap"){
+
+		            if(flag==0){
 		               requestTarget = "addJsonProjScrap";
-					   asdf = "스크랩 해제";
-					   qwer = "deleteScrap";
 		            }else{
 		               requestTarget = "deleteJsonProjScrap";
-		               asdf = "스크랩 추가";
-		               qwer = "addScrap";
 		            }
-		            alert(requestTarget+"컨트롤러 어디로가니");
-
 		             var projNo=$(this).attr('projNo');
-		             alert(projNo);
 		             $.ajax(
 		                {
 		                   url : "/profile/"+requestTarget+"/"+projNo,
@@ -186,10 +185,16 @@
 		                      "Accept" : "application/json",
 		                     "Content-Type" : "application/json"   
 		                 },
+		                   context : this,
 		                   success : function(JSONData , status){
-		                      var displatValue = 
-		                     "<button type='button' title='"+asdf+"' class='glyphicon glyphicon-star' style='font-size: 25px' id='deleteScrap' projNo='${project.projNo}' value='"+qwer+"'></button>"
-		                      $(".glyphicon.glyphicon-star").html(displayValue);
+		                    
+		                	   if(flag==0){
+		                		   $(this).removeClass('fa fa-star').addClass('fa fa-star inbox-started');
+		                		   $(this).attr('scrap','1');
+		                	   }else{
+		                		   $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
+									$(this).attr('save','0');
+		                	   }
 		                   }
 		                });
 		             });
@@ -249,6 +254,7 @@
 <!-- Ranking -->
 <!-- type -->
 <div class="container">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
   <div class="row">
 	  <div class="margin-top-20">
 		  <div class="text">	
@@ -290,10 +296,12 @@
 									<th colspan="10" style="font-size: 25px; table-layout: fixed; height: 40px;  white-space:nowrap;">
 									
 										<c:if test="${project.scrapNo==0}">
-										<button type="button" title="스크랩 추가" class="glyphicon glyphicon-star" style="font-size: 25px" id="addScrap" projNo="${project.projNo}" value="addScrap"></button>
+										<i class="fa fa-star" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
+										<%-- <button type="button" title="스크랩 추가" class="glyphicon glyphicon-star" style="font-size: 25px" id="addScrap" projNo="${project.projNo}" value="addScrap"></button> --%>	
 										</c:if>
 										<c:if test="${project.scrapNo!=0}">
-										<button type="button" title="스크랩 해제" class="glyphicon glyphicon-star" style="font-size: 25px" id="deleteScrap" projNo="${project.projNo}" value="deleteScrap"></button>
+										<i class="fa fa-star inbox-started"  projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
+										<%-- <button type="button" title="스크랩 해제" class="glyphicon glyphicon-star" style="font-size: 25px" id="deleteScrap" projNo="${project.projNo}" value="deleteScrap"></button> --%>
 										</c:if>
 										${project.projTitle}
 									</th>

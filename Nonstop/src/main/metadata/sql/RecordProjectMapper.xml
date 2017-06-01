@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="RecordProjectMapper">
+ 	
+ 	
+	<resultMap id="recordProjectSelectMap" type="recordProject">
+		<result property="comName" 				column="user_name" 				jdbcType="VARCHAR"/>
+		<result property="proTitle"				column="proj_title" 			jdbcType="VARCHAR" />
+		<result property="proStartDate" 		column="proj_startdate" 		jdbcType="DATE" />
+		<result property="proendDate" 			column="proj_enddate"			jdbcType="DATE" />
+		<result property="projNo" 				column="proj_no"				jdbcType="NUMERIC" />
+		<result property="projNo" 				column="proj_no"				jdbcType="NUMERIC" />
+		
+		</resultMap>
+	
+
+	 <select  id="getListRecordProject"  parameterType="String"	resultMap="recordProjectSelectMap">
+	 select u.user_name,b.proj_title,b.proj_startdate,b.proj_enddate 
+			from   users u,(select p.proj_user_id,p.proj_title,p.proj_startdate,p.proj_enddate 
+	 						from project p,(select *
+			 								from record_applicant
+			 								where rec_user_id =#{recUserId} AND rec_status=1)a
+	 						where p.proj_no=a.rec_proj_no) b
+			where b.proj_user_id=u.user_id
+	 </select>
+	 
+</mapper>		
+		

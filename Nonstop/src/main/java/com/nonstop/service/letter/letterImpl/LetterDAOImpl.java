@@ -1,6 +1,8 @@
 package com.nonstop.service.letter.letterImpl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +49,44 @@ public class LetterDAOImpl implements LetterDAO{
 	public void updateReadDate(int letNo) throws Exception{
 		sqlSession.update("LetterMapper.updateReadDate",letNo);
 	}
+	
+	public void updateSave(int letNo) throws Exception{
+		sqlSession.update("LetterMapper.updateSave",letNo);
+	}
+	
+	public void addSave(int letNo) throws Exception{
+		sqlSession.update("LetterMapper.addSave",letNo);
+	}
 
+	public void deleteSave(int letNo) throws Exception {
+		sqlSession.update("LetterMapper.deleteSave",letNo);
+	}
+	
+	public void updateRecView(int letNo , String userId) throws Exception{
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("letNo", letNo);
+		map.put("userId", userId);
+		
+		sqlSession.update("LetterMapper.updateRecView", map);
+	}
+	
+	public void updateSendView(int letNo , String userId) throws Exception{
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("letNo", letNo);
+		map.put("userId", userId);
+		
+		sqlSession.update("LetterMapper.updateSendView", map);
+	}
+
+	public List<Letter> getSaveLetterList(String userId) throws Exception {
+		return sqlSession.selectList("LetterMapper.getSaveLetterList", userId);
+	}
 }
+
+
+
+

@@ -27,6 +27,7 @@
     
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
@@ -53,7 +54,7 @@ $(function() {
 								"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
 								"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
 		});
-	
+ 	
 	$("#follow").on("click" ,function() {
 		
 		var flag = $(this).text().trim();
@@ -85,16 +86,12 @@ $(function() {
 						var targetUserId = $(this).attr('targetUserId');
 						self.location="/profile/deleteJsonFollow?targetUserId="+targetUserId;	
 						});
-					
-					var displayValue =  
-						"<div class='col-sm-offset-4  col-sm-4 text-center'>"
-						+"<span class='follow' targetUserId='${user.userId}' id='follow'>"
-			      		+"<button type='button' class='btn btn-primary' id='profile' >"+asdf+"</button>"
-			      		+"</span>"
-			      		+"</div>";
-		    
-			      		
-				$( "span.follow" ).html(displayValue);
+
+			      		if(flag=="팔로우"){
+			      			$( "#followflag" ).html("언팔로우");
+			      		}else{
+			      			$( "#followflag" ).html("팔로우");
+			      		}
 				}
 			});
 		});
@@ -164,38 +161,7 @@ $(function() {
 
   <body>
  
- <!-- Navigation -->
-<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-    <div class="container">
-        <!-- Brand and toggle get grouped for better mobile display -->
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Start Bootstrap</a>
-        </div>
-        <!-- Collect the nav links, forms, and other content for toggling -->
-        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-            <ul class="nav navbar-nav">
-                <li>
-                    <a href="#">About</a>
-                </li>
-                <li>
-                    <a href="#">Services</a>
-                </li>
-                <li>
-                    <a href="#">Contact</a>
-                </li>
-            </ul>
-        </div>
-        <!-- /.navbar-collapse -->
-    </div>
-    <!-- /.container -->
-</nav>
- 
+  <jsp:include  page="/view/common/toolbar.jsp" />
   <section id="container" >    
       <!-- **********************************************************************************************************************************************************
       MAIN SIDEBAR MENU
@@ -208,7 +174,8 @@ $(function() {
         <!-- sidebar menu start-->
               <ul class="sidebar-menu">
               
-              	  <%-- <p class="center"><a href="profile.html"><img src="resources/images/upload/${user.image}" class="img-circle" width="60"></a></p> --%>
+              <br/><br/>
+              	  <img src="../../resources/images/upload/${user.image}" class="img-circle" width="64" hieght="60"> 
               	  <h5 class="center">${user.userId}</h5>
               	  <h5 class="center">${user.addr}</h5>
               	  
@@ -232,20 +199,19 @@ $(function() {
 		      		<c:if test="${follow.reqUserId != sessionScope.user.userId}">
 		      		<div class="col-sm-offset-4  col-sm-4 text-center">
 					 <span class="follow" targetUserId="${user.userId}" id="follow">
-		      		<button type="button" class="btn btn-primary" id="profile" >팔로우</button>
+		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우</button>
 		      		</span>
 		      		</div>
 		      		</c:if>
 		      	</c:if>
 		      		
-		      		<c:if test="${follow.reqUserId  == career.careerUserId}"> 
+		      		<c:if test="${session.user.userId  == param.userId}"> 
 		      		<div class="col-sm-offset-4  col-sm-4 text-center">
 					 <span class="listFollow" reqUserId="${user.userId}">
-		      		<button type="button" class="btn btn-primary" id="listFollow" >팔로우목록보기</button>
+		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button>
 		      		</span>
 		      		</div>
-		      		</c:if>
-		      		
+		      		</c:if>	
               </ul>
               <!-- sidebar menu end-->
           </div>
@@ -272,10 +238,10 @@ $(function() {
 					    </c:if>
 					    
 					    <c:if test="${user.role=='2'}">
-					    <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Portfolio</a></li>
+					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
 					    </c:if>
 					    <c:if test="${follow.reqUserId  == career.careerUserId}"> 
-					    <li role="presentation"><a href="#Scrap" aria-controls="Scrap" role="tab" data-toggle="tab">Scrap</a></li>
+					    <li role="presentation"><a href="#Scrap" aria-controls="Scrap" role="tab" data-toggle="tab" id=scrap>Scrap</a></li>
 					 	</c:if>
 					  </ul>
 			
@@ -284,15 +250,22 @@ $(function() {
 					    <div role="tabpanel" class="tab-pane active" id="Profile">
 					   <c:if test="${user.role=='2'}">
 					    <jsp:include page="/view/profile/listCareer.jsp" /> 
-					    
-					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    
-					  	</c:if>				  
+					    </c:if>	
+					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
 					    </div>
+					    
 					    <div role="tabpanel" class="tab-pane" id="Portfolio">
-							<%-- <jsp:include page="/portfolio.jsp" /> --%>
+							<%-- <jsp:include page="/view/portfolio/Listportfolio.jsp" />  --%>
 						</div>
 						 <div role="tabpanel" class="tab-pane" id="Project">rffherg</div>
-					    <div role="tabpanel" class="tab-pane" id="Scrap">스크래엡</div>
+					    <div role="tabpanel" class="tab-pane" id="Scrap">
+					    
+							<h3>스크랩 목록보기</h3> 
+							<br/>
+					    <button type="button" class="btn btn-default" id="portfolio" >포트폴리오</button> 
+					    <button type="button" class="btn btn-default" id="project" >프로젝트</button>
+					   		<jsp:include page="/view/profile/listPortScrap.jsp"/>
+					    </div>
 					   
 					  </div>
 					

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.User;
+import com.nonstop.service.portfolio.PortfolioDAO;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.user.UserService;
@@ -66,10 +68,17 @@ public class ProfileController {
 		
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		//Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		
+		int portDivision = 1;
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
 		
 		model.addAttribute("list" , map.get("list"));
-		//model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list3" , portfolio);
 		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
@@ -260,6 +269,21 @@ public class ProfileController {
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
 		profileService.addProjScrap(projNo,scrapUserId);
+	}
+	
+	@RequestMapping(value="getPortScrapList" , method=RequestMethod.GET)
+	public String getPortScrapList(HttpSession session, Model model) throws Exception{
+		System.out.println("getPortScrapList : GET");
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		int portDivision = 1;
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		
+		model.addAttribute("list" , portfolio);
+		
+		return "forward:/view/profile/listPortScrap";
 	}
 
 	@RequestMapping(value="deleteJsonPortScrap/{portNo}",method=RequestMethod.GET)

@@ -1,5 +1,6 @@
 package com.nonstop.service.letter;
 
+import java.util.List;
 import java.util.Map;
 
 import com.nonstop.domain.Letter;
@@ -17,5 +18,17 @@ public interface LetterService {
 	public void deleteLetter(int letNo) throws Exception;
 	
 	public void updateReadDate(int letNo) throws Exception;
+
+	public void updateSave(int letNo) throws Exception;
+	
+	public void addSave(int letNo) throws Exception;
+	
+	public void deleteSave(int letNo) throws Exception;
+	
+	public void updateRecView(int letNo , String userId) throws Exception;
+	
+	public void updateSendView(int letNo , String userId) throws Exception;
+	
+	public Map<String , Object> getSaveLetterList(String userId) throws Exception;
 
 }
