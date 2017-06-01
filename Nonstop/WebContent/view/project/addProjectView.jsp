@@ -33,6 +33,7 @@
 		body {
             padding-top : 50px;
         }
+        
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -45,7 +46,7 @@
 		var projAnnoEnd = $("input[name='projAnnoEnd']").val();
 		var projStartDate = $("input[name='projStartDate']").val();
 		var projEndDate = $("input[name='projEndDate']").val();
-		var projDetail = $("input[name='projDetail']").val();
+		var projDetail = $("textarea[name='projDetail']").val();
 		
 		
 		$("input:hidden[name='projDivision']").val(projDivision);
@@ -66,12 +67,12 @@
 		}
 		
 		if(projEndDate == null || projEndDate.length<1){
-			alert("가격은 반드시 입력하셔야 합니다.");
+			alert("ㄴㅇㄹㄴㅇㄹㄴ입력하셔야 합니다.");
 			return;
 		}
 		
 		if(projDetail == null || projDetail.length<1){
-			alert("가격은 반드시 입력하셔야 합니다.");
+			alert("상세정보 입력하셔야 합니다.");
 			return;
 		}
 		
@@ -81,6 +82,8 @@
 		}
 
 		$("input:hidden[name='projLocation']").val( projLocation );
+		
+		$("textarea[name='projDetail']").val().replace(/\n/gi, '<br>');
 		
 		$("form").attr("method", "POST").attr("action", "/project/addProject").submit();
 		
@@ -116,8 +119,8 @@
 		
 		
 		
-		
-	
+
+
 	});
 	
 
@@ -186,7 +189,7 @@
 		  <div class="form-group">
 		    <label for="projDetail" class="col-sm-offset-1 col-sm-3 control-label">상세내용</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="projDetail" name="projDetail" placeholder="가격을 입력해주세요">
+		      <textarea class="form-control" rows="12" id="projDetail" name="projDetail" placeholder="입력해주세요"></textarea>
 		    </div>
 		  </div>
 		  
