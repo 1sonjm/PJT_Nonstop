@@ -160,7 +160,7 @@ public class ProfileDAOImpl implements ProfileDAO{
 		
 		List<RecordApplicant> list = sqlSession.selectList("RecordProjectMapper.getListRecordProject", recUserId);
 		
-		map.put("list", list);
+		map.put("list2", list);
 		
 		return map;
 	}

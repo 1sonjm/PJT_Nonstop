@@ -9,7 +9,6 @@ public class RecordApplicant {
 	private int recProjNo;
 	private String recUserId;
 	private int recStatus;
-	private String recUserName;
 	
 	public int getRecNo() {
 		return recNo;
@@ -36,12 +35,6 @@ public class RecordApplicant {
 		this.recStatus = recStatus;
 	}
 	
-	public String getRecUserName() {
-		return recUserName;
-	}
-	public void setRecUserName(String recUserName) {
-		this.recUserName = recUserName;
-	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -54,7 +47,6 @@ public class RecordApplicant {
 		builder.append(", recStatus=");
 		builder.append(recStatus);
 		builder.append(", recUserName=");
-		builder.append(recUserName);
 		builder.append("]");
 		return builder.toString();
 	}

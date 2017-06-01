@@ -46,7 +46,7 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getPortfolio"	parameterType="int"	resultMap="portfolioSelectMap">
+	 <select 	id="getPortfolio"	parameterType="map"	resultMap="portfolioSelectMap">
 		<!-- SELECT
 		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_viewcount	
 		FROM portfolio
