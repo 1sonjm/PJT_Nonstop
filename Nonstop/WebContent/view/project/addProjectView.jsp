@@ -141,7 +141,7 @@
 	    
 	    <!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" name="detailForm" enctype="multipart/form-data">
-		
+		 <input type="hidden" name="projUserId" value="${sessionScope.user.userId}">
 		  <div class="form-group">
 		    <label for="division" class="col-sm-offset-1 col-sm-3 control-label">분류</label>
 		    <div class="col-sm-2">
@@ -208,7 +208,7 @@
 		    <input type="hidden" name="projLocation" />
 		  </div>
 		  
-		  
+		 
 		  
 		  
 		   <div class="form-group">
