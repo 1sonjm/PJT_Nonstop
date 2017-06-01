@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.PortComment;
+import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.service.portfolio.PortfolioDAO;
 
@@ -34,24 +35,21 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	}
 	
 	@Override
-	public Portfolio getPortfolio(int portNo,String scrapUserId) throws Exception {
-
-		System.out.println("포트폴리오 디에오임쁠 여기들어오냣!");
-		System.out.println(portNo);
+	public Portfolio getPortfolio(int portNo,String sessionUserId) throws Exception {
 		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("portNo", portNo);
-		map.put("scrapUserId", scrapUserId);
+		map.put("sessionUserId", sessionUserId);
 		
 		return sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
 	}
 
-	public List<Portfolio> getPortfolioList(int portDivision,String scrapUserId) throws Exception {
+	public List<Portfolio> getPortfolioList(int portDivision,String sessionUserId) throws Exception {
 		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
-		map.put("scrapUserId", scrapUserId);
+		map.put("sessionUserId", sessionUserId);
 		map.put("portDivision", portDivision);
 		
 		
@@ -84,6 +82,18 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	public void deleteComment(int comNo) throws Exception {
 		// TODO Auto-generated method stub
 		sqlSession.delete("PortfolioMapper.deleteComment", comNo);
+	}
+
+	@Override
+	public void addPortLike(PortLike portLike) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("PortfolioMapper.addPortLike", portLike);
+	}
+
+	@Override
+	public void deletePortLike(int portLikeNo) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("PortfolioMapper.deletePortLike", portLikeNo);
 	}
 	
 }
