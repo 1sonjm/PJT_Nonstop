@@ -48,26 +48,107 @@
     }
     
    	#center {
-		margin-left:20%;
-        margin-right:10%;
+   		margin-left:0%;
+	    margin-right:0%;
+		
+	}
+	
+	@media (min-width: 1200px) {
+		#center {
+		margin-left:25%;
+        margin-right:5%;
+	}
+	
 	}
     </style>
     <script type="text/javascript">
 	//============= logout Event  처리 =============	
-	 $(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 	$("a:contains('Statistics')").on("click" , function() {
+	$(function() {
+	 	$("#logout").on("click" , function() {
 			$(self.location).attr("href","/user/logout");
 			//self.location = "/user/logout"
 		}); 
 	 });
 	
+	 //============= login 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#login").on("click" , function() {
+			//$(self.location).attr("href","/user/logout");
+			self.location = "/user/login"
+		}); 
+	 });
+	 
+	 //============= 회원가입 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#addUser").on("click" , function() {
+			//$(self.location).attr("href","/user/logout");
+			self.location = "/user/addUser"
+		}); 
+	 });
+	 
+	 //============= 쪽지함 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#listLetter").on("click" , function() {
+	 		var receiveId = $("#userId").val();		
+	 		self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
+		}); 
+	 });
+	 
+	 //============= 프로필 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#profile").on("click" , function() {
+			self.location = "/profile/getMineProfile"
+		}); 
+	 });
+	 
+	 //============= 내정보보기 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#getUser").on("click" , function() {
+	 		//alert($("#userId").val());
+	 		var userId = $("#userId").val();	 	
+ 			self.location = "/user/getUser?userId="+userId;
+		}); 
+	 });
+	 
+	 //============= 내정보수정 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#updateUser").on("click" , function() {
+	 		alert($("#userId").val());
+	 		var userId = $("#userId").val();	 	
+ 			 self.location = "/user/updateUser?userId="+userId;
+		}); 
+	 });
+	 
+	 //============= 내정보수정 이동 Event 처리 =============
+ 	 $(function() {
+		 
+		 $("#listFollow").on("click" , function() {
+ 		
+		var reqUserId = $("#userId").val();
+	
+		self.location = "/profile/getFollowList?reqUserId="+reqUserId;
+		
+	  	 popWin 
+		= window.open("/view/profile/listFollow.jsp",
+								"popWin", 
+								"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
+								"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
+		});
+ 	 });
+		 
+	//============= 통계 이동 Event 처리 =============	
+	 $(function() {
+	 	$("#statistics").on("click" , function() {
+			self.location = "/view/statistics/statistics.jsp"
+		}); 
+	 });
+		
 	//============= toolbar project 이동 Event 처리 =============	
 	 $(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	 	$("#projDesigner").on("click" , function() {
 			//$(self.location).attr("href","/user/logout");
-			self.location = "/project/getProject?projNo=18"
+			self.location = "/project/listProject"
 		}); 
 	 });
 	
@@ -76,7 +157,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDeveloper").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=18"
+				self.location = "/project/listProject"
 			}); 
 		 });
 	
@@ -98,13 +179,6 @@
 			}); 
 		 });
 	
-	//=============  개인정보조회회 Event  처리 =============	
- 	$( "a:contains('개인정보조회')" ).on("click" , function() {
- 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
-	});
-			
-			
 	</script> 
 
 </head>
@@ -150,32 +224,30 @@
 				    </li>
 				      
 				      
-				    <li><a href="#">Statistics</a></li>
+				    <li><a href="#" id="statistics">Statistics</a></li>
 				</ul>
 				
 				<ul class="nav navbar-nav navbar-right">
-			      <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
-				   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>김준영님 환영합니다.</a></li>
-				   	  <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
+					<c:if test="${empty sessionScope.user.userId }">
+                      <li><a href="#" id="login">로그인</a></li>
+                      <li><a href="#" id="addUser">회원가입</a></li>
+                    </c:if>
+	 			    <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
+	 			    <c:if test="${!empty sessionScope.user.userId }">
+				   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
+				   	  <li><a href="#" id="listLetter"><span class="glyphicon glyphicon-envelope"></span></a></li>
 				      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
 				        <ul class="dropdown-menu">
-				          <li><a href="#">프로필</a></li>
-				          <li><a href="#">내정보보기</a></li>
-				          <li><a href="#">내정보수정</a></li>
-				          <li><a href="#">팔로우 목록보기</a></li>
-				          <li><a href="#">로그아웃</a></li>
+				          <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}"/>				         
+				          <li><a href="#" id="profile">프로필</a></li>
+				          <li><a href="#" id="getUser">내정보보기</a></li>
+				          <li><a href="#" id="updateUser">내정보수정</a></li>
+				          <li><a href="#" id="listFollow">팔로우 목록보기</a></li>
+				          <li><a href="#" id="logout">로그아웃</a></li>
 				        </ul>
 				      </li>
+				     </c:if>  
 				      
-				      
-				      
-				     <!--  <li><a href="#"><span class="glyphicon glyphicon-align-justify"></span></a></li> -->
-			     <%--  </c:if> --%>
-			      
-			      <%-- <c:if test="${sessionScope.user.role != '1' || ${sessionScope.user.role != '2' || ${sessionScope.user.role != '3'}">
-			      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> 로그인</a></li>
-				      <li><a href="#"><span class="glyphicon glyphicon-user"></span> 회원가입</a></li>
-				  </c:if> --%>
 			    </ul>
 	         </div>
             <!-- /.navbar-collapse -->
@@ -188,13 +260,41 @@
         <div class="intro-body">
             <div class="container">
                 <div class="row">
-                	<div class="col-md-8 col-md-offset-2">
+                	<div class="col-md-10 col-md-offset-1">
                         <h1 class="brand-heading">NONSTOP</h1>
-                        <p class="intro-text">A free, responsive, one page Bootstrap theme.
-                            <br>Created by Start Bootstrap.</p> -->
-                        <a href="#about" class="btn btn-circle page-scroll">
-                            <i class="fa fa-angle-double-down animated"></i>
+                        <div class="margin-bottom-30"></div>
+                        <ul class="main-ul">
+                        	<li>
+                        		<h2>123</h2>
+                        		<p>개발자 포트폴리오</p>
+                        	</li>
+                        	<li>
+								<div class="verticle-line"><br/><br/><br/></div>
+                        	</li>                        	
+                        	<li>
+                        		<h2>123</h2>
+                        		<p>디자인 포트폴리오</p>
+                        	</li>
+                        	<li>
+                        		<div class="verticle-line"><br/><br/><br/></div>
+                        	</li>
+                        	<li>
+                        		<h2>123</h2>
+                        		<p>등록된 프로젝트</p>
+                        	</li>
+                        </ul>
+
+
+                       	<p class="intro-text">개발자, 디자이너 모집 및 프로젝트 진행을 논스톱에서 한번에 해결하세요.<br/> 뭐라고 써야할지 모르겠다 도움 필요.</p>
+
+                        <button class="sq_button" type="button">회원가입</button>
+						<button class="sq_button" type="button">일단, 둘러볼게요</button>			                        
+                    
+                       	<div class="margin-top-30">
+                        <a href="#about" class="btn btn-circle page-scroll"> 
+                            <i class="fa fa-angle-double-down animated"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </i>
                         </a>
+						</div>
                 	</div>
                 </div>
             </div>

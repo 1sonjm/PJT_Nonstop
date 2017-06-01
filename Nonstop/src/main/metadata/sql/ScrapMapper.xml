@@ -22,8 +22,8 @@
 		INTO scrap
 		VALUES (seq_scrap_no.nextval,
 				#{scrapUserId},
+				#{portNo},
 				#{projNo:NUMERIC},
-				#{portNo:NUMERIC},
 				1)
 	 </insert>
 	 
@@ -32,8 +32,8 @@
 		INTO scrap
 		VALUES (seq_scrap_no.nextval,
 				#{scrapUserId},
-				#{projNo:NUMERIC},
 				#{portNo:NUMERIC},
+				#{projNo},
 				2)
 	 </insert>
 	 
@@ -45,9 +45,22 @@
 					WHERE user_id = #{scrapUserId} AND post_no=#{postNo} AND scrap_div=#{scrapDiv})inner_table)
 	 </select>
 	 
-	 <delete id="deleteScrap" parameterType="map">
+	  <select  id="getListPortScrap"  parameterType="map"	resultMap="scrapSelectMap">
+		SELECT scrap_no, user_id ,port_no,scrap_div
+		FROM scrap
+		WHERE user_id=#{scrapUserId}
+	 </select>
+	 
+	 
+	 
+	 <delete id="deletePortScrap" parameterType="map">
 	 	DELETE
-	 	FROM scrap WHERE user_id=#{scrapUserId} AND post_no=#{targetUserId} AND scrap_div=#{scrapDiv})
+	 	FROM scrap WHERE port_no=#{portNo} AND user_id=#{scrapUserId}
+	 </delete>
+	 
+	 <delete id="deleteProjScrap" parameterType="map">
+	 	DELETE
+	 	FROM scrap WHERE proj_no=#{projNo} AND user_id=#{scrapUserId}
 	 </delete>
 	
 </mapper>		

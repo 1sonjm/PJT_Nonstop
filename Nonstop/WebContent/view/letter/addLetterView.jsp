@@ -36,17 +36,23 @@
 				
 				
 				$("form").attr("method" , "POST").attr("action" , "/letter/addLetter").submit();
+				
+				/*  popWin 
+				= window.open("/view/letter/addLetterResult.jsp",
+										"popWin", 
+										"left=300,top=100,width=200,height=200,marginwidth=0,marginheight=0,"+
+										"scrollbars=no,scrolling=no,menubar=no,resizable=no");     */
 			});
 		});	
 		
 		
 		//============= "취소"  Event 처리 및  연결 =============
-		/* $(function() {
+		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+			$("#close").on("click" , function() {
+				close();
 			});
-		});	 */
+		});	
 	
 		
 		
@@ -68,7 +74,7 @@
 		  <div class="form-group">
 		    <label for="sendId" class="col-sm-offset-1 col-sm-3 control-label">발신자</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="sendId" name="sendId">
+		      <input type="text" class="form-control" id="sendId" name="sendId" value = "${sessionScope.user.userId}" readOnly>
 	
 		    </div>
 		 
@@ -92,7 +98,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary" id="send">전&nbsp;송</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+			  <a class="btn btn-primary btn" href="#" role="button" id="close">취&nbsp;소</a>
 		    </div>
 		  </div>
 		</form>

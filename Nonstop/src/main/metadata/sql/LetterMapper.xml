@@ -26,8 +26,43 @@
 				#{receiveId},
 				#{letDetail},
 				SYSDATE,
-				#{letReaddate:DATE})
+				'')
 	 </insert>
+	 
+	 <select  id="getReceiveLetterList"  parameterType="String"	resultMap="letterSelectMap">
+			SELECT *
+			FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+				FROM(	SELECT let_no,let_send_id,let_receive_id,let_detail,let_regdate,NVL(let_readdate,'') let_readdate
+						FROM letter
+						WHERE let_receive_id = #{receiveId:VARCHAR} )inner_table)
+	 </select>
+	 
+	  <select  id="getListSendLetter"  parameterType="String"	resultMap="letterSelectMap">
+			SELECT *
+			FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+				FROM(	SELECT let_no,let_send_id,let_receive_id,let_detail,let_regdate,NVL(let_readdate,'') let_readdate
+						FROM letter
+						WHERE let_send_id = #{sendId:VARCHAR} )inner_table)
+	 </select>
+	 
+	  <select  id="getLetter"  parameterType="int"	resultMap="letterSelectMap">
+		SELECT let_no,let_send_id,let_receive_id,let_detail,let_readdate
+		FROM letter
+		WHERE let_no=#{letNo}
+	 </select>
+	 
+	 <update id="updateReadDate" parameterType="int">
+		UPDATE letter
+		<set>
+		let_readdate = SYSDATE
+		</set>
+		WHERE let_no = #{letNo:NUMERIC} 
+	</update>
+	 
+	  <delete id="deleteLetter" parameterType="int">
+	 	DELETE
+	 	FROM letter WHERE let_no =#{letNo} 
+	 </delete>
 	 
 	
 </mapper>		

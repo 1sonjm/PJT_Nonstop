@@ -1,178 +1,214 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR" pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-	<nav class="navbar navbar-inverse navbar-fixed-top" id="floater">
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	  <div class="container-fluid">
 	    <div class="navbar-header">
-	      <a class="navbar-brand" id="logo">NONSTOP</a>
+	    	<!-- Ï§ÑÏñ¥Îì§Î©¥ ÏÉùÍ∏∞Îäî Î©îÎâ¥Î≤ÑÌäº -->
+	    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
+                Menu <i class="fa fa-bars"></i>
+            </button>
+	    	<!-- Î°úÍ≥† -->
+	      	<a class="navbar-brand page-scroll" href="/index.jsp">
+                <i class="fa fa-play-circle"></i> NONSTOP
+            </a>
 	    </div>
 	    
-	    <ul class="nav navbar-nav" id="center">
-	      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Portfolio</a>
-	        <ul class="dropdown-menu">
-	          <li><a href="#" id="portDesigner">Designer</a></li>
-	          <li><a href="#" id="portDeveloper">Developer</a></li>
-	        </ul>
-	      </li>
+			<!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse navbar-main-collapse">
+                <ul class="nav navbar-nav" id="center">
+                    <!-- Hidden li included to remove active class from about link when scrolled up past about section -->
+                    <li class="hidden">
+                        <a href="#page-top"></a>
+                    </li>
+                    
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Portfolio</a>
+                   <ul class="dropdown-menu">
+                     <li><a href="#" id="portDesigner">Designer</a></li>
+                     <li><a href="#" id="portDeveloper">Developer</a></li>
+                   </ul>
+                </li>
 
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Project </a>
+                   <ul class="dropdown-menu">
+                     <li><a href="#" id="projDesigner">Designer</a></li>
+                     <li><a href="#" id="projDeveloper">Developer</a></li>
+                   </ul>
+                </li>
 
-	      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Project </a>
-	        <ul class="dropdown-menu">
-	          <li><a href="#" id="projDesigner">Designer</a></li>
-	          <li><a href="#" id="projDeveloper">Developer</a></li>
-	        </ul>
-	      </li>
 	      
 	      
 	      <li><a href="#">Statistics</a></li>
-	    </ul>
-	    
-	    
-	    <ul class="nav navbar-nav navbar-right">
-	      <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
-		   	  <li><a href="#"><span class="glyphicon glyphicon-user"></span>±Ë¡ÿøµ¥‘ »Øøµ«’¥œ¥Ÿ.</a></li>
-		   	  <li><a href="#"><span class="glyphicon glyphicon-envelope"></span></a></li>
-		      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
-		        <ul class="dropdown-menu">
-		          <li><a href="#">«¡∑Œ« </a></li>
-		          <li><a href="#">≥ª¡§∫∏∫∏±‚</a></li>
-		          <li><a href="#">≥ª¡§∫∏ºˆ¡§</a></li>
-		          <li><a href="#">∆»∑ŒøÏ ∏Ò∑œ∫∏±‚</a></li>
-		          <li><a href="#">∑Œ±◊æ∆øÙ</a></li>
-		        </ul>
-		      </li>
-		      
-		      
-		      
-		     <!--  <li><a href="#"><span class="glyphicon glyphicon-align-justify"></span></a></li> -->
-	      <%-- </c:if> --%>
-	      
-	      <%-- <c:if test="${sessionScope.user.role != '1' || ${sessionScope.user.role != '2' || ${sessionScope.user.role != '3'}">
-	      	  <li><a href="#"><span class="glyphicon glyphicon-log-in"></span>∑Œ±◊¿Œ</a></li>
-		      <li><a href="#"><span class="glyphicon glyphicon-user"></span> »∏ø¯∞°¿‘</a></li>
-		  </c:if> --%>
-	    </ul>
-	  </div>
-	</nav>
+            </ul>
+            
+            <ul class="nav navbar-nav navbar-right">
+               <c:if test="${empty sessionScope.user.userId }">
+                      <li><a href="#" id="login">Î°úÍ∑∏Ïù∏</a></li>
+                      <li><a href="#" id="addUser">ÌöåÏõêÍ∞ÄÏûÖ</a></li>
+                    </c:if>
+               <c:if test="${!empty sessionScope.user.userId }">
+                    <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}Îãò ÌôòÏòÅÌï©ÎãàÎã§.</a></li>
+                    <li><a href="#" id="listLetter"><span class="glyphicon glyphicon-envelope"></span></a></li>
+                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
+                    <ul class="dropdown-menu">
+                      <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}"/>                     
+                      <li><a href="#" id="profile">ÌîÑÎ°úÌïÑ</a></li>
+                      <li><a href="#" id="getUser">ÎÇ¥Ï†ïÎ≥¥Î≥¥Í∏∞</a></li>
+                      <li><a href="#" id="updateUser">ÎÇ¥Ï†ïÎ≥¥ÏàòÏ†ï</a></li>
+                      <li><a href="#" id="listFollow">ÌåîÎ°úÏö∞ Î™©Î°ùÎ≥¥Í∏∞</a></li>
+                      <li><a href="#" id="logout">Î°úÍ∑∏ÏïÑÏõÉ</a></li>
+                    </ul>
+                  </li>
+                 </c:if>  
+                  
+             </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
 
 <style>
 	
 	
 	
-	#center {
-		margin-left:30%;
-        margin-right:30%;
-       
-	}
-	
-	/* p {
-		margin-top : 0;
-		margin-bottom : 0;
-		font-size: 150%;
-	} */
+
+    
+    #center {
+       margin-left:0%;
+       margin-right:0%;   
+    }
+    @media (min-width: 1200px) {
+      #center {
+      	margin-left:25%;
+      	margin-right:5%;
+      }
+    }
 	</style>
 
-<script type="text/javascript">
-
-		//============= ∏ﬁ¿Œ∆‰¿Ã¡ˆ ¿Ãµø Event  √≥∏Æ =============   
-		$(function() {
-		   $("#logo").on("click" , function() {
-		      self.location = "/index.jsp";
-		   }); 
-		});
-		
-		//============= toolbar portfolio ¿Ãµø Event √≥∏Æ =============
-	    $(function() {
-	         //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	          $("#portDesigner").on("click" , function() {
-	            //$(self.location).attr("href","/user/logout");
-	            self.location = "/portfolio/listPortfolio"
-	          }); 
-	    });
-	   
-	   //============= toolbar portfolio ¿Ãµø Event √≥∏Æ =============
-	    $(function() {
-	         //==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	          $("#portDeveloper").on("click" , function() {
-	            //$(self.location).attr("href","/user/logout");
-	            self.location = "/portfolio/listPortfolio"
-	          }); 
-	    });
-		
-	   //============= toolbar user login ¿Ãµø Event √≥∏Æ =============
-	   
-	    $(function() {
-	          $("a:contains('∑Œ±◊¿Œ')").on("click" , function() {
-	            //$(self.location).attr("href","/user/logout");
-	            self.location = "/user/login"
-	          }); 
-	    });
-	   
-	  //============= toolbar statistics getListTotalStatistics ¿Ãµø Event √≥∏Æ =============
-		   
-	    $(function() {
-	          $("a:contains('Statistics')").on("click" , function() {
-	            //$(self.location).attr("href","/user/logout");
-	            self.location = "/statistics/getListTotalStatistics"
-	          }); 
-	    });
-	  
-		
-		//============= »∏ø¯¡§∫∏¡∂»∏ Event  √≥∏Æ =============	
-		 $(function() {
-			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("#projDesigner").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=1"
-			}); 
-		 });
-		
-		 $(function() {
-				//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("#projDeveloper").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/getProject?projNo=1"
-			}); 
-		 });
-		
-		//=============  ∞≥¿Œ¡§∫∏¡∂»∏»∏ Event  √≥∏Æ =============	
-	 	$( "a:contains('∞≥¿Œ¡§∫∏¡∂»∏')" ).on("click" , function() {
-	 		//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$(self.location).attr("href","/user/getUser?userId=${sessionScope.user.userId}");
-		});
-		
-	 	$(function() {
-		 	$("a:contains('∆«∏≈ªÛ«∞µÓ∑œ')").on("click" , function() {
-				self.location = "/product/addProductView.jsp"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$("a:contains('∆«∏≈ªÛ«∞∞¸∏Æ')").on("click" , function() {
-				self.location = "/product/listProduct?menu=manage"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$("a:contains('ªÛ «∞ ∞À ªˆ')").on("click" , function() {
-				self.location = "/product/listProduct?menu=search"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$(".totalList").on("click" , function() {
-				self.location = "/purchase/listSale"
-			}); 
-		});
-	 	
-	 	$(function() {
-		 	$("a:contains('±∏∏≈¿Ã∑¬¡∂»∏')").on("click" , function() {
-				self.location = "/purchase/listPurchase"
-			}); 
-		});
-		
-</script>  
+    <script type="text/javascript">
+   //============= logout Event  Ï≤òÎ¶¨ =============   
+   $(function() {
+       $("#logout").on("click" , function() {
+         $(self.location).attr("href","/user/logout");
+         //self.location = "/user/logout"
+      }); 
+    });
+   
+    //============= login Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+       $("#login").on("click" , function() {
+         //$(self.location).attr("href","/user/logout");
+         self.location = "/user/login"
+      }); 
+    });
+    
+    //============= ÌöåÏõêÍ∞ÄÏûÖ Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+       $("#addUser").on("click" , function() {
+         //$(self.location).attr("href","/user/logout");
+         self.location = "/user/addUser"
+      }); 
+    });
+    
+    //============= Ï™ΩÏßÄÌï® Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+       $("#listLetter").on("click" , function() {
+          var receiveId = $("#userId").val();      
+          self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
+      }); 
+    });
+    
+    //============= ÌîÑÎ°úÌïÑ Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+       $("#profile").on("click" , function() {
+         self.location = "/profile/getMineProfile"
+      }); 
+    });
+    
+    //============= ÎÇ¥Ï†ïÎ≥¥Î≥¥Í∏∞ Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+       $("#getUser").on("click" , function() {
+          //alert($("#userId").val());
+          var userId = $("#userId").val();       
+          self.location = "/user/getUser?userId="+userId;
+      }); 
+    });
+    
+    //============= ÎÇ¥Ï†ïÎ≥¥ÏàòÏ†ï Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+       $("#updateUser").on("click" , function() {
+          alert($("#userId").val());
+          var userId = $("#userId").val();       
+           self.location = "/user/updateUser?userId="+userId;
+      }); 
+    });
+    
+    //============= ÎÇ¥Ï†ïÎ≥¥ÏàòÏ†ï Ïù¥Îèô Event Ï≤òÎ¶¨ =============
+     $(function() {
+       
+       $("#listFollow").on("click" , function() {
+       
+      var reqUserId = $("#userId").val();
+   
+      self.location = "/profile/getFollowList?reqUserId="+reqUserId;
+      
+         popWin 
+      = window.open("/view/profile/listFollow.jsp",
+                        "popWin", 
+                        "left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
+                        "scrollbars=no,scrolling=no,menubar=no,resizable=no");   
+      });
+     });
+       
+   //============= ÌÜµÍ≥Ñ Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+      //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+       $("a:contains('Statistics')").on("click" , function() {
+         $(self.location).attr("href","/user/logout");
+         //self.location = "/user/logout"
+      }); 
+    });
+      
+   //============= toolbar project Ïù¥Îèô Event Ï≤òÎ¶¨ =============   
+    $(function() {
+      //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+       $("#projDesigner").on("click" , function() {
+         //$(self.location).attr("href","/user/logout");
+         self.location = "/project/listProject"
+      }); 
+    });
+   
+   //============= toolbar project Ïù¥Îèô Event Ï≤òÎ¶¨ =============
+    $(function() {
+         //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+          $("#projDeveloper").on("click" , function() {
+            //$(self.location).attr("href","/user/logout");
+            self.location = "/project/listProject"
+         }); 
+       });
+   
+   //============= toolbar portfolio Ïù¥Îèô Event Ï≤òÎ¶¨ =============
+    $(function() {
+         //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+          $("#portDesigner").on("click" , function() {
+            //$(self.location).attr("href","/user/logout");
+            self.location = "/portfolio/listPortfolio?portDivision=2"
+         }); 
+       });
+   
+   //============= toolbar portfolio Ïù¥Îèô Event Ï≤òÎ¶¨ =============
+    $(function() {
+         //==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+          $("#portDeveloper").on("click" , function() {
+            //$(self.location).attr("href","/user/logout");
+            self.location = "/portfolio/listPortfolio?portDivision=1"
+         }); 
+       });
+   
+   </script>   
 
 
