@@ -114,7 +114,8 @@
 			 ,SUM(stat_supply) AS stat_supply
 			 ,TO_CHAR(stat_date,'yyyy/mm') AS stat_date
 		FROM statistics s, tech t
-		WHERE s.stat_tech_no = t.tech_no AND t.tech_no = #{techNo} AND s.stat_date BETWEEN #{searchStartDate} AND #{searchEndDate}
+		WHERE s.stat_tech_no = t.tech_no AND t.tech_no = #{techNo}
+		AND s.stat_date BETWEEN #{searchStartDate} AND #{searchEndDate}
 		GROUP BY stat_tech_no,tech_name,tech_class,stat_date
 		ORDER BY stat_tech_no
 	 </select>
@@ -135,6 +136,6 @@
 	 <!-- 개인 기술 통계 -->
 	<select	id="getListUserStatistics" parameterType="String" resultMap="statisticsSet">
 		SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
-		WHERE t.tech_no = c.career_tech_no AND career_user_id = 'user01'
+		WHERE t.tech_no = c.career_tech_no AND career_user_id = #{value}
 	</select>
 </mapper>

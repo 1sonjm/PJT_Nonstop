@@ -83,7 +83,13 @@ function getJsonDataList(type,addr){
 					highMap.init('???');
 					break;
 				case "techData":
-					return jsonData;
+					document.querySelector("#selectTechData").innerHTML = "";
+					for(var i=0;i<jsonData.techDataList.length;i++){
+						document.querySelector("#selectTechData").innerHTML 
+							+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
+										+jsonData.techDataList[i].techName
+									+"</option>";
+					}
 					break;
 				}
 			}else{
@@ -94,8 +100,9 @@ function getJsonDataList(type,addr){
 }
 function combineDate(input,count){
 	var d = new Date(input);
-	d.setMonth(d.getMonth()+1+count);
-	return d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
+	d.setMonth(d.getMonth()+count);
+	alert(new Date(d.getFullYear(),d.getMonth(),d.getDate()));
+	return new Date(d.getFullYear(),d.getMonth(),d.getDate());
 }
 
 $(function(){
@@ -157,25 +164,11 @@ $(function(){
 	
 	//동적 기술목록 호출
 	$('#selectTechClass').on('change',function(){
-		var a = "?techClass="+document.querySelector('#selectTechClass').value
-		$.ajax("/statistics/getJSONListTechData"+a,{
-			method : "POST" ,
-			dataType : "json" ,
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			success : function(jsonData) {
-				//console.log(jsonData.techDataList[0].techName);
-				document.querySelector("#selectTechData").innerHTML = "";
-				for(var i=0;i<jsonData.techDataList.length;i++){
-					document.querySelector("#selectTechData").innerHTML 
-						+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
-									+jsonData.techDataList[i].techName
-								+"</option>";
-				}
-			}
-		});
+		getJsonDataList("techData","getJSONListTechData");
+	})
+	$('#daterange').on('change',function(){
+		$('input[name="dateStart"]').val($('#daterange').val().split(' ~ ')[0]);
+		$('input[name="dateEnd"]').val($('#daterange').val().split(' ~ ')[1]);
 	})
 	
 	//달력 생성
@@ -186,8 +179,7 @@ $(function(){
 					"지난 1개월 간": [combineDate(nowDate,-1),nowDate],
 					"지난 3개월 간": [combineDate(nowDate,-3),nowDate],
 					"지난 6개월 간": [combineDate(nowDate,-6),nowDate],
-					"지난 1년 간": [combineDate(nowDate,-12),nowDate],
-					"지난 3년 간": [combineDate(nowDate,-36),nowDate]
+					"지난 1년 간": [combineDate(nowDate,-12),nowDate]
 			},
 			"locale": {
 					"format": "YYYY/MM/DD",
@@ -201,9 +193,9 @@ $(function(){
 			},
 			"showCustomRangeLabel": false,
 			"alwaysShowCalendars": true,
-			"startDate": combineDate(nowDate,-6),
+			"startDate": combineDate(nowDate,-1),
 			"endDate": nowDate,
-			"minDate": combineDate(nowDate,-40),//자료의 최초값 넣기
+			"minDate": combineDate(nowDate,-36),//자료의 최초값 넣기
 			"maxDate": nowDate,
 			"opens": "left"
 	}, function(start, end, label) {

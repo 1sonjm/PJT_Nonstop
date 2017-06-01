@@ -1,5 +1,7 @@
 package com.nonstop.control.statistics;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -7,9 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsService;
 
 @Controller
@@ -38,7 +40,7 @@ public class StatisticsController {
 		model.addAttribute("techDataList", statisticsService.getTechDataList(statistics.getTechClass()));
 	}
 	
-	@RequestMapping(value="getListTotalStatistics", method=RequestMethod.GET)
+	@RequestMapping(value="getListStatistics", method=RequestMethod.GET)
 	public String getListTotalStatistics(Model model){
 		System.out.println("/statstics/getListTotalStatistics");
 
@@ -80,9 +82,10 @@ public class StatisticsController {
 	
 	//include로 화면 구성된다고 한다.
 	@RequestMapping(value="getUserStatisticsList", method=RequestMethod.GET)
-	public String getUserStatisticsList(Model model){
+	public String getUserStatisticsList(Model model,HttpSession session){
 		System.out.println("/statstics/getUserStatisticsList");
-		model.addAttribute("dataList", statisticsService.getPostCountList());
+		User user = (User)session.getAttribute("user");
+		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user.getUserId()));
 		return ".jsp";
 	}
 	
