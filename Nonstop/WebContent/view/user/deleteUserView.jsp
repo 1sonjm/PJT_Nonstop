@@ -111,11 +111,14 @@
 			        <form class="form-horizontal">
 		  
 					  <div class="form-group">
-					    <label for="userId" class="col-sm-4 control-label">아 이 디</label>
-					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
-					    </div>
-					  </div>
+		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
+		    <div class="col-sm-6">
+		      <input type="text" class="form-control" id="userId" name="userId" value="${user.userId }" placeholder="중복확인하세요"  readonly>
+		       <span id="helpBlock" class="help-block">
+		      	
+		      </span>
+		    </div>
+		  </div>
 					  
 					  <div class="form-group">
 					    <label for="password" class="col-sm-4 control-label">패 스 워 드</label>
@@ -126,7 +129,7 @@
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-6 text-center">
-					      <button type="button" class="btn btn-primary"  >회원 탈퇴</button>
+					      <button type="button" class="btn btn-primary"  >회원탈퇴</button>
 					      <br/><br/>
 					      <a class="btn btn-primary btn" href="#" role="button" id = "index">메인으로</a>	
 					      			      					      

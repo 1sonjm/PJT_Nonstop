@@ -80,7 +80,7 @@
 	    
 	    <div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>프로필 사진</strong></div>
-			<img src="/resources/images/upload/${user.image}" class="img-square" width="200">
+			<img src="/resources/images/upload/${user.image}" class="img-square" width="200" height="200">
 		</div>
 		<hr/>
 	

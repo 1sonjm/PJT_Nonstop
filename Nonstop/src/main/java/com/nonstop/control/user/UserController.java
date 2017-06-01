@@ -374,16 +374,23 @@ public class UserController {
 	   }
 	
 	
+	@RequestMapping( value="deleteUser", method=RequestMethod.GET )
+	public String deleteUser() throws Exception{
+		
+		System.out.println("/user/deleteUser : GET");
+
+		return "redirect:/view/user/deleteUserView.jsp";
+	}
 	
 	@RequestMapping( value="deleteUser", method=RequestMethod.POST )
 	   public String deleteUser(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 	      
-	      System.out.println("/user/login : POST");
+	      System.out.println("/user/deleteUser : POST");
 
 	      String destinate = "forward:/view/user/deleteUserView.jsp";
 	      
 	      User dbUser=userService.getUser(user.getUserId());
-	      System.out.println("user 뭐닝" + dbUser);
+	      System.out.println("user" + dbUser);
 	      
 	      if( user.getPassword().equals(dbUser.getPassword())){
 	         session.setAttribute("user", dbUser);
