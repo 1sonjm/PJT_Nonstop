@@ -40,26 +40,7 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	 $(function() {
-		 $("span.updateCareer").on("click" , function() {
-				var careerNo=$(this).attr('careerNo');
-				alert(careerNo);
-			self.location ="/profile/updateCareer?careerNo="+careerNo;
-			
-			});
-		 
-		 $("span.deleteCareer").on("click" , function() {
-				alert("ㅇㅇ" );
-				var careerNo=$(this).attr('careerNo');
-				alert(careerNo);
-			self.location ="/profile/deleteCareer?careerNo="+careerNo;
-			
-			});
-		 
-		$("span.addCareer").on("click" , function() {
-		 		self.location = "/profile/addCareerView";
-			}); 
-	});	
+
 </script>
 </head>
 

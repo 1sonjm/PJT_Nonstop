@@ -83,29 +83,74 @@
 		
 		  <div class="form-group">
 		    <label for="techName" class="col-sm-offset-1 col-sm-3 control-label">±â¼ú¸í</label>
-		    <div class="col-sm-2">
-		    <%--   <input type="text" class="form-control" id="techName" name="techName" value="${career.techName}"> --%>
-		      
-		      <select class="form-control" name="techNo" >
-		      <c:if test="${career.techNo == '1000'}">
-			 <option value="1000" selected="selected">Java</option>
-			 <option value="1001" >Python</option>
-			 <option value="1002" >PHP</option>
-			 </c:if>
+		    	<div class="col-sm-2">
+		   
+		     		<c:if test="${career.techClass == '1' }"> 
+		      			<select class="form-control" name="techNo" >
+		      				<c:if test="${career.techNo == '1000'}">
+			 					<option value="1000" selected="selected">Java</option>
+			 					<option value="1001" >Python</option>
+			 					<option value="1002" >PHP</option>
+			 				</c:if>
 			 
-			  <c:if test="${career.techNo == '1001'}">
-			 <option value="1000">Java</option>
-			  <option value="1001" selected="selected">Python</option>
-			  <option value="1002">PHP</option>
-			 </c:if>
+			  				<c:if test="${career.techNo == '1001'}">
+			 					<option value="1000">Java</option>
+			  					<option value="1001" selected="selected">Python</option>
+			  					<option value="1002">PHP</option>
+			 				</c:if>
 			 
-			  <c:if test="${career.techNo == '1002'}">
-			   <option value="1000">Java</option>
-			 <option value="1001">Python</option>
-			 <option value="1002" selected="selected">PHP</option>
-			 </c:if>
+			  				<c:if test="${career.techNo == '1002'}">
+			   					<option value="1000">Java</option>
+			 					<option value="1001">Python</option>
+			 					<option value="1002" selected="selected">PHP</option>
+			 				</c:if>
+						</select>
+					</c:if>
+			
+			 		<c:if test="${career.techClass == '2' }"> 
+		      			<select class="form-control" name="techNo" >
+		      				<c:if test="${career.techNo == '2000'}">
+			 					<option value="2000" selected="selected">Spring</option>
+			 					<option value="2001" >Django</option>
+			 					<option value="2002" >Symfony</option>
+			 				</c:if>
 			 
-			</select>
+			  				<c:if test="${career.techNo == '2001'}">
+			 					<option value="2000" >Spring</option>
+								<option value="2001" selected="selected">Django</option>
+			 					<option value="2002" >Symfony</option>
+			 				</c:if>
+			 
+			  				<c:if test="${career.techNo == '2002'}">
+			  					<option value="2000" >Spring</option>
+			 					<option value="2001" >Django</option>
+			 					<option value="2002" selected="selected" >Symfony</option>
+			 				</c:if>
+						</select>
+					</c:if>
+					
+					<c:if test="${career.techClass == '3' }"> 
+		      			<select class="form-control" name="techNo" >
+		      				<c:if test="${career.techNo == '3000'}">
+			 					<option value="3000" selected="selected">Oracle</option>
+			 					<option value="3001" >Mssql</option>
+			 					<option value="3002" >Mysql</option>
+			 				</c:if>
+			 
+			  				<c:if test="${career.techNo == '3001'}">
+			 					<option value="3000" >Oracle</option>
+			 					<option value="3001" selected="selected">Mssql</option>
+			 					<option value="3002" >Mysql</option>
+			 				</c:if>
+			 
+			  				<c:if test="${career.techNo == '3002'}">
+			  					<option value="3000" >Oracle</option>
+			 					<option value="3001" >Mssql</option>
+			 					<option value="3002"selected="selected" >Mysql</option>
+			 				</c:if>
+						</select>
+					</c:if>
+			
 			
 		    </div>
 		  </div>

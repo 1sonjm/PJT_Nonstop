@@ -43,9 +43,8 @@
 	 $(function() {
 		 $("span.updateCareer").on("click" , function() {
 				var careerNo=$(this).attr('careerNo');
-				
-			self.location ="/profile/updateCareer?careerNo="+careerNo;
-			
+				var techClass=$(this).attr('techClass');
+			self.location ="/profile/updateCareer?careerNo="+careerNo+"&techClass="+techClass;
 			});
 		 
 		 $("span.deleteCareer").on("click" , function() {
@@ -71,6 +70,7 @@
         <thead>
           <tr>
             <th align="center">No</th>
+            <th align="left" >분류</th>
             <th align="left" >기능명</th>
             <th align="left">경력</th>
             <th align="left">
@@ -95,20 +95,30 @@
 			<tr>
 			<td align="center">${ i }</td>
 			
-			
+			<td align="center">
+			<c:if test="${career.techClass == '1'}">Language</c:if>
+			<c:if test="${career.techClass == '2'}">Framework</c:if>
+			<c:if test="${career.techClass == '3'}">DBMS</c:if>
+			</td>
 			 
 			 
 			  <td align="left">
 			  <c:if test="${career.techNo == '1000' }">Java</c:if>
 			  <c:if test="${career.techNo == '1001' }">Python</c:if>
 			  <c:if test="${career.techNo == '1002' }">Php</c:if>
+			  <c:if test="${career.techNo == '2000' }">Spring</c:if>
+			  <c:if test="${career.techNo == '2001' }">Django</c:if>
+			  <c:if test="${career.techNo == '2002' }">Symfony</c:if>
+			  <c:if test="${career.techNo == '3000' }">Oracle</c:if>
+			  <c:if test="${career.techNo == '3001' }">Mssql</c:if>
+			  <c:if test="${career.techNo == '3002' }">Mysql</c:if>
 			  </td>
 			 
 			  <td align="left">${career.careerUseTerm}개월  &nbsp; &nbsp;
 			  
 			  	<c:if test="${career.careerUserId==sessionScope.user.userId }">
 			  
-			  		<span class="updateCareer" careerNo="${career.careerNo}">
+			  		<span class="updateCareer" careerNo="${career.careerNo}" techClass="${career.techClass}">
 			  			<button type="button" class="btn btn-primary">수정</button> &nbsp; &nbsp;
 			   		</span>
 			   
