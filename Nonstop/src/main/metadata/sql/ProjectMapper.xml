@@ -25,13 +25,23 @@
 		<result property="scrapNo" 			column="scrap_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
+	 <resultMap id="commentSelectMap" type="projComment">
+		<result property="comNo" 			column="com_no" 				jdbcType="INTEGER"/>
+		<result property="comprojNo" 		column="com_proj_no" 			jdbcType="INTEGER" />
+		<result property="comUserId" 		column="com_user_id" 			jdbcType="VARCHAR" />
+		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
+		<result property="comRegDate" 		column="com_proj_regdate" 		jdbcType="DATE" />
+		<result property="comContent" 		column="com_proj_content" 		jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
 	<!-- SQL : INSERT -->
 	<insert 	id="addProject"		parameterType="project" >
 	 	INSERT 
 		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
 		VALUES ( seq_project_proj_no.nextval, 
-		'com02', 
-		#{projDivision:NUMERIC}, 
+		#{projUserId:VARCHAR}, 
+		#{projDivision:NUMERIC},
 		#{projTitle:VARCHAR}, 
 		SYSDATE, 
 		#{projAnnoEnd:DATE},
@@ -44,7 +54,7 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProject"	parameterType="map"	resultMap="projectSelectMap">
-	SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location,p.proj_detail, p.proj_viewcount,
+	SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
 	round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
 	round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
 	FROM project p , (SELECT * FROM scrap WHERE user_id=#{scrapUserId:VARCHAR}) a
@@ -52,30 +62,47 @@
 	
 	 </select>
 	 
-	 <select  id="listProject"  parameterType="String"	resultMap="projectSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* <!-- , ROWNUM AS row_seq -->
-	  			FROM( SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
+	 <select  id="listProject"  parameterType="map"	resultMap="projectSelectMap">
+	 <!-- 	SELECT *
+	  	FROM (	SELECT inner_table.*  , ROWNUM AS row_seq 
+	  		FROM(  -->SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 200) ,'...')as proj_detail, p.proj_viewcount,
 							 round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
 							 round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
 					  FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
 					 <where>
-					 p.proj_no=a.proj_no(+) 
-						 <!-- <if test="searchCondition != null">
+					 	 p.proj_no=a.proj_no(+) And
+					 	 <if test="projDivision == 1">
+					         p.proj_division IN (10,11,12)   
+					     </if>   
+					     <if test="projDivision == 2">
+					         p.proj_division IN (20,21,22)   
+					     </if>
+					     <if test="projDivision != 1 and projDivision != 2">
+					         p.proj_division = #{projDivision}
+					     </if> 
+					 </where>
+					
+						 <!-- <where> <if test="searchCondition != null">
 						 	<if test="searchCondition == 0 and searchKeyword !='' ">
 						 		AND proj_title like '%' || #{searchKeyword} ||'%'
 						 	</if>
 					    	<if test="searchCondition == 1 and searchKeyword !='' ">
 							    AND proj_location like '%' || #{searchKeyword} ||'%'
 							</if>
-						</if>  -->
-					 </where>
+						</if> </where> 
+					 
+					 
 											
-										<!-- 	GROUP BY p.prod_name, p.prod_no, p.prod_detail, 
+										GROUP BY p.prod_name, p.prod_no, p.prod_detail, 
 											p.manufacture_day, p.price, p.image_file, p.reg_date, 
-											tran_status_code, p.tran_prod_stock ORDER BY prod_no --> ) inner_table)
+											tran_status_code, p.tran_prod_stock ORDER BY prod_no    ) inner_table)-->
 						<!-- WHERE ROWNUM &lt;= #{endRowNum} )
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}  -->
+		
+				
+					 
+					
+					
 	 </select>
 	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
@@ -120,6 +147,44 @@
 		DELETE from project
 		where proj_no=#{projNo}
 	 </delete>
+	 
+	 <insert 	id="addComment"		parameterType="projComment" >
+	 	INSERT INTO 
+	 	proj_comment( com_no , com_proj__no , com_user_id , com_proj__regdate , com_proj__content) 
+		VALUES	 (	seq_proj_comment_com_no.nextVal, 
+		#{comProjNo}, 
+		#{comUserId}, 
+		SYSDATE, 
+		#{comContent})
+		<selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
+        SELECT seq_proj_comment_com_no.currval FROM dual
+    	</selectKey>
+	 </insert>
+	 
+	<select  id="getComment"  parameterType="int"	resultMap="commentSelectMap">
+		SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
+		FROM proj_comment c, users u 
+		WHERE c.com_no = #{comNo} 
+		AND u.user_id = c.com_user_id
+	</select>
+	 
+ 
+
+	<delete id="deleteComment" parameterType="int">
+		DELETE from proj_comment
+		where com_no = #{value}
+	</delete>
+	 
+	 
+	<select  id="getCommentList"  parameterType="int"	resultMap="commentSelectMap">
+
+		SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
+		FROM proj_comment c, users u 
+		WHERE c.com_proj_no = #{comProjNo} 
+		AND u.user_id = c.com_user_id
+		ORDER BY com_proj_regdate DESC
+		
+	</select>
 	 
 	 
 	

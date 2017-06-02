@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+
+<head>
+ 	<meta charset="UTF-8">
+ 	
+	<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>		
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<link rel="stylesheet" type="text/css" href="main.css">
+	<script src="signaling_channel.js"></script>
+	<script src="sdp.js"></script>
+	<script src="main.js"></script>
+	
+	<!-- 회면 공유를 위한 확장프로그램 링크 -->
+	<!-- <link rel="chrome-webstore-item" href="https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk"> -->
+	
+	<!-- <script src="change_IOdevice.js"></script> -->
+</head>
+<body>
+		<header>
+				<div id="owr-logo"></div>
+		</header>
+		<aside>
+			<div id="sidebar"  class="nav-collapse">
+				<video id="self_view" autoplay muted></video>
+					<div id="chat_div"></div>
+					<div class="form-inline" id="chat-container">
+							<input type="sendtext" class="form-control" id="chat_txt" disabled>
+							<input type="button" class="btn" id="chat_but" value="Send" disabled style="visibility: visible;">
+					</div>
+			</div>
+		</aside>
+		<section id="main-content">
+			<section id="init-section">
+					<div id="settings-container">
+							Session id <input type="text" id="session_txt" value="" size="10">
+							<input class="btn" type="button" id="join_but" value="Join" disabled>
+							<input class="btn" type="button" id="call_but" value="Call" disabled><br>
+							<input type="checkbox" id="video_cb" checked>Video<br>
+							<input type="checkbox" id="audio_cb" checked>Audio<br>
+							<input type="checkbox" id="chat_cb" checked>Chat
+							<div id="share-container">
+									link: <a id="share_link" target="_blank" href=""></a>
+							</div>
+					</div>
+			</section>
+			<!-- 
+				<div>
+					 <div class="select">
+					<label for="audioSource">음성 입력장치: </label><select id="audioSource"></select>
+				</div>
+		
+				<div class="select">
+					<label for="audioOutput">음성 출력장치: </label><select id="audioOutput"></select>
+				</div>
+		
+				<div class="select">
+					<label for="videoSource">화상 장치: </label><select id="videoSource"></select>
+				</div>
+						<script src="change_IOdevice.js"></script> ready 상태에서 적용시켜야될듯하다
+					</div> -->
+			<section id="main-room" style="display: none">
+					<div id="video-container">
+							<video id="remote_view" autoplay controls></video>
+					</div>
+					<div id="instant">
+				 <div class="label">Instant: </div>
+				 <meter high="0.25" max="1" value="0"></meter>
+				 <div class="value"></div>
+			 </div>
+					<div id="log_div"></div>
+			</section>
+			<section class="experiment">
+                <h2>Prerequisites</h2>
+                <ol>
+                    <li>
+                    <button id="share-screen" class="setup" disabled style="display: none;">Share Your Screen</button>
+                    <button onclick=" window.open('https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk','_blank')" id="install-button">Click to Install</button>
+                    <!-- 사이트를 인증해아만 inline installation을 할 수 있음. -->
+                        <!-- <button onclick="!!navigator.webkitGetUserMedia && !!window.chrome && !!chrome.webstore && !!chrome.webstore.install && chrome.webstore.install('https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk', function() {location.reload();})" id="install-button" style="font-size:inherit; padding-bottom:0;">Click to Install</button> -->
+                    </li>
+                </ol>
+            </section>
+		</section>
+	<script src="screeeen.js"></script>
+</body>
+</html>

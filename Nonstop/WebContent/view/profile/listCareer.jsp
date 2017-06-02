@@ -43,15 +43,15 @@
 	 $(function() {
 		 $("span.updateCareer").on("click" , function() {
 				var careerNo=$(this).attr('careerNo');
-				alert(careerNo);
+				
 			self.location ="/profile/updateCareer?careerNo="+careerNo;
 			
 			});
 		 
 		 $("span.deleteCareer").on("click" , function() {
-				alert("ㅇㅇ" );
+				
 				var careerNo=$(this).attr('careerNo');
-				alert(careerNo);
+				
 			self.location ="/profile/deleteCareer?careerNo="+careerNo;
 			
 			});
@@ -76,7 +76,11 @@
             <th align="left">
             <span class="addCareer">
             <c:if test="${user.userId==sessionScope.user.userId }">
-			  <button type="button" class="btn btn-primary">등록</button>
+			   <div class="btn-group">
+                              <a class="btn mini btn-info" href="javascript:;">
+                                  <i class="fa fa-cog"></i>
+                              </a>
+                          </div>
 			  </c:if>
 			   </span>
             </th>

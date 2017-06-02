@@ -18,6 +18,7 @@
 		<typeAlias alias="portfolio" type="com.nonstop.domain.Portfolio" />
 		<typeAlias alias="portComment" type="com.nonstop.domain.PortComment" />
 		<typeAlias alias="portLike" type="com.nonstop.domain.PortLike" />
+		<typeAlias alias="projComment" type="com.nonstop.domain.ProjComment" />
 		<typeAlias alias="statistics" type="com.nonstop.domain.Statistics" />
 		<typeAlias alias="letter" type="com.nonstop.domain.Letter" />
      	<typeAlias alias="career" type="com.nonstop.domain.Career" />
@@ -26,8 +27,7 @@
 		<typeAlias alias="project" type="com.nonstop.domain.Project" />
 		<typeAlias alias="user" type="com.nonstop.domain.User" />
 		<typeAlias alias="search" type="com.nonstop.domain.Search" />
-		<typeAlias alias="comment" type="com.nonstop.domain.Comment" />
-
+		<typeAlias alias="recordProject" type="com.nonstop.domain.RecordProject" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -42,7 +42,7 @@
 		<mapper resource="sql/ScrapMapper.xml"/>
 		<mapper resource="sql/ProjectMapper.xml"/>
 		<mapper resource="sql/UserMapper.xml"/>
-		<mapper resource="sql/CommentMapper.xml"/>
+		<mapper resource="sql/RecordProjectMapper.xml"/>
 
 	</mappers>
 

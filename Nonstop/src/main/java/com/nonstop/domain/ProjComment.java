@@ -8,8 +8,9 @@ public class ProjComment {
 	private int comNo;
 	private int comProjNo;
 	private String comUserId;
-	private Date comProjRegDate;
-	private String comProjContent;
+	private String comUserImg;
+	private Date comRegDate;
+	private String comContent;
 	
 	
 	public int getComNo() {
@@ -30,23 +31,32 @@ public class ProjComment {
 	public void setComUserId(String comUserId) {
 		this.comUserId = comUserId;
 	}
-	public Date getComProjRegDate() {
-		return comProjRegDate;
+	public String getComUserImg() {
+		return comUserImg;
 	}
-	public void setComProjRegDate(Date comProjRegDate) {
-		this.comProjRegDate = comProjRegDate;
+	public void setComUserImg(String comUserImg) {
+		this.comUserImg = comUserImg;
 	}
-	public String getComProjContent() {
-		return comProjContent;
+	public Date getComRegDate() {
+		return comRegDate;
 	}
-	public void setComProjContent(String comProjContent) {
-		this.comProjContent = comProjContent;
+	public void setComRegDate(Date comRegDate) {
+		this.comRegDate = comRegDate;
 	}
+	public String getComContent() {
+		return comContent;
+	}
+	public void setComContent(String comContent) {
+		this.comContent = comContent;
+	}
+	
 	@Override
 	public String toString() {
-		return "ProjComment [comNo=" + comNo + ", comProjNo=" + comProjNo + ", comUserId=" + comUserId
-				+ ", comProjRegDate=" + comProjRegDate + ", comProjContent=" + comProjContent + "]";
+		return "ProjComment [comNo=" + comNo + ", comProjNo=" + comProjNo + ", comUserId=" + comUserId + ", comUserImg="
+				+ comUserImg + ", comRegDate=" + comRegDate + ", comContent=" + comContent + "]";
 	}
+	
+	
 	
 	
 	

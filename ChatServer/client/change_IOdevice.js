@@ -1,65 +1,56 @@
 /*
-*  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
-*
-*  Use of this source code is governed by a BSD-style license
-*  that can be found in the LICENSE file in the root of the source
-*  tree.
-*/
+ *  Copyright (c) 2015 The WebRTC project authors. All Rights Reserved.
+ *
+ *  Use of this source code is governed by a BSD-style license
+ *  that can be found in the LICENSE file in the root of the source
+ *  tree.
+ */
 
 'use strict';
 
-var videoElement = document.querySelector('video');
-var audioInputSelect = document.querySelector('select#audioSource');
-var audioOutputSelect = document.querySelector('select#audioOutput');
-var videoSelect = document.querySelector('select#videoSource');
-var selectors = [audioInputSelect, audioOutputSelect, videoSelect];
+var remoteVideo = document.querySelector('#remote_view');
+var gumVideo = document.querySelector('#remote_view');
+gumVideo.addEventListener('play', function() {
+  gumVideo.volume = 0.1;
+  console.log('Audio lowered to reduce feedback from local gUM stream');
+});
 
 function gotDevices(deviceInfos) {
-  // Handles being called several times to update labels. Preserve values.
-  var values = selectors.map(function(select) {
-    return select.value;
-  });
-  selectors.forEach(function(select) {
-    while (select.firstChild) {
-      select.removeChild(select.firstChild);
-    }
-  });
+  var masterOutputSelector = document.createElement('select');
+
   for (var i = 0; i !== deviceInfos.length; ++i) {
     var deviceInfo = deviceInfos[i];
     var option = document.createElement('option');
     option.value = deviceInfo.deviceId;
-    if (deviceInfo.kind === 'audioinput') {
-      option.text = deviceInfo.label ||
-          'microphone ' + (audioInputSelect.length + 1);
-      audioInputSelect.appendChild(option);
-    } else if (deviceInfo.kind === 'audiooutput') {
+    if (deviceInfo.kind === 'audiooutput') {
+      console.info('Found audio output device: ', deviceInfo.label);
       option.text = deviceInfo.label || 'speaker ' +
-          (audioOutputSelect.length + 1);
-      audioOutputSelect.appendChild(option);
-    } else if (deviceInfo.kind === 'videoinput') {
-      option.text = deviceInfo.label || 'camera ' + (videoSelect.length + 1);
-      videoSelect.appendChild(option);
+          (masterOutputSelector.length + 1);
+      masterOutputSelector.appendChild(option);
     } else {
-      console.log('Some other kind of source/device: ', deviceInfo);
+      console.log('Found non audio output device: ', deviceInfo.label);
     }
   }
-  selectors.forEach(function(select, selectorIndex) {
-    if (Array.prototype.slice.call(select.childNodes).some(function(n) {
-      return n.value === values[selectorIndex];
-    })) {
-      select.value = values[selectorIndex];
-    }
-  });
+
+  // Clone the master outputSelector and replace outputSelector placeholders.
+  var allOutputSelectors = document.querySelectorAll('select');
+  for (var selector = 0; selector < allOutputSelectors.length; selector++) {
+    var newOutputSelector = masterOutputSelector.cloneNode(true);
+    newOutputSelector.addEventListener('change', changeAudioDestination);
+    allOutputSelectors[selector].parentNode.replaceChild(newOutputSelector,
+        allOutputSelectors[selector]);
+  }
 }
 
 navigator.mediaDevices.enumerateDevices().then(gotDevices).catch(handleError);
 
-// Attach audio output device to video element using device/sink ID.
-function attachSinkId(element, sinkId) {
+// Attach audio output device to the provided media element using the deviceId.
+function attachSinkId(element, sinkId, outputSelector) {
   if (typeof element.sinkId !== 'undefined') {
     element.setSinkId(sinkId)
     .then(function() {
-      console.log('Success, audio output device attached: ' + sinkId);
+      console.log('Success, audio output device attached: ' + sinkId + ' to ' +
+          'element with ' + element.title + ' as source.');
     })
     .catch(function(error) {
       var errorMessage = error;
@@ -69,46 +60,23 @@ function attachSinkId(element, sinkId) {
       }
       console.error(errorMessage);
       // Jump back to first output device in the list as it's the default.
-      audioOutputSelect.selectedIndex = 0;
+      outputSelector.selectedIndex = 0;
     });
   } else {
     console.warn('Browser does not support output device selection.');
   }
 }
 
-function changeAudioDestination() {
-  var audioDestination = audioOutputSelect.value;
-  attachSinkId(videoElement, audioDestination);
+function changeAudioDestination(event) {
+  var deviceId = event.target.value;
+  var outputSelector = event.target;
+  // FIXME: Make the media element lookup dynamic.
+  var element = event.path[2].childNodes[1];
+  attachSinkId(element, deviceId, outputSelector);
 }
 
 function gotStream(stream) {
   window.stream = stream; // make stream available to console
-  videoElement.srcObject = stream;
-  // Refresh button list in case labels have become available
-  return navigator.mediaDevices.enumerateDevices();
+  gumAudio.srcObject = stream;
+  gumVideo.srcObject = stream;
 }
-
-function handleError(error) {
-  console.log('navigator.getUserMedia error: ', error);
-}
-//function start() {
-//  if (window.stream) {
-//    window.stream.getTracks().forEach(function(track) {
-//      track.stop();
-//    });
-//  }
-//  var audioSource = audioInputSelect.value;
-//  var videoSource = videoSelect.value;
-//  var constraints = {
-//    audio: {deviceId: audioSource ? {exact: audioSource} : undefined},
-//    video: {deviceId: videoSource ? {exact: videoSource} : undefined}
-//  };
-//  navigator.mediaDevices.getUserMedia(constraints).
-//      then(gotStream).then(gotDevices).catch(handleError);
-//}
-//
-//audioInputSelect.onchange = start;
-//audioOutputSelect.onchange = changeAudioDestination;
-//videoSelect.onchange = start;
-//
-//start();
