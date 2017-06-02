@@ -17,6 +17,7 @@
 	<typeAliases>
 		<typeAlias alias="portfolio" type="com.nonstop.domain.Portfolio" />
 		<typeAlias alias="portComment" type="com.nonstop.domain.PortComment" />
+		<typeAlias alias="portLike" type="com.nonstop.domain.PortLike" />
 		<typeAlias alias="projComment" type="com.nonstop.domain.ProjComment" />
 		<typeAlias alias="statistics" type="com.nonstop.domain.Statistics" />
 		<typeAlias alias="letter" type="com.nonstop.domain.Letter" />

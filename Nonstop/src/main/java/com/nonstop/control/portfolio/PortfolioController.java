@@ -12,16 +12,20 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.nonstop.domain.Follow;
 import com.nonstop.domain.PortComment;
+import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.user.UserService;
 
 @Controller
 @RequestMapping("/portfolio/*")
@@ -34,6 +38,10 @@ public class PortfolioController {
 	@Autowired
 	@Qualifier("profileServiceImpl")
 	private ProfileService profileService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	public PortfolioController() {
 
@@ -90,9 +98,13 @@ public class PortfolioController {
 	@RequestMapping(value="listPortfolio")
 	public String listPortfolio(@RequestParam("portDivision") int portDivision,HttpSession session, Model model) throws Exception {
 		
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		String sessionUserId="testUser";
 		
-		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision,scrapUserId);
+		if((User)session.getAttribute("user") != null) {
+			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+		
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision,sessionUserId);
 
 		model.addAttribute("list", portfolioList);
 
@@ -101,17 +113,31 @@ public class PortfolioController {
 	
 	@RequestMapping(value="getPortfolio")
 	public String getPortfolio(@RequestParam("portNo") int portNo, HttpSession session, Model model) throws Exception {
-	/*public String getPortfolio( @RequestParam("portNo") int portNo, Model model) throws Exception {*/
 		
 		System.out.println("getPortfolio Controller");
 		
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		String sessionUserId="testUser";
 		
-		//스크랩
-		Portfolio portfolio = portfolioService.getPortfolio(portNo,scrapUserId);
+		if((User)session.getAttribute("user") != null) {
+			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+		//스크랩, getPortfolio, 좋아요 플래그
+		Portfolio portfolio = portfolioService.getPortfolio(portNo,sessionUserId);
 		
+		if(portfolio.getPortLikeNo()!=0){
+			portfolio.setPortLikeFlag(true);
+		}
 		//댓글
 		List<PortComment> portCommentList = portfolioService.getCommentList(portNo);
+		//팔로우 플래그
+		Follow follow = profileService.getFollow(sessionUserId);
+		
+		if(follow != null){
+			portfolio.setPortFollowFlag(true);
+		}
+		
+		//게시자 미니프로필용 user
+		User user = userService.getUser(portfolio.getPortUserId());
 		
 		//클릭시 조회수 추가
 		int portViewCount = portfolio.getTotalPortView();
@@ -156,6 +182,7 @@ public class PortfolioController {
 		
 		model.addAttribute("portCommentList", portCommentList);
 		model.addAttribute("portfolio", portfolio);
+		model.addAttribute("user", user);
 		
 		return "forward:/view/portfolio/getPortfolio.jsp";
 	}
@@ -232,13 +259,31 @@ public class PortfolioController {
 		model.addAttribute("portComment", portComment);
 	}
 	
-	@RequestMapping(value="deleteComment")
-	public String deleteComment(@RequestParam("comNo") int comNo, @RequestParam("comPortNo") int comPortNo, Model model) throws Exception{
+	@RequestMapping(value="deleteComment/{comNo}/{comPortNo}" , method=RequestMethod.GET)
+	public void deleteComment(@PathVariable("comNo") int comNo, @PathVariable("comPortNo") int comPortNo, Model model) throws Exception{
 		
 		portfolioService.deleteComment(comNo);
-		/*AJAX로 삭제하는 법 고려해보기*/
-		/*List<PortComment> portCommentList = portfolioService.getCommentList(comPortNo);*/
 		
-		return "forward:/portfolio/getPortfolio?portNo="+comPortNo;
 	}
+	
+	@RequestMapping(value="addJsonPortLike" , method=RequestMethod.POST)
+	public void addJsonProjScrap(@ModelAttribute("portLike") PortLike portLike) throws Exception{
+		
+		System.out.println("/portfolio/addJsonPortLike");
+	
+		portfolioService.addPortLike(portLike);
+		
+
+	}
+	
+	@RequestMapping(value="delJsonPortLike/{portLikeNo}" , method=RequestMethod.GET)
+	public void delJsonProjScrap(@PathVariable("portLikeNo") int portLikeNo) throws Exception{
+		
+		System.out.println("/portfolio/delJsonPortLike");
+	
+		portfolioService.deletePortLike(portLikeNo);
+		
+
+	}
+
 }
