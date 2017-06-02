@@ -74,7 +74,11 @@
 		    overflow:hidden;
 		}
 		
-	   .thumbnail:hover{
+		.breadcrumb{
+			margin : 0;
+		}
+		
+	    .thumbnail:hover{
 	    	background-color:#ffffe6;
 	    	border: 2px solid orange;
 	    }
@@ -113,6 +117,16 @@
        .fa-star {
           color: #d5d5d5;
         }
+        
+        form{
+          float : right;
+          margin : 0;
+        }
+        /*  회색 부분 all,web,app */
+        .navbar-static-top {
+		  padding-top: 30px;
+		  height: 120px;
+		}
      	
      	
 	</style>
@@ -222,32 +236,6 @@
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container">
-		
-		<div class="margin-top-5">
-			<!-- Search-bar -->
-			<div class="input-group input-group-sm">
-				<!-- 카테고리 선택 -->		
-				
-				<div class="input-group-btn">
-	   				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">검색어 <span class="caret"></span></button>
-	       			<ul class="dropdown-menu" role="menu">
-						<li><a href="#">제목</a></li>
-						<li><a href="#">개발기술</a></li>
-						<li><a href="#">개발지역</a></li>
-			       </ul>
-				</div>
-				<!-- 돋보기모양 -->
-				<span class="input-group-addon"> 		            
-					<span class="glyphicon glyphicon-search"></span>
-				</span>
-				<input type="text" class="form-control" aria-label="...">
-				<!-- 검색버튼 -->
-				<span class="input-group-btn">
-					<button class="btn btn-default" type="button">검색</button>
-				</span>			
-			</div>	
-		</div>
-		
 		<!-- ALL/WEB/APP -->
 		<div class="row">	
 			<div class="col-md-6 col-md-offset-3" align="center">
@@ -257,7 +245,6 @@
 	        	<button class="button button-neutral" type="button" id="button-app" value="${param.projDivision}">App</button>
 			</div>
 		</div>
-		
 	</div>
 </nav>
 
@@ -282,12 +269,38 @@
 </div>
             
 <div class="container">
-	<ol class="breadcrumb">
-	  <li><a href="#" >최신등록순</a></li>
-	  <li><a href="#">마감임박순</a></li>
-	  <li><a href="#">지원자순</a></li>
-	  <li><a href="#">조회순</a></li>
-	</ol>			
+	<div class="row">
+		<div class="col-md-6">	
+		<ol class="breadcrumb">
+		  <li><a href="#" >최신등록순</a></li>
+		  <li><a href="#">마감임박순</a></li>
+		  <li><a href="#">지원자순</a></li>
+		  <li><a href="#">조회순</a></li>
+		</ol>
+		</div>
+		
+		<div class="col-md-6">
+	    <form class="form-inline" name="detailForm">
+		  <div class="form-group">
+		    <select class="form-control" name="searchCondition" >
+				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
+				<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>개발기술</option>
+				<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>개발지역</option>
+			</select>
+		  </div>
+		  
+		  <div class="form-group">
+		    <label class="sr-only" for="searchKeyword">검색어</label>
+		    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+		    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+		  </div>
+		  
+		  <button type="button" class="btn btn-default">검색</button>
+		  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+		  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+		</form>
+		</div>
+	</div>
 </div>
 
 

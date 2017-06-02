@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -87,7 +88,7 @@ public class ProjectController {
 		
 //		Project project = projectService.getProject(projNo);
 		project = projectService.getProject(projNo ,scrapUserId);
-//		Comment comment = commentService.getComment(project.getProjNo());
+		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
 		User user = userService.getUser(project.getProjUserId());
 		
 //		project.getProjDetail().replaceAll("\r\n", "<br>");
@@ -95,11 +96,9 @@ public class ProjectController {
 		System.out.println(scrapUserId);
 		
 		
-//		session.setAttribute("comProdNo", comProdNo);
 		session.setAttribute("projNo", projNo);
-//		model.addAttribute("comProdNo", comProdNo);
+		model.addAttribute("projCommentList", projCommentList);
 		model.addAttribute("project", project);
-//		model.addAttribute("comment", comment);
 		model.addAttribute("user", user);
 		
 	
@@ -199,14 +198,11 @@ public class ProjectController {
 		model.addAttribute("projComment", projComment);
 	}
 	
-	@RequestMapping(value="deleteComment")
-	public String deleteComment(@RequestParam("comNo") int comNo, @RequestParam("comProjNo") int comProjNo, Model model) throws Exception{
+	@RequestMapping(value="deleteComment/{comNo}/{comProjNo}" , method=RequestMethod.GET)
+	public void deleteComment(@PathVariable("comNo") int comNo, @PathVariable("comProjNo") int comProjNo, Model model) throws Exception{
 		
 		projectService.deleteComment(comNo);
-		/*AJAX로 삭제하는 법 고려해보기*/
-		/*List<PortComment> portCommentList = portfolioService.getCommentList(comPortNo);*/
 		
-		return "forward:/project/getProject?projNo="+comProjNo;
 	}
 	
 	
