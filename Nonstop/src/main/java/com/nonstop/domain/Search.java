@@ -10,6 +10,10 @@ public class Search {
 	private String searchCondition;
 	private String searchKeyword;
 	private int pageSize;
+	private int projPageSize;
+	
+	
+
 	//==> ����Ʈȭ�� currentPage�� �ش��ϴ� ȸ�������� ROWNUM ��� SELECT ���� �߰��� Field 
 	//==> UserMapper.xml �� 
 	//==> <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
@@ -57,6 +61,14 @@ public class Search {
 	//==> Select Query �� ROWNUM ���� ��
 	public int getStartRowNum() {
 		return (getCurrentPage()-1)*getPageSize()+1;
+	}
+	
+	public int getProjPageSize() {
+		return projPageSize;
+	}
+
+	public void setProjPageSize(int projPageSize) {
+		this.projPageSize = projPageSize;
 	}
 
 	@Override

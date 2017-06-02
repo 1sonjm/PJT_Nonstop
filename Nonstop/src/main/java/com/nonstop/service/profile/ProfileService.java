@@ -5,7 +5,6 @@ import java.util.Map;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
-import com.nonstop.domain.Scrap;
 
 public interface ProfileService {
 	
@@ -13,6 +12,8 @@ public interface ProfileService {
 	public void addCareer(Career career) throws Exception;
 	
 	public Map<String , Object> getCareerList(String careerUserId) throws Exception;
+	
+	public Map<String , Object> getCareerList2(String userId) throws Exception;
 	
 	public Career getCareer(int careerNo) throws Exception;
 	
@@ -24,14 +25,20 @@ public interface ProfileService {
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception;
 	
+	public Follow getFollow(String reqUserId) throws Exception;
+	
 	public void deleteFollow(String reqUserId,String targetUserId) throws Exception;
 	
-	public void addPortScrap(int portNo ,String scrapUserId) throws Exception;
+	public void addPortScrap(int portNo,String scrapUserId) throws Exception;
 	
-	public void addProjScrap(int projNo ,String scrapUserId) throws Exception;
+	public void addProjScrap(int projNo,String scrapUserId) throws Exception;
 	
-	public List<Scrap> getScrapList(int scrapDiv , String scrapUserId , int postNo) throws Exception;
+	public Map<String , Object> getPortScrapList(String scrapUserId) throws Exception;
 	
-	public void deleteScrap(String scrapUserId , int postNo , int scrapDiv) throws Exception;
+	public void deleteJsonPortScrap(int portNo , String scrapUserId) throws Exception;
+	
+	public void deleteJsonProjScrap(int projNo , String scrapUserId) throws Exception;
+	
+	public Map<String , Object> getRecordProjectList(String recUserId) throws Exception;
 
 }

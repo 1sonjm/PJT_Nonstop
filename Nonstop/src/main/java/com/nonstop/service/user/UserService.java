@@ -13,16 +13,22 @@ import com.nonstop.domain.User;
 
 public interface UserService {
 	
-
 	public void addUser(User user) throws Exception;
 	
 	public void addCompany(User user) throws Exception;
 	
 	public User getUser(String userId) throws Exception;
 
+
 	public User getCompany(String userId) throws Exception;
 
 	public User getProfileUser(String careerUserId) throws Exception;
+
+	
+	public User getProfileMine(String careerUserId) throws Exception;
+	
+	public User getProfileOther(String userId) throws Exception;
+
 	
 	public Map<String , Object> getUserList(Search search) throws Exception;
 	

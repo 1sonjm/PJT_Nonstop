@@ -1,12 +1,17 @@
 package com.nonstop.service.project.projectImpl;
 
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.service.project.ProjectDAO;
 
 
@@ -34,10 +39,13 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 		
-	public Project getProject(int projNo) throws Exception {
-//		int comProdNo = prodNo;
-//		sqlSession.selectOne("CommentMapper.getComment", comProdNo);
-		return sqlSession.selectOne("ProjectMapper.getProject", projNo);
+	public Project getProject(int projNo , String scrapUserId) throws Exception {
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("projNo", projNo);
+		map.put("scrapUserId", scrapUserId);
+		
+		return sqlSession.selectOne("ProjectMapper.getProject", map);
 	}
 	
 	public void updateProject(Project project) throws Exception {
@@ -52,16 +60,18 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 	
-/*	public List<Product> getProductList(Search search) throws Exception {
+	public List<Project> listProject(Search search , String scrapUserId) throws Exception {
 		
-		return sqlSession.selectList("ProductMapper.getProductList", search);
+		//Map<String , Object> map = new HashMap<String , Object>();
+		
+		//map.put("search", search);
+		//map.put("scrapUserId", scrapUserId);
+		
+		return sqlSession.selectList("ProjectMapper.listProject", scrapUserId);
 	}
-
-	
-	
 	
 	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("ProductMapper.getTotalCount", search);
+		return sqlSession.selectOne("ProjectMapper.getTotalCount", search);
 	}
-*/
+
 }

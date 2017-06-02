@@ -18,7 +18,9 @@ public interface UserDAO {
 	
 	public User getCompany(String userId) throws Exception ;
 	
-	public User getProfileUser(String careerUserId) throws Exception;
+	public User getProfileMine(String careerUserId) throws Exception;
+	
+	public User getProfileOther(String userId) throws Exception;
 
 	public List<User> getUserList(Search search) throws Exception ;
 

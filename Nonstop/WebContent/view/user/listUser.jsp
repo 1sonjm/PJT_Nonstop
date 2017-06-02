@@ -189,7 +189,7 @@
 		  <c:forEach var="user" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
-			<c:if test="${user.role==2}">
+			
 			  <td align="center">${ i }</td>
 			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
 			  <td align="left">${user.userName}</td>
@@ -198,7 +198,7 @@
 			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
 			  	<input type="hidden" value="${user.userId}">
 			  </td>
-			  </c:if>
+			  
 			</tr>
           </c:forEach>
         

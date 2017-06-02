@@ -10,7 +10,6 @@ public class Letter {
 	private String letDetail;
 	private Date letRegdate;
 	private Date letReaddate;
-	
 	public int getLetNo() {
 		return letNo;
 	}
@@ -41,13 +40,12 @@ public class Letter {
 	public void setLetRegdate(Date letRegdate) {
 		this.letRegdate = letRegdate;
 	}
-	public Date getLetReadDate() {
+	public Date getLetReaddate() {
 		return letReaddate;
 	}
-	public void setLetReadDate(Date letReadDate) {
-		this.letReaddate = letReadDate;
+	public void setLetReaddate(Date letReaddate) {
+		this.letReaddate = letReaddate;
 	}
-	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -61,10 +59,12 @@ public class Letter {
 		builder.append(letDetail);
 		builder.append(", letRegdate=");
 		builder.append(letRegdate);
-		builder.append(", letReadDate=");
+		builder.append(", letReaddate=");
 		builder.append(letReaddate);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 
 }

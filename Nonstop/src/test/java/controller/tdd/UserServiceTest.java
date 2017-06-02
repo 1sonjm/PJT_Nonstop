@@ -130,6 +130,8 @@ public class UserServiceTest {
 		//System.out.println(userService.checkDuplication("testUserId"+System.currentTimeMillis()) );
 	 	
 		//==> API Ȯ��
+
+
 		 	
 	}
 	
