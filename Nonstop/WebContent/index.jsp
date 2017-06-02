@@ -140,7 +140,7 @@
 	//============= 통계 이동 Event 처리 =============	
 	 $(function() {
 	 	$("#statistics").on("click" , function() {
-			self.location = "/view/statistics/statistics.jsp"
+			self.location = "/statistics/getListStatistics"
 		}); 
 	 });
 		

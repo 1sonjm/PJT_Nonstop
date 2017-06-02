@@ -50,7 +50,7 @@
             self.location="/portfolio/addPortfolio";
          }); 
          
-          $(".thumbnail").on("click" , function() {
+         $(".thumbnail").on("click" , function() {
             alert($(this).find('input').val());            
             self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();
          }); 
@@ -85,56 +85,42 @@
             }
          });
          
-         
-         
       });
-      
-      
-      $(function() {
       /* 스크랩추가 */
-      $(".Scrap").on("click" , function() {
+      $(function() {
+          
+          $(".Scrap").on("click" , function() {
 
-            var flag = $(this).text().trim();
-            var requestTarget;
-            var asdf;
-            
-            alert(flag);
-            
-            
-            if(flag=="add to scrap"){
-               requestTarget = "addJsonPortScrap";
-               asdf = "delete to scrap";  
-               alert(1);
-            }else if(flag=="delete to scrap"){
-               requestTarget = "deleteJsonPortScrap";
-               asdf ="add to scrap"
-                  alert(2);
-            }else{
-               requestTarget == "deleteJsonPortScrap";
-                asdf ="add to scrap"
-                   alert(3);
-            }
-            alert(requestTarget+"컨트롤러 어디로가니");
-            alert(asdf);
-            
-             var portNo=$(this).attr('portNo');
-             $.ajax(
-                {
-                   url : "/profile/"+requestTarget+"/"+portNo,
-                   method : "GET",
-                   dateType : "json",
-                   headers : {
-                      "Accept" : "application/json",
-                     "Content-Type" : "application/json"   
-                 },
-                   success : function(JSONData , status){
-                      var displatValue = 
-                      "<button type='button' id='Scrap' portNo='${portfolio.portNo}'>"+asdf+"</button>";
-                      
-                      $(".Scrap").html(displayValue);
-                   }
+                var flag = $(this).text().trim();
+                var requestTarget;
+                var asdf;
+                
+                if(flag=="add to scrap"){
+                   requestTarget = "addJsonPortScrap";
+                   asdf = "delete to scrap";  
+                }else if(flag=="delete to scrap"){
+                   requestTarget = "deleteJsonPortScrap";
+                   asdf ="add to scrap"
+                }else{
+                   requestTarget == "deleteJsonPortScrap";
+                    asdf ="add to scrap"
+                }
+                
+                 var portNo=$(this).attr('portNo');
+                 $.ajax(
+                    {
+                       url : "/profile/"+requestTarget+"/"+portNo,
+                       method : "GET",
+                       dateType : "json",
+                       headers : {
+                          "Accept" : "application/json",
+                         "Content-Type" : "application/json"   
+                     },
+                       success : function(data){
+                    	   		 location.reload();
+                     }
                 });
-             });
+           });
       });
    </script>
    <style>

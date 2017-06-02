@@ -216,7 +216,7 @@ function statisticsByPeriod(jsonData){
 				+"/"+jsonData.dataList[i].demand
 				+"/"+jsonData.dataList[i].supply
 		+"/"+jsonData.dataList[i].userRate
-		+"/"+jsonData.dataList[i].date);
+		+"/"+jsonData.dataList[i].regdate);
 		
 		dataSet.push({
 			date: jsonData.dataList[i].regdate,
