@@ -15,16 +15,16 @@
     <title>List_Portfolio</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
 
    <!-- jQuery -->
-    <script src="../../resources/javascript/jquery.js"></script>
+    <script src="/resources/javascript/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    <script src="/resources/javascript/bootstrap.min.js"></script>
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -51,7 +51,6 @@
          }); 
          
          $(".thumbnail").on("click" , function() {
-            alert($(this).find('input').val());            
             self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();
          }); 
          
@@ -90,20 +89,23 @@
       $(function() {
           
           $(".Scrap").on("click" , function() {
-
+				
                 var flag = $(this).text().trim();
                 var requestTarget;
                 var asdf;
                 
                 if(flag=="add to scrap"){
+                   alert("해당 게시물을 스크랩합니다.");
                    requestTarget = "addJsonPortScrap";
                    asdf = "delete to scrap";  
                 }else if(flag=="delete to scrap"){
+                   alert("스크랩을 삭제합니다.");
                    requestTarget = "deleteJsonPortScrap";
                    asdf ="add to scrap"
                 }else{
+                   alert("스크랩을 삭제합니다.");
                    requestTarget == "deleteJsonPortScrap";
-                    asdf ="add to scrap"
+                   asdf ="add to scrap"
                 }
                 
                  var portNo=$(this).attr('portNo');
@@ -271,7 +273,7 @@
          <div class="input-group input-group-sm">
             <!-- 카테고리 선택 -->      
             <div class="input-group-btn">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Actionsadsdff <span class="caret"></span></button>
+                  <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Actionsadsdff <span class="caret"></span></button>
                    <ul class="dropdown-menu" role="menu">
                   <li><a href="#">Action</a></li>
                   <li><a href="#">Another action</a></li>
@@ -287,7 +289,7 @@
             <input type="text" class="form-control" aria-label="...">
             <!-- 검색버튼 -->
             <span class="input-group-btn">
-               <button class="btn btn-default" type="button">검색</button>
+               <button class="btn btn-info" type="button">검색</button>
             </span>         
          </div>   
       </div>
@@ -437,12 +439,12 @@
                                    
                                                                    
                                  </p>
-                           <p class="text-center">                            
-                              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> ${portfolio.totalPortView} &ensp;&ensp;&ensp;&ensp;&ensp;
-                              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ${portfolio.totalPortLike} &ensp;&ensp;&ensp;&ensp;&ensp;
-                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ${portfolio.totalPortComment}
-                           </p> 
-                        </figcaption>
+	                           <p class="text-center">                            
+	                              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> ${portfolio.totalPortView} &ensp;&ensp;&ensp;&ensp;&ensp;
+	                              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ${portfolio.totalPortLike} &ensp;&ensp;&ensp;&ensp;&ensp;
+	                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ${portfolio.totalPortComment}
+	                           </p> 
+                        	</figcaption>
                           </div>
                         </blockquote>                                        
                                  

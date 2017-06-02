@@ -5,7 +5,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-	  <div class="container-fluid">
+	  <div class="container">
 	    <div class="navbar-header">
 	    	<!-- 줄어들면 생기는 메뉴버튼 -->
 	    	<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
@@ -13,7 +13,7 @@
             </button>
 	    	<!-- 로고 -->
 	      	<a class="navbar-brand page-scroll" href="/index.jsp">
-                <i class="fa fa-play-circle"></i> NONSTOP
+                NONSTOP
             </a>
 	    </div>
 	    
@@ -25,23 +25,23 @@
                         <a href="#page-top"></a>
                     </li>
                     
-                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Portfolio</a>
+                    <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">PORTFOLIO</a>
                    <ul class="dropdown-menu">
-                     <li><a href="#" id="portDesigner">Designer</a></li>
-                     <li><a href="#" id="portDeveloper">Developer</a></li>
+                     <li><a href="#" id="portDesigner">DESIGNER</a></li>
+                     <li><a href="#" id="portDeveloper">DEVELOPER</a></li>
                    </ul>
                 </li>
 
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Project </a>
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">PROJECT </a>
                    <ul class="dropdown-menu">
-                     <li><a href="#" id="projDesigner">Designer</a></li>
-                     <li><a href="#" id="projDeveloper">Developer</a></li>
+                     <li><a href="#" id="projDesigner">DESIGNER</a></li>
+                     <li><a href="#" id="projDeveloper">DEVELOPER</a></li>
                    </ul>
                 </li>
 
 	      
 	      
-	      <li><a href="#">Statistics</a></li>
+	      <li><a href="#">STATISTICS</a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
