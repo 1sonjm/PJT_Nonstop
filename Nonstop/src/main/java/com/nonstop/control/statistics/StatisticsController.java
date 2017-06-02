@@ -34,6 +34,11 @@ public class StatisticsController {
 		return "redirect:/index.jsp";
 	}
 	
+	@RequestMapping(value="getJSONListTechClass", method=RequestMethod.POST)
+	public void getJSONListTechClass(Model model){
+		System.out.println("/statstics/getJSONListTechClass");
+		model.addAttribute("techClassList",statisticsService.getTechClassList());
+	}
 	@RequestMapping(value="getJSONListTechData", method=RequestMethod.POST)
 	public void getJSONListTechData(Model model,@ModelAttribute("statistics") Statistics statistics){
 		System.out.println("/statstics/getJSONListTechData");

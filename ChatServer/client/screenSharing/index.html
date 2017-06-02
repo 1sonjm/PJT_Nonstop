@@ -1,4 +1,4 @@
-﻿<!--
+﻿ <!--
 > Muaz Khan     - https://github.com/muaz-khan
 > MIT License   - https://www.webrtc-experiment.com/licence/
 > Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/Pluginfree-Screen-Sharing
@@ -121,7 +121,7 @@
                 // MIT License   - https://www.webrtc-experiment.com/licence/
                 // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/Pluginfree-Screen-Sharing
 
-                var isWebRTCExperimentsDomain = document.domain.indexOf('webrtc-experiment.com') != -1;
+                //var isWebRTCExperimentsDomain = document.domain.indexOf('webrtc-experiment.com') != -1;
 
                 var config = {
                     openSocket: function(config) {
@@ -164,7 +164,6 @@
                         tr.innerHTML = '<td>' + room.roomName + '</td>' +
                             '<td><button class="join" id="' + room.roomToken + '">Open Screen</button></td>';
                         roomsList.insertBefore(tr, roomsList.firstChild);
-
                         var button = tr.querySelector('.join');
                         button.onclick = function() {
                             var button = this;
@@ -175,20 +174,15 @@
                             });
                         };
                     },
-                    onNewParticipant: function(numberOfParticipants) {
-                        document.title = numberOfParticipants + ' users are viewing your screen!';
-                        var element = document.getElementById('number-of-participants');
-                        if (element) {
-                            element.innerHTML = numberOfParticipants + ' users are viewing your screen!';
-                        }
-                    },
                     oniceconnectionstatechange: function(state) {
                         if(state == 'failed') {
                             alert('Failed to bypass Firewall rules. It seems that target user did not receive your screen. Please ask him reload the page and try again.');
+                            //상대가 수시
                         }
 
                         if(state == 'connected') {
                             alert('A user successfully received your screen.');
+                            //상대방이 영상을 수신받았을때
                         }
                     }
                 };
@@ -209,7 +203,7 @@
                             googLeakyBucket: true
                         }]
                     };
-
+/* 
                     // try to check if extension is installed.
                     if(isChrome && isWebRTCExperimentsDomain && typeof extensionAvailable == 'undefined' && DetectRTC.screen.chromeMediaSource != 'desktop') {
                         DetectRTC.screen.isChromeExtensionAvailable(function(available) {
@@ -228,9 +222,10 @@
                         });
                         return;
                     }
-
+ */
                     // for non-www.webrtc-experiment.com domains
-                    if(isChrome && !isWebRTCExperimentsDomain && !DetectRTC.screen.sourceId) {
+                    //if(isChrome && !isWebRTCExperimentsDomain && !DetectRTC.screen.sourceId) {
+                    if(isChrome && !DetectRTC.screen.sourceId) {
                         window.addEventListener('message', function (event) {
                             if (event.data && event.data.chromeMediaSourceId) {
                                 var sourceId = event.data.chromeMediaSourceId;
@@ -364,13 +359,7 @@
                     };
                 };
 
-                if(!isWebRTCExperimentsDomain) {
-                    loadScreenFrame();
-                }
-                else {
-                    document.getElementById('share-screen').disabled = false;
-                    document.getElementById('room-name').disabled = false;
-                }
+                loadScreenFrame();
             </script>
 
             <script>

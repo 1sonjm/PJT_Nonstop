@@ -112,7 +112,7 @@
 		SELECT DISTINCT stat_tech_no,tech_name,tech_class
 			 ,SUM(stat_demand) AS stat_demand
 			 ,SUM(stat_supply) AS stat_supply
-			 ,TO_CHAR(stat_date,'yyyy/mm') AS stat_date
+			 ,TO_CHAR(stat_date,'yyyy/mm/dd') AS stat_date
 		FROM statistics s, tech t
 		WHERE s.stat_tech_no = t.tech_no AND t.tech_no = #{techNo}
 		AND s.stat_date BETWEEN #{searchStartDate} AND #{searchEndDate}

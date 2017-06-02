@@ -101,7 +101,6 @@ function getJsonDataList(type,addr){
 function combineDate(input,count){
 	var d = new Date(input);
 	d.setMonth(d.getMonth()+count);
-	alert(new Date(d.getFullYear(),d.getMonth(),d.getDate()));
 	return new Date(d.getFullYear(),d.getMonth(),d.getDate());
 }
 
