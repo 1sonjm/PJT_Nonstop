@@ -140,8 +140,8 @@ function requestListener(request, response) {
     var url = request.url.split("?", 1)[0];
     var filePath = path.join(clientDir, url);
     if (filePath.indexOf(clientDir) != 0 || filePath == clientDir)
-        filePath = path.join(clientDir, "/webrtc.html");
-    	//filePath = path.join(clientDir, "screenSharing/index.html");//화면공유 test
+    	//filePath = path.join(clientDir, "/webrtc.html");
+    	filePath = path.join(clientDir, "screenSharing/index.html");//화면공유 test
 
     fs.stat(filePath, function (err, stats) {
         if (err || !stats.isFile()) {

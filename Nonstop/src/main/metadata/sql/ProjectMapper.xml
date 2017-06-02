@@ -27,7 +27,7 @@
 	
 	 <resultMap id="commentSelectMap" type="projComment">
 		<result property="comNo" 			column="com_no" 				jdbcType="INTEGER"/>
-		<result property="comprojNo" 		column="com_proj_no" 			jdbcType="INTEGER" />
+		<result property="comProjNo" 		column="com_proj_no" 			jdbcType="INTEGER" />
 		<result property="comUserId" 		column="com_user_id" 			jdbcType="VARCHAR" />
 		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
 		<result property="comRegDate" 		column="com_proj_regdate" 		jdbcType="DATE" />
@@ -150,7 +150,7 @@
 	 
 	 <insert 	id="addComment"		parameterType="projComment" >
 	 	INSERT INTO 
-	 	proj_comment( com_no , com_proj__no , com_user_id , com_proj__regdate , com_proj__content) 
+	 	proj_comment( com_no , com_proj_no , com_user_id , com_proj_regdate , com_proj_content) 
 		VALUES	 (	seq_proj_comment_com_no.nextVal, 
 		#{comProjNo}, 
 		#{comUserId}, 

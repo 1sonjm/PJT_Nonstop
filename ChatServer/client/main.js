@@ -58,7 +58,7 @@ window.onload = function () {
         // 채팅만 설정할때 바로 콜되네?
     } else {// 최초 방 생성자
         // set a random session id
-        document.getElementById("session_txt").value = Math.random().toString(16).substr(4);//방ID 부여 (여기에 사용자 id넣으면 되겠다.)
+        document.getElementById("session_txt").value = Math.random().toString(16).substr(10);//방ID 부여 (여기에 사용자 id넣으면 되겠다.)
     }
     
     //채팅방 개설

@@ -1,4 +1,4 @@
-﻿<!--
+﻿ <!--
 > Muaz Khan     - https://github.com/muaz-khan
 > MIT License   - https://www.webrtc-experiment.com/licence/
 > Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/Pluginfree-Screen-Sharing
@@ -121,7 +121,7 @@
                 // MIT License   - https://www.webrtc-experiment.com/licence/
                 // Documentation - https://github.com/muaz-khan/WebRTC-Experiment/tree/master/Pluginfree-Screen-Sharing
 
-                var isWebRTCExperimentsDomain = document.domain.indexOf('webrtc-experiment.com') != -1;
+                //var isWebRTCExperimentsDomain = document.domain.indexOf('webrtc-experiment.com') != -1;
 
                 var config = {
                     openSocket: function(config) {
@@ -164,7 +164,6 @@
                         tr.innerHTML = '<td>' + room.roomName + '</td>' +
                             '<td><button class="join" id="' + room.roomToken + '">Open Screen</button></td>';
                         roomsList.insertBefore(tr, roomsList.firstChild);
-
                         var button = tr.querySelector('.join');
                         button.onclick = function() {
                             var button = this;
@@ -175,20 +174,15 @@
                             });
                         };
                     },
-                    onNewParticipant: function(numberOfParticipants) {
-                        document.title = numberOfParticipants + ' users are viewing your screen!';
-                        var element = document.getElementById('number-of-participants');
-                        if (element) {
-                            element.innerHTML = numberOfParticipants + ' users are viewing your screen!';
-                        }
-                    },
                     oniceconnectionstatechange: function(state) {
                         if(state == 'failed') {
                             alert('Failed to bypass Firewall rules. It seems that target user did not receive your screen. Please ask him reload the page and try again.');
+                            //상대가 수신 실패시
                         }
 
                         if(state == 'connected') {
                             alert('A user successfully received your screen.');
+                            //상대방이 영상을 수신받았을때
                         }
                     }
                 };
@@ -209,7 +203,7 @@
                             googLeakyBucket: true
                         }]
                     };
-
+/* 
                     // try to check if extension is installed.
                     if(isChrome && isWebRTCExperimentsDomain && typeof extensionAvailable == 'undefined' && DetectRTC.screen.chromeMediaSource != 'desktop') {
                         DetectRTC.screen.isChromeExtensionAvailable(function(available) {
@@ -228,9 +222,10 @@
                         });
                         return;
                     }
-
+ */
                     // for non-www.webrtc-experiment.com domains
-                    if(isChrome && !isWebRTCExperimentsDomain && !DetectRTC.screen.sourceId) {
+                    //if(isChrome && !isWebRTCExperimentsDomain && !DetectRTC.screen.sourceId) {
+                    if(isChrome && !DetectRTC.screen.sourceId) {
                         window.addEventListener('message', function (event) {
                             if (event.data && event.data.chromeMediaSourceId) {
                                 var sourceId = event.data.chromeMediaSourceId;
@@ -263,7 +258,7 @@
                         audio: false,
                         video: screen_constraints//이미지 대신 화면을 줌 > true
                     };
-
+/* 
                     if(!!navigator.mozGetUserMedia) {
                         console.warn(Firefox_Screen_Capturing_Warning);
                         constraints.video = {
@@ -273,7 +268,7 @@
                             maxHeight: 1080,
                             minAspectRatio: 1.77
                         };
-                    }
+                    } */
 
                     console.log( JSON.stringify( constraints , null, '\t') );
 
@@ -282,6 +277,8 @@
                     video.setAttribute('controls', true);
                     videosContainer.insertBefore(video, videosContainer.firstChild);
 
+                    
+                    //영상 전달부
                     getUserMedia({
                         video: video,
                         constraints: constraints,
@@ -326,7 +323,7 @@
                         else uniqueToken.innerHTML = uniqueToken.parentNode.parentNode.href = '#' + (Math.random() * new Date().getTime()).toString(36).toUpperCase().replace( /\./g , '-');
                 })(); */
 
-                var Firefox_Screen_Capturing_Warning = 'Make sure that you are using Firefox Nightly and you enabled: media.getusermedia.screensharing.enabled flag from about:config page. You also need to add your domain in "media.getusermedia.screensharing.allowed_domains" flag.';
+                //var Firefox_Screen_Capturing_Warning = 'Make sure that you are using Firefox Nightly and you enabled: media.getusermedia.screensharing.enabled flag from about:config page. You also need to add your domain in "media.getusermedia.screensharing.allowed_domains" flag.';
 
             </script>
 
@@ -364,13 +361,7 @@
                     };
                 };
 
-                if(!isWebRTCExperimentsDomain) {
-                    loadScreenFrame();
-                }
-                else {
-                    document.getElementById('share-screen').disabled = false;
-                    document.getElementById('room-name').disabled = false;
-                }
+                loadScreenFrame();
             </script>
 
             <script>
@@ -385,13 +376,13 @@
 
                     var screenCallback;
 
-                    DetectRTC.screen = {
+                    DetectRTC.screen = {/*
                     chromeMediaSource: 'screen',
                         getSourceId: function(callback) {
                             if(!callback) throw '"callback" parameter is mandatory.';
                             screenCallback = callback;
                             window.postMessage('get-sourceId', '*');
-                        },
+                        },*//*
                         isChromeExtensionAvailable: function(callback) {
                             if(!callback) return;
 
@@ -406,7 +397,7 @@
                                 }
                                 else callback(true);
                             }, 2000);
-                        },
+                        },*//*
                         onMessageCallback: function(data) {
                             if (!(typeof data == 'string' || !!data.sourceId)) return;
 
@@ -432,9 +423,9 @@
                                 DetectRTC.screen.sourceId = data.sourceId;
                                 if(screenCallback) screenCallback( DetectRTC.screen.sourceId );
                             }
-                        },
+                        },*/
                         getChromeExtensionStatus: function (callback) {//확장 프로그램 설치여부 확인
-                            if (!!navigator.mozGetUserMedia) return callback('not-chrome');
+                            //if (!!navigator.mozGetUserMedia) return callback('not-chrome');
 
                             var extensionid = 'ajhifddimkapgcifgcodmmfdlknahffk';
 
@@ -457,9 +448,9 @@
                     };
 
                     // check if desktop-capture extension installed.
-                    if(window.postMessage && isChrome) {
+                    /*if(window.postMessage && isChrome) {
                         DetectRTC.screen.isChromeExtensionAvailable();
-                    }
+                    }*/
                 })();
 
                 DetectRTC.screen.getChromeExtensionStatus(function(status) {//설치 여부에 따라 반환해주는 status로 구분하여 버튼 변경
@@ -472,16 +463,16 @@
                         DetectRTC.screen.chromeMediaSource = 'desktop';
                     }
                 });
-
+/*
                 window.addEventListener('message', function (event) {
                     if (event.origin != window.location.origin) {
                         return;
                     }
 
-                    DetectRTC.screen.onMessageCallback(event.data);
+                    //DetectRTC.screen.onMessageCallback(event.data);
                 });
-
-                console.log('current chromeMediaSource', DetectRTC.screen.chromeMediaSource);
+*/
+                //console.log('current chromeMediaSource', DetectRTC.screen.chromeMediaSource);
             </script>
 
             <section class="experiment">
@@ -520,6 +511,6 @@
         </article>
 
         <!-- commits.js is useless for you! -->
-        <script src="https://cdn.webrtc-experiment.com/commits.js" async> </script>
+        <!-- <script src="https://cdn.webrtc-experiment.com/commits.js" async> </script> -->
     </body>
 </html>

@@ -168,7 +168,7 @@
     $(function() {
       //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
        $("a:contains('Statistics')").on("click" , function() {
-         $(self.location).attr("href","/user/logout");
+         $(self.location).attr("href","/statistics/getListStatistics");
          //self.location = "/user/logout"
       }); 
     });

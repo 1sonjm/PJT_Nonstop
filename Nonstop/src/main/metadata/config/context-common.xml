@@ -38,8 +38,8 @@
 	
 	<!-- spring scheduler를 사용하여 데이터를 동기화 -->
 	<task:scheduled-tasks>
-		<!-- <task:scheduled ref="statisticsServiceImpl" method= "addStatisticsDataList" cron="${dataSync.interval}" /> -->
-		<task:scheduled ref="statisticsServiceImpl" method= "testSync" cron="${dataSync.interval}" />
+		<task:scheduled ref="statisticsServiceImpl" method= "addStatisticsDataList" cron="${dataSync.interval}" />
+		<!-- <task:scheduled ref="statisticsServiceImpl" method= "testSync" cron="${dataSync.interval}" /> -->
 	</task:scheduled-tasks> 
 				
 </beans>

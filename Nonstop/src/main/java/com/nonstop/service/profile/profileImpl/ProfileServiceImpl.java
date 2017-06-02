@@ -39,8 +39,8 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileDAO.getCareerList(userId);
 	}
 
-	public Career getCareer(int careerNo) throws Exception {
-		return profileDAO.getCareer(careerNo);
+	public Career getCareer(int careerNo , int techClass) throws Exception {
+		return profileDAO.getCareer(careerNo,techClass);
 	}
 
 	public void updateCareer(Career career) throws Exception {
@@ -94,6 +94,8 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		return profileDAO.getRecordProjectList(recUserId);
 	}
+	
+	
 	
 	
 }
