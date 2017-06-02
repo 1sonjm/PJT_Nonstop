@@ -48,12 +48,12 @@
 			});
 		});	
 		
-		
+		 
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+			$("#cancel").on("click" , function() {
+				self.location = "../index.jsp"
 			});
 		});	
 		
@@ -159,8 +159,8 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" />
-    --%>	<!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/view/common/toolbar.jsp" />
+    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -264,7 +264,7 @@
 				                    <div class="btn btn-default image-preview-input">
 				                        <span class="glyphicon glyphicon-folder-open"></span>
 				                        <span class="image-preview-input-title">찾아보기</span>
-				                        <input type="file" accept="image/png, image/jpeg, image/gif" name="updateCompany" id="image" <%-- value="${user.image} --%>"/> <!-- rename it -->
+				                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="updateCompany" id="image" <%-- value="${user.image} --%>"/> <!-- rename it -->
 				                    </div>
 				                </span>
 				            </div><!-- /input-group image-preview [TO HERE]--> 
@@ -274,7 +274,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취 &nbsp;소</a>
+			  <a class="btn btn-primary btn" href="#" role="button" id="cancel">취 &nbsp;소</a>
 		    </div>
 		  </div>
 		</form>

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -40,7 +40,17 @@
 	<script type="text/javascript">
 
 		//============= "로그인"  Event 연결 =============
-		$( function() {
+			
+			function fncDeleteUser() {
+			var name=$("input[name='userName']").val();
+			
+			
+			}
+			
+			
+			
+			
+		function fncDeleteUser() {
 			
 			$("#userId").focus();
 			
@@ -64,13 +74,12 @@
 				
 				$("form").attr("method","POST").attr("action","/user/deleteUser").attr("target","_parent").submit();
 			});
-		});	
-		
+		}
 		
 		$( function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#addUser").on("click" , function() {
-				self.location = ""
+			$("#index").on("click" , function() {
+				self.location = "../index.jsp"
 			});
 		});
 	
@@ -85,11 +94,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
+	<jsp:include page="/view/common/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->	
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -113,8 +118,8 @@
 					  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
 		    <div class="col-sm-6">
-		      <input type="text" class="form-control" id="userId" name="userId" value="${user.userId }" placeholder="중복확인하세요"  readonly>
-		       <span id="helpBlock" class="help-block">
+		      <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" placeholder="중복확인하세요"  readonly>
+		      
 		      	
 		      </span>
 		    </div>

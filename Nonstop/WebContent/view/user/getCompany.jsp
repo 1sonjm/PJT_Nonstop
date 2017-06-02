@@ -53,7 +53,9 @@
 		 $(function() {
 				//==> DOM Object GET 3°¡Áö ¹æ¹ý ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "#deleteUser" ).on("click" , function() {
-						self.location = "/view/user/deleteUserView.jsp"
+					 var userId = $(this).attr('userId')
+					 alert(userId);
+					 self.location = "/user/deleteUser?userId="+userId;
 						
 					});
 			});
@@ -69,8 +71,8 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" />
-   	 --%><!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/view/common/toolbar.jsp" />
+   	 <!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
 	<div class="container">
@@ -165,7 +167,7 @@
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
-				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser">È¸¿øÅ»Åð</a>
+				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser" userId="${user.userId}">È¸¿øÅ»Åð</a>
 	  		</div>
 		</div>		
 		
