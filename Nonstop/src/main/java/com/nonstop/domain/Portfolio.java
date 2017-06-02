@@ -15,6 +15,8 @@ public class Portfolio{
 	private String portDay;
 	private String portDetail;
 	private String portFile;
+	private int scrapNo;
+	private int portLikeNo;
 	private int totalPortView;
 	private int totalPortLike;
 	private int totalPortComment;
@@ -23,7 +25,9 @@ public class Portfolio{
 	private boolean portFollowFlag;
 	private boolean portScrFlag;
 	private String scrapUserId;
-	private int scrapNo;
+	
+	
+	
 	public Portfolio() {
 	}
 	public int getPortNo() {
@@ -92,58 +96,20 @@ public class Portfolio{
 	public void setPortFile(String portFile) {
 		this.portFile = portFile;
 	}
+	
+	public int getPortLikeNo() {
+		return portLikeNo;
+	}
+	public void setPortLikeNo(int portLikeNo) {
+		this.portLikeNo = portLikeNo;
+	}
 	public int getTotalPortView() {
 		return totalPortView;
 	}
 	public void setTotalPortView(int totalPortView) {
 		this.totalPortView = totalPortView;
 	}
-	@Override
-	public String toString() {
-		StringBuilder builder = new StringBuilder();
-		builder.append("Portfolio [portNo=");
-		builder.append(portNo);
-		builder.append(", portUserId=");
-		builder.append(portUserId);
-		builder.append(", portDivision=");
-		builder.append(portDivision);
-		builder.append(", portTitle=");
-		builder.append(portTitle);
-		builder.append(", portRegdate=");
-		builder.append(portRegdate);
-		builder.append(", portUpdate=");
-		builder.append(portUpdate);
-		builder.append(", portMonth=");
-		builder.append(portMonth);
-		builder.append(", portYear=");
-		builder.append(portYear);
-		builder.append(", portDay=");
-		builder.append(portDay);
-		builder.append(", portDetail=");
-		builder.append(portDetail);
-		builder.append(", portFile=");
-		builder.append(portFile);
-		builder.append(", totalPortView=");
-		builder.append(totalPortView);
-		builder.append(", totalPortLike=");
-		builder.append(totalPortLike);
-		builder.append(", totalPortComment=");
-		builder.append(totalPortComment);
-		builder.append(", portViewFlag=");
-		builder.append(portViewFlag);
-		builder.append(", portLikeFlag=");
-		builder.append(portLikeFlag);
-		builder.append(", portFollowFlag=");
-		builder.append(portFollowFlag);
-		builder.append(", portScrFlag=");
-		builder.append(portScrFlag);
-		builder.append(", scrapUserId=");
-		builder.append(scrapUserId);
-		builder.append(", scrapNo=");
-		builder.append(scrapNo);
-		builder.append("]");
-		return builder.toString();
-	}
+	
 	public int getTotalPortLike() {
 		return totalPortLike;
 	}
@@ -191,6 +157,55 @@ public class Portfolio{
 	}
 	public void setScrapNo(int scrapNo) {
 		this.scrapNo = scrapNo;
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Portfolio [portNo=");
+		builder.append(portNo);
+		builder.append(", portUserId=");
+		builder.append(portUserId);
+		builder.append(", portDivision=");
+		builder.append(portDivision);
+		builder.append(", portTitle=");
+		builder.append(portTitle);
+		builder.append(", portRegdate=");
+		builder.append(portRegdate);
+		builder.append(", portUpdate=");
+		builder.append(portUpdate);
+		builder.append(", portMonth=");
+		builder.append(portMonth);
+		builder.append(", portYear=");
+		builder.append(portYear);
+		builder.append(", portDay=");
+		builder.append(portDay);
+		builder.append(", portDetail=");
+		builder.append(portDetail);
+		builder.append(", portFile=");
+		builder.append(portFile);
+		builder.append(", scrapNo=");
+		builder.append(scrapNo);
+		builder.append(", portLikeNo=");
+		builder.append(portLikeNo);
+		builder.append(", totalPortView=");
+		builder.append(totalPortView);
+		builder.append(", totalPortLike=");
+		builder.append(totalPortLike);
+		builder.append(", totalPortComment=");
+		builder.append(totalPortComment);
+		builder.append(", portViewFlag=");
+		builder.append(portViewFlag);
+		builder.append(", portLikeFlag=");
+		builder.append(portLikeFlag);
+		builder.append(", portFollowFlag=");
+		builder.append(portFollowFlag);
+		builder.append(", portScrFlag=");
+		builder.append(portScrFlag);
+		builder.append(", scrapUserId=");
+		builder.append(scrapUserId);
+		builder.append("]");
+		return builder.toString();
 	}
 
 }

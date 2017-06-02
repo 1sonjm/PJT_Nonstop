@@ -17,6 +17,7 @@
 		<result property="portFile" 		column="port_file" 				jdbcType="VARCHAR" />
 		<result property="portDetail" 		column="port_detail" 			jdbcType="VARCHAR"  />
 		<result property="totalPortView" 	column="port_viewcount" 		jdbcType="NUMERIC" />
+		<result property="portLikeNo" 		column="port_like_no" 			jdbcType="NUMERIC" />
 		<result property="scrapUserId"		column="user_id"				jdbcType="VARCHAR"/>
 		<result property="scrapNo"			column="scrap_no"				jdbcType="NUMERIC"/>
 
@@ -29,6 +30,13 @@
 		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
 		<result property="comRegDate" 		column="com_port_regdate" 		jdbcType="DATE" />
 		<result property="comContent" 		column="com_port_content" 		jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+	<resultMap id="portLikeMap" type="portLike">
+		<result property="portLikeNo" 		column="port_like-no" 			jdbcType="INTEGER"/>
+		<result property="portNo" 			column="port_no" 				jdbcType="INTEGER" />
+		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
 		
 	</resultMap>
 	
@@ -53,16 +61,16 @@
 		WHERE port_no = #{portNo} -->
 		
 		
-		SELECT P.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount,a.scrap_no
-		FROM portfolio p,(SELECT scrap_no,port_no
-     		  			  FROM scrap
-     		  		 	  WHERE user_id=#{scrapUserId}) a
-		WHERE p.port_no=a.port_no(+) AND p.port_no=#{portNo}
+		SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount, s.scrap_no, l.port_like_no, l.port_no
+		FROM portfolio p,
+			(SELECT port_like_no, port_no, user_id FROM port_like WHERE user_id=#{sessionUserId}) l, 
+			(SELECT scrap_no, port_no FROM scrap WHERE user_id=#{sessionUserId}) s
+		WHERE p.port_no=s.port_no(+) AND p.port_no=l.port_no(+) AND p.port_no=#{portNo} 
 	 </select>
 
 	 <select  id="getPortfolioList" parameterType="map" resultMap="portfolioSelectMap">
 	  	SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
-     	FROM portfolio p, (select * from scrap where user_id=#{scrapUserId}) a
+     	FROM portfolio p, (select * from scrap where user_id=#{sessionUserId}) a
      <where>
         p.port_no=a.port_no(+) AND
         <if test="portDivision == 1">
@@ -75,30 +83,8 @@
          p.port_division = #{portDivision}
       </if>   
      </where>
-	  	ORDER BY port_viewcount
-	  	
-	  	<!-- SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT p.prod_no , p.prod_name , p.prod_detail , p.manufacture_day , p.price , p.image_file , p.reg_date , NVL(t.tran_status_code,'0') tran_status_code
-											FROM product p, transaction t
-											<where>
-											p.prod_no = t.prod_no(+)
-												<if test="searchCondition != null">			
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				AND p.prod_no = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				AND p.prod_name = #{searchKeyword}LIKE %#{SearchKeyword}%
-													</if>
-													<if test="searchCondition == 2 and searchKeyword !='' ">
-										 				AND p.price = #{searchKeyword}
-													</if>
-												</if>
-											</where>
-											
-											ORDER BY prod_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
+	  	ORDER BY port_viewcount DESC NULLS LAST
+
 	 </select>
 	 
 	<!-- SQL : INSERT -->
@@ -157,6 +143,21 @@
 		
 	</select>
 	
-	
+	<insert 	id="addPortLike"		parameterType="portLike" >
+	 	INSERT INTO 
+	 	port_like(port_like_no , port_no , user_id) 
+		VALUES	 (seq_port_like_port_like_no.nextVal, 
+		#{portNo}, 
+		#{userId})
+		
+		<!--<selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
+        SELECT seq_port_comment_com_no.currval FROM dual
+    	</selectKey> -->
+	 </insert>
+	 
+	 <delete id="deletePortLike" parameterType="int">
+		DELETE from port_like
+		where port_like_no = #{value}
+	 </delete>
 	 
 </mapper>

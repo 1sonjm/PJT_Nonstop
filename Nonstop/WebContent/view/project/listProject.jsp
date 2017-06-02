@@ -18,7 +18,7 @@
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
-
+	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<!-- jQuery -->
     <script src="../../resources/javascript/jquery.js"></script>
 
@@ -105,6 +105,16 @@
         	background-color: orange;
      	}
      	
+     	/* scrap button */
+     	.fa-star.inbox-started, .fa-star:hover {
+          color: #f78a09;
+    	}
+      
+       .fa-star {
+          color: #d5d5d5;
+        }
+     	
+     	
 	</style>
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
@@ -116,28 +126,8 @@
 		});
 		
 		
-		/* function d_day() {
-			var nowDate = new Date();
-			var projAnnoEnd = new Date($("#projAnnoEnd").val());
-			var thatDay = projAnnoEnd.getTime('YYYY/MM/DD 23:59:59') - nowDate.getTime('YYYY/MM/DD 00:00:00');
-			var days = Math.abs(Math.floor(thatDay / (1000*60*60*24))+1);
-			if (thatDay<0){
-				days=0;
-			}
-			
-			$("#thatDay").append('<font color=#ff607f>'+days+'</font>');
-			
-		}
 		
 		
-		function expect_day() {
-			var projStartDate = new Date($("#projStartDate").val());
-			var projEndDate = new Date($("#projEndDate").val());
-			var expectDay = projEndDate.getTime() - projStartDate.getTime();
-			var days = Math.abs(Math.floor(expectDay / (1000*60*60*24))+1);
-			$("#expectDay").append('<font>'+days+'</font>');
-		}
-		 */
 		
 		$(function() {
 			$(".glyphicon.glyphicon-plus-sign").on("click", function(){
@@ -148,51 +138,78 @@
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
 			
+			$("#button-all").on("click" , function() {
+	            var projDivision = $(this).val();
+	            
+	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
+	               self.location="/project/listProject?projDivision=1";
+	            }else{
+	               self.location="/project/listProject?projDivision=2";
+	            }
+	         });
+		         
+	         $("#button-web").on("click" , function() {
+	            var projDivision = $(this).val();
+	            
+	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
+	               self.location="/project/listProject?projDivision=11";
+	            }else{
+	               self.location="/project/listProject?projDivision=21";
+	            }
+	         });
+	         
+	         $("#button-app").on("click" , function() {
+	            var projDivision = $(this).val();
+	            
+	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
+	               self.location="/project/listProject?projDivision=12";
+	            }else{
+	               self.location="/project/listProject?projDivision=22";
+	            }
+	         });
+			
 		
 		});
 		
 		
-		$(function() {
-		      /* 스크랩추가 */
-		      $(".glyphicon.glyphicon-star").on("click" , function() {
+		   $(function() {
+	            /* 스크랩추가 */
+	            $("i.fa").on("click" , function() {
 
-		            var flag = $(this).attr('value');
-		            var requestTarget;
-		            var asdf;
-		            var qwer;
-		            alert(flag);
-		            
-		            
-		            if(flag=="addScrap"){
-		               requestTarget = "addJsonProjScrap";
-					   asdf = "스크랩 해제";
-					   qwer = "deleteScrap";
-		            }else{
-		               requestTarget = "deleteJsonProjScrap";
-		               asdf = "스크랩 추가";
-		               qwer = "addScrap";
-		            }
-		            alert(requestTarget+"컨트롤러 어디로가니");
+	                  var flag = $(this).attr('scrap');
+	                  var requestTarget;
+	                  alert(flag);
 
-		             var projNo=$(this).attr('projNo');
-		             alert(projNo);
-		             $.ajax(
-		                {
-		                   url : "/profile/"+requestTarget+"/"+projNo,
-		                   method : "GET",
-		                   dateType : "json",
-		                   headers : {
-		                      "Accept" : "application/json",
-		                     "Content-Type" : "application/json"   
-		                 },
-		                   success : function(JSONData , status){
-		                      var displatValue = 
-		                     "<button type='button' title='"+asdf+"' class='glyphicon glyphicon-star' style='font-size: 25px' id='deleteScrap' projNo='${project.projNo}' value='"+qwer+"'></button>"
-		                      $(".glyphicon.glyphicon-star").html(displayValue);
-		                   }
-		                });
-		             });
-		      });
+	                  if(flag==0){
+	                     requestTarget = "addJsonProjScrap";
+	                  }else{
+	                     requestTarget = "deleteJsonProjScrap";
+	                  }
+	                   var projNo=$(this).attr('projNo');
+	                   $.ajax(
+	                      {
+	                         url : "/profile/"+requestTarget+"/"+projNo,
+	                         method : "GET",
+	                         dateType : "json",
+	                         headers : {
+	                            "Accept" : "application/json",
+	                           "Content-Type" : "application/json"   
+	                       },
+	                         context : this,
+	                         success : function(JSONData , status){
+	                          
+	                            if(flag==0){
+	                               $(this).removeClass('fa fa-star').addClass('fa fa-star inbox-started');
+	                               $(this).attr('scrap','1');
+	                            }else{
+	                               $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
+	                           $(this).attr('save','0');
+	                            }
+	                         }
+	                      });
+	                   });
+	            });
+
 	</script>
 
 
@@ -234,9 +251,10 @@
 		<!-- ALL/WEB/APP -->
 		<div class="row">	
 			<div class="col-md-6 col-md-offset-3" align="center">
-	        	<button class="button button-neutral" type="button">All</button>
-	        	<button class="button button-neutral" type="button">Web</button>
-	        	<button class="button button-neutral" type="button">App</button>
+				<input type="hidden" id="projDivision" name="projDivision" value="${param.projDivision}"/>
+	        	<button class="button button-neutral" type="button" id="button-all" value="${param.projDivision}">All</button>
+	        	<button class="button button-neutral" type="button" id="button-web" value="${param.projDivision}">Web</button>
+	        	<button class="button button-neutral" type="button" id="button-app" value="${param.projDivision}">App</button>
 			</div>
 		</div>
 		
@@ -248,10 +266,12 @@
 <!-- Ranking -->
 <!-- type -->
 <div class="container">
+  <input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+  <input type="hidden" class="projUserId" name="projUserId" id="projUserId" value="${project.projUserId}" />
   <div class="row">
 	  <div class="margin-top-20">
 		  <div class="text">	
-		    <h2 class="text">Project<button type="button" class="glyphicon glyphicon-plus-sign" style="font-size: 35px"/></h2>
+		     <h2 class="text">Project<c:if test="${sessionScope.user.role == 3}"><button type="button" class="glyphicon glyphicon-plus-sign" style="font-size: 35px"/></c:if></h2>
 		  </div>
 	  </div>
   </div>
@@ -287,13 +307,12 @@
 							<table style="height: 400px; overflow:hidden;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">
 									<th colspan="10" style="font-size: 25px; table-layout: fixed; height: 40px;  white-space:nowrap;">
-									
 										<c:if test="${project.scrapNo==0}">
-										<button type="button" title="스크랩 추가" class="glyphicon glyphicon-star" style="font-size: 25px" id="addScrap" projNo="${project.projNo}" value="addScrap"></button>
-										</c:if>
-										<c:if test="${project.scrapNo!=0}">
-										<button type="button" title="스크랩 해제" class="glyphicon glyphicon-star" style="font-size: 25px" id="deleteScrap" projNo="${project.projNo}" value="deleteScrap"></button>
-										</c:if>
+			                               <i class="fa fa-star" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
+			                            </c:if>
+			                            <c:if test="${project.scrapNo!=0}">
+			                               <i class="fa fa-star inbox-started"  projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
+			                            </c:if>
 										${project.projTitle}
 									</th>
 									<th colspan="2" style="text-align: center">
