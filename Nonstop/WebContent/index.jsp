@@ -56,7 +56,7 @@
 	
 	@media (min-width: 1200px) {
 		#center {
-		margin-left:25%;
+		margin-left:26.5%;
         margin-right:5%;
 	}
 	

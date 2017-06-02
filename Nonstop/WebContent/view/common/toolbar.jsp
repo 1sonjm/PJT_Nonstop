@@ -83,7 +83,7 @@
     }
     @media (min-width: 1200px) {
       #center {
-      	margin-left:25%;
+      	margin-left:29%;
       	margin-right:5%;
       }
     }
