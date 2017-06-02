@@ -12,9 +12,13 @@
 		<result property="letNo" 		column="let_no" 			jdbcType="NUMERIC"/>
 		<result property="sendId"		column="let_send_id" 		jdbcType="VARCHAR" />
 		<result property="receiveId" 	column="let_receive_id" 	jdbcType="VARCHAR" />
+		<result property="letTitle" 	column="let_title" 			jdbcType="VARCHAR" />
 		<result property="letDetail" 	column="let_detail" 		jdbcType="VARCHAR" />
 		<result property="letRegdate" 	column="let_regdate" 		jdbcType="DATE" />
 		<result property="letReaddate" 	column="let_readdate" 		jdbcType="DATE" />
+		<result property="letSave" 		column="let_save" 			jdbcType="NUMERIC"/>
+		<result property="letRecView" 	column="let_rec_view" 		jdbcType="NUMERIC"/>
+		<result property="letSendView"	column="let_send_view"		jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -24,15 +28,16 @@
 		VALUES (seq_let_no.nextval,
 				#{sendId},
 				#{receiveId},
+				#{letTitle},
 				#{letDetail},
 				SYSDATE,
-				'')
+				'','','','')
 	 </insert>
 	 
 	 <select  id="getReceiveLetterList"  parameterType="String"	resultMap="letterSelectMap">
 			SELECT *
 			FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM(	SELECT let_no,let_send_id,let_receive_id,let_detail,let_regdate,NVL(let_readdate,'') let_readdate
+				FROM(	SELECT let_no,let_send_id,let_receive_id,let_title,let_detail, let_regdate ,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
 						FROM letter
 						WHERE let_receive_id = #{receiveId:VARCHAR} )inner_table)
 	 </select>
@@ -40,13 +45,19 @@
 	  <select  id="getListSendLetter"  parameterType="String"	resultMap="letterSelectMap">
 			SELECT *
 			FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-				FROM(	SELECT let_no,let_send_id,let_receive_id,let_detail,let_regdate,NVL(let_readdate,'') let_readdate
+				FROM(	SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_regdate,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
 						FROM letter
 						WHERE let_send_id = #{sendId:VARCHAR} )inner_table)
 	 </select>
 	 
+	 <select  id="getSaveLetterList"  parameterType="String"	resultMap="letterSelectMap">
+			SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_regdate,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
+			FROM letter
+			WHERE let_receive_id=#{userId} AND let_save=1
+	 </select>
+	 
 	  <select  id="getLetter"  parameterType="int"	resultMap="letterSelectMap">
-		SELECT let_no,let_send_id,let_receive_id,let_detail,let_readdate
+		SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_readdate,NVL(let_save,'') let_save
 		FROM letter
 		WHERE let_no=#{letNo}
 	 </select>
@@ -56,6 +67,38 @@
 		<set>
 		let_readdate = SYSDATE
 		</set>
+		WHERE let_no = #{letNo:NUMERIC} 
+	</update>
+	
+	<update id="addSave" parameterType="int">
+		UPDATE letter
+		<set>
+		let_save = 1
+		</set>
+		WHERE let_no = #{letNo:NUMERIC} 
+	</update>
+	
+	<update id="deleteSave" parameterType="int">
+		UPDATE letter
+		<set>
+		let_save = ''
+		</set>
+		WHERE let_no = #{letNo:NUMERIC} 
+	</update>
+	
+	<update id="updateRecView" parameterType="map">
+		UPDATE letter
+
+		set let_rec_view = 1
+		
+		WHERE let_no = #{letNo:NUMERIC} 
+	</update>
+	
+	<update id="updateSendView" parameterType="map">
+		UPDATE letter
+
+		set let_send_view = 1
+		
 		WHERE let_no = #{letNo:NUMERIC} 
 	</update>
 	 

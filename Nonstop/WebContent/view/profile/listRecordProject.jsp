@@ -40,26 +40,7 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
-	 $(function() {
-		 $("span.updateCareer").on("click" , function() {
-				var careerNo=$(this).attr('careerNo');
-				alert(careerNo);
-			self.location ="/profile/updateCareer?careerNo="+careerNo;
-			
-			});
-		 
-		 $("span.deleteCareer").on("click" , function() {
-				alert("ㅇㅇ" );
-				var careerNo=$(this).attr('careerNo');
-				alert(careerNo);
-			self.location ="/profile/deleteCareer?careerNo="+careerNo;
-			
-			});
-		 
-		$("span.addCareer").on("click" , function() {
-		 		self.location = "/profile/addCareerView";
-			}); 
-	});	
+
 </script>
 </head>
 
@@ -84,16 +65,16 @@
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="career" items="${list}">
+		  <c:forEach var="recordProject" items="${list2}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			<td align="center">${ i }</td>
 
-			  <td align="left">${recordApplicant.recUserName}</td>
+			  <td align="left">${recordProject.comName}</td>
 			 
-			  <td align="left">${project.projTitle}</td>
+			  <td align="left">${recordProject.proTitle}</td>
 			  
-			  <td align="left">${project.projStartDate} ~ ${project.projEndDate}</td>
+			  <td align="left">${recordProject.proStartDate} ~ ${recordProject.proendDate}</td>
 			  
 			 
 			</tr>

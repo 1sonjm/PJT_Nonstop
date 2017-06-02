@@ -24,6 +24,13 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
+.fa-star.inbox-started, .fa-star:hover {
+    color: #f78a09;
+}
+.fa-star {
+    color: #d5d5d5;
+}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -65,9 +72,10 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	
 	<div class="container">
-	
+	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 		<h1 class="bg-primary text-center">쪽지작성</h1>
-		
+		 <i class="fa fa-star"></i>
+         <i class="fa fa-star inbox-started"></i>
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		

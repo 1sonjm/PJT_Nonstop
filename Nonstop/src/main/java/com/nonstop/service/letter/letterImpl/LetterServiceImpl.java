@@ -63,5 +63,45 @@ public class LetterServiceImpl implements LetterService {
 		letterDAO.updateReadDate(letNo);
 	}
 	
+	public void updateSave(int letNo) throws Exception{
+		letterDAO.updateSave(letNo);
+	}
+
+	public void addSave(int letNo) throws Exception {
+		letterDAO.addSave(letNo);
+	}
+
+	public void deleteSave(int letNo) throws Exception {
+		letterDAO.deleteSave(letNo);
+	}
+	
+	public void updateRecView(int letNo , String userId) throws Exception{
+		letterDAO.updateRecView(letNo, userId);
+	}
+	
+	public void updateSendView(int letNo , String userId) throws Exception{
+		letterDAO.updateSendView(letNo, userId);
+	}
+
+	public Map<String, Object> getSaveLetterList(String userId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		List<Letter> list =letterDAO.getSaveLetterList(userId);
+		
+		map.put("list", list);
+		
+		return map;
+	}
 
 }
+
+
+
+
+
+
+
+
+
+

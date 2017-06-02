@@ -18,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.statistics.StatisticsService;
 import com.nonstop.service.user.UserService;
 
 @Controller
@@ -38,6 +41,10 @@ public class ProfileController {
 	@Autowired
 	@Qualifier("portfolioServiceImpl")
 	private PortfolioService portfolioService;
+	
+	@Autowired
+	@Qualifier("statisticsServiceImpl")
+	private StatisticsService statisticsService;
 	
 	public ProfileController(){
 		System.out.println(this.getClass());
@@ -66,10 +73,17 @@ public class ProfileController {
 		
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		//Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		
+		int portDivision = 1;
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
 		
 		model.addAttribute("list" , map.get("list"));
-		//model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list3" , portfolio);
 		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
@@ -100,9 +114,18 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="addCareerView",method=RequestMethod.GET)
-	public String addCareer() throws Exception{
+	public String addCareer(Model model) throws Exception{
 		
 		System.out.println("/profile/addCareerView : GET");
+		
+		List<Statistics> techClassList = statisticsService.getTechClassList();
+		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
 		
 		return "forward:/view/profile/addCareerView.jsp";
 	}
@@ -140,11 +163,11 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="updateCareer",method=RequestMethod.GET)
-	public String updateCareer(@RequestParam("careerNo")int careerNo , Model model) throws Exception{
+	public String updateCareer(@RequestParam("careerNo")int careerNo,@RequestParam("techClass") int techClass , Model model) throws Exception{
 		
 		System.out.println("/profile/updateCareer : GET");
 		
-		Career career = profileService.getCareer(careerNo);
+		Career career = profileService.getCareer(careerNo,techClass);
 		
 		model.addAttribute("career", career);
 		
@@ -260,6 +283,21 @@ public class ProfileController {
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
 		profileService.addProjScrap(projNo,scrapUserId);
+	}
+	
+	@RequestMapping(value="getPortScrapList" , method=RequestMethod.GET)
+	public String getPortScrapList(HttpSession session, Model model) throws Exception{
+		System.out.println("getPortScrapList : GET");
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		int portDivision = 1;
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		
+		model.addAttribute("list" , portfolio);
+		
+		return "forward:/view/profile/listPortScrap";
 	}
 
 	@RequestMapping(value="deleteJsonPortScrap/{portNo}",method=RequestMethod.GET)

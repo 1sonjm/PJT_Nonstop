@@ -28,7 +28,7 @@ public class ProfileDAOImpl implements ProfileDAO{
 	public ProfileDAOImpl(){
 		System.out.println(this.getClass());
 	}
-
+	
 	public void addCareer(Career career) throws Exception {
 		sqlSession.insert("CareerMapper.addCareer",career);
 	}
@@ -53,8 +53,13 @@ public class ProfileDAOImpl implements ProfileDAO{
 		return map;
 	}
 
-	public Career getCareer(int careerNo) throws Exception {
-		return sqlSession.selectOne("CareerMapper.getCareer", careerNo);
+	public Career getCareer(int careerNo, int techClass) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("careerNo", careerNo);
+		map.put("techClass", techClass);
+		return sqlSession.selectOne("CareerMapper.getCareer", map);
 	}
 	
 	public void updateCareer(Career career) throws Exception {
@@ -160,10 +165,14 @@ public class ProfileDAOImpl implements ProfileDAO{
 		
 		List<RecordApplicant> list = sqlSession.selectList("RecordProjectMapper.getListRecordProject", recUserId);
 		
-		map.put("list", list);
+		map.put("list2", list);
 		
 		return map;
 	}
+
+	
+
+	
 
 }
 

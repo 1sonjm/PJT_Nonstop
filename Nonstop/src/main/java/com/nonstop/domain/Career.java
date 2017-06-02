@@ -5,9 +5,9 @@ public class Career {
 	private int careerNo;
 	private String careerUserId;
 	private String techNo;
-	private int techDiv;
 	private String techName;
 	private int careerUseTerm;
+	private int techClass;
 	
 	public int getCareerNo() {
 		return careerNo;
@@ -27,12 +27,6 @@ public class Career {
 	public void setTechNo(String techNo) {
 		this.techNo = techNo;
 	}
-	public int getTechDiv() {
-		return techDiv;
-	}
-	public void setTechDiv(int techDiv) {
-		this.techDiv = techDiv;
-	}
 	public String getTechName() {
 		return techName;
 	}
@@ -45,6 +39,13 @@ public class Career {
 	public void setCareerUseTerm(int careerUseTerm) {
 		this.careerUseTerm = careerUseTerm;
 	}
+	
+	public int getTechClass() {
+		return techClass;
+	}
+	public void setTechClass(int techClass) {
+		this.techClass = techClass;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -55,15 +56,15 @@ public class Career {
 		builder.append(", techNo=");
 		builder.append(techNo);
 		builder.append(", techDiv=");
-		builder.append(techDiv);
 		builder.append(", techName=");
 		builder.append(techName);
 		builder.append(", careerUseTerm=");
 		builder.append(careerUseTerm);
+		builder.append(", techClass=");
+		builder.append(techClass);
 		builder.append("]");
 		return builder.toString();
 	}
-	
 	
 	
 }

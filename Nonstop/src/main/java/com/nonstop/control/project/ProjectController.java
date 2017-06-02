@@ -1,6 +1,6 @@
 package com.nonstop.control.project;
 
-import java.util.Map;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.nonstop.domain.Comment;
-import com.nonstop.domain.Page;
+import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
-import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
-import com.nonstop.service.comment.CommentService;
 import com.nonstop.service.project.ProjectService;
 import com.nonstop.service.user.UserService;
 
@@ -34,9 +31,6 @@ public class ProjectController {
 	@Qualifier("projectServiceImpl")
 	private ProjectService projectService;
 	
-	@Autowired
-	@Qualifier("commentServiceImpl")
-	private CommentService commentService;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -67,40 +61,46 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="addProject", method=RequestMethod.POST)
-	public String addProject( @ModelAttribute("project") Project project, Model model) throws Exception {
+	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
 		
 		System.out.println("여기는 addProject : "+project);
 		
+//		projDetail.replaceAll("\r\n", "<br>");
+//		session.setAttribute("projDetail", projDetail);
 		projectService.addProject(project);
+		
 		model.addAttribute("project", project);
 		
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/project/listProject";
 	}
 	
 	
 	@RequestMapping(value="getProject", method=RequestMethod.GET)
-	public String getProject( @RequestParam("projNo") int projNo , 
+	public String getProject( @RequestParam("projNo") int projNo ,
 							  Model model, HttpSession session ) throws Exception {
 		
 		System.out.println("/project/getProject : GET");
-//	int comProdNo=prodNo;
-
-//		Project project = projectService.getProject(projNo);
-//		Comment comment = commentService.getComment(project.getProjNo());
-//		User user = userService.getUser(project.getProjUserId());
-
 		
+		Project project = new Project();
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+//		String projDetail = project.getProjDetail();
+		
+//		Project project = projectService.getProject(projNo);
+		project = projectService.getProject(projNo ,scrapUserId);
+//		Comment comment = commentService.getComment(project.getProjNo());
+		User user = userService.getUser(project.getProjUserId());
+		
+//		project.getProjDetail().replaceAll("\r\n", "<br>");
+		
 		System.out.println(scrapUserId);
-		Project project = projectService.getProject(projNo ,scrapUserId);
-//		Comment comment = commentService.getComment(product.getProdNo());
+		
 		
 //		session.setAttribute("comProdNo", comProdNo);
 		session.setAttribute("projNo", projNo);
 //		model.addAttribute("comProdNo", comProdNo);
 		model.addAttribute("project", project);
 //		model.addAttribute("comment", comment);
-//		model.addAttribute("user", user);
+		model.addAttribute("user", user);
 		
 	
 		return "forward:/view/project/getProject.jsp";
@@ -129,7 +129,7 @@ public class ProjectController {
 		
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		Project project = projectService.getProject(projNo,scrapUserId);
+		Project project = projectService.getProject(projNo, scrapUserId);
 		// Model �� View ����
 		model.addAttribute("project", project);
 		
@@ -146,7 +146,7 @@ public class ProjectController {
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/project/listProject";
 	}
 	
 	@RequestMapping(value="deleteProject", method=RequestMethod.POST)
@@ -156,66 +156,60 @@ public class ProjectController {
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/project/listProject";
 	}
 	
 	
 	@RequestMapping(value="listProject")
-	public String listProject( @ModelAttribute("search") Search search , Model model ,HttpSession session , HttpServletRequest request) throws Exception{
+	public String listProject( @RequestParam("projDivision") int projDivision , Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/project/listProject");
-		
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		
-		
+		Project project = new Project();
+//		if(search.getCurrentPage() ==0 ){
+//			search.setCurrentPage(1);
+//		}
+//		search.setPageSize(pageSize);
+//		User user = userService.getUser(project.getProjUserId());
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		// Business logic ����
-		Map<String , Object> map=projectService.listProject(search,scrapUserId);
+//		Map<String , Object> map=projectService.listProject(projDivision,scrapUserId);
+		List<Project> list = projectService.listProject(projDivision,scrapUserId);
+//		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+//		System.out.println(resultPage);
 		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
-		
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
+		model.addAttribute("list", list);
+//		model.addAttribute("user", user);
+//		model.addAttribute("resultPage", resultPage);
+//		model.addAttribute("search", search);
 		
 		return "forward:/view/project/listProject.jsp";
 	}
 	
-	@RequestMapping(value="addComment", method=RequestMethod.POST)
-	public String addComment( @ModelAttribute("comment") Comment comment, Model model) throws Exception {
+	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
+	public void addJsonComment( @ModelAttribute("projComment") ProjComment projComment, HttpSession session, Model model ) throws Exception {
 		
-		System.out.println("여기는 addComment : "+comment);
+		System.out.println("/addJsonComment");
 		
-		commentService.addComment(comment);
-		model.addAttribute("comment", comment);
+		System.out.println("projComment : "+projComment);
 		
-		return "redirect:/project/listProject";
-	}
-	@RequestMapping(value="getComment", method=RequestMethod.GET)
-	public String getComment( @RequestParam("comNo") int comNo, Model model, HttpSession session ) throws Exception {
+		projectService.addComment(projComment);
 		
-		System.out.println("/comment/getComment : GET");
-		Comment comment = commentService.getComment(comNo);
-		session.setAttribute("comNo", comNo);
-		model.addAttribute("comNo", comNo);
+		projComment = projectService.getComment(projComment.getComNo());
 		
-		System.out.println("GetProductAction끝2");
-		return "redirect:/view/project/listProject.jsp";
+		model.addAttribute("projComment", projComment);
 	}
 	
-	@RequestMapping(value="deleteComment", method=RequestMethod.POST)
-	public String deleteComment( @ModelAttribute("comment") Comment comment, Model model ) throws Exception {
-
-		commentService.deleteComment(comment);
-		model.addAttribute("comment", comment);
+	@RequestMapping(value="deleteComment")
+	public String deleteComment(@RequestParam("comNo") int comNo, @RequestParam("comProjNo") int comProjNo, Model model) throws Exception{
 		
-		return "redirect:/project/listProject";
+		projectService.deleteComment(comNo);
+		/*AJAX로 삭제하는 법 고려해보기*/
+		/*List<PortComment> portCommentList = portfolioService.getCommentList(comPortNo);*/
+		
+		return "forward:/project/getProject?projNo="+comProjNo;
 	}
-
+	
+	
 	
 	
 }
