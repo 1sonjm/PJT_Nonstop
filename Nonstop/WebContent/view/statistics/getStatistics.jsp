@@ -18,7 +18,7 @@
 
 <!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="/resources/css/bootstrap-theme.css">
+<link rel="stylesheet" href="/resources/css/nonstop.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 
@@ -48,6 +48,9 @@
 <style type="text/css">
 .ui-datepicker-year{
 		display:none;
+}
+.container{
+	padding-top: 50px
 }
 </style>
 <script type="text/javascript">
@@ -213,9 +216,8 @@ function aa(){
 <jsp:include page="/view/common/toolbar.jsp" />
 
 <div class="container">
-	<h2>Dynamic Tabs</h2>
 	<button onclick="aa()">채팅창으로 이동</button>
-	<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
+	
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>
@@ -251,7 +253,7 @@ function aa(){
 			</div>
 		</div>
 		<div class="col-md-2">
-			<button type="button" class="btn btn-primary btn-lg btn-block" id="search">조회</button>
+			<button type="button" class="btn btn-default btn-lg btn-block" id="search">조회</button>
 		</div>
 		<div class="col-md-5" id="searchTarget">
 			<span class="text-left">조회 대상</span>
