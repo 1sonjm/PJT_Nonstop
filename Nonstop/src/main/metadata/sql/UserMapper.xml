@@ -91,7 +91,7 @@
 	<delete id="deleteUser"	parameterType="user">
 		DELETE 
 		FROM users
-		WHERE user_id = #{userId} AND user_pwd = #{password}
+		WHERE user_id = #{userId}
 	</delete>
 	
 		 
@@ -113,63 +113,65 @@
 	 </select>
 
 
-	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , user_email
-											FROM users
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY user_id ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
+	<select  id="getUserList"  parameterType="search"   resultMap="userSelectMap">
+           SELECT *
+           FROM (   SELECT inner_table.* , ROWNUM AS row_seq
+                    FROM ( SELECT user_id , user_name , user_email
+                           FROM users 
+                           WHERE (user_role = 2 OR user_role = 1) 
+                                <if test="searchCondition != null">    
+                                    <if test="searchCondition == 0 and searchKeyword !='' ">
+                                        AND user_id like '%'||#{searchKeyword}||'%'
+                                    </if>
+                                	<if test="searchCondition == 1 and searchKeyword !='' ">
+                                          AND user_name like '%'||#{searchKeyword}||'%'
+                                    </if>
+                                 </if>                                    
+                                    ORDER BY user_id ) inner_table
+                     WHERE ROWNUM &lt;= #{endRowNum} )
+         	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+       </select>
+
 	 	 
-		<select  id="getCompanyList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_ceo , user_email
-											FROM users
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY user_id ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>		
+		<select  id="getCompanyList"  parameterType="search"   resultMap="userSelectMap">
+           SELECT *
+           FROM (   SELECT inner_table.* , ROWNUM AS row_seq
+                       FROM      (   SELECT user_id , user_name , user_ceo
+                                    FROM users 
+                                    WHERE (user_role = 3 OR user_role = 1) 
+                                 <if test="searchCondition != null">
+                                    
+                                       <if test="searchCondition == 0 and searchKeyword !='' ">
+                                          AND user_id like '%'||#{searchKeyword}||'%'
+                                       </if>
+                                       <if test="searchCondition == 1 and searchKeyword !='' ">
+                                          AND user_name like '%'||#{searchKeyword}||'%'
+                                       </if>
+                                    
+                                 </if>                                    
+                                    ORDER BY user_id ) inner_table
+                     WHERE ROWNUM &lt;= #{endRowNum} )
+         WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+       </select>
 		
 	
  
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , user_email
-						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
-	 </select>
+	 <select  id="getTotalCount"  parameterType="search"    resultType="int">
+           SELECT COUNT(*)
+           FROM(   SELECT user_id , user_name , user_email
+                     FROM users 
+                  <if test="searchCondition != null">
+                     <where>
+                        <if test="searchCondition == 0 and searchKeyword !='' ">
+                         user_id like '%'||#{searchKeyword}||'%'
+                        </if>
+                        <if test="searchCondition == 1 and searchKeyword !='' ">
+                         user_name like '%'||#{searchKeyword}||'%'
+                        </if>
+                     </where>
+                  </if> 
+                     ) countTable                  
+       </select>
 	 
 	 
 	 

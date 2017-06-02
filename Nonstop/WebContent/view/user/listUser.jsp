@@ -54,9 +54,9 @@
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 //$( "button.btn.btn-default" ).on("click" , function() {
-			//	fncGetUserList(1);
-			//});
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				fncGetUserList(1);
+			});
 		 });
 		
 		
@@ -97,8 +97,9 @@
 																+"아이디 : "+JSONData.user.userId+"<br/>"
 																+"이  름 : "+JSONData.user.userName+"<br/>"
 																+"이메일 : "+JSONData.user.email+"<br/>"
-																+"ROLE : "+JSONData.user.role+"<br/>"
-																+"등록일 : "+JSONData.user.regDate+"<br/>"
+																+"주  소 : " +JSONData.user.addr+"<br/>"
+																+"연락처 : " +JSONData.user.tel+"<br/>"
+																+"비밀번호: " +JSONData.user.password+"<br/>"
 																+"</h6>";
 									$("h6").remove();
 									$( "#"+userId+"" ).html(displayValue);
@@ -123,8 +124,8 @@
 <body>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" />
-   	 --%><!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/view/common/toolbar.jsp" />
+   	 <!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -185,22 +186,22 @@
        
 		<tbody>
 		
-		  <c:set var="i" value="0" />
-		  <c:forEach var="user" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
+	 	<c:set var="i" value="0" />
+		  <c:forEach var="userList" items="${list}">
+			<c:set var="i" value="${ i+1 }" /> 
 			<tr>
 			
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
-			  <td align="left">${user.userName}</td>
-			  <td align="left">${user.email}</td>
+			  <td align="left"  title="Click : 회원정보 확인">${userList.userId}</td>
+			  <td align="left">${userList.userName}</td>
+			  <td align="left">${userList.email}</td>
 			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
-			  	<input type="hidden" value="${user.userId}">
+			  	<i class="glyphicon glyphicon-ok" id= "${userList.userId}"></i>
+			  	<input type="hidden" value="${userList.userId}">
 			  </td>
-			  
+
 			</tr>
-          </c:forEach>
+	       </c:forEach> 
         
         </tbody>
       
@@ -212,6 +213,8 @@
  	
  	
  	<!-- PageNavigation Start... -->
+ 	<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}"/>
+ 	
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
 	

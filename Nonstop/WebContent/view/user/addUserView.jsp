@@ -240,11 +240,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Nonstop</a>
-   		</div>
-   	</div>
+	<jsp:include page="/view/common/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -329,7 +325,7 @@
 				                    <div class="btn btn-default image-preview-input">
 				                        <span class="glyphicon glyphicon-folder-open"></span>
 				                        <span class="image-preview-input-title">찾아보기</span>
-				                        <input type="file" accept="image/png, image/jpeg, image/gif" name="file" id="image"/> <!-- rename it -->
+				                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="file" id="image"/> <!-- rename it -->
 				                    </div>
 				                </span>
 				            </div><!-- /input-group image-preview [TO HERE]--> 

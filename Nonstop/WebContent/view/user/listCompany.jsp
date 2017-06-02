@@ -54,9 +54,9 @@
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 //$( "button.btn.btn-default" ).on("click" , function() {
-			//	fncGetUserList(1);
-			//});
+			 $( "button.btn.btn-default" ).on("click" , function() {
+				fncGetCompanyList(1);
+			});
 		 });
 		
 		
@@ -65,7 +65,7 @@
 		
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
-				 self.location ="/user/getUser?userId="+$(this).text().trim();
+				 self.location ="/user/getCompany?userId="+$(this).text().trim();
 			});
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
@@ -84,7 +84,7 @@
 				
 					$.ajax( 
 							{
-								url : "/user/getJsonUser/"+userId ,
+								url : "/user/getJsonCompany/"+userId ,
 								method : "GET" ,
 								dataType : "json" ,
 								headers : {
@@ -94,11 +94,14 @@
 								success : function(JSONData , status) {
 
 									var displayValue = "<h6>"
-																+"아이디 : "+JSONData.user.userId+"<br/>"
-																+"이  름 : "+JSONData.user.userName+"<br/>"
-																+"이메일 : "+JSONData.user.email+"<br/>"
-																+"ROLE : "+JSONData.user.role+"<br/>"
-																+"등록일 : "+JSONData.user.regDate+"<br/>"
+										+"아이디 : "+JSONData.user.userId+"<br/>"
+										+"이  름 : "+JSONData.user.userName+"<br/>"
+										+"기업명 : "+JSONData.user.companyName+"<br/>"
+										+"이메일 : "+JSONData.user.email+"<br/>"
+										+"주  소 : " +JSONData.user.addr+"<br/>"
+										+"연락처 : " +JSONData.user.tel+"<br/>"
+										+"비밀번호: " +JSONData.user.password+"<br/>"
+										+"</h6>";
 																+"</h6>";
 									$("h6").remove();
 									$( "#"+userId+"" ).html(displayValue);
@@ -123,8 +126,8 @@
 <body>
 	
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" />
-   	 --%><!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/view/common/toolbar.jsp" />
+   	 <!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -178,7 +181,7 @@
             <th align="center">No</th>
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
-            <th align="left">이메일</th>
+            <th align="left">기업명</th>
             <th align="left">간략정보</th >
           </tr>
         </thead>
@@ -189,16 +192,16 @@
 		  <c:forEach var="user" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
-			<c:if test="${user.role==3}">
+			
 			  <td align="center">${ i }</td>
 			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
 			  <td align="left">${user.userName}</td>
-			  <td align="left">${user.email}</td>
+			  <td align="left">${user.companyName}</td>
 			  <td align="left">
 			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
 			  	<input type="hidden" value="${user.userId}">
 			  </td>
-			  </c:if>
+			  
 			</tr>
           </c:forEach>
         

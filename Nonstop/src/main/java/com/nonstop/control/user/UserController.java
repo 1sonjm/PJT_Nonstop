@@ -186,24 +186,23 @@ public class UserController {
 
 			user.setImage(image);
 			
-			//user.setUserId("user");
+			
 	        try {
 	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
 	            file.transferTo(uploadFile);
 	        } catch (IOException e) {
 	            e.printStackTrace();	
 		}
-		
-	        
+  
 	        return "forward:/view/user/getUser.jsp";
-		/*return "redirect:/view/user/getUser?userId="+user.getUserId();*/
+		
 	}
 	
 	@RequestMapping( value="updateCompany", method=RequestMethod.GET )
 	public String updateCompany( @RequestParam("userId") String userId , Model model ) throws Exception{
 
 		System.out.println("/user/updateCompny : GET");
-		//Business Logic
+		
 		User user = userService.getCompany(userId);
 
 		model.addAttribute("user", user);
@@ -215,7 +214,7 @@ public class UserController {
 	public String updateCompany( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateCompany") MultipartFile file) throws Exception{
 		
 		System.out.println("/user/updateCompany : POST");
-		//Business Logic
+		
 		userService.updateCompany(user);
 		
 		String sessionId=((User)session.getAttribute("user")).getUserId();
@@ -227,7 +226,7 @@ public class UserController {
 
 			user.setImage(image);
 			
-			//user.setUserId("user");
+			
 	        try {
 	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
 	            file.transferTo(uploadFile);
@@ -263,23 +262,9 @@ public class UserController {
 	      System.out.println(session.getAttribute("user"));
 	      
 	      return destinate;
-//	      return "redirect:/user/getUser?userId="+dbUser.getUserId();
+
 	   }
-	/*@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
-		
-		System.out.println("/user/login : POST");
-		//Business Logic
-		User dbUser=userService.getUser(user.getUserId());
-		
-		if( user.getPassword().equals(dbUser.getPassword())){
-			session.setAttribute("user", dbUser);
-		}
-		return "redirect:/index.jsp";
-		//return "redirect:/index.jsp";
-	}*/
 	
-	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	@RequestMapping( value="jsonLogin", method=RequestMethod.POST )
 	public void jsonLogin(	@RequestBody User user,
 												HttpSession session,
@@ -375,25 +360,42 @@ public class UserController {
 	
 	
 	@RequestMapping( value="deleteUser", method=RequestMethod.GET )
-	public String deleteUser() throws Exception{
+	public String deleteUser(@RequestParam("userId") String userId,Model model) throws Exception{
 		
 		System.out.println("/user/deleteUser : GET");
+		
+		User user = userService.getUser(userId);
+		
+		model.addAttribute("user" , user);
 
-		return "redirect:/view/user/deleteUserView.jsp";
+		return "forward:/view/user/deleteUserView.jsp";
 	}
 	
 	@RequestMapping( value="deleteUser", method=RequestMethod.POST )
-	   public String deleteUser(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
-	      
+	   /*public String deleteUser(@ModelAttribute("user") User user , HttpSession session ) throws Exception{*/
+		 public String deleteUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateFile1") MultipartFile file) throws Exception{
 	      System.out.println("/user/deleteUser : POST");
-
+	    
+			//Business Logic
+			userService.deleteUser(user);
+			
+			String sessionId=((User)session.getAttribute("user")).getUserId();
+			if(sessionId.equals(user.getUserId())){
+				session.setAttribute("user", user);
+			}
 	      String destinate = "forward:/view/user/deleteUserView.jsp";
 	      
-	      User dbUser=userService.getUser(user.getUserId());
-	      System.out.println("user" + dbUser);
-	      
-	      if( user.getPassword().equals(dbUser.getPassword())){
-	         session.setAttribute("user", dbUser);
+	      /*User dbUser=userService.getUser(user.getUserId());
+	      System.out.println("user" + dbUser);*/
+	      userService.deleteUser(user);
+			
+			String sessionId1=((User)session.getAttribute("user")).getUserId();
+			if(sessionId1.equals(user.getUserId())){
+				session.setAttribute("user", user);
+			}
+			
+	      if( user.getPassword().equals(user.getPassword())){
+	         session.setAttribute("user", user);
 	         userService.deleteUser(user);
 	         destinate="forward:/view/user/deleteUser.jsp";
 	      }       
