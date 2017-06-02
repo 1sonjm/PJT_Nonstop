@@ -69,12 +69,15 @@
 /* 미니프로필 */
 .about-fixed {
 	position: fixed;
-	/* width: 20.8%; */
+	width: 18%;
 }
 
 .my-pic {
-	width: 100%;
-	box-shadow: -2px -1px 88px 0px rgba(0, 0, 0, 0.17);
+	 width: 100%;
+     height: 0;
+     padding-bottom: 100%;
+     box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
+     overflow: hidden;
 }
 
 .my-pic img {
@@ -82,28 +85,16 @@
 }
 
 .my-detail {
-	text-align: center;
 	margin-bottom: 30px;
 	background: #ffffff;
 	box-shadow: -2px -1px 88px 0px rgba(0, 0, 0, 0.17);
 }
 
-.my-detail .white-spacing {
-	padding: 23px 0;
+.white-spacing {
+	padding-left: 10px;
 	border-bottom: 1px dashed #cccccc;
 }
 
-.my-detail h1 {
-	font-size: 20px;
-	font-weight: 700;
-}
-
-.my-detail span {
-	color: #c1c1c1;
-	font-weight: 400;
-	line-height: 30px;
-	font-size: 16px;
-}
 
 /* 포트폴리오 상세페이지 메인 */
 #main {
@@ -177,6 +168,35 @@ div.blog-post {
 	line-height: 35px;
 	font-weight: 600;
 	letter-spacing: 0.5px;
+}
+
+.comment-div{    	
+   	height: 40px; width: 100%;
+}
+.comment-div h6{
+	margin-top:5px;
+	font-weight: 400;
+	font-size: 12px;
+	color: #656c7e;
+}
+.comment-div span{
+	margin-top:5px;
+	font-weight: 400;
+	font-size: 12px;
+	color: #a8a8a8;
+}
+.comment-div p{
+	line-height: 15px !important;
+}
+.comment-input{
+	 border:2px solid #dbdfe4;
+	 border-radius: 4px;
+	 height: 50px; width: 100%;
+	 padding: 5px 10px;
+	 color: #7f919e;
+}
+.comment-input h5{
+ 	font-weight: 500;
 }
 
 .blog-post .post-info {
@@ -256,9 +276,6 @@ th, tr {
 	margin: 20px;
 }
 
-#commentButton {
-	float: right;
-}
 
 .btn.btn-default.btn-sm {
 	float: right;
@@ -270,40 +287,6 @@ th, tr {
 	padding-left: 5px;
 }
 
-.comment-div {
-	height: 40px;
-	width: 100%;
-}
-
-.comment-div h6 {
-	margin-top: 5px;
-	font-size: 12px;
-	color: #656c7e;
-}
-
-.comment-div span {
-	margin-top: 0;
-	font-weight: 400;
-	font-size: 12px;
-	color: #a8a8a8;
-}
-
-.comment-div p {
-	line-height: 15px !important;
-}
-
-.comment-input {
-	border: 2px solid #dbdfe4;
-	border-radius: 4px;
-	height: 50px;
-	width: 100%;
-	padding: 5px 10px;
-	color: #7f919e;
-}
-
-.comment-input h5 {
-	font-weight: 500;
-}
 
 hr.thick-line {
 	border-color: #e7e9ee;
@@ -312,24 +295,6 @@ hr.thick-line {
 	margin-bottom: 20px;
 }
 
-#profileImage {
-	font-size: 120px;
-	height: 180px;
-	width: 180px;
-	border: 0;
-	border-radius: 50%;
-	margin-top: 10%;
-	margin-bottom: 10%;
-}
-
-.img-circle {
-	height: 200px;
-	width: 200px;
-	border: 0;
-	border-radius: 50%;
-	margin-top: 10%;
-	margin-bottom: 10%;
-}
 
 .glyphicon-time, .glyphicon-home, .glyphicon-list-alt,
 	.glyphicon-map-marker {
@@ -363,6 +328,19 @@ hr.thick-line {
 	width: 120px;
 }
 
+#followCancle, #followAccept, #messageQuestion{
+	margin-left:0%;
+	margin-right:0%;
+	padding: 10px, 14px;
+	font-size: 16px;
+	font-weight: 500;
+	background-color: #ececec;
+	border: 0;
+	border-radius: 0;
+	width: 120px;
+	float : center;
+}
+
 
 xmp{
 	font-weight: bold;
@@ -388,23 +366,7 @@ xmp{
 	});
 	
 	
-	 $(function() {
-	      /* 댓글 박스 클릭시 comment창 보이게 */ 
-	       $(".comment-input").on("click" , function() {
-	          $( ".comment-input" ).css("display" , "none"); 
-	          $(".comment-btn").css("display" , "block");
-	       }); 
-	      
-	     /*  $("#addComment").on("click" , function() {
-	         alert($("#com-content").val());
-	         alert($(this).next().val());
-	         alert($(this).next().next().val());
-	      }); */
-	   }); 
 	 
-	 
-	
-	
 	$(function() {
 		$("#deleteButton").on("click", function(){
 			fncDeleteProject(1);
@@ -467,60 +429,64 @@ xmp{
 	             });
 	      });
 	
-	
-	  $(function() {
-	      /* 댓글 박스 클릭시 comment창 보이게 */ 
+	   function fnMove(comment){
+	        var position = $("#comment").offset();
+	        $('html, body').animate({scrollTop : position.top}, 800);
+	   }
+	   
+	   $(function() {
+		      /* 댓글 박스 클릭시 comment창 보이게 */ 
+		   var maxLength = 200;
+	       $('textarea').keyup(function() {
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+	       /* 댓글 박스 클릭시 comment창 보이게 */ 
 	       $(".comment-input").on("click" , function() {
-	          $( ".comment-input" ).css("display" , "none"); 
-	          $(".comment-btn").css("display" , "block");
+		          $( ".comment-input" ).css("display" , "none"); 
+		          $(".comment-btn").css("display" , "block");
 	       }); 
-	      
-	      $("#addComment").on("click" , function() {
-	    	  
-	    	  $.ajax( 
-						{
-							url : "/project/addJsonComment",
-							method : "POST" ,
-							dataType : "json" ,
-							context : this,
-							data : {
-									comContent:$("#com-content").val(),
-									comProjNo:$(this).next().val(),
-									comUserId:$(this).next().next().val(),
-									} , 
-							success : function(serverData , status) {
-									
-									 	
-										displayValue='<div class="media">'												   
-														+'<div class="media-left">'
-														  +'<a href="#">'
-														    +'<img class="comment-img" src="http://placehold.it/45x45" alt="">'
-														  +'</a>'
-														+'</div>'
-														+'<div class="media-body">'
-														  +'<div class="comment-div">'
-														  	+'<h6>'+serverData.projComment.comUserId+'<span>ㅣ   '+serverData.projComment.comRegDate+'</span></h6>'
-														  	+'<p>'+serverData.projComment.comContent+'</p>'									  		
-														  +'</div>'										  
-														+'</div>'
-													  +'</div>';
-									 										
-										/* $("#ajaxTarget").html(displayValue); */
-										$("#ajaxTarget").after(displayValue);
-							}
-					});
-	      });
-	      
-	      /*댓글 삭제*/
-	      $("#deleteComment").on("click" , function() {
-	          alert($(this).next().val());
-	          alert($("#comProjNo").val());
-	          self.location="/project/deleteComment?comNo="+$(this).next().val()+"&comProjNo="+$("#comProjNo").val();
-	       }); 
-	   }); 
-	
-
-	
+	       
+	       /* 댓글 등록 */
+	       $("#addComment").on("click" , function() {
+	 		  
+	 	    	  $.ajax( 
+	 						{
+	 							url : "/project/addJsonComment",
+	 							method : "POST" ,
+	 							dataType : "json" ,
+	 							context : this,
+	 							data : {
+	 									comContent:$("#comContent").val(),
+	 									comProjNo:$(this).next().val(),
+	 									comUserId:$(this).next().next().val(),
+	 									} , 
+	 							success : function(serverData , status) {
+	 									  location.reload();
+	 							}
+	 					});
+	 	      });
+	 	      
+	 	      /*댓글 삭제*/
+	 	  $(".glyphicon-trash").on("click" , function() {
+	           $.ajax( 
+	 					{
+	 						url : "/project/deleteComment/"+$(this).next().val()+"/"+$("#projNo").val(),
+	 						method : "GET" ,
+	 						dataType : "json" ,
+	 						context : this,
+	 						headers : {
+	 	                        "Accept" : "application/json",
+	 	                        "Content-Type" : "application/json"   
+	 	                    },
+	 						success : function(data) {
+	 								  location.reload();
+	 						}
+	 	     	 });          
+	        }); 
+		      
+	  }); 
     
 	</script>
 </head>
@@ -673,10 +639,9 @@ xmp{
 
 									<!--  <div class="margin-top-50"></div> -->
 									<!-- Post Comment (Disqus) Start -->
-									                               <div class="margin-top-50"></div>
-                               
-                               	<!-- Post Comment (Disqus) Start -->
-                                <div id="comment" class="comment">
+									<div class="margin-top-50"></div>
+                               		
+                               		<div id="comment" class="comment">
                                 	<h3>Discuss About Post</h3>
                                 	<div class="margin-top-20"></div>
                                   	<h6>22 Comments</h6>
@@ -685,7 +650,7 @@ xmp{
                                     <div class="media">
 									  <div class="media-left">
 									    <a href="#">
-									      <img src="http://placehold.it/50x50" alt="">									      
+									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
 									    </a>
 									  </div>
 									  
@@ -696,11 +661,12 @@ xmp{
 							            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
 						                    <form role="form">
 						                    <div class="form-group">
-						                      <textarea class="form-control" rows="3" id="com-content"></textarea>
+						                       <textarea id="comContent" maxlength="200" style="resize: none; wrap:hard; width:700px; height:120px;"></textarea><br/>
+                            					200 / <span id="chars">200</span> 글자 남았습니다.
 						                    </div>
 						                      <button type="button" name="comProjContent" value="" class="btn btn-primary" id="addComment">Submit</button>
-						                      <input type="hidden" id="comProjNo" value="${project.projNo}">
-						                      <input type="hidden" id="comUserId" value="${sessionScope.user.userId}">
+						                      <input type="hidden" id="projNo" value="${project.projNo}">
+						                      <input type="hidden" id="sessionUserId" value="${sessionScope.user.userId}">
 						                    </form>
 						                 </div>						  	
 								  	  </div>
@@ -735,16 +701,14 @@ xmp{
 									  	</div>										  
 									  </div>
 									</div>
-																	
 								</c:forEach>
-								
                             </div>                                     
                         </div>
-								</div>
-							</div>
-						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -756,16 +720,15 @@ xmp{
 				<div class="col-md-3">
 					<div class="about-fixed">
 
-						<div class="my-pic" style="height: 415px; width: 270px">
-							<%--    <center>
-                 	<img class="img-circle" src="http://placehold.it/" alt="" style="height : 150px; width: 150px">
-                 </center>--%>
-							<center>
-								<button type="button" class="glyphicon glyphicon-user"
-									id="profileImage"></button>
-							</center>
-
-							<p class="glyphicon glyphicon-time"></p>
+						<div class="my-pic">
+						    <img class="userImg" src="../../resources/images/upload/user01img.jpg" alt="">
+              			</div>
+              			
+              			<div class="my-detail">
+              			
+              			<div class="white-spacing">
+              			 	<br/>
+	                        <p class="glyphicon glyphicon-time"></p>
 							${project.projAnnoStart} <br />
 							<p class="glyphicon glyphicon-home"></p>
 							${user.userName} <br />
@@ -787,36 +750,22 @@ xmp{
 							<br />
 							<p class="glyphicon glyphicon-map-marker"></p>
 							${project.projLocation} <br />
-							<center>
-								<p style="margin-top: 3%">
-									<button type="button" class="btn btn-danger"
-										style="width: 80px">쪽지 문의</button>
-									<button type="button" class="btn btn-primary"
-										style="width: 80px">팔 로 우</button>
-								</p>
+		                 </div> 
+						 
+						 <div class="margin-top-20">
+						 	<center>
+								<!-- <button type="button" class="btn btn-default btn-lg" id="followCancle">팔로우 취소</button> -->
+							<button type="button" class="btn btn-default btn-lg" id="messageQuestion">쪽지 문의</button>
+							<button type="button" class="btn btn-default btn-lg" id="followAccept">팔로우하기</button>
 							</center>
+		                 </div>
+		                 
+		                 <div class="margin-bottom-20">&nbsp;</div>
 						</div>
-
-						<!-- <div class="my-detail">
-                
-                  <div class="white-spacing">
-                      <p></p>
-                      <p></p>
-                      <p></p>
-                  </div> 
-                
-                  <div class="row">
-                     <input class="btn btn-default" type="button" value="쪽지문의">
-                     <input class="btn btn-default" type="button" value="팔로우">
-                  </div>
-              </div> -->
 					</div>
 				</div>
-				<!-- About Me (Right Sidebar) End -->
-
 			</div>
 		</div>
-		<!-- Post Comment (Disqus) Start -->
 	</div>
 
 
@@ -831,94 +780,3 @@ xmp{
 </form>
 </body>
 </html>
-
-
-
-
-
-<!-- <div class="col-md-9" id="gab">
-	        	<div class="col-md-12">
-	        		<div class="row">
-	        			<p></p>
-	        		</div>
-        		</div>
-       		</div>
-       		
-       		<div class="col-md-9">
-	        	<div class="col-md-12 page-body">
-	        		<div class="row">
-	        		asdfsdafdsafdsf
-	        		</div>
-        		</div>
-       		</div> -->
-
-
-
-
-
-<!--  <div class="container">
-	   		
-	   	 	<div class="row">
-		        <div class="col-md-9" id="gab">
-		        	<div class="col-md-12">
-		        		<div class="row">
-		        			<p></p>
-		        		</div>
-		       		</div>
-		      	</div>
-		      	
-		        <div class="col-md-9">
-		        	<div class="col-md-12 page-body">
-		        		<div class="row">
-		        		<h4>댓글</h4>
-				 		<hr/>
-				 		<div class="bs-example" name="comUserId" ><h4>${comment.comUserId}</h4>
-							<textarea class="form-control" rows="5" name="comContent" placeholder="최소 20자 이상 입력해 주세요"></textarea>
-							<button type="button" class="btn btn-primary" id="commentButton">등록</button>	
-						</div>
-						<br/>
-						<hr/>
-		        		</div>
-		       		</div>
-	      		</div>
-	      		
-	      		<div class="col-md-9">
-		        	<div class="col-md-12 page-body">
-		        		<div class="row">
-		        			<div class="col-sm-4">${comment.comUserId}</div>
-							<div class="col-sm-8">
-								<c:if test="${user.userId==comment.comUserId}">
-									<button type="button" class="btn btn-default btn-sm">
-									  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									</button>
-								</c:if>
-							</div>
-						</div>
-						
-						<div class="row">
-					  		<div class="col-sm-12">${comment.comContent} </div>
-						</div>
-						
-						<div class="row">
-					  		<div class="col-sm-12">${comment.comRegdate}</div>
-					  		<hr/>
-						</div>
-						
-					
-		        		</div>
-		       		</div>
-	      		</div>
-   		  	</div>
-	    </div>
-	      		
-	      		-->
-
-
-
-
-
-
-
-
-
-
