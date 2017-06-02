@@ -371,25 +371,6 @@ xmp{
 
 <script type="text/javascript">
 	
-	function fncAddComment() {
-		var comment = $("textarea[name='comContent']").val();
-		
-			if(comment == null || comment.length<20){
-			alert("최소 20자 이상 입력해 주세요.")
-			return;
-		}
-		
-		$("form").attr("method", "POST").attr("action", "/project/addComment").submit();
-	
-	}
-	
-	function fncDeleteComment() {
-		
-		alert("정말 삭제하시겠습니까?")
-		
-		$("form").attr("method", "POST").attr("action", "/project/deleteComment").submit();
-	
-	}
 	
 	function fncDeleteProject() {
 		
@@ -401,14 +382,6 @@ xmp{
 	
 	
 	$(function (){
-		$( ".glyphicon.glyphicon-trash" ).on("click" , function() {
-			
-			fncDeleteComment(1);
-		});
-		
-		$( "#commentButton" ).on("click" , function() {
-			fncAddComment(1);
-		});
 		
 		$("#projDetail").val().replace('/\n/g', '<br>');
 	
@@ -422,11 +395,11 @@ xmp{
 	          $(".comment-btn").css("display" , "block");
 	       }); 
 	      
-	      $("#addComment").on("click" , function() {
+	     /*  $("#addComment").on("click" , function() {
 	         alert($("#com-content").val());
 	         alert($(this).next().val());
 	         alert($(this).next().next().val());
-	      });
+	      }); */
 	   }); 
 	 
 	 
@@ -726,8 +699,8 @@ xmp{
 						                      <textarea class="form-control" rows="3" id="com-content"></textarea>
 						                    </div>
 						                      <button type="button" name="comProjContent" value="" class="btn btn-primary" id="addComment">Submit</button>
-						                      <input type="hidden" id="comProjNo" value="${portfolio.portNo}">
-						                      <input type="hidden" value="${sessionScope.user.userId}">
+						                      <input type="hidden" id="comProjNo" value="${project.projNo}">
+						                      <input type="hidden" id="comUserId" value="${sessionScope.user.userId}">
 						                    </form>
 						                 </div>						  	
 								  	  </div>

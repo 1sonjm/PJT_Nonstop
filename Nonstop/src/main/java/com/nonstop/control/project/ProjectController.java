@@ -206,7 +206,7 @@ public class ProjectController {
 		/*AJAX로 삭제하는 법 고려해보기*/
 		/*List<PortComment> portCommentList = portfolioService.getCommentList(comPortNo);*/
 		
-		return "forward:/portfolio/getPortfolio?projNo="+comProjNo;
+		return "forward:/project/getProject?projNo="+comProjNo;
 	}
 	
 	
