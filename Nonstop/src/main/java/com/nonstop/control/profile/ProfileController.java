@@ -104,7 +104,9 @@ public class ProfileController {
 		
 		System.out.println("/profile/getOtherProfile in getFollow");
 		
-		Follow follow = profileService.getFollow(reqUserId);
+		String targetUserId = userId;
+		
+		Follow follow = profileService.getFollow(reqUserId , targetUserId);
 		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("user", user);

@@ -80,7 +80,7 @@ public class LetterController {
 	}
 	
 	@RequestMapping(value="getReceiveLetterList")
-	public String getReceiveLetterList(@RequestParam("receiveId")String receiveId , Model model ) throws Exception{
+	public String getReceiveLetterList(@RequestParam("receiveId")String receiveId, Model model ) throws Exception{
 		
 		System.out.println("/letter/getReceiveLetterList");
 		
@@ -138,20 +138,7 @@ public class LetterController {
 		return "forward:/view/letter/getLetter.jsp";
 		
 	}
-	
-	@RequestMapping(value="deleteLetter", method=RequestMethod.GET)
-	public String deleteLetter(@RequestParam("letNo") int letNo,@RequestParam("receiveId") String receiveId, Model model)throws Exception{
-		
-		System.out.println("/letter/deleteLetter:GET");
-		
-		letterService.deleteLetter(letNo);
-		
-		Map<String,Object> map = letterService.getReceiveLetterList(receiveId);
-		
-		model.addAttribute("list",map.get("list"));
-		
-		return "forward:/view/letter/listLetter.jsp";
-	}
+
 	
 	@RequestMapping(value="addSave/{letNo}",method=RequestMethod.GET)
 	public void updateSave(@PathVariable int letNo) throws Exception{
@@ -216,6 +203,7 @@ public class LetterController {
 		model.addAttribute("list",map.get("list"));
 		return "forward:/view/letter/listReceiveLetter.jsp";
 	}
+	
 	@RequestMapping(value="getSaveLetterList" , method=RequestMethod.GET)
 	public String getSaveLetterList(@RequestParam("userId") String userId,Model model) throws Exception{
 		
@@ -232,6 +220,29 @@ public class LetterController {
 		model.addAttribute("list",map.get("list"));
 		
 		return "forward:/view/letter/listSaveLetter.jsp";
+	}
+	
+	@RequestMapping(value="updateReadDate", method=RequestMethod.POST)
+	public String updateReadDate(@RequestParam(value="chbox") List<String> values , Model model , HttpSession session) throws Exception{
+		
+		System.out.println("letter/updateReadDate : GET");
+		if(values != null && values.size()>0){
+			for(int i=0 ; i<values.size(); i++){
+			letterService.updateReadDate(Integer.parseInt(values.get(i)));
+			}
+		}
+		String receiveId = ((User)session.getAttribute("user")).getUserId();
+		
+		Map<String , Object> map = letterService.getReceiveLetterList(receiveId);
+		
+		String reqUserId = receiveId;
+		
+		List<Follow> follow = profileService.getFollowList(reqUserId);
+		
+		model.addAttribute("list2" , follow);
+		model.addAttribute("list", map.get("list"));
+		
+		return "forward:/view/letter/listReceiveLetter.jsp";
 	}
 	
 }

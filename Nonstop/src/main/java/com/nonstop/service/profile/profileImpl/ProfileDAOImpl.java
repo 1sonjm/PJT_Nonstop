@@ -90,8 +90,13 @@ public class ProfileDAOImpl implements ProfileDAO{
 		return sqlSession.selectList("FollowMapper.getListFollow",map);
 	}
 
-	public Follow getFollow(String reqUserId) throws Exception {
-		return sqlSession.selectOne("FollowMapper.getFollow", reqUserId);
+	public Follow getFollow(String reqUserId , String targetUserId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("reqUserId", reqUserId);
+		map.put("targetUserId", targetUserId);
+		return sqlSession.selectOne("FollowMapper.getFollow", map);
 	}
 
 	
