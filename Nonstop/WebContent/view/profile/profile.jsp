@@ -115,13 +115,18 @@ $(function() {
 	#sidebar h5 {
 		color: #f2f2f2;
 		font-weight: 700;
+		margin-top : 145px;
 	}
 	
+	#sidebar p {
+		color: #f2f2f2;
+		margin-top : 0px;
+	}
 	
 	ul.sidebar-menu {
 	    margin-top: 75px;
 	}
-	
+	 
 	/* MAIN CONTENT CONFIGURATION */
 	#main-content {
 	    margin-left: 270px;
@@ -153,6 +158,13 @@ $(function() {
 	    padding-top: 0px;
 	    width: 100%;
 	}
+	.img-circle{
+	display : block;
+	margin-left : auto;
+	margin-right : auto;
+	margin-bottom : 0px;
+	margin-top: 60px;
+	}
 		
 	
 	</style>
@@ -172,24 +184,25 @@ $(function() {
           <div id="sidebar"  class="nav-collapse ">
 
         <!-- sidebar menu start-->
-              <ul class="sidebar-menu">
+              <!-- <ul class="sidebar-menu"> -->
               
-              <br/><br/>
-              	  <img src="../../resources/images/upload/${user.image}" class="img-circle" width="64" hieght="60"> 
-              	  <h5 class="center">${user.userId}</h5>
-              	  <h5 class="center">${user.addr}</h5>
+              <br/><br/><br/><br/><br/><br/>
+             
+              	  <img src="../../resources/images/upload/${user.image}" class="img-circle" width="160px">
+              	  <h5 class="text-center">${user.userId}</h5>
+              	  <p class="text-center">${user.addr}</p>
               	  
               	  <c:if test="${user.role=='3'}">
-              	  <h5 class="center">기업대표자 : ${user.companyName}</h5>
-              	  <h5 class="center">직원수 : ${user.empNum}</h5>
-              	  <h5 class="center">설립일 : ${user.pubDate}</h5>
+              	  <h5 class="text-center">기업대표자 : ${user.companyName}</h5>
+              	  <h5 class="text-center">직원수 : ${user.empNum}</h5>
+              	  <h5 class="text-center">설립일 : ${user.pubDate}</h5>
               	  </c:if>
-				  
-				  <br/><br/><br/>
+				 
+
 				  
 				<c:if test="${user.userId != sessionScope.user.userId }">
 				  <c:if test="${follow.reqUserId==sessionScope.user.userId && career.careerUserId==targetUserId }">
-				  <div class="col-sm-offset-4  col-sm-4 text-center">
+				  <div class="col-sm-12 text-center">
 					 <span class="follow" targetUserId="${user.userId}" id="follow">
 		      		<button type="button" class="btn btn-primary" id="profile" >언팔로우</button>
 		      		</span>
@@ -197,7 +210,7 @@ $(function() {
 		      		</c:if>
 		      		
 		      		<c:if test="${follow.reqUserId != sessionScope.user.userId}">
-		      		<div class="col-sm-offset-4  col-sm-4 text-center">
+		      		<div class="col-sm-12 text-center">
 					 <span class="follow" targetUserId="${user.userId}" id="follow">
 		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우</button>
 		      		</span>
@@ -206,13 +219,13 @@ $(function() {
 		      	</c:if>
 		      		
 		      		<c:if test="${session.user.userId  == param.userId}"> 
-		      		<div class="col-sm-offset-4  col-sm-4 text-center">
+		      		<div class="col-sm-12 text-center">
 					 <span class="listFollow" reqUserId="${user.userId}">
 		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button>
 		      		</span>
 		      		</div>
 		      		</c:if>	
-              </ul>
+              <!-- </ul> -->
               <!-- sidebar menu end-->
           </div>
       </aside>
