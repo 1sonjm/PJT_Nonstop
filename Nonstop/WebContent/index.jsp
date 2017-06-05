@@ -259,7 +259,7 @@
                 <div class="row">
                 	<div class="col-md-10 col-md-offset-1">
                         <h1 class="brand-heading">NONSTOP</h1>
-                        <div class="margin-bottom-40"></div>
+                        <div class="margin-bottom-20"></div>
                         <div class="intro-main">
 	                        <ul class="main-ul">
 	                        	<li>
@@ -282,12 +282,12 @@
 	                        	</li>
 	                        </ul>
                         </div>
-						<div class="margin-bottom-40"></div>	
+						<div class="margin-bottom-20"></div>	
 
                        	<p class="intro-text">웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱<br/>포트폴리오 등록과 구인구직을 위한 프로젝트 등록 논스톱에서 한번에 해결하세요.<br/>
                        	웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱포트폴리오 등록과 구인구직을 <br/>위한 프로젝트 등록 논스톱에서 한번에 해결하세요.</p>
 
-						<div class="margin-bottom-80"></div>	
+						<div class="margin-bottom-50"></div>	
 						
                         <button class="sq_button" type="button" style=" background-color: #ff6600">회원가입</button>
 						<button class="sq_button" type="button">일단, 둘러볼게요</button>			                        

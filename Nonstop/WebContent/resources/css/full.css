@@ -368,7 +368,7 @@ a:focus {
   font-color: #fff;
 }
 .intro .intro-body .intro-text {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 
@@ -386,7 +386,7 @@ a:focus {
   	margin-bottom: 7px;
   }
   .intro .intro-body .intro-text {
-   	font-size: 16px;
+   	font-size: 15px;
   }
   .intro-main {
     width: 85%;
@@ -402,7 +402,7 @@ a:focus {
   position: fixed;
   width: 70px;
   height: 70px;
-  margin-top: 5%;
+  margin-top: 3%;
   margin-left: -2.3%;
   padding: 14px 14px;
   border: 2px solid #666666;
