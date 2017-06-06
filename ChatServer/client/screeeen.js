@@ -168,7 +168,7 @@ function captureUserMedia(callback, extensionAvailable) {
         audio: false,
         video: screen_constraints//이미지 대신 화면을 줌 > true
     };
-
+/*
     if(!!navigator.mozGetUserMedia) {
         console.warn(Firefox_Screen_Capturing_Warning);
         constraints.video = {
@@ -179,7 +179,7 @@ function captureUserMedia(callback, extensionAvailable) {
             minAspectRatio: 1.77
         };
     }
-
+*/
     console.log( JSON.stringify( constraints , null, '\t') );
 
     var video = document.createElement('video');
@@ -188,7 +188,7 @@ function captureUserMedia(callback, extensionAvailable) {
     video.setAttribute('controls', true);
     videosContainer.insertBefore(video, videosContainer.firstChild);
     
-    getUserMedia({
+    navigator.mediaDevices.getUserMedia({
         video: video,
         constraints: constraints,
         onsuccess: function(stream) {

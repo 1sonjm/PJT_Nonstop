@@ -13,6 +13,7 @@
 	<script src="signaling_channel.js"></script>
 	<script src="sdp.js"></script>
 	<script src="main.js"></script>
+	<script src="https://cdn.WebRTC-Experiment.com/getScreenId.js"></script>
 	<script type="text/javascript">
 		$(function(){
 			resizeComponent($(window).width(),$(window).height());
@@ -55,7 +56,7 @@
 			<section id="init-section">
 					<div id="settings-container">
 							Session id <input type="text" id="session_txt" value="" size="10">
-							<input class="btn" type="button" id="join_but" value="Join" disabled>
+							<input class="btn" type="button" id="join_but" value="Join">
 							<input class="btn" type="button" id="call_but" value="Call" disabled><br>
 							<input type="checkbox" id="video_cb" checked>Video<br>
 							<input type="checkbox" id="audio_cb" checked>Audio<br>
@@ -103,7 +104,8 @@
            </ol>
        </section>
     	<div id="videos-container"></div>
+    	<button id="capture-screen">나를 눌러라</button>
+    	<video id="screenvideo" controls style="visibility: visible; display: inline; width: 200px; height: 120px;"></video>
 		</section>
-	<script src="screeeen.js"></script>
 </body>
 </html>

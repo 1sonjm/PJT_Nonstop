@@ -1,4 +1,4 @@
-﻿// Last time updated at August 22, 2014, 08:32:23
+// Last time updated at August 22, 2014, 08:32:23
 
 // Muaz Khan      - www.MuazKhan.com
 // MIT License    - www.WebRTC-Experiment.com/licence
@@ -322,31 +322,24 @@ iceServers = {
 };
 
 /*
-
 var iceFrame, loadedIceFrame;
-
 function loadIceFrame(callback, skip) {
     if (loadedIceFrame) return;
     if (!skip) return loadIceFrame(callback, true);
-
     loadedIceFrame = true;
-
     var iframe = document.createElement('iframe');
     iframe.onload = function() {
         iframe.isLoaded = true;
-
         window.addEventListener('message', function(event) {
             if (!event.data || !event.data.iceServers) return;
             callback(event.data.iceServers);
         });
-
         iframe.contentWindow.postMessage('get-ice-servers', '*');
     };
     iframe.src = 'https://cdn.webrtc-experiment.com/getIceServers/';
     iframe.style.display = 'none';
     (document.body || document.documentElement).appendChild(iframe);
 };
-
 loadIceFrame(function(_iceServers) {
     iceServers.iceServers = iceServers.iceServers.concat(_iceServers);
     console.log('ice-servers', JSON.stringify(iceServers.iceServers, null, '\t'));

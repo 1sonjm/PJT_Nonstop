@@ -1,0 +1,21 @@
+{
+  "name": "chatserver",
+  "version": "1.0.0",
+  "description": "The server uses [node.js](http://nodejs.org) and is started using: ``` node channel_server.js ``` The default port is 8080. The port to use can be changed by setting the environment variable PORT or giving the port as an argument to the node command. If both the environment variable and the argument are given then the argument is used.",
+  "main": "channel_server.js",
+  "dependencies": {
+    "connect": "^3.6.1",
+    "express": "^4.15.2",
+    "express-session": "^1.15.2",
+    "node-static": "^0.7.9",
+    "socket.io": "^2.0.2",
+    "utils": "^0.3.1",
+    "websocket": "^1.0.24"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
