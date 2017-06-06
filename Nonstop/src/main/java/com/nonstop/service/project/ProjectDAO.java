@@ -13,9 +13,11 @@ public interface ProjectDAO {
 
 	public Project getProject(int projNo , String scrapUserId) throws Exception;
 
-	public List<Project> listProject(int projDivision, String scrapUserId) throws Exception;
+	public List<Project> listProject(int projDivision, String scrapUserId, Search search, int sortFlag) throws Exception;
 //
 	public void updateProject(Project project) throws Exception;
+	
+	public void updateViewCount(Project project) throws Exception;
 	
 	public void deleteProject(Project project) throws Exception;
 //	
