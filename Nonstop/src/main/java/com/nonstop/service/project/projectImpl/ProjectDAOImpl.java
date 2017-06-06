@@ -41,6 +41,7 @@ public class ProjectDAOImpl implements ProjectDAO{
 
 		
 	public Project getProject(int projNo , String scrapUserId) throws Exception {
+		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("projNo", projNo);
@@ -55,22 +56,37 @@ public class ProjectDAOImpl implements ProjectDAO{
 		
 	}
 	
+	public void updateViewCount(Project project) throws Exception{
+		
+		sqlSession.update("ProjectMapper.updateViewCount", project);
+	}
+	
 	public void deleteProject(Project project) throws Exception{
 		
 		sqlSession.delete("ProjectMapper.deleteProject", project);
 	}
 
 	
-	public List<Project> listProject(int projDivision , String scrapUserId) throws Exception {
+	public List<Project> listProject(int projDivision , String scrapUserId, Search search, int sortFlag) throws Exception {
 		
+		Project project = new Project();
+		String searchCondition = search.getSearchCondition();
+		String searchKeyword = search.getSearchKeyword();
 		//Map<String , Object> map = new HashMap<String , Object>();
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("scrapUserId", scrapUserId);
 		map.put("projDivision", projDivision);
-		
+		map.put("search", search);
+		map.put("sortFlag", sortFlag);
+//		map.put("searchCondition", searchCondition);
+//		map.put("searchKeyword", searchKeyword);
 		//map.put("search", search);
 		//map.put("scrapUserId", scrapUserId);
+		
+		System.out.println("searchCondition다오임플"+searchCondition);
+		System.out.println("searchKeyword다오임플"+searchKeyword);
+		System.out.println("sortFlag"+ project.getSortFlag());
 		
 		return sqlSession.selectList("ProjectMapper.listProject", map);
 	}
