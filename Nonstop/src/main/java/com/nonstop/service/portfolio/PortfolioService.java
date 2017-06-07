@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nonstop.domain.PortComment;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Search;
 
 public interface PortfolioService {
 
@@ -13,7 +14,7 @@ public interface PortfolioService {
 
 	public Portfolio getPortfolio(int portNo, String sessionUserId) throws Exception;
 	
-	public List<Portfolio> getPortfolioList(int portDivision, String sessionUserId) throws Exception;
+	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception;
 	
 	public void updatePortfolio(Portfolio portfolio) throws Exception;
 

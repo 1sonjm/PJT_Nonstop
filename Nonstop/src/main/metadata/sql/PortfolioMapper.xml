@@ -21,7 +21,7 @@
 		<result property="portLikeNo" 		column="port_like_no" 			jdbcType="NUMERIC" />
 		<result property="scrapUserId"		column="user_id"				jdbcType="VARCHAR"/>
 		<result property="scrapNo"			column="scrap_no"				jdbcType="NUMERIC"/>
-
+		<result property="endRowNum"		column="row_seq"				jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	 <resultMap id="commentSelectMap" type="portComment">
@@ -70,21 +70,30 @@
 	 </select>
 
 	 <select  id="getPortfolioList" parameterType="map" resultMap="portfolioSelectMap">
-	  	SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
-     	FROM portfolio p, (select * from scrap where user_id=#{sessionUserId}) a
-	     <where>
-	        p.port_no=a.port_no(+) AND
-	        <if test="portDivision == 1">
-	         p.port_division IN (10,11,12)   
-	      </if>   
-	      <if test="portDivision == 2">
-	         p.port_division IN (20,21,22)   
-	      </if>
-	      <if test="portDivision != 1 and portDivision != 2">
-	         p.port_division = #{portDivision}
-	      </if>   
-	     </where>
-	  	ORDER BY port_viewcount DESC NULLS LAST
+
+		SELECT*
+		FROM
+		(SELECT inner_table.*, users.user_img, users.user_id, ROWNUM AS row_seq
+			FROM 
+			(SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
+			     	FROM portfolio p, (select * from scrap where user_id=#{sessionUserId}) a
+				    <where>
+				        p.port_no=a.port_no(+) AND
+				        
+				        <if test="search.postDivision == 1">
+					       p.port_division IN (10,11,12)   
+					    </if>   
+					    <if test="search.postDivision == 2">
+					       p.port_division IN (20,21,22)   
+					    </if>
+					    <if test="search.postDivision != 1 and search.postDivision != 2">
+					       p.port_division = #{search.postDivision}
+					    </if>   
+			
+					</where>
+				  	ORDER BY port_viewcount DESC NULLS LAST) inner_table, users
+			WHERE users.user_id=inner_table.port_user_id)
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 
 	 </select>
 	 

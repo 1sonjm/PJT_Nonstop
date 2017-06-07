@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.PortComment;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
@@ -96,7 +98,7 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="listPortfolio")
-	public String listPortfolio(@RequestParam("portDivision") int portDivision,HttpSession session, Model model) throws Exception {
+	public String listPortfolio(@ModelAttribute("search") Search search, HttpSession session, Model model) throws Exception {
 		
 		String sessionUserId="testUser";
 		
@@ -104,11 +106,43 @@ public class PortfolioController {
 			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 		
-		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision,sessionUserId);
+		if(search.getEndRowNum() == 0) {
+			search.setStartRowNum(1);
+			search.setEndRowNum(16);
+		}else{
+			int startRowNum = search.getEndRowNum()+1;
+			int endRowNum = startRowNum+16;
+
+			search.setStartRowNum(startRowNum);
+			search.setEndRowNum(endRowNum);
+		}
+		
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
 
 		model.addAttribute("list", portfolioList);
 
 		return "forward:/view/portfolio/listPortfolio.jsp";
+	}
+	
+	@RequestMapping(value="listJsonPortfolio", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Portfolio> listJsonPortfolio(@ModelAttribute("search") Search search, HttpSession session, Model model) throws Exception {
+		
+		String sessionUserId="testUser";
+		
+		if((User)session.getAttribute("user") != null) {
+			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+
+		int startRowNum = search.getEndRowNum()+1;
+		int endRowNum = startRowNum+15;
+
+		search.setStartRowNum(startRowNum);
+		search.setEndRowNum(endRowNum);
+
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
+
+		return portfolioList;
 	}
 	
 	@RequestMapping(value="getPortfolio")
@@ -267,7 +301,7 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="addJsonPortLike" , method=RequestMethod.POST)
-	public void addJsonProjScrap(@ModelAttribute("portLike") PortLike portLike) throws Exception{
+	public void addJsonPortLike(@ModelAttribute("portLike") PortLike portLike) throws Exception{
 		
 		System.out.println("/portfolio/addJsonPortLike");
 	
@@ -277,7 +311,7 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="delJsonPortLike/{portLikeNo}" , method=RequestMethod.GET)
-	public void delJsonProjScrap(@PathVariable("portLikeNo") int portLikeNo) throws Exception{
+	public void delJsonPortLike(@PathVariable("portLikeNo") int portLikeNo) throws Exception{
 		
 		System.out.println("/portfolio/delJsonPortLike");
 	

@@ -73,7 +73,7 @@ h6 {
   	line-height: 1.5;
    	border-radius: 0;
     color: #fff;
-    background-color: #2c2a2b;
+    background-color: rgba(31, 31, 31, 0.8);
     text-align: center;
     font-weight: 400;
     border: 0;
@@ -189,6 +189,7 @@ a:focus {
 .navbar-static-top {
   padding-top: 30px;
   height: 140px;
+  box-shadow: 2px 0 9px #bdbdbd;
 }
 
 /* 카占쌓곤옙 */
@@ -402,7 +403,7 @@ a:focus {
   position: fixed;
   width: 70px;
   height: 70px;
-  margin-top: 3%;
+  margin-top: 2.8%;
   margin-left: -2.3%;
   padding: 14px 14px;
   border: 2px solid #666666;
