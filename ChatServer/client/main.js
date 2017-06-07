@@ -13,6 +13,7 @@ var signalingChannel;
 var pc;
 var peer;
 var localStream;
+var screenMediaStream;
 var chatDiv;
 var chatText;
 var chatButton;
@@ -54,98 +55,154 @@ window.onload = function () {
 	var hash = location.hash.substr(1);
 	if (hash) {// 주소로 들어온 사람
 		document.getElementById("session_txt").value = hash;
-		//log("Auto-joining session: " + hash);
+		// log("Auto-joining session: " + hash);
 		// 채팅만 설정할때 바로 콜되네?
 		document.getElementById("join_but").click();
 	} else {// 최초 방 생성자
 		// set a random session id
-		document.getElementById("session_txt").value = Math.random().toString(16).substr(10);//방ID 부여 (여기에 사용자 id넣으면 되겠다.)
+		document.getElementById("session_txt").value = Math.random().toString(16).substr(10);// 방ID
+																								// 부여
+																								// (여기에
+																								// 사용자
+																								// id넣으면
+																								// 되겠다.)
 	}
 	
 
-    window.IsAndroidChrome = false;
-    try {
-        if (navigator.userAgent.toLowerCase().indexOf("android") > -1 && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)) {
-            window.IsAndroidChrome = true;
-        }
-    } catch (e) {}
-    
+	window.IsAndroidChrome = false;
+	try {
+		if (navigator.userAgent.toLowerCase().indexOf("android") > -1 && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)) {
+			window.IsAndroidChrome = true;
+		}
+	} catch (e) {}
+
 	document.getElementById("capture-screen").onclick = function () {
 		getScreenId(function(error, sourceId, screen_constraints) {
-            // error    == null || 'permission-denied' || 'not-installed' || 'installed-disabled' || 'not-chrome'
-            // sourceId == null || 'string' || 'firefox'
-            // getUserMedia(screen_constraints, onSuccess, onFailure);
+			// error == null || 'permission-denied' || 'not-installed' ||
+			// 'installed-disabled' || 'not-chrome'
+			// sourceId == null || 'string' || 'firefox'
+			// getUserMedia(screen_constraints, onSuccess, onFailure);
 
-            document.getElementById('capture-screen').disabled = false;
+			document.getElementById('capture-screen').disabled = false;
 
-            if (IsAndroidChrome) {
-                screen_constraints = {
-                    mandatory: {
-                        chromeMediaSource: 'screen'
-                    },
-                    optional: []
-                };
-                
-                screen_constraints = {
-                    video: screen_constraints
-                };
+			if (IsAndroidChrome) {
+				screen_constraints = {
+					mandatory: {
+						chromeMediaSource: 'screen'
+					},
+					optional: []
+				};
+				
+				screen_constraints = {
+					video: screen_constraints
+				};
 
-                error = null;
-            }
+				error = null;
+			}
 
-            if(error == 'not-installed') { alert('Please install Chrome extension. See the link below.'); return; }
-            if(error == 'installed-disabled') { alert('Please install or enable Chrome extension. Please check "chrome://extensions" page.'); return; }
-            if(error == 'permission-denied') { alert('Please make sure you are using HTTPs. Because HTTPs is required.'); return; }
+			if(error == 'not-installed') { alert('Please install Chrome extension. See the link below.'); return; }
+			if(error == 'installed-disabled') { alert('Please install or enable Chrome extension. Please check "chrome://extensions" page.'); return; }
+			if(error == 'permission-denied') { alert('Please make sure you are using HTTPs. Because HTTPs is required.'); return; }
 
-            console.info('getScreenId callback \n(error, sourceId, screen_constraints) =>\n', error, sourceId, screen_constraints);
+			console.info('getScreenId callback \n(error, sourceId, screen_constraints) =>\n', error, sourceId, screen_constraints);
+			console.info()
+			// chromeMediaSourceId 가 없다는데 어떻게 해야되는걸까
+			// screen_constraints.mandatory.chromeMediaSourceId = sourceId;
+			
+			
+			document.getElementById('capture-screen').disabled = true;
+			navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+			navigator.getUserMedia(screen_constraints, function(stream) {
+				// share this "MediaStream" object using RTCPeerConnection API
+				// 화면캡처를 시작할때
+				screenMediaStream = stream
+				console.info("@@"+screenMediaStream);
+				
+				document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
 
-            //chromeMediaSourceId 가 없다는데 어떻게 해야되는걸까
-        	//screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-        	
-        	
-            document.getElementById('capture-screen').disabled = true;
-            navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-            navigator.getUserMedia(screen_constraints, function(stream) {
-                // share this "MediaStream" object using RTCPeerConnection API
-            	// 화면공유를 시작할때
-                document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
+				stream.oninactive = stream.onended = function() {
+					// 캡처를 종료할때
+					document.querySelector('#screenvideo').src = null;
+					document.getElementById('capture-screen').disabled = false;
+				};
 
-                stream.oninactive = stream.onended = function() {
-                	// 공유를 종료할때
-                    document.querySelector('#screenvideo').src = null;
-                    document.getElementById('capture-screen').disabled = false;
-                };
-
-                document.getElementById('capture-screen').disabled = false;
-            }, function(error) {
-                console.error('getScreenId error', error);//오류 발생시
-                alert('Failed to capture your screen. Please check Chrome console logs for further information.');
-            });
-        });
+				document.getElementById('capture-screen').disabled = false;
+			}, function(error) {
+				console.error('getScreenId error', error);// 오류 발생시
+				alert('Failed to capture your screen. Please check Chrome console logs for further information.');
+			});
+			// aa = screen_constraints;
+			//console.info('??',screen_constraints);
+			
+			aa = screen_constraints;
+			//console.info('##',aa);
+			// ////////////////////////////////////////////////////////////////////////////////////////////////////
+			
+		});
 	}
-	/*
-	//이거 어떻게 하지
-	var screen_constraints = {
-	        mandatory: {
-	            chromeMediaSource: DetectRTC.screen.chromeMediaSource,
-	            maxWidth: screen.width > 1920 ? screen.width : 1920,
-	            maxHeight: screen.height > 1080 ? screen.height : 1080
-	            // minAspectRatio: 1.77
-	        },
-	        optional: [{ // non-official Google-only optional constraints
-	            googTemporalLayeredScreencast: true
-	        }, {
-	            googLeakyBucket: true
-	        }]
-	    };
-	*/
-	//채팅방 개설
+	
+	/*지울준비
+	var aa;
+	var video_constraints = {
+			mandatory : {},
+			optional : []
+		};
+	function bb(options) {
+        var n = navigator,
+            media;
+        n.getMedia = n.webkitGetUserMedia || n.mozGetUserMedia;
+        console.info(options.constraints );
+        n.getMedia(options.constraints || {
+            audio: true,
+            video: video_constraints
+        }, streaming, options.onerror || function(e) {
+            console.error(e);
+        });
+        function streaming(stream) {
+            var video = options.video;
+            if (video) {
+                video[moz ? 'mozSrcObject' : 'src'] = moz ? stream : window.webkitURL.createObjectURL(stream);
+                video.play();
+            }
+            options.onsuccess && options.onsuccess(stream);
+            media = stream;
+            console.info("#"+stream);
+        }
+
+        return media;
+    }*/
+	
+	// 채팅방 개설
 		// get a local stream
 	document.getElementById("join_but").onclick = function () {
+      /*지울준비
+		var videosContainer = document.getElementById('videos-container')
+		var video = document.createElement('video');
+        video.setAttribute('autoplay', true);
+        video.setAttribute('controls', true);
+        videosContainer.insertBefore(video, videosContainer.firstChild);
+        
+        bb({
+				video : video,// self view
+				constraints : aa,// send screendata
+				onsuccess : function(stream) {
+					config.attachStream = stream;
+					callback && callback();
+					video.setAttribute('muted', true);
+				},
+				onerror : function() {
+					if (location.protocol === 'http:') {
+						alert('Please test this WebRTC experiment on HTTPS.');
+					}
+				}
+			});
+        */
+        
 		navigator.mediaDevices.getUserMedia({ 
-			"audio": true,
-			"video": true})//screen_constraints})
+			audio: true,
+			video: true})// screen_constraints})
 			.then(function (stream) {
+			
 			// .. show it in a self-view
 			selfView.srcObject = stream;
 			// .. and keep it to be sent later
@@ -187,9 +244,9 @@ window.onload = function () {
 		}).catch(logError);
 	}
 		
-		if (hash) {
-			//start(true);
-		}
+	if (hash) {
+		// start(true);
+	}
 };
 
 // handle signaling messages received from the other peer
@@ -253,10 +310,10 @@ function start(isInitiator) {
 		}
 	};
 
-	if (isInitiator) {//채팅을 위한 dataChannel 생성
+	if (isInitiator) {// 채팅을 위한 dataChannel 생성
 		channel = pc.createDataChannel("chat");
 		setupChat();
-	} else { //생성된 dataChannel 사용
+	} else { // 생성된 dataChannel 사용
 		pc.ondatachannel = function (evt) {
 			channel = evt.channel;
 			setupChat();
@@ -274,8 +331,14 @@ function start(isInitiator) {
 	};
 
 	if (audioCheckBox.checked || videoCheckBox.checked) {
-		pc.addStream(localStream);
+		pc.addStream(screenMediaStream);
+		//pc.addStream(localStream);//videoStream을 전달해줌 
+	}else{
+		alert('여기야');
+		//이런식으로 하니까 안가지네.. 내가 check를 그냥 고정해버렸나?
+		pc.addStream(screenMediaStream);
 	}
+	
 
 	if (isInitiator)
 		pc.createOffer(localDescCreated, logError);
@@ -335,9 +398,9 @@ function setupChat() {
 		chatText.disabled = false;
 		chatButton.disabled = false;
 
-		//On enter press - send text message.
+		// On enter press - send text message.
 		chatText.onkeyup = function(event) {
-			if (event.keyCode == 13) {//엔터 입력시 메세지전송
+			if (event.keyCode == 13) {// 엔터 입력시 메세지전송
 				chatButton.click();
 			}
 		};
@@ -345,7 +408,7 @@ function setupChat() {
 		chatButton.onclick = function () {
 			if(chatText.value) {
 				postChatMessage(chatText.value, true);
-				channel.send(/*document.getElementById("user_id").value*/"userId"+": "+chatText.value);//송신메세지
+				channel.send(/* document.getElementById("user_id").value */"userId"+": "+chatText.value);// 송신메세지
 				chatText.value = "";
 				chatText.placeholder = "";
 			}
