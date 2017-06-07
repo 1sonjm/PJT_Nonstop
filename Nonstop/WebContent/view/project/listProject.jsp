@@ -127,20 +127,111 @@
 		  padding-top: 30px;
 		  height: 120px;
 		}
+		
+		::selection { color:white; background:blue; }
+		::-moz-selection { color:white; background:blue; }
      	
      	
 	</style>
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
+		/*검색 펑션*/
+		function fncGetList(currentPage) {
+			$("#currentPage").val(currentPage);
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			alert(projDivision);
+	            if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag=0").submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag=0").submit();
+	            }
+			
+		
+		}
+		
+		function fncSortList1(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 1;
+			alert(sortFlag);
+			
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+				
+		/*최신등록순*/	
+		$(function() {
+			$( "#projAnnoStart1" ).on("click" , function() {
+				fncSortList1();
+			});
+		});
+		
+		/*마감임박순*/
+		function fncSortList2(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 2;
+			alert(sortFlag);
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+	
+		/*마감임박순*/	
+		$(function() {
+			$( "#projDday1" ).on("click" , function() {
+				fncSortList2();
+			});
+		});
+		
+		/*조회순*/
+		function fncSortList4(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 4;
+			alert(sortFlag);
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+	
+		/*조회순*/	
+		$(function() {
+			$( "#projViewCount1" ).on("click" , function() {
+				fncSortList4();
+			});
+		});
+			
+		
+		/*검색기능*/		
+		$(function() {
+			$( "button.btn.btn-default" ).on("click" , function() {
+				fncGetList(1);
+			});
+		});
+		/*검색기능 엔터첬을때 넘어가기*/	
+		$(function() {
+			$( "#searchKeyword" ).keypress( function(e) {
+				if(e.keyCode==13){
+					fncGetList(1);
+				}
+			});
+		});
+	
 		
 		$(document).ready(function() {
 		    $('#Carousel').carousel({
 		        interval: 5000
 		    })
 		});
-		
-		
-		
 		
 		
 		$(function() {
@@ -156,9 +247,9 @@
 	            var projDivision = $(this).val();
 	            
 	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=1";
+	               self.location="/project/listProject?projDivision=1&sortFlag=0";
 	            }else{
-	               self.location="/project/listProject?projDivision=2";
+	               self.location="/project/listProject?projDivision=2&sortFlag=0";
 	            }
 	         });
 		         
@@ -166,9 +257,9 @@
 	            var projDivision = $(this).val();
 	            
 	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=11";
+	               self.location="/project/listProject?projDivision=11&sortFlag=0";
 	            }else{
-	               self.location="/project/listProject?projDivision=21";
+	               self.location="/project/listProject?projDivision=21&sortFlag=0";
 	            }
 	         });
 	         
@@ -176,9 +267,9 @@
 	            var projDivision = $(this).val();
 	            
 	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=12";
+	               self.location="/project/listProject?projDivision=12&sortFlag=0";
 	            }else{
-	               self.location="/project/listProject?projDivision=22";
+	               self.location="/project/listProject?projDivision=22&sortFlag=0";
 	            }
 	         });
 			
@@ -271,12 +362,14 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">	
-		<ol class="breadcrumb">
-		  <li><a href="#" >최신등록순</a></li>
-		  <li><a href="#">마감임박순</a></li>
-		  <li><a href="#">지원자순</a></li>
-		  <li><a href="#">조회순</a></li>
-		</ol>
+		<form class="form-inline" name="detailForm">
+			<ol class="breadcrumb" >
+			  <li><a href="#" id="projAnnoStart1">최신등록순</a></li>
+			  <li><a href="#" id="projDday1">마감임박순</a></li>
+			  <li><a href="#" id="">지원자순</a></li>
+			  <li><a href="#" id="projViewCount1" >조회순</a></li>
+			</ol>
+		</form>
 		</div>
 		
 		<div class="col-md-6">
@@ -291,13 +384,13 @@
 		  
 		  <div class="form-group">
 		    <label class="sr-only" for="searchKeyword">검색어</label>
-		    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-		    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+		    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" 
+		    	   value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 		  </div>
 		  
 		  <button type="button" class="btn btn-default">검색</button>
 		  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-		  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+		  <input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
 		</form>
 		</div>
 	</div>
@@ -312,10 +405,12 @@
 				<c:forEach var="project" items="${list}">
 				<c:set var="i" value="${ i+1 }" />
 					<div class="col-md-6 col-sm-6 hero-feature" style="margin-top: 30px; margin-bottom: 20px; height: 400px">
-						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" /> 
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+						<input type="hidden" name="projAnnoStart" id="projAnnoStart" value="${project.projAnnoStart}" /> 
 						<input type="hidden" name="projAnnoEnd" id="projAnnoEnd" value="${project.projAnnoEnd}" /> 
 						<input type="hidden" name="projStartDate" id="projStartDate" value="${project.projStartDate}" /> 
 						<input type="hidden" name="projEndDate" id="projEndDate" value="${project.projEndDate}" />
+						<input type="hidden" name="sortFlag" id="sortFlag" class="sortFlag" value="${project.sortFlag}" />
 						<div class="thumbnail">
 							<table style="height: 400px; overflow:hidden;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">
@@ -397,7 +492,7 @@
 
 
 								<tr style="height: 20px; border-bottom: 1px solid #ddd">
-									<th colspan="12">개발 기술 : java</th>
+									<th colspan="12">개발 기술 : java ${project.projAnnoStart}</th>
 								</tr>
 
 								<tr style="height: 150px; text-align: top-left;" class="projDetail">
@@ -421,58 +516,6 @@
 	            </div>
 	         </div>
 	      </div>
-	        
-	             
-	<div class="container text-center">
-		 
-		 <nav>
-		  <!-- 크기조절 :  pagination-lg pagination-sm-->
-		  <ul class="pagination" >
-		    
-		    <!--  <<== 좌측 nav -->
-		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-		 		<li class="disabled">
-			</c:if>
-			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-				<li>
-			</c:if>
-		      <a href="javascript:fncGetList('${ resultPage.currentPage-1}')" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		    
-		    <!--  중앙  -->
-			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-				
-				<c:if test="${ resultPage.currentPage == i }">
-					<!--  현재 page 가르킬경우 : active -->
-				    <li class="active">
-				    	<a href="javascript:fncGetList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
-				    </li>
-				</c:if>	
-				
-				<c:if test="${ resultPage.currentPage != i}">	
-					<li>
-						<a href="javascript:fncGetList('${ i }');">${ i }</a>
-					</li>
-				</c:if>
-			</c:forEach>
-		    
-		     <!--  우측 nav==>> -->
-		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-		  		<li class="disabled">
-			</c:if>
-			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-				<li>
-			</c:if>
-		      <a href="javascript:fncGetList('${resultPage.endUnitPage+1}')" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-		
-	</div>
 
 </body>
 
@@ -514,6 +557,57 @@
 
 
 안녕하세요김준영입니다새롭게보게되   타이틀 최대숫자
+
+
+
+	        
+	             
+	<div class="container text-center">
+		 
+		 <nav>
+		  <ul class="pagination" >
+		    
+		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
+		 		<li class="disabled">
+			</c:if>
+			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
+				<li>
+			</c:if>
+		      <a href="javascript:fncGetList('${ resultPage.currentPage-1}')" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    
+			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
+				
+				<c:if test="${ resultPage.currentPage == i }">
+				    <li class="active">
+				    	<a href="javascript:fncGetList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
+				    </li>
+				</c:if>	
+				
+				<c:if test="${ resultPage.currentPage != i}">	
+					<li>
+						<a href="javascript:fncGetList('${ i }');">${ i }</a>
+					</li>
+				</c:if>
+			</c:forEach>
+		    
+		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
+		  		<li class="disabled">
+			</c:if>
+			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
+				<li>
+			</c:if>
+		      <a href="javascript:fncGetList('${resultPage.endUnitPage+1}')" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+		
+	</div>
+
 
  -->
 

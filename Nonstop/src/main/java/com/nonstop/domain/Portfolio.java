@@ -6,6 +6,7 @@ public class Portfolio{
 	
 	private int portNo;
 	private String portUserId;
+	private String portUserImg;
 	private int portDivision;
 	private String portTitle;
 	private Date portRegdate;
@@ -41,6 +42,12 @@ public class Portfolio{
 	}
 	public void setPortUserId(String portUserId) {
 		this.portUserId = portUserId;
+	}
+	public String getPortUserImg() {
+		return portUserImg;
+	}
+	public void setPortUserImg(String portUserImg) {
+		this.portUserImg = portUserImg;
 	}
 	public int getPortDivision() {
 		return portDivision;
@@ -166,6 +173,8 @@ public class Portfolio{
 		builder.append(portNo);
 		builder.append(", portUserId=");
 		builder.append(portUserId);
+		builder.append(", portUserImg=");
+		builder.append(portUserImg);
 		builder.append(", portDivision=");
 		builder.append(portDivision);
 		builder.append(", portTitle=");
@@ -207,7 +216,6 @@ public class Portfolio{
 		builder.append("]");
 		return builder.toString();
 	}
-
 }
 
 

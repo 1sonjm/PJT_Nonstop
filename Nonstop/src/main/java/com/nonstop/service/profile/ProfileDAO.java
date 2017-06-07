@@ -24,7 +24,7 @@ public interface ProfileDAO {
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception;
 	
-	public Follow getFollow(String reqUserId) throws Exception;
+	public Follow getFollow(String reqUserId ,String targetUserId) throws Exception;
 
 	public void deleteFollow(String reqUserId,String targetUserId) throws Exception;
 	

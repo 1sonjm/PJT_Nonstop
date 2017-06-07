@@ -15,7 +15,7 @@
     <title>List_Portfolio</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+   <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
@@ -33,86 +33,26 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
    <script type="text/javascript">
-
-      $(document).ready(function() {
-          $('#Carousel').carousel({
-              interval: 5000
-          })
-      });
-      
+   
       $(function() {
          
-         $(".img-circle").on("click" , function() {
-            alert("께헤헿");
-            self.location="/portfolio/addPortfolio";
-         }); 
-         
-          $(".thumbnail").on("click" , function() {
-            alert($(this).find('input').val());            
+          $(".thumbnail").on("click" , function() {            
             self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();
          }); 
-         
-         $("#button-all").on("click" , function() {
-            var portDivision = $(this).val();
-            
-            if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
-               self.location="/portfolio/listPortfolio?portDivision=10";
-            }else{
-               self.location="/portfolio/listPortfolio?portDivision=20";
-            }
-         });
-         
-         $("#button-web").on("click" , function() {
-            var portDivision = $(this).val();
-            
-            if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
-               self.location="/portfolio/listPortfolio?portDivision=11";
-            }else{
-               self.location="/portfolio/listPortfolio?portDivision=21";
-            }
-         });
-         
-         $("#button-app").on("click" , function() {
-            var portDivision = $(this).val();
-            
-            if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
-               self.location="/portfolio/listPortfolio?portDivision=12";
-            }else{
-               self.location="/portfolio/listPortfolio?portDivision=22";
-            }
-         });
-         
-         
-         
       });
-      
       
       $(function() {
       /* 스크랩추가 */
-      $(".Scrap").on("click" , function() {
+      $(".portScrap").on("click" , function() {
 
             var flag = $(this).text().trim();
             var requestTarget;
-            var asdf;
-            
-            alert(flag);
-            
             if(flag=="add to scrap"){
-               requestTarget = "addJsonPortScrap";
-               asdf = "delete to scrap";  
-               alert(1);
-            }else if(flag=="delete to scrap"){
-               requestTarget = "deleteJsonPortScrap";
-               asdf ="add to scrap"
-                  alert(2);
+               requestTarget = "addJsonPortScrap";  
             }else{
-               requestTarget == "deleteJsonPortScrap";
-                asdf ="add to scrap"
-                   alert(3);
+               requestTarget = "deleteJsonPortScrap";
             }
-            alert(requestTarget+"컨트롤러 어디로가니");
-            alert(asdf);
-            
+       			alert(requestTarget);
              var portNo=$(this).attr('portNo');
              $.ajax(
                 {
@@ -123,11 +63,15 @@
                       "Accept" : "application/json",
                      "Content-Type" : "application/json"   
                  },
-                   success : function(JSONData , status){
-                      var displatValue = 
-                      "<button type='button' id='Scrap' portNo='${portfolio.portNo}'>"+asdf+"</button>";
+                 	context : this,
+                 	success : function(JSONData , status){
+                     
+                       if(flag=="add to scrap"){
+                    	   $(this).text("delete to scrap");
+                       }else{
+                    	   $(this).text("add to scrap");
+                       }
                       
-                      $(".Scrap").html(displayValue);
                    }
                 });
              });
@@ -291,11 +235,11 @@
 <c:set var="i" value="${i+1}"/>
 
 
-<c:if test="${i%4==1}">
+<%-- <c:if test="${i%4==1}"> --%>
 <div class="margin-bottom-30">
       <div class="container">    
           <div class="row">   
-</c:if>      
+<%-- </c:if>  --%>     
 
            
             <c:if test="${portfolio.scrapNo != 0 }">
@@ -324,11 +268,11 @@
                                    <span class="glyphicon glyphicon-search" aria-hidden="false"></span>
                                    view portfolio<br/>
                                    <c:if test="${portfolio.scrapNo != 0}">
-                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
+                                   <button type="button" class="portScrap" portNo="${portfolio.portNo}">delete to scrap</button>
                                    </c:if>
                                    
                                    <c:if test="${portfolio.scrapNo ==0}">
-                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
+                                   <button type="button" class="portScrap" portNo="${portfolio.portNo}">add to scrap</button>
                                    </c:if>
                                    
                                                                    
@@ -346,14 +290,15 @@
                        </div>
                     </figure>
                 </div>
+                </div>
                   </c:if>
             </div>   
          
-   <c:if test="${i%4==0}">        
+   <%-- <c:if test="${i%4==0}">  --%>       
          </div>
      </div>
-</div>  
-</c:if>
+
+<%-- </c:if> --%>
    
 </c:forEach>
 

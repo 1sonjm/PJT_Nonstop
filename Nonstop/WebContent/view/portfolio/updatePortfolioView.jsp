@@ -10,20 +10,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>addPortfolio</title>
+    <title>updatePortfolio</title>
     
     
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
     
     <!-- jQuery -->
-	<script src="../../resources/javascript/jquery.js"></script>
+	<script src="/resources/javascript/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="../../resources/javascript/bootstrap.min.js"></script>
+	<script src="/resources/javascript/bootstrap.min.js"></script>
 	
     <style>	
     legend {
@@ -175,7 +175,7 @@
 			<form class="form-horizontal" method="post" enctype="multipart/form-data">
 	    		<fieldset>			
 				<!-- Form Name -->
-				<legend align="center">Add Portfolio</legend>
+				<legend align="center">Update Portfolio</legend>
 				
 				<!-- Text input-->
 				<div class="margin-top-30">
