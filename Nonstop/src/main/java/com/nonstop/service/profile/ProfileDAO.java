@@ -14,7 +14,7 @@ public interface ProfileDAO {
 	
 	public Map<String , Object> getCareerList2(String userId) throws Exception;
 	
-	public Career getCareer(int careerNo) throws Exception;
+	public Career getCareer(int careerNo,int techClass) throws Exception;
 	
 	public void updateCareer(Career career) throws Exception;
 	
@@ -24,7 +24,7 @@ public interface ProfileDAO {
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception;
 	
-	public Follow getFollow(String reqUserId) throws Exception;
+	public Follow getFollow(String reqUserId ,String targetUserId) throws Exception;
 
 	public void deleteFollow(String reqUserId,String targetUserId) throws Exception;
 	

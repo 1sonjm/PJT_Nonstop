@@ -183,10 +183,11 @@ function captureUserMedia(callback, extensionAvailable) {
     console.log( JSON.stringify( constraints , null, '\t') );
 
     var video = document.createElement('video');
+    video.style.visibility = "visible";
     video.setAttribute('autoplay', true);
     video.setAttribute('controls', true);
     videosContainer.insertBefore(video, videosContainer.firstChild);
-
+    
     getUserMedia({
         video: video,
         constraints: constraints,
@@ -197,12 +198,46 @@ function captureUserMedia(callback, extensionAvailable) {
             video.setAttribute('muted', true);
         },
         onerror: function() {
-            if (isChrome && location.protocol === 'http:') {
-                alert('Please test this WebRTC experiment on HTTPS.');
-            } else if(isChrome) {
+            if(isChrome) {
                 alert('Screen capturing is either denied or not supported. Please install chrome extension for screen capturing or run chrome with command-line flag: --enable-usermedia-screen-capturing');
             }
         }
     });
 }
+var screenFrame, loadedScreenFrame;
+var videosContainer = document.getElementById("videos-container")
+
+function loadScreenFrame(skip) {
+    if(loadedScreenFrame) return;
+    if(!skip) return loadScreenFrame(true);
+
+    loadedScreenFrame = true;
+
+    var iframe = document.createElement('iframe');
+    iframe.onload = function () {
+        iframe.isLoaded = true;
+        console.log('Screen Capturing frame is loaded.');
+
+        //document.getElementById('room-name').disabled = false;
+    };
+    iframe.src = 'https://www.webrtc-experiment.com/getSourceId/';
+    iframe.style.display = 'none';
+    (document.body || document.documentElement).appendChild(iframe);
+
+    screenFrame = {
+        postMessage: function () {
+            if (!iframe.isLoaded) {
+                setTimeout(screenFrame.postMessage, 100);
+                return;
+            }
+            console.log('Asking iframe for sourceId.');
+            iframe.contentWindow.postMessage({
+                captureSourceId: true
+            }, '*');
+        }
+    };
+};
+
+loadScreenFrame();
+
                 

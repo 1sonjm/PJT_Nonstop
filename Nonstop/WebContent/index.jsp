@@ -19,16 +19,16 @@
     <title>Nonstop</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
     
     <!-- jQuery -->
-    <script src="../../resources/javascript/jquery.js"></script>
+    <script src="/resources/javascript/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    <script src="/resources/javascript/bootstrap.min.js"></script>
 
     <!-- Plugin JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
@@ -56,7 +56,7 @@
 	
 	@media (min-width: 1200px) {
 		#center {
-		margin-left:25%;
+		margin-left:26.5%;
         margin-right:5%;
 	}
 	
@@ -140,7 +140,7 @@
 	//============= 통계 이동 Event 처리 =============	
 	 $(function() {
 	 	$("#statistics").on("click" , function() {
-			self.location = "/view/statistics/statistics.jsp"
+			self.location = "/statistics/getListStatistics"
 		}); 
 	 });
 		
@@ -186,10 +186,6 @@
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
-<!-- ToolBar Start /////////////////////////////////////-->
-<%-- <jsp:include page="/view/common/toolbar.jsp" /> --%>
-<!-- ToolBar End   /////////////////////////////////////-->
-
     <!-- Navigation -->
     <nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
         <div class="container">
@@ -198,7 +194,7 @@
                     Menu <i class="fa fa-bars"></i>
                 </button>
                 <a class="navbar-brand page-scroll" href="#page-top">
-                    <i class="fa fa-play-circle"></i> NONSTOP
+                    NONSTOP
                 </a>
             </div>
 
@@ -263,42 +259,48 @@
                 <div class="row">
                 	<div class="col-md-10 col-md-offset-1">
                         <h1 class="brand-heading">NONSTOP</h1>
-                        <div class="margin-bottom-30"></div>
-                        <ul class="main-ul">
-                        	<li>
-                        		<h2>123</h2>
-                        		<p>개발자 포트폴리오</p>
-                        	</li>
-                        	<li>
-								<div class="verticle-line"><br/><br/><br/></div>
-                        	</li>                        	
-                        	<li>
-                        		<h2>123</h2>
-                        		<p>디자인 포트폴리오</p>
-                        	</li>
-                        	<li>
-                        		<div class="verticle-line"><br/><br/><br/></div>
-                        	</li>
-                        	<li>
-                        		<h2>123</h2>
-                        		<p>등록된 프로젝트</p>
-                        	</li>
-                        </ul>
+                        <div class="margin-bottom-20"></div>
+                        <div class="intro-main">
+	                        <ul class="main-ul">
+	                        	<li>
+	                        		<h1>123</h1>
+	                        		<p>개발자 포트폴리오</p>
+	                        	</li>
+	                        	<li>
+									<div class="verticle-line"><br/><br/><br/></div>
+	                        	</li>                        	
+	                        	<li>
+	                        		<h1>123</h1>
+	                        		<p>디자인 포트폴리오</p>
+	                        	</li>
+	                        	<li>
+	                        		<div class="verticle-line"><br/><br/><br/></div>
+	                        	</li>
+	                        	<li>
+	                        		<h1>123</h1>
+	                        		<p>등록된 프로젝트</p>
+	                        	</li>
+	                        </ul>
+                        </div>
+						<div class="margin-bottom-20"></div>	
 
+                       	<p class="intro-text">웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱<br/>포트폴리오 등록과 구인구직을 위한 프로젝트 등록 논스톱에서 한번에 해결하세요.<br/>
+                       	웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱포트폴리오 등록과 구인구직을 <br/>위한 프로젝트 등록 논스톱에서 한번에 해결하세요.</p>
 
-                       	<p class="intro-text">개발자, 디자이너 모집 및 프로젝트 진행을 논스톱에서 한번에 해결하세요.<br/> 뭐라고 써야할지 모르겠다 도움 필요.</p>
-
-                        <button class="sq_button" type="button">회원가입</button>
+						<div class="margin-bottom-50"></div>	
+						
+                        <button class="sq_button" type="button" style=" background-color: #ff6600">회원가입</button>
 						<button class="sq_button" type="button">일단, 둘러볼게요</button>			                        
                     
-                       	<div class="margin-top-30">
+                       	<div class="center-block">
                         <a href="#about" class="btn btn-circle page-scroll"> 
-                            <i class="fa fa-angle-double-down animated"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span> </i>
+                            <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
                         </a>
 						</div>
                 	</div>
                 </div>
             </div>
+            
         </div>
     </header>
 

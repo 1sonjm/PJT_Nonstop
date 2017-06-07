@@ -15,16 +15,16 @@
     <title>List_Portfolio</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
 
    <!-- jQuery -->
-    <script src="../../resources/javascript/jquery.js"></script>
+    <script src="/resources/javascript/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    <script src="/resources/javascript/bootstrap.min.js"></script>
     
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -50,8 +50,7 @@
             self.location="/portfolio/addPortfolio";
          }); 
          
-          $(".thumbnail").on("click" , function() {
-            alert($(this).find('input').val());            
+         $(".thumbnail").on("click" , function() {
             self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();
          }); 
          
@@ -85,56 +84,45 @@
             }
          });
          
-         
-         
       });
-      
-      
-      $(function() {
       /* 스크랩추가 */
-      $(".Scrap").on("click" , function() {
-
-            var flag = $(this).text().trim();
-            var requestTarget;
-            var asdf;
-            
-            alert(flag);
-            
-            
-            if(flag=="add to scrap"){
-               requestTarget = "addJsonPortScrap";
-               asdf = "delete to scrap";  
-               alert(1);
-            }else if(flag=="delete to scrap"){
-               requestTarget = "deleteJsonPortScrap";
-               asdf ="add to scrap"
-                  alert(2);
-            }else{
-               requestTarget == "deleteJsonPortScrap";
-                asdf ="add to scrap"
-                   alert(3);
-            }
-            alert(requestTarget+"컨트롤러 어디로가니");
-            alert(asdf);
-            
-             var portNo=$(this).attr('portNo');
-             $.ajax(
-                {
-                   url : "/profile/"+requestTarget+"/"+portNo,
-                   method : "GET",
-                   dateType : "json",
-                   headers : {
-                      "Accept" : "application/json",
-                     "Content-Type" : "application/json"   
-                 },
-                   success : function(JSONData , status){
-                      var displatValue = 
-                      "<button type='button' id='Scrap' portNo='${portfolio.portNo}'>"+asdf+"</button>";
-                      
-                      $(".Scrap").html(displayValue);
-                   }
+      $(function() {
+          
+          $(".Scrap").on("click" , function() {
+				
+                var flag = $(this).text().trim();
+                var requestTarget;
+                var asdf;
+                
+                if(flag=="add to scrap"){
+                   alert("해당 게시물을 스크랩합니다.");
+                   requestTarget = "addJsonPortScrap";
+                   asdf = "delete to scrap";  
+                }else if(flag=="delete to scrap"){
+                   alert("스크랩을 삭제합니다.");
+                   requestTarget = "deleteJsonPortScrap";
+                   asdf ="add to scrap"
+                }else{
+                   alert("스크랩을 삭제합니다.");
+                   requestTarget == "deleteJsonPortScrap";
+                   asdf ="add to scrap"
+                }
+                
+                 var portNo=$(this).attr('portNo');
+                 $.ajax(
+                    {
+                       url : "/profile/"+requestTarget+"/"+portNo,
+                       method : "GET",
+                       dateType : "json",
+                       headers : {
+                          "Accept" : "application/json",
+                         "Content-Type" : "application/json"   
+                     },
+                       success : function(data){
+                    	   		 location.reload();
+                     }
                 });
-             });
+           });
       });
    </script>
    <style>
@@ -196,8 +184,6 @@
       margin-bottom:80px;
    }
    /* 스크랩버튼 끝 */
-
-
 
    /* hover 효과 */
    
@@ -265,6 +251,32 @@
       max-width: 100%; 
       height: auto; 
    }
+   
+   .input-group-btn > .btn-success {      
+      background: #ebebeb;
+      border-color: #bdbdbd;
+   }
+   
+   #listUserImg {
+   	  margin-top: 12%;
+   	  margin-left: 25%;
+   	  margin-right: 25%;
+   }
+
+	blockquote {
+	  padding: 0;
+	  padding-right: 5%;
+	  border-left: 0;
+	}
+	
+	blockquote h6 {
+	  margin-top: 10%;
+	  margin-bottom: 3px;
+	  overflow: hidden; 
+	  text-overflow: ellipsis;
+	  white-space: nowrap; 
+	  width: 100%;
+	}
    </style>
 
 </head>
@@ -279,33 +291,56 @@
 <!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
    <div class="container"> <!-- <div class="container"> 獄�占쏙옙占쏙옙占� �⑨옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 / <div class="container-fluid"> ��怨�占싼�占쏙옙 占쏙옙筌ｋ��占쏙옙繹�占쏙�占� 占쏙옙占쎈��占쏙옙占쏙옙 筌ㅿ옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 -->
-      
-      <div class="margin-top-5">
-         <!-- Search-bar -->
+      <div class="input-group input-group-sm">
+      <div class="input-group-btn">
+        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span></button>
+        <ul class="dropdown-menu" role="menu">
+          <li><a href="#">Action</a></li>
+          <li><a href="#">Another action</a></li>
+          <li><a href="#">Something else here</a></li>
+          <li class="divider"></li>
+          <li><a href="#">Separated link</a></li>
+        </ul>
+      </div><!-- /btn-group -->
+      <span class="input-group-addon" id="sizing-addon3">@</span>
+      <input type="text" class="form-control" aria-label="...">
+      <span class="input-group-btn">
+        <button class="btn btn-success" type="button">검색</button>
+      </span>
+    </div><!-- /input-group -->
+  </div>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+<!--          Search-bar
          <div class="input-group input-group-sm">
-            <!-- 카테고리 선택 -->      
-            <div class="input-group-btn">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Actionsadsdff <span class="caret"></span></button>
-                   <ul class="dropdown-menu" role="menu">
-                  <li><a href="#">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-            </div>
-            <!-- 돋보기모양 -->
+            카테고리 선택                
+			<select class="form-control input-sm">
+			  <option>검색조건</option>
+			  <option>2</option>
+			  <option>3</option>
+			  <option>4</option>
+			  <option>5</option>
+			</select>
+		
+            돋보기모양
             <span class="input-group-addon">                   
                <span class="glyphicon glyphicon-search"></span>
             </span>
+            
             <input type="text" class="form-control" aria-label="...">
-            <!-- 검색버튼 -->
+            검색버튼
             <span class="input-group-btn">
-               <button class="btn btn-default" type="button">검색</button>
+               <button class="btn btn-success" type="button">검색</button>
             </span>         
-         </div>   
+         
       </div>
-      
+       -->
       <!-- ALL/WEB/APP 甕곤옙占쏙옙 -->
       <div class="row">   
          <div class="col-md-6 col-md-offset-3" align="center">
@@ -329,15 +364,13 @@
 
 <!-- Ranking type-->
 <div class="container"> 
-  <div class="margin-top-70">
-     <div class="margin-bottom-10">
+  <div class="margin-top-70"></div>
      <div class="text-center">   
       <span class="glyphicon glyphicon-tower" aria-hidden="true"></span>     
-       <h3 class="text-center">portfolio-ranking</h3>
+       <h3 class="text-center">PORTFOLIO - RANKING</h3>
        <p class="text-center">2017.05.10 - 2017.08.10 랭킹 순위</p>
      </div>
-     </div>
-  </div>
+  <div class="margin-bottom-30"></div>
 </div>  
 
 <!-- Ranking contents -->
@@ -345,52 +378,91 @@
     <div class="row">
       <div class="col-md-12">
            <div id="Carousel" class="carousel slide">
+               
+               <ol class="carousel-indicators">
+                   <li data-target="#Carousel" data-slide-to="0" class="active"></li>
+                   <li data-target="#Carousel" data-slide-to="1"></li>
+                   <li data-target="#Carousel" data-slide-to="2"></li>
+               </ol>
                 
-                <ol class="carousel-indicators">
-                    <li data-target="#Carousel" data-slide-to="0" class="active"></li>
-                    <li data-target="#Carousel" data-slide-to="1"></li>
-                    <li data-target="#Carousel" data-slide-to="2"></li>
-                </ol>
-                 
-                <!-- Carousel items -->
-                <div class="carousel-inner">
-                    
-                   <div class="item active">
-                      <div class="row">
-                        <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                        <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                        <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                        <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                      </div><!--.row-->
-                   </div><!--.item-->
-                    
-                   <div class="item">
-                      <div class="row">
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                      </div><!--.row-->
-                   </div><!--.item-->
-                    
-                   <div class="item">
-                      <div class="row">
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                         <div class="col-md-3"><a href="#" class="thumbnail"><img src="http://placehold.it/250x250" alt="Image" style="max-width:100%;"></a></div>
-                      </div><!--.row-->
-                   </div><!--.item-->
-                 
-                </div><!--.carousel-inner-->
-                
-                <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
-                <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
-            </div><!--.Carousel-->
-                 
+               <!-- Carousel items -->
+               <div class="carousel-inner">
+                     
+				<c:set var="i" value="0"/>
+				<c:forEach var="portfolio" items="${list}" >
+				<c:set var="i" value="${i+1}"/>
+				
+				<c:if test="${i==1}">
+				<div class="item active">
+					<div class="row">
+				</c:if>    
+				
+				<c:if test="${i%4==1 && i>1}">
+				<div class="item">
+					<div class="row">
+				</c:if>    
+	         
+		           <div class="col-md-3 col-sm-6">
+		                <div class="thumbnail">
+		                   <figure class="effect-sadie">
+		                   <input type="hidden" id="portNo" name="portNo" value="${portfolio.portNo}"/>
+		                                      
+		                      <div class="thumbnail-portImage">
+		                          <img src="/resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">                       
+		                       </div>   
+		                       <div class="caption">
+		                           
+		                           <blockquote>
+		                          <div class="row">
+		                            <div class="col-sm-3 text-center">
+		                              <img class="img-circle" src="/resources/images/upload/${sessionScope.user.image}" id="listUserImg" width="50px" height="50px">
+		                              <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/>                         
+		                            </div>
+		                            <div class="col-sm-9">
+		                              <h6>${portfolio.portTitle}</h6>
+		                              <small>${portfolio.portUserId}</small>
+		                            </div>
+		                            <figcaption>          
+		                               <p class="hover__active">
+		                                   <span class="glyphicon glyphicon-search" aria-hidden="false"></span>
+		                                   view portfolio<br/>
+		                                   <c:if test="${portfolio.scrapNo != 0}">
+		                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
+		                                   </c:if>
+		                                   
+		                                   <c:if test="${portfolio.scrapNo ==0}">
+		                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
+		                                   </c:if>
+		                                   
+		                                                                   
+		                                 </p>
+			                           <p class="text-center">                            
+			                              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> ${portfolio.totalPortView} &ensp;&ensp;&ensp;&ensp;&ensp;
+			                              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ${portfolio.totalPortLike} &ensp;&ensp;&ensp;&ensp;&ensp;
+			                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ${portfolio.totalPortComment}
+			                           </p> 
+		                        	</figcaption>
+		                          </div>
+		                        </blockquote>                                        
+		                                 
+		                       </div>
+		                    </figure>
+		                </div>
+		            </div>   
+	         
+		   	 <c:if test="${i%4==0}">        
+		         </div>
+		     </div>  
+		   	 </c:if>
+		   
+			 </c:forEach>
+           
+          </div><!--.Carousel-->
       </div>
+      <a data-slide="prev" href="#Carousel" class="left carousel-control">‹</a>
+   	  <a data-slide="next" href="#Carousel" class="right carousel-control">›</a>
    </div>
-</div><!--.container-->
+</div>
         
 
 <div class="container">
@@ -430,7 +502,7 @@
                            <blockquote>
                           <div class="row">
                             <div class="col-sm-3 text-center">
-                              <img class="img-circle" src="http://placehold.it/50x50" style="width: 50px;height:50px;">
+                              <img class="img-circle" src="http://placehold.it/50x50" id="listUserImg" style="width: 50px;height:50px;">
                               <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/>                         
                             </div>
                             <div class="col-sm-9">
@@ -451,12 +523,12 @@
                                    
                                                                    
                                  </p>
-                           <p class="text-center">                            
-                              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> ${portfolio.totalPortView} &ensp;&ensp;&ensp;&ensp;&ensp;
-                              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ${portfolio.totalPortLike} &ensp;&ensp;&ensp;&ensp;&ensp;
-                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ${portfolio.totalPortComment}
-                           </p> 
-                        </figcaption>
+	                           <p class="text-center">                            
+	                              <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> ${portfolio.totalPortView} &ensp;&ensp;&ensp;&ensp;&ensp;
+	                              <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> ${portfolio.totalPortLike} &ensp;&ensp;&ensp;&ensp;&ensp;
+	                              <span class="glyphicon glyphicon-edit" aria-hidden="true"></span> ${portfolio.totalPortComment}
+	                           </p> 
+                        	</figcaption>
                           </div>
                         </blockquote>                                        
                                  

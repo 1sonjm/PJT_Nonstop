@@ -14,16 +14,16 @@
     
     
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
     
     <!-- jQuery -->
-	<script src="../../resources/javascript/jquery.js"></script>
+	<script src="/resources/javascript/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="../../resources/javascript/bootstrap.min.js"></script>
+	<script src="/resources/javascript/bootstrap.min.js"></script>
 	
     <style>	
     legend {

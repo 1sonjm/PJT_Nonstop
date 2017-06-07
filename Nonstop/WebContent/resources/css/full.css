@@ -31,13 +31,13 @@ html {
   width: 100%;
   height: 100%;
 }
-h1 {
-  text-transform: uppercase; /* �빮�ڷ� ���� */
+/* h1 {
+  text-transform: uppercase; 占쎈문占쌘뤄옙 占쏙옙占쏙옙
   font-size: 40px;
   font-weight: 900;
 }
 h2 {
-  text-transform: uppercase; /* �빮�ڷ� ���� */
+  text-transform: uppercase; 占쎈문占쌘뤄옙 占쏙옙占쏙옙
   font-size: 32px;
   font-weight: 700;
 }
@@ -47,7 +47,7 @@ h3 {
   font-weight: 700;
 }
 h4 {
-  text-transform: uppercase; /* �빮�ڷ� ���� */
+  text-transform: uppercase; 占쎈문占쌘뤄옙 占쏙옙占쏙옙
   font-size: 18px;
   font-weight: 700;
   letter-spacing: 0.2em;
@@ -60,7 +60,7 @@ h6 {
   font-size: 14px;
   font-weight: 700;
 }
-
+ */
 .sq_button {
     display: inline-block;
     width:200px;
@@ -68,7 +68,7 @@ h6 {
     margin: 5px;
     /* padding: 10px 30px; */
     text-transform:uppercase;
-   	font-size: 14px;
+   	font-size: 15px;
    	font-weight: 200;
   	line-height: 1.5;
    	border-radius: 0;
@@ -102,8 +102,8 @@ h6 {
     margin-right: 40px;
 }
 .main-ul p{
-	font-size: 12px;
-	color: #74e6dd;
+	font-size: 15px;
+	color: #ff7416;
 	font-weight: 500;
 }
 .verticle-line {
@@ -118,8 +118,8 @@ h6 {
 
 @media (min-width: 768px) {
   p {
-    font-size: 16px;
-    line-height: 1.5em;
+    font-size: 15px;
+    line-height: 1.9em;
   }
 }
 a {
@@ -185,13 +185,13 @@ a:focus {
   color: white;
 }
 
-/* 2��° nav */
+/* 2占쏙옙째 nav */
 .navbar-static-top {
   padding-top: 30px;
   height: 140px;
 }
 
-/* ī�װ� */
+/* 카占쌓곤옙 */
 .breadcrumb{
   margin-top: 30px;
   margin-bottom: 5px;	
@@ -349,7 +349,7 @@ a:focus {
   padding: 100px 0;
   text-align: center;
   color: white;
-  background: url(../../resources/images/layout/main.jpg) no-repeat bottom center scroll;
+  background: url(../../resources/images/layout/main-bg.jpg) no-repeat bottom center scroll;
   background-color: black;
   -webkit-background-size: cover;
   -moz-background-size: cover;
@@ -368,8 +368,9 @@ a:focus {
   font-color: #fff;
 }
 .intro .intro-body .intro-text {
-  font-size: 14px;
+  font-size: 15px;
 }
+
 
 @media (min-width: 768px) {
   .intro {
@@ -379,20 +380,32 @@ a:focus {
   .intro .intro-body .brand-heading {
     font-size: 50px;
   	text-transform:uppercase;
-  	font-weight: 900;
+  	font-weight: 700;
   	letter-spacing : 0.2em;
   	font-color: #fff;
+  	margin-bottom: 7px;
   }
   .intro .intro-body .intro-text {
-   	font-size: 14px;
+   	font-size: 15px;
+  }
+  .intro-main {
+    width: 85%;
+    background-color: rgba(0, 0, 0, 0.4);
+    margin: 0 auto;
+    padding: 13 0;
+    border-radius: 20px;
+  
   }
 }
+
 .btn-circle {
+  position: fixed;
   width: 70px;
   height: 70px;
-  margin-top: 15px;
-  padding: 7px 16px;
-  border: 2px solid white;
+  margin-top: 3%;
+  margin-left: -2.3%;
+  padding: 14px 14px;
+  border: 2px solid #666666;
   border-radius: 100% !important;
   font-size: 40px;
   color: white;
@@ -614,13 +627,13 @@ body {
   webkit-tap-highlight-color: rgba(255, 255, 255, 0.2);
 }
 
-/* ��Ʈ������ ĸ�� */
+/* 占쏙옙트占쏙옙占쏙옙占쏙옙 캡占쏙옙 */
 .caption {
 	width: 252.5px;
 	height: 80px;
 }
 
-/* ��Ʈ������ ���� ���� pagination-dot */
+/* 占쏙옙트占쏙옙占쏙옙占쏙옙 占쏙옙占쏙옙 占쏙옙占쏙옙 pagination-dot */
 .dot_pagination {
   text-align: center;
 }
@@ -687,13 +700,13 @@ body {
 }
 
 
-/* ��Ʈ������ glyphicon */
+/* 占쏙옙트占쏙옙占쏙옙占쏙옙 glyphicon */
 .glyphicon.glyphicon-tower {
   font-size: 30px;
-  color: #cacaca;
+  color: rgb(223, 105, 26);
 }
 
-/* ��Ʈ������ second-nav ��ư */
+/* 占쏙옙트占쏙옙占쏙옙占쏙옙 second-nav 占쏙옙튼 */
 .button {
 	margin-top: 20px;
 	margin-left: 10px;
@@ -721,37 +734,38 @@ body {
 
 .button-neutral{
     color: #777;
-    border-color: #ddd;
+    border-color: #bdbdbd;
 }
 .button-neutral:hover{
     color: #fff;
     background-color: #555;
 }
 
-/* carousel 명예의전당*/
+/* carousel 紐낆삁�쓽�쟾�떦*/
 /* Removes the default 20px margin and creates some padding space for the indicators and controls */
 .carousel {
     margin-bottom: 0;
-    padding: 0 40px 30px 40px;
+    padding-left: 15px;
 }
 /* Reposition the controls slightly */
 .carousel-control {
-	left: -12px;
+	position: absolute;
+	left: -70px;
     height: 40px;
 	width: 40px;
     background: none repeat scroll 0 0 #222222;
     border: 4px solid #FFFFFF;
     border-radius: 23px 23px 23px 23px;
-    margin-top: 90px;
+    margin-top: 105px;
 }
 .carousel-control.right {
-	right: -12px;
+	right: -70px;
 }
 /* Changes the position of the indicators */
 .carousel-indicators {
 	right: 50%;
 	top: auto;
-	bottom: -10px;
+	bottom: -25px;
 	margin-right: -19px;
 }
 /* Changes the colour of the indicators */

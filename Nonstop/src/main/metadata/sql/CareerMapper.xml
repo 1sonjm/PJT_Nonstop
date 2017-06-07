@@ -10,11 +10,11 @@
  	
 	<resultMap id="careerSelectMap" type="career">
 		<result property="careerNo" 			column="career_no" 			jdbcType="NUMERIC"/>
-		<result property="careerUserId"			column="career_user_id" 			jdbcType="VARCHAR" />
-		<result property="techNo" 				column="career_tech_no" 		jdbcType="NUMERIC" />
+		<result property="careerUserId"			column="career_user_id" 	jdbcType="VARCHAR" />
+		<result property="techNo" 				column="career_tech_no" 	jdbcType="NUMERIC" />
 		<result property="careerUseTerm" 		column="career_use_month"	jdbcType="NUMERIC" />
-		<result property="techDiv" 				column="tech_class" 		jdbcType="NUMERIC" />
-		<result property="techName" 			column="tech_name"	jdbcType="VARCHAR" />
+		<result property="techName" 			column="tech_name"			jdbcType="VARCHAR" />
+		<result property="techClass" 			column="tech_class"			jdbcType="NUMERIC" />
 		</resultMap>
 	
 	
@@ -29,21 +29,26 @@
 	 </insert>
 	 
 	 <select  id="getListCareer"  parameterType="String"	resultMap="careerSelectMap">
-			SELECT c.career_tech_no , c.career_use_month , c.career_no , c.career_user_id
+			SELECT c.career_tech_no , c.career_use_month , c.career_no , c.career_user_id, t.tech_class
              FROM career c ,tech t
              WHERE c.career_user_id=#{careerUserId} AND t.tech_no= c.career_tech_no 
 
           
 	 </select>
 	 
-	  <select  id="getCareer"  parameterType="int"	resultMap="careerSelectMap">
-			SELECT c.career_tech_no , c.career_use_month
+	  <select  id="getCareer"  parameterType="map"	resultMap="careerSelectMap">
+			SELECT c.career_tech_no , c.career_use_month,t.tech_class
              FROM career c ,tech t
-             WHERE c.career_no=#{careerNo} AND t.tech_no= c.career_tech_no 
-
-          
+             WHERE c.career_no=#{careerNo} AND t.tech_no= c.career_tech_no AND t.tech_class=#{techClass}
 	 </select>
 	 
+	 <select  id="getListTechClass"	resultMap="careerSelectMap">
+			SELECT tech_class 
+			FROM tech
+			GROUP BY tech_class
+	 </select>
+	 
+	
 	 <update id="updateCareer" parameterType="career">
 		UPDATE career
 		<set>

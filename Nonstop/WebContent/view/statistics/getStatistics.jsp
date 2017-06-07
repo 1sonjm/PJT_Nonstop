@@ -18,7 +18,7 @@
 
 <!--	///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="/resources/css/bootstrap-theme.css">
+<link rel="stylesheet" href="/resources/css/nonstop.css">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 
@@ -48,6 +48,9 @@
 <style type="text/css">
 .ui-datepicker-year{
 		display:none;
+}
+.container{
+	padding-top: 50px
 }
 </style>
 <script type="text/javascript">
@@ -83,7 +86,13 @@ function getJsonDataList(type,addr){
 					highMap.init('???');
 					break;
 				case "techData":
-					return jsonData;
+					document.querySelector("#selectTechData").innerHTML = "";
+					for(var i=0;i<jsonData.techDataList.length;i++){
+						document.querySelector("#selectTechData").innerHTML 
+							+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
+										+jsonData.techDataList[i].techName
+									+"</option>";
+					}
 					break;
 				}
 			}else{
@@ -94,8 +103,8 @@ function getJsonDataList(type,addr){
 }
 function combineDate(input,count){
 	var d = new Date(input);
-	d.setMonth(d.getMonth()+1+count);
-	return d.getFullYear()+"/"+d.getMonth()+"/"+d.getDate();
+	d.setMonth(d.getMonth()+count);
+	return new Date(d.getFullYear(),d.getMonth(),d.getDate());
 }
 
 $(function(){
@@ -157,25 +166,11 @@ $(function(){
 	
 	//동적 기술목록 호출
 	$('#selectTechClass').on('change',function(){
-		var a = "?techClass="+document.querySelector('#selectTechClass').value
-		$.ajax("/statistics/getJSONListTechData"+a,{
-			method : "POST" ,
-			dataType : "json" ,
-			headers : {
-				"Accept" : "application/json",
-				"Content-Type" : "application/json"
-			},
-			success : function(jsonData) {
-				//console.log(jsonData.techDataList[0].techName);
-				document.querySelector("#selectTechData").innerHTML = "";
-				for(var i=0;i<jsonData.techDataList.length;i++){
-					document.querySelector("#selectTechData").innerHTML 
-						+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
-									+jsonData.techDataList[i].techName
-								+"</option>";
-				}
-			}
-		});
+		getJsonDataList("techData","getJSONListTechData");
+	})
+	$('#daterange').on('change',function(){
+		$('input[name="dateStart"]').val($('#daterange').val().split(' ~ ')[0]);
+		$('input[name="dateEnd"]').val($('#daterange').val().split(' ~ ')[1]);
 	})
 	
 	//달력 생성
@@ -186,8 +181,7 @@ $(function(){
 					"지난 1개월 간": [combineDate(nowDate,-1),nowDate],
 					"지난 3개월 간": [combineDate(nowDate,-3),nowDate],
 					"지난 6개월 간": [combineDate(nowDate,-6),nowDate],
-					"지난 1년 간": [combineDate(nowDate,-12),nowDate],
-					"지난 3년 간": [combineDate(nowDate,-36),nowDate]
+					"지난 1년 간": [combineDate(nowDate,-12),nowDate]
 			},
 			"locale": {
 					"format": "YYYY/MM/DD",
@@ -201,9 +195,9 @@ $(function(){
 			},
 			"showCustomRangeLabel": false,
 			"alwaysShowCalendars": true,
-			"startDate": combineDate(nowDate,-6),
+			"startDate": combineDate(nowDate,-1),
 			"endDate": nowDate,
-			"minDate": combineDate(nowDate,-40),//자료의 최초값 넣기
+			"minDate": combineDate(nowDate,-36),//자료의 최초값 넣기
 			"maxDate": nowDate,
 			"opens": "left"
 	}, function(start, end, label) {
@@ -222,9 +216,8 @@ function aa(){
 <jsp:include page="/view/common/toolbar.jsp" />
 
 <div class="container">
-	<h2>Dynamic Tabs</h2>
 	<button onclick="aa()">채팅창으로 이동</button>
-	<p>To make the tabs toggleable, add the data-toggle="tab" attribute to each link. Then add a .tab-pane class with a unique ID for every tab and wrap them inside a div element with class .tab-content.</p>
+	
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>
@@ -260,7 +253,7 @@ function aa(){
 			</div>
 		</div>
 		<div class="col-md-2">
-			<button type="button" class="btn btn-primary btn-lg btn-block" id="search">조회</button>
+			<button type="button" class="btn btn-default btn-lg btn-block" id="search">조회</button>
 		</div>
 		<div class="col-md-5" id="searchTarget">
 			<span class="text-left">조회 대상</span>

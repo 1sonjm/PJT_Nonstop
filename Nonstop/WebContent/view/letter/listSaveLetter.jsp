@@ -636,9 +636,9 @@ ul {
                       </div>
                       <div class="inbox-body">
                          <div class="mail-option">
-                             <div class="chk-all">
+                             <!-- <div class="chk-all"> -->
                                  <!-- <input type="checkbox" class="mail-checkbox mail-group-checkbox"> -->
-                                 <div class="btn-group">
+                                 <!-- <div class="btn-group">
                                      <a data-toggle="dropdown" href="#" class="btn mini all" aria-expanded="false">
                                          All
                                          <i class="fa fa-angle-down "></i>
@@ -648,8 +648,8 @@ ul {
                                          <li><a href="#"> Read</a></li>
                                          <li><a href="#"> Unread</a></li>
                                      </ul>
-                                 </div>
-                             </div>
+                                 </div> -->
+                          <!--    </div> -->
 
                              <!-- <div class="btn-group">
                                  <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
@@ -662,9 +662,9 @@ ul {
                                      <i class="fa fa-angle-down"></i>
                                  </a>
                                  <ul class="dropdown-menu">
-                                     <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                                    <!--  <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li> -->
-                                     <li class="divider"></li>
+                                     <!-- <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
+                                     <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
+                                     <li class="divider"></li> -->
                                      <li><a href="#" id="deleteLetter" letNo="${letter.letNo}"><i class="fa fa-trash-o" ></i> Delete</a></li>
                                  </ul>
                              </div>

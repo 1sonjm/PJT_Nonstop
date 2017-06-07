@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -36,12 +36,36 @@
 				//self.location ="/profile/addCareer?techNo="+$(this).attr('techNo')+"&careerUseTerm="+$(this).attr('careerUseTerm');
 				//$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
 				});
- 
+ 			
+			 $('#selectTechClass').on('change',function(){
+					var a = "?techClass="+document.querySelector('#selectTechClass').value
+					$.ajax("/statistics/getJSONListTechData"+a,{
+						method : "POST" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(jsonData) {
+							//console.log(jsonData.techDataList[0].techName);
+							document.querySelector("#selectTechData").innerHTML = "";
+							for(var i=0;i<jsonData.techDataList.length;i++){
+								document.querySelector("#selectTechData").innerHTML 
+									+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
+												+jsonData.techDataList[i].techName
+											+"</option>";
+							}
+						}
+					});
+				})
 		});	
 		 function fncAddCareer(){
 		 	
 		 	$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
 		 }
+		 
+		//동적 기술목록 호출
+			
 	
 	</script>		
     
@@ -57,18 +81,47 @@
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
-		  <div class="form-group">
+		 
 		  
-		    <label for="techNo" class="col-sm-offset-1 col-sm-3 control-label">기술명</label> 
-		    <div class="col-sm-4" id="techNo">
+		    <label for="techNo" class="col-sm-offset-1 col-sm-3 control-label">분류</label> 
+		    <!-- <div class="col-sm-4" id="techNo">
 		     
 		    <select class="form-control" name="techNo" >
 			 <option value="1000">JAVA</option>
 			 <option value="1001">python</option>
 			 <option value="1002">php</option>
 			</select>
-		    </div>
-		  </div>  
+		    </div> -->
+		    
+			<div class="form-group">
+			<div class="col-md-2">
+				<select class="form-control" id="selectTechClass" name="techClass">
+					<c:forEach var="classValue" items="${techClassList}" begin="0" step="1">
+						<option value="${classValue.techClass}">
+							<c:choose>
+								<c:when test="${classValue.techClass == 1}">Language</c:when>
+								<c:when test="${classValue.techClass == 2}">Framework</c:when>
+								<c:when test="${classValue.techClass == 3}">DBMS</c:when>
+							</c:choose>
+						</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		
+		
+		<label for="techNo" class="col-sm-offset-1 col-sm-3 control-label">기술명</label> 
+			<div class="form-group" id="TechData">
+			<div class="col-md-3">
+				
+				<select class="form-control" id="selectTechData"name="techNo" >
+					<c:forEach var="career" items="${techDataList}" begin="0" step="1">
+						<option value="${career.techNo}">${career.techName}</option>
+					</c:forEach>
+				</select>
+			</div>
+		</div>
+		  
 		  
 		  <div class="form-group">
 		    <label for="careerUseTerm" class="col-sm-offset-1 col-sm-3 control-label">사용기간</label>
