@@ -86,9 +86,9 @@ public class ProfileController {
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
 		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
-		
+
 		int projDivision = 1;
-		List<Project> project = projectService.listProject(projDivision, scrapUserId);
+		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
 		
 		String reqUserId = scrapUserId;
 		
@@ -97,7 +97,7 @@ public class ProfileController {
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
-		model.addAttribute("list4" , project);
+		//model.addAttribute("list4" , project);
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
 		
@@ -233,12 +233,12 @@ public class ProfileController {
 		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
 		
 		int projDivision = 1;
-		List<Project> project = projectService.listProject(projDivision, scrapUserId);
+		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
 		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
-		model.addAttribute("list4" , project);
+		//model.addAttribute("list4" , project);
 		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
