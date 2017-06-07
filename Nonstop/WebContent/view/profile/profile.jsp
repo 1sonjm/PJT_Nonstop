@@ -20,12 +20,10 @@
     <title>DASHGUM - FREE Bootstrap Admin Template</title>
 
     <!-- Bootstrap Core CSS -->
-      <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -38,7 +36,7 @@
 <script type="text/javascript">
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#addCareer").on("click" , function() {
+ 	$(".addCareer").on("click" , function() {
  		self.location = "/profile/addCareerView";
 	}); 
 	
@@ -158,7 +156,7 @@ $(function() {
 	    padding-top: 0px;
 	    width: 100%;
 	}
-	.img-circle{
+	#profileImg{
 	display : block;
 	margin-left : auto;
 	margin-right : auto;
@@ -188,7 +186,7 @@ $(function() {
               
               <br/><br/><br/><br/><br/><br/>
              
-              	  <img src="../../resources/images/upload/${user.image}" class="img-circle" width="160px">
+              	  <img src="../../resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
               	  <h5 class="text-center">${user.userId}</h5>
               	  <p class="text-center">${user.addr}</p>
               	  
@@ -222,6 +220,26 @@ $(function() {
 		      		<div class="col-sm-12 text-center">
 					 <span class="listFollow" reqUserId="${user.userId}">
 		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button>
+		      		<ul class="nav nav-pills nav-stacked labels-info inbox-divider">
+                          <li> <h4>Followers</h4> </li>
+                           <c:set var="i" value="0" />
+		  					<c:forEach var="follow" items="${follow}">
+							<c:set var="i" value="${ i+1 }" />
+							
+                          <li> 
+                          <a href="#" class="followProfile" userId="${user.userId}"> 
+                          <i class=" fa fa-sign-blank text-danger"></i> 
+                          ${follow.targetUserId} 
+                          </a> 
+                          
+                          </li>
+                         <!--  <li> <a href="#"> <i class=" fa fa-sign-blank text-success"></i> Design </a> </li>
+                          <li> <a href="#"> <i class=" fa fa-sign-blank text-info "></i> Family </a>
+                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-warning "></i> Friends </a>
+                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-primary "></i> Office </a>
+                          </li> -->
+                          </c:forEach>
+                      </ul> 
 		      		</span>
 		      		</div>
 		      		</c:if>	
@@ -253,13 +271,19 @@ $(function() {
 					    <c:if test="${user.role=='2'}">
 					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
 					    </c:if>
-					    <c:if test="${follow.reqUserId  == career.careerUserId}"> 
-					    <li role="presentation"><a href="#Scrap" aria-controls="Scrap" role="tab" data-toggle="tab" id=scrap>Scrap</a></li>
+
+					 	<c:if test="${user.userId  == sessionScope.user.userId}"> 
+					    <li role="presentation"><a href="#projectScrap" aria-controls="projectScrap" role="tab" data-toggle="tab" >projectScrap</a></li>
+					 	</c:if>
+					 	
+					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
+					    <li role="presentation"><a href="#portfolioScrap" aria-controls="portfolioScrap" role="tab" data-toggle="tab" >portfolioScrap</a></li>
 					 	</c:if>
 					  </ul>
 			
 					  <!-- Tab panes -->
 					  <div class="tab-content">
+					  
 					    <div role="tabpanel" class="tab-pane active" id="Profile">
 					   <c:if test="${user.role=='2'}">
 					    <jsp:include page="/view/profile/listCareer.jsp" /> 
@@ -267,21 +291,26 @@ $(function() {
 					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
 					    </div>
 					    
-					    <div role="tabpanel" class="tab-pane" id="Portfolio">
-							<%-- <jsp:include page="/view/portfolio/Listportfolio.jsp" />  --%>
-						</div>
-						 <div role="tabpanel" class="tab-pane" id="Project">rffherg</div>
-					    <div role="tabpanel" class="tab-pane" id="Scrap">
-					    
-							<h3>스크랩 목록보기</h3> 
-							<br/>
-					    <button type="button" class="btn btn-default" id="portfolio" >포트폴리오</button> 
-					    <button type="button" class="btn btn-default" id="project" >프로젝트</button>
+					  <div role="tabpanel" class="tab-pane" id="Portfolio">
+					    	<br/> <h5>내가올린 포트폴리오 목록보기</h5> <br/>
+					   <jsp:include page="/view/profile/listMyPort.jsp" />
+						</div> 
+						
+						 <div role="tabpanel" class="tab-pane" id="Project">
+						 	<br/> <h5>내가올린 프로젝트 목록보기</h5> <br/>
+						 </div>
+						 
+					    <div role="tabpanel" class="tab-pane" id="portfolioScrap">
+							<br/> <h5>포트폴리오 스크랩 목록보기</h5> <br/>
 					   		<jsp:include page="/view/profile/listPortScrap.jsp"/>
 					    </div>
+					    
+					    <div role="tabpanel" class="tab-pane" id="projectScrap">
+							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
+					   		<jsp:include page="/view/profile/listProjScrap.jsp"/>
+					    </div> 
 					   
 					  </div>
-					
 					</div>
 				</div>
 			</div>

@@ -57,13 +57,10 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception {
-	
 		return profileDAO.getFollowList(reqUserId);
 	}
 
 	public Follow getFollow(String reqUserId , String targetUserId) throws Exception {
-		System.out.println("+++++++++++++++++++++++++++++++++++++++"+reqUserId);
-		System.out.println("+++++++++++++++++++++++++++++++++++++++"+targetUserId);
 		return profileDAO.getFollow(reqUserId , targetUserId);
 	}
 	

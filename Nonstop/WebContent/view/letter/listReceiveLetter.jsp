@@ -409,6 +409,14 @@ ul {
 	<script type="text/javascript">
 	 $(function(){
 		 
+		 
+	       $('textarea').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
 		 //메일전송
 		 $("#send").on("click", function(){
 			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
@@ -556,7 +564,8 @@ ul {
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">Mail</label>
                                                   <div class="col-lg-10">
-                                                      <textarea rows="10" cols="30" name="letDetail" placeholder="2000자까지 입력가능" class="form-control" id="" name=""></textarea>
+                                                      <textarea maxlength="2000" rows="10" cols="30" name="letDetail" placeholder="2000자까지 입력가능" class="form-control" ></textarea>
+                                                  	  <br/> 2000/<span id="chars">2000</span>
                                                   </div>
                                               </div>
 
