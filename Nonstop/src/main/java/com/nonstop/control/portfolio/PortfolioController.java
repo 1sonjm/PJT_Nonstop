@@ -177,7 +177,7 @@ public class PortfolioController {
 		int portViewCount = portfolio.getTotalPortView();
 		portfolio.setTotalPortView(++portViewCount);
 		portfolio.setPortViewFlag(true);		
-		portfolioService.updatePortfolio(portfolio);
+		portfolioService.updatePortCount(portfolio);
 		
 		//수정된 게시물의 경우 
 		if(portfolio.getPortUpdate() != null){
@@ -222,12 +222,9 @@ public class PortfolioController {
 	}
 
 	@RequestMapping(value="updatePortfolio", method=RequestMethod.GET)
-	public String updatePortfolio(Model model, HttpSession session) throws Exception {
+	public String updatePortfolio(@RequestParam("portNo") int portNo, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("updatePortfolio Controller");
-		
-		//getPortfolio.jsp에서 hidden 태그로 숨겨서 가져와야햇!!! 나중에수정햇!!
-		int portNo = 10;
 		
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
@@ -279,6 +276,14 @@ public class PortfolioController {
 		return "forward:/view/portfolio/getPortfolio.jsp";
 	}
 	
+	@RequestMapping(value="deletePortfolio")
+	public String deletePortfolio(@RequestParam("portNo") int portNo) throws Exception {
+		
+		portfolioService.deletePortfolio(portNo);
+		
+		return "forward:/index.jsp";
+	}
+	
 	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
 	public void addJsonComment( @ModelAttribute("portComment") PortComment portComment, HttpSession session, Model model ) throws Exception {
 		
@@ -304,20 +309,33 @@ public class PortfolioController {
 	public void addJsonPortLike(@ModelAttribute("portLike") PortLike portLike) throws Exception{
 		
 		System.out.println("/portfolio/addJsonPortLike");
-	
+		
+		Portfolio portfolio = portfolioService.getPortfolio(portLike.getPortNo(), portLike.getUserId());
+		//클릭시 추천수 추가
+		portfolio.setTotalPortLike(portfolio.getTotalPortLike()+1);
+		portfolio.setPortLikeFlag(true);
+		portfolioService.updatePortCount(portfolio);
+		
 		portfolioService.addPortLike(portLike);
 		
-
 	}
 	
-	@RequestMapping(value="delJsonPortLike/{portLikeNo}" , method=RequestMethod.GET)
-	public void delJsonPortLike(@PathVariable("portLikeNo") int portLikeNo) throws Exception{
+	@RequestMapping(value="delJsonPortLike" , method=RequestMethod.POST)
+	public void delJsonPortLike(@ModelAttribute("portLike") PortLike portLike) throws Exception{
 		
 		System.out.println("/portfolio/delJsonPortLike");
 	
-		portfolioService.deletePortLike(portLikeNo);
+		Portfolio portfolio = portfolioService.getPortfolio(portLike.getPortNo(), portLike.getUserId());
 		
-
+		System.out.println("djfjowiejfojofgmkfl : "+portfolio.getTotalPortLike());
+		
+		//클릭시 추천수 감소
+		portfolio.setTotalPortLike(portfolio.getTotalPortLike()-1);
+		portfolio.setPortLikeFlag(true);
+		portfolioService.updatePortCount(portfolio);
+		
+		portfolioService.deletePortLike(portLike.getPortLikeNo());
+		
 	}
 
 }

@@ -98,5 +98,17 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		sqlSession.delete("PortfolioMapper.deletePortLike", portLikeNo);
 	}
 
+	@Override
+	public void updatePortCount(Portfolio portfolio) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("PortfolioMapper.updatePortCount", portfolio);
+	}
+
+	@Override
+	public void deletePortfolio(int portNo) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("PortfolioMapper.deletePortfolio", portNo);
+	}
+
 
 }

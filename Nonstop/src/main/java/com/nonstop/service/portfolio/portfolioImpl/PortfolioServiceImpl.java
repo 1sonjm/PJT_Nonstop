@@ -87,6 +87,18 @@ public class PortfolioServiceImpl implements PortfolioService{
 		// TODO Auto-generated method stub
 		portfolioDAO.deletePortLike(portLikeNo);
 	}
+
+	@Override
+	public void updatePortCount(Portfolio portfolio) throws Exception {
+		// TODO Auto-generated method stub
+		portfolioDAO.updatePortCount(portfolio);
+	}
+
+	@Override
+	public void deletePortfolio(int portNo) throws Exception {
+		// TODO Auto-generated method stub
+		portfolioDAO.deletePortfolio(portNo);
+	}
 	
 	
 	

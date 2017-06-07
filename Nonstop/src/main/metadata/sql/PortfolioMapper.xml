@@ -18,6 +18,8 @@
 		<result property="portFile" 		column="port_file" 				jdbcType="VARCHAR" />
 		<result property="portDetail" 		column="port_detail" 			jdbcType="VARCHAR"  />
 		<result property="totalPortView" 	column="port_viewcount" 		jdbcType="NUMERIC" />
+		<result property="totalPortLike" 	column="port_like_count" 		jdbcType="NUMERIC" />
+		<result property="totalPortComment" column="port_com_count" 		jdbcType="NUMERIC" />
 		<result property="portLikeNo" 		column="port_like_no" 			jdbcType="NUMERIC" />
 		<result property="scrapUserId"		column="user_id"				jdbcType="VARCHAR"/>
 		<result property="scrapNo"			column="scrap_no"				jdbcType="NUMERIC"/>
@@ -62,7 +64,7 @@
 		WHERE port_no = #{portNo} -->
 		
 		
-		SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount, s.scrap_no, l.port_like_no, l.port_no
+		SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount, p.port_like_count, p.port_com_count, s.scrap_no, l.port_like_no, l.port_no
 		FROM portfolio p,
 			(SELECT port_like_no, port_no, user_id FROM port_like WHERE user_id=#{sessionUserId}) l, 
 			(SELECT scrap_no, port_no FROM scrap WHERE user_id=#{sessionUserId}) s
@@ -75,7 +77,7 @@
 		FROM
 		(SELECT inner_table.*, users.user_img, users.user_id, ROWNUM AS row_seq
 			FROM 
-			(SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
+			(SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no
 			     	FROM portfolio p, (select * from scrap where user_id=#{sessionUserId}) a
 				    <where>
 				        p.port_no=a.port_no(+) AND
@@ -103,17 +105,33 @@
 		<set>
 		port_division=#{portDivision}, 
 		port_title=#{portTitle},
-		<if test="portViewFlag == true">
-			port_viewcount=#{totalPortView},	
-		</if>	
-		<if test="portViewFlag == false">	 
-			port_update=SYSDATE,
-		</if> 
+		port_update=SYSDATE,
 		port_file=#{portFile}, 
 		port_detail=#{portDetail}
 		</set>
 		WHERE port_no=#{portNo}
 	</update>
+	
+	<update 	id="updatePortCount"		parameterType="portfolio" >
+	 	UPDATE portfolio
+		<set>
+		<if test="portViewFlag == true">
+			port_viewcount=#{totalPortView},	
+		</if>	
+		<if test="portLikeFlag == true">	 
+			port_like_count=#{totalPortLike},
+		</if> 
+		<if test="totalPortComment != 0">
+			port_com_count=#{totalPortComment},	
+		</if>	
+		</set>
+		WHERE port_no=#{portNo}
+	</update>
+	
+	<delete id="deletePortfolio" parameterType="int">
+		DELETE from portfolio
+		WHERE port_no = #{value}
+	</delete>
 	
 	<insert 	id="addComment"		parameterType="portComment" >
 	 	INSERT INTO 

@@ -186,12 +186,13 @@
 														+'<span class="glyphicon glyphicon-search" aria-hidden="false"></span>'
 														+'view portfolio<br/>';
 														
-						                                 if(this.scrapNo != 0){
-						                                	displayValue += '<button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>';
-						                                 }else{
-						                                	displayValue += '<button type="button" class="Scrap" portNo="'+this.portNo+'">add to scrap</button>';
-						                                 }	 
-						                                 
+														if($(".sessionScope").val() != '') {
+							                                 if(this.scrapNo != 0){
+							                                	displayValue += '<button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>';
+							                                 }else {
+							                                	displayValue += '<button type="button" class="Scrap" portNo="'+this.portNo+'">add to scrap</button>';
+							                                 }	 
+														}
 						                                 displayValue +='</p>'
 														+'<p class="text-center">'                            
 														+'<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> '+this.totalPortView+' &ensp;&ensp;&ensp;&ensp;&ensp;'
@@ -491,14 +492,19 @@
 		                               <p class="hover__active">
 		                                   <span class="glyphicon glyphicon-search" aria-hidden="false"></span>
 		                                   view portfolio<br/>
+
+											<!-- 스크랩버튼 -->
 		                                   <c:if test="${portfolio.scrapNo != 0}">
 		                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
 		                                   </c:if>
 		                                   
-		                                   <c:if test="${portfolio.scrapNo ==0}">
+		                                   <c:if test="${portfolio.scrapNo == 0 && !empty sessionScope.user}">
 		                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
 		                                   </c:if>
 		                                   
+		                                   <c:if test="${empty sessionScope.user}">
+		                                   <input type="hidden" class="sessionScope" value="">
+		                                   </c:if>
 		                                                                   
 		                                 </p>
 			                           <p class="text-center">                            
@@ -578,14 +584,17 @@
                                <p class="hover__active">
                                    <span class="glyphicon glyphicon-search" aria-hidden="false"></span>
                                    view portfolio<br/>
+                                   <!-- 스크랩버튼 -->
                                    <c:if test="${portfolio.scrapNo != 0}">
                                    <button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
                                    </c:if>
                                    
-                                   <c:if test="${portfolio.scrapNo ==0}">
+                                   <c:if test="${portfolio.scrapNo == 0 && !empty sessionScope.user}">
                                    <button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
                                    </c:if>
                                    
+                                   <c:if test="${empty sessionScope.user}">
+                                   </c:if>
                                                                    
                                  </p>
 	                           <p class="text-center">                            

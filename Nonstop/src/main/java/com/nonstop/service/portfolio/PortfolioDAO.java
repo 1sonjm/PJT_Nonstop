@@ -18,6 +18,8 @@ public interface PortfolioDAO {
 	
 	public void updatePortfolio(Portfolio portfolio) throws Exception;
 	
+	public void deletePortfolio(int portNo) throws Exception;
+	
 	public int addComment(PortComment portComment) throws Exception;
 	
 	public List<PortComment> getCommentList(int comPortNo) throws Exception;
@@ -29,4 +31,6 @@ public interface PortfolioDAO {
 	public void addPortLike(PortLike portLike) throws Exception;
 	
 	public void deletePortLike(int portLikeNo) throws Exception;
+	
+	public void updatePortCount(Portfolio portfolio) throws Exception;
 }
