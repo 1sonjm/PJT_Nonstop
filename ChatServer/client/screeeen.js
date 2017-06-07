@@ -188,7 +188,7 @@ function captureUserMedia(callback, extensionAvailable) {
     video.setAttribute('controls', true);
     videosContainer.insertBefore(video, videosContainer.firstChild);
     
-    navigator.mediaDevices.getUserMedia({
+    getUserMedia({
         video: video,
         constraints: constraints,
         onsuccess: function(stream) {

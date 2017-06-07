@@ -31,10 +31,10 @@
 						WHERE request_id = #{reqUserId:VARCHAR} )inner_table)
 	 </select>
 	 
-	 <select  id="getFollow"  parameterType="String"	resultMap="followSelectMap">
+	 <select  id="getFollow"  parameterType="map"	resultMap="followSelectMap">
 		SELECT *
 		FROM follow
-		WHERE request_id=#{reqUserId}
+		WHERE request_id=#{reqUserId} AND recive_id=#{targetUserId}
 	 </select>
 	 
 	 <delete id="deleteFollow" parameterType="map">
