@@ -6,7 +6,6 @@
 
 <mapper namespace="ProjectMapper">
  	
- 	
 	<resultMap id="projectSelectMap" type="project">
 		<result property="projNo" 			column="proj_no" 			jdbcType="NUMERIC"/>
 		<result property="projUserId"		column="proj_user_id" 		jdbcType="VARCHAR" />
