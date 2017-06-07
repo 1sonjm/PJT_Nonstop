@@ -328,7 +328,7 @@ hr.thick-line {
 	width: 120px;
 }
 
-#followCancle, #followAccept, #messageQuestion{
+#follow1, #follow2, #messageQuestion{
 	margin-left:0%;
 	margin-right:0%;
 	padding: 10px, 14px;
@@ -486,7 +486,57 @@ xmp{
 	 	     	 });          
 	        }); 
 		      
-	  }); 
+	  });
+	   
+	   $(function() {
+		   /*팔로우*/
+		   $("#follow1").on("click" , function() {       	
+			   var targetUserId = $("#projUserId").val();
+			   /*팔로우하기*/
+				   alert($("#projUserId").val()+"에게 팔로우를 신청합니다.");
+				   $.ajax( 
+							{
+								url : "/profile/addJsonFollow/"+targetUserId,
+								method : "GET" ,
+								dataType : "json" ,
+								context : this,					
+								headers : {
+					                        "Accept" : "application/json",
+					                        "Content-Type" : "application/json"   
+					                      },
+								success : function(data) {
+										  location.reload();
+								}
+					});
+			});
+		   
+			   
+		   $("#follow2").on("click" , function() {       	
+			   var targetUserId = $("#projUserId").val();
+			   /*팔로우취소*/
+				   alert($("#projUserId").val()+" 팔로우를 취소합니다.");
+				   $.ajax( 
+							{
+								url : "/profile/deleteJsonFollow/"+targetUserId,
+								method : "GET" ,
+								dataType : "json" ,
+								context : this,					
+								headers : {
+					                        "Accept" : "application/json",
+					                        "Content-Type" : "application/json"   
+					                      },
+								success : function(data) {
+										  location.reload();
+								}
+					});
+	       });
+	   });
+	   
+	   $(function() {
+		   $("#messageQuestion").on("click" , function() {       	
+		    	  self.location="/letter/addLetter";
+		      });
+	   });
     
 	</script>
 </head>
@@ -725,7 +775,6 @@ xmp{
               			</div>
               			
               			<div class="my-detail">
-              			
               			<div class="white-spacing">
               			 	<br/>
 	                        <p class="glyphicon glyphicon-time"></p>
@@ -753,10 +802,18 @@ xmp{
 		                 </div> 
 						 
 						 <div class="margin-top-20">
+						 	<input type="hidden" name="projUserId" id="projUserId" value="${project.projUserId}"/>
 						 	<center>
-								<!-- <button type="button" class="btn btn-default btn-lg" id="followCancle">팔로우 취소</button> -->
-							<button type="button" class="btn btn-default btn-lg" id="messageQuestion">쪽지 문의</button>
-							<button type="button" class="btn btn-default btn-lg" id="followAccept">팔로우하기</button>
+								<button type="button" class="btn btn-default btn-lg" id="messageQuestion">쪽지 문의</button>
+								<c:if test="${sessionScope.user.role == 2}">
+								<%-- 	<c:if test="${project.projFollowFlag == true}"> --%>
+										<button type="button" class="btn btn-default btn-lg" id="follow1">팔로우 하기</button>
+										<button type="button" class="btn btn-default btn-lg" id="follow2">팔로우 취소</button>
+									<%-- </c:if>
+									<c:if test="${project.projFollowFlag == false}">
+										
+									</c:if> --%>
+								</c:if>
 							</center>
 		                 </div>
 		                 
