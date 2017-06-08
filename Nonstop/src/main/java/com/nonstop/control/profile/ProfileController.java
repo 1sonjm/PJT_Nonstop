@@ -83,27 +83,31 @@ public class ProfileController {
 		
 		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
 		
-		int portDivision = 2;
+		
 		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		Search search = new Search();
+		search.setPostDivision(1);
+		search.setStartRowNum(1);
+		search.setEndRowNum(16);
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
 		
-		portDivision = 1;
+		search.setPostDivision(2);
 		
-		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
 		
 		int projDivision = 1;
 		
 		int sortFlag=0;
 		
-		Search search = new Search();
+		Search search2 = new Search();
 		
-		List<Project> project = projectService.listProject(projDivision, scrapUserId, search, sortFlag);
+		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
 		
 		projDivision = 2;
 		
-		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search, sortFlag);
+		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
 		
 		String reqUserId = scrapUserId;
 		
@@ -243,11 +247,13 @@ public class ProfileController {
 		
 		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
 		
-		int portDivision = 1;
-		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		Search search = new Search();
+		
+		search.setPostDivision(1);
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
 		
 		//int projDivision = 1;
 		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
@@ -346,9 +352,11 @@ public class ProfileController {
 		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
-		int portDivision = 1;
+		Search search = new Search();
 		
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		search.setPostDivision(1);
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
 		
 		model.addAttribute("list" , portfolio);
 		
