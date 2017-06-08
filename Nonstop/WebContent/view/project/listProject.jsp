@@ -14,47 +14,18 @@
     <title>프로젝트 목록보기</title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<!-- jQuery -->
-    <script src="../../resources/javascript/jquery.js"></script>
+    <script src="/resources/javascript/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
+    <script src="/resources/javascript/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
-<!--     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<link href="/css/animate.min.css" rel="stylesheet">
-	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="../../resources/css/full.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-	  jQuery
-    <script src="../../resources/javascript/jquery.js"></script>
-
-    Bootstrap Core JavaScript
-    <script src="../../resources/javascript/bootstrap.min.js"></script> -->
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 
 	<style>
 	
@@ -127,11 +98,102 @@
 		  padding-top: 30px;
 		  height: 120px;
 		}
+		
+		::selection { color:white; background:blue; }
+		::-moz-selection { color:white; background:blue; }
      	
      	
 	</style>
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
+		/*검색 */
+		function fncGetList(currentPage) {
+			$("#currentPage").val(currentPage);
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			alert(projDivision);
+	            if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag=0").submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag=0").submit();
+	            }
+		
+		}
+		
+		/*검색기능*/		
+		$(function() {
+			$( "button.btn.btn-default" ).on("click" , function() {
+				fncGetList(1);
+			});
+		});
+		/*검색기능 엔터첬을때 넘어가기*/	
+		$(function() {
+			$( "#searchKeyword" ).keypress( function(e) {
+				if(e.keyCode==13){
+					fncGetList(1);
+				}
+			});
+		});
+	
+		/*최신등록순*/	
+		function fncSortList1(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 1;
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+				
+		/*최신등록순*/	
+		$(function() {
+			$( "#projAnnoStart1" ).on("click" , function() {
+				fncSortList1();
+			});
+		});
+		
+		/*마감임박순*/
+		function fncSortList2(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 2;
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+	
+		/*마감임박순*/	
+		$(function() {
+			$( "#projDday1" ).on("click" , function() {
+				fncSortList2();
+			});
+		});
+		
+		/*조회순*/
+		function fncSortList4(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 4;
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+	
+		/*조회순*/	
+		$(function() {
+			$( "#projViewCount1" ).on("click" , function() {
+				fncSortList4();
+			});
+		});
+			
+		
+		
 		
 		$(document).ready(function() {
 		    $('#Carousel').carousel({
@@ -140,25 +202,28 @@
 		});
 		
 		
-		
-		
-		
 		$(function() {
 			$(".glyphicon.glyphicon-plus-sign").on("click", function(){
-				self.location ="/view/project/addProjectView.jsp"
+				self.location ="/view/project/addProjectView.jsp";
 			});
 			
-			$(".detailButton").on("click", function(){
-				self.location ="/project/getProject?projNo="+$(this).attr("value");
-			});
+			if($("#sessionUserId").val() == "" || $("#sessionUserId").val() ==null ){
+				$(".detailButton").on("click", function(){
+					self.location ="/user/login";
+				});
+			}else{
+				$(".detailButton").on("click", function(){
+					self.location ="/project/getProject?projNo="+$(this).attr("value");
+				});
+			}
 			
 			$("#button-all").on("click" , function() {
 	            var projDivision = $(this).val();
 	            
 	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=1";
+	               self.location="/project/listProject?projDivision=1&sortFlag=0";
 	            }else{
-	               self.location="/project/listProject?projDivision=2";
+	               self.location="/project/listProject?projDivision=2&sortFlag=0";
 	            }
 	         });
 		         
@@ -166,9 +231,9 @@
 	            var projDivision = $(this).val();
 	            
 	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=11";
+	               self.location="/project/listProject?projDivision=11&sortFlag=0";
 	            }else{
-	               self.location="/project/listProject?projDivision=21";
+	               self.location="/project/listProject?projDivision=21&sortFlag=0";
 	            }
 	         });
 	         
@@ -176,9 +241,9 @@
 	            var projDivision = $(this).val();
 	            
 	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=12";
+	               self.location="/project/listProject?projDivision=12&sortFlag=0";
 	            }else{
-	               self.location="/project/listProject?projDivision=22";
+	               self.location="/project/listProject?projDivision=22&sortFlag=0";
 	            }
 	         });
 			
@@ -255,6 +320,7 @@
 <div class="container">
   <input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
   <input type="hidden" class="projUserId" name="projUserId" id="projUserId" value="${project.projUserId}" />
+  <input type="hidden" class="sessionUserId" name="sessionUserId" id="sessionUserId" value="${sessionScope.user.userId}" />
   <div class="row">
 	  <div class="margin-top-20">
 		  <div class="text">	
@@ -271,12 +337,14 @@
 <div class="container">
 	<div class="row">
 		<div class="col-md-6">	
-		<ol class="breadcrumb">
-		  <li><a href="#" >최신등록순</a></li>
-		  <li><a href="#">마감임박순</a></li>
-		  <li><a href="#">지원자순</a></li>
-		  <li><a href="#">조회순</a></li>
-		</ol>
+		<form class="form-inline" name="detailForm">
+			<ol class="breadcrumb" >
+			  <li><a href="#" id="projAnnoStart1">최신등록순</a></li>
+			  <li><a href="#" id="projDday1">마감임박순</a></li>
+			  <li><a href="#" id="">지원자순</a></li>
+			  <li><a href="#" id="projViewCount1" >조회순</a></li>
+			</ol>
+		</form>
 		</div>
 		
 		<div class="col-md-6">
@@ -291,13 +359,13 @@
 		  
 		  <div class="form-group">
 		    <label class="sr-only" for="searchKeyword">검색어</label>
-		    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-		    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+		    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" 
+		    	   value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 		  </div>
 		  
 		  <button type="button" class="btn btn-default">검색</button>
 		  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-		  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+		  <input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
 		</form>
 		</div>
 	</div>
@@ -312,10 +380,12 @@
 				<c:forEach var="project" items="${list}">
 				<c:set var="i" value="${ i+1 }" />
 					<div class="col-md-6 col-sm-6 hero-feature" style="margin-top: 30px; margin-bottom: 20px; height: 400px">
-						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" /> 
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+						<input type="hidden" name="projAnnoStart" id="projAnnoStart" value="${project.projAnnoStart}" /> 
 						<input type="hidden" name="projAnnoEnd" id="projAnnoEnd" value="${project.projAnnoEnd}" /> 
 						<input type="hidden" name="projStartDate" id="projStartDate" value="${project.projStartDate}" /> 
 						<input type="hidden" name="projEndDate" id="projEndDate" value="${project.projEndDate}" />
+						<input type="hidden" name="sortFlag" id="sortFlag" class="sortFlag" value="${project.sortFlag}" />
 						<div class="thumbnail">
 							<table style="height: 400px; overflow:hidden;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">
@@ -421,58 +491,6 @@
 	            </div>
 	         </div>
 	      </div>
-	        
-	             
-	<div class="container text-center">
-		 
-		 <nav>
-		  <!-- 크기조절 :  pagination-lg pagination-sm-->
-		  <ul class="pagination" >
-		    
-		    <!--  <<== 좌측 nav -->
-		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-		 		<li class="disabled">
-			</c:if>
-			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-				<li>
-			</c:if>
-		      <a href="javascript:fncGetList('${ resultPage.currentPage-1}')" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		    
-		    <!--  중앙  -->
-			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-				
-				<c:if test="${ resultPage.currentPage == i }">
-					<!--  현재 page 가르킬경우 : active -->
-				    <li class="active">
-				    	<a href="javascript:fncGetList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
-				    </li>
-				</c:if>	
-				
-				<c:if test="${ resultPage.currentPage != i}">	
-					<li>
-						<a href="javascript:fncGetList('${ i }');">${ i }</a>
-					</li>
-				</c:if>
-			</c:forEach>
-		    
-		     <!--  우측 nav==>> -->
-		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-		  		<li class="disabled">
-			</c:if>
-			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-				<li>
-			</c:if>
-		      <a href="javascript:fncGetList('${resultPage.endUnitPage+1}')" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-		
-	</div>
 
 </body>
 
@@ -514,6 +532,57 @@
 
 
 안녕하세요김준영입니다새롭게보게되   타이틀 최대숫자
+
+
+
+	        
+	             
+	<div class="container text-center">
+		 
+		 <nav>
+		  <ul class="pagination" >
+		    
+		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
+		 		<li class="disabled">
+			</c:if>
+			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
+				<li>
+			</c:if>
+		      <a href="javascript:fncGetList('${ resultPage.currentPage-1}')" aria-label="Previous">
+		        <span aria-hidden="true">&laquo;</span>
+		      </a>
+		    </li>
+		    
+			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
+				
+				<c:if test="${ resultPage.currentPage == i }">
+				    <li class="active">
+				    	<a href="javascript:fncGetList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
+				    </li>
+				</c:if>	
+				
+				<c:if test="${ resultPage.currentPage != i}">	
+					<li>
+						<a href="javascript:fncGetList('${ i }');">${ i }</a>
+					</li>
+				</c:if>
+			</c:forEach>
+		    
+		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
+		  		<li class="disabled">
+			</c:if>
+			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
+				<li>
+			</c:if>
+		      <a href="javascript:fncGetList('${resultPage.endUnitPage+1}')" aria-label="Next">
+		        <span aria-hidden="true">&raquo;</span>
+		      </a>
+		    </li>
+		  </ul>
+		</nav>
+		
+	</div>
+
 
  -->
 

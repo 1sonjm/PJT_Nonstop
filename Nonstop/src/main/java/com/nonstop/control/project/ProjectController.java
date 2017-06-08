@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
+import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.project.ProjectService;
 import com.nonstop.service.user.UserService;
 
@@ -32,6 +34,9 @@ public class ProjectController {
 	@Qualifier("projectServiceImpl")
 	private ProjectService projectService;
 	
+	@Autowired
+	@Qualifier("profileServiceImpl")
+	private ProfileService profileService;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -50,7 +55,7 @@ public class ProjectController {
 	
 	@Value("#{commonProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize;
+	int projPageSize;
 	
 	
 	@RequestMapping(value="addProjectView", method=RequestMethod.GET)
@@ -65,14 +70,14 @@ public class ProjectController {
 	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
 		
 		System.out.println("여기는 addProject : "+project);
-		
-//		projDetail.replaceAll("\r\n", "<br>");
-//		session.setAttribute("projDetail", projDetail);
+		System.out.println("sdfkjsdhalksdaf"+project.getProjAnnoEnd());
+		System.out.println("sdfkjsdhalksdaf"+project.getProjStartDate());
+		System.out.println("sdfkjsdhalksdaf"+project.getProjEndDate());
 		projectService.addProject(project);
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/project/listProject";
+		return "forward:/index.jsp";
 	}
 	
 	
@@ -82,16 +87,13 @@ public class ProjectController {
 		
 		System.out.println("/project/getProject : GET");
 		
+		
 		Project project = new Project();
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
-//		String projDetail = project.getProjDetail();
-		
-//		Project project = projectService.getProject(projNo);
 		project = projectService.getProject(projNo ,scrapUserId);
 		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
 		User user = userService.getUser(project.getProjUserId());
-		
-//		project.getProjDetail().replaceAll("\r\n", "<br>");
+		projectService.updateViewCount(project);
 		
 		System.out.println(scrapUserId);
 		
@@ -101,7 +103,6 @@ public class ProjectController {
 		model.addAttribute("project", project);
 		model.addAttribute("user", user);
 		
-	
 		return "forward:/view/project/getProject.jsp";
 	}
 	
@@ -145,7 +146,7 @@ public class ProjectController {
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/project/listProject";
+		return "forward:/index.jsp";
 	}
 	
 	@RequestMapping(value="deleteProject", method=RequestMethod.POST)
@@ -155,31 +156,35 @@ public class ProjectController {
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/project/listProject";
+		return "forward:/index.jsp";
 	}
 	
 	
 	@RequestMapping(value="listProject")
-	public String listProject( @RequestParam("projDivision") int projDivision , Model model ,HttpSession session , HttpServletRequest request) throws Exception{
-		
-		System.out.println("/project/listProject");
+	public String listProject( @ModelAttribute("search") Search search,
+								@RequestParam("sortFlag") int sortFlag , 
+								@RequestParam("projDivision") int projDivision , 
+								Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		Project project = new Project();
-//		if(search.getCurrentPage() ==0 ){
-//			search.setCurrentPage(1);
-//		}
-//		search.setPageSize(pageSize);
-//		User user = userService.getUser(project.getProjUserId());
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
-		// Business logic ����
-//		Map<String , Object> map=projectService.listProject(projDivision,scrapUserId);
-		List<Project> list = projectService.listProject(projDivision,scrapUserId);
-//		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-//		System.out.println(resultPage);
+		System.out.println("/project/listProject");
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		System.out.println("sortFlag"+ sortFlag);
+		search.setPageSize(projPageSize);
+		String scrapUserId = "testUser";
+		
+		if((User)session.getAttribute("user") != null) {
+			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+				
+		List<Project> list = projectService.listProject(projDivision,scrapUserId,search,sortFlag);
+		
+		System.out.println("getSearchKeyword"+search.getSearchKeyword());
+		System.out.println("getSearchCondition"+search.getSearchCondition());
 		
 		model.addAttribute("list", list);
-//		model.addAttribute("user", user);
-//		model.addAttribute("resultPage", resultPage);
-//		model.addAttribute("search", search);
+		model.addAttribute("search", search);
 		
 		return "forward:/view/project/listProject.jsp";
 	}

@@ -465,9 +465,9 @@ ul {
                               <h5><a href="#">${user.userId}</a></h5>
                               
                           </div>
-                          <a class="mail-dropdown pull-right" href="javascript:;">
+                          <!-- <a class="mail-dropdown pull-right" href="javascript:;">
                               <i class="fa fa-chevron-down"></i>
-                          </a>
+                          </a> -->
                       </div>
                       <div class="inbox-body">
                           <a href="#myModal" data-toggle="modal"  title="Compose"    class="btn btn-compose">
@@ -640,9 +640,9 @@ ul {
                                      <i class="fa fa-angle-down "></i>
                                  </a>
                                  <ul class="dropdown-menu">
-                                     <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                                    <!--  <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li> -->
-                                     <li class="divider"></li>
+                                     <!-- <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
+                                     <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
+                                     <li class="divider"></li> -->
                                      <li><a href="#" id="deleteLetter" letNo="${letter.letNo}"><i class="fa fa-trash-o"></i> Delete</a></li>
                                  </ul>
                              </div>

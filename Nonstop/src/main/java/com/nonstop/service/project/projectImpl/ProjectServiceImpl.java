@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.service.project.ProjectDAO;
 import com.nonstop.service.project.ProjectService;
 
@@ -44,13 +45,28 @@ public class ProjectServiceImpl implements ProjectService{
 		projectDAO.updateProject(project);
 	}
 	
+	public void updateViewCount(Project project) throws Exception{
+		
+		projectDAO.updateViewCount(project);
+	}
+	
+	
 	public void deleteProject(Project project) throws Exception{
 		
 		projectDAO.deleteProject(project);
 	}
 	
-	public List<Project> listProject(int projDivision, String scrapUserId) throws Exception {
-		List<Project> list = projectDAO.listProject(projDivision,scrapUserId);
+	public List<Project> listProject(int projDivision, String scrapUserId, Search search, int sortFlag) throws Exception {
+		Project project = new Project();
+		String searchCondition = search.getSearchCondition();
+		String searchKeyword = search.getSearchKeyword();
+		
+		List<Project> list = projectDAO.listProject(projDivision,scrapUserId,search,sortFlag);
+		
+		
+		System.out.println("searchCondition서비스임플"+searchCondition);
+		System.out.println("searchKeyword서비스임플"+searchKeyword);
+		System.out.println("sortFlag"+ project.getSortFlag());
 //		int totalCount = projectDAO.getTotalCount(search);
 		
 //		map.put("totalCount", new Integer(totalCount));

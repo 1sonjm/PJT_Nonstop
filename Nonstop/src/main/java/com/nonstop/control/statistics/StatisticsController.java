@@ -86,13 +86,13 @@ public class StatisticsController {
 		return "/index.jsp";
 	}
 	
-	//include로 화면 구성된다고 한다.
+	
 	@RequestMapping(value="getUserStatisticsList", method=RequestMethod.GET)
-	public String getUserStatisticsList(Model model,HttpSession session){
+	public void getJSONUserStatisticsList(Model model,HttpSession session){
 		System.out.println("/statstics/getUserStatisticsList");
 		User user = (User)session.getAttribute("user");
 		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user.getUserId()));
-		return ".jsp";
+		
 	}
 	
 }

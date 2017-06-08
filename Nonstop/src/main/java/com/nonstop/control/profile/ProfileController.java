@@ -19,10 +19,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.project.ProjectService;
 import com.nonstop.service.statistics.StatisticsService;
 import com.nonstop.service.user.UserService;
 
@@ -33,6 +36,10 @@ public class ProfileController {
 	@Autowired
 	@Qualifier("profileServiceImpl")
 	private ProfileService profileService;
+	
+	@Autowired
+	@Qualifier("projectServiceImpl")
+	private ProjectService projectService;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -73,18 +80,43 @@ public class ProfileController {
 		
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		
+		
 		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
 		
-		int portDivision = 1;
+		int portDivision = 2;
 		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
 		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
 		
+		portDivision = 1;
+		
+		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		
+		int projDivision = 1;
+		
+		int sortFlag=0;
+		
+		Search search = new Search();
+		
+		List<Project> project = projectService.listProject(projDivision, scrapUserId, search, sortFlag);
+		
+		projDivision = 2;
+		
+		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search, sortFlag);
+		
+		String reqUserId = scrapUserId;
+		
+		List<Follow> follow = profileService.getFollowList(reqUserId);
+		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
+		model.addAttribute("list5" , portfolio2);
+		model.addAttribute("list4" , project);
+		model.addAttribute("list6" , project2);
 		model.addAttribute("user", user);
+		model.addAttribute("follow", follow);
 		
 		return "forward:/view/profile/profile.jsp";
 	}
@@ -104,7 +136,9 @@ public class ProfileController {
 		
 		System.out.println("/profile/getOtherProfile in getFollow");
 		
-		Follow follow = profileService.getFollow(reqUserId);
+		String targetUserId = userId;
+		
+		Follow follow = profileService.getFollow(reqUserId , targetUserId);
 		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("user", user);
@@ -193,15 +227,36 @@ public class ProfileController {
 	}
 	
 	@RequestMapping(value="deleteCareer",method=RequestMethod.GET)
-	public String deleteCareer(@RequestParam("careerNo") int careerNo , Model model) throws Exception{
+	public String deleteCareer(@RequestParam("careerNo") int careerNo , HttpSession session, Model model) throws Exception{
 		
 		System.out.println("/profile/deleteCareer : GET");
 		
 		profileService.deleteCareer(careerNo);
 		
-		Map<String , Object> map = profileService.getCareerList("user05");
+		String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		model.addAttribute("list", map.get("list"));
+		User user = userService.getProfileMine(careerUserId);
+		
+		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		
+		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		
+		int portDivision = 1;
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		
+		//int projDivision = 1;
+		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
+		
+		model.addAttribute("list" , map.get("list"));
+		model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list3" , portfolio);
+		//model.addAttribute("list4" , project);
+		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
 	}

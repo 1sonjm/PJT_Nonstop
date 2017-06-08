@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 
 
 public interface ProjectService {
@@ -12,9 +13,11 @@ public interface ProjectService {
 
 	public Project getProject(int projNo , String scrapUserId) throws Exception;
 
-	public List<Project> listProject(int projDivision , String scrapUserId) throws Exception;
+	public List<Project> listProject(int projDivision , String scrapUserId, Search search, int sortFlag) throws Exception;
 
 	public void updateProject(Project project) throws Exception;
+	
+	public void updateViewCount(Project project) throws Exception;
 	
 	public void deleteProject(Project project) throws Exception;
 	
@@ -25,5 +28,7 @@ public interface ProjectService {
 	public ProjComment getComment(int comNo) throws Exception;
 
 	public void deleteComment(int comNo) throws Exception ;
+	
+	
 	
 }

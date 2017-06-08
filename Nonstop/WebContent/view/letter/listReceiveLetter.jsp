@@ -409,39 +409,62 @@ ul {
 	<script type="text/javascript">
 	 $(function(){
 		 
+		 
+	       $('textarea').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
+		 //메일전송
 		 $("#send").on("click", function(){
-			 
 			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
 		 });
 		 
+		 //팔로워프로필로 이동
+		$(".followProfile").on("click", function(){
+			 var userId = $(this).text().trim();
+			 alert(userId);
+			 self.location = "/profile/getOtherProfile?userId="+userId;
+		 });
+		 
+		 //받은 메세지함
 		  $("#inBox").on("click", function(){
 			 var receiveId = $(this).attr('receiveId');
 			 self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
-
 		 });
 		  
+		 //보낸메세지함
 		  $("#sendBox").on("click", function(){
 				 var sendId = $(this).attr('sendId');
 				 self.location = "/letter/getSendLetterList?sendId="+sendId;
-			 });
+		  });
 		 
-		 
+		  //메세지 상세보기	 
 		  $(".view-message").on("click" , function() {
 				var letNo = $(this).attr('letNo');
 				var receiveId = $(this).attr('receiveId');
 			self.location ="/letter/getLetter?letNo="+letNo+"&receiveId="+receiveId;
 			});
 		 
+		  //메세지삭제
 		 $("#deleteLetter").on("click" , function() {
 			 $("form").attr("method" , "POST").attr("action" , "/letter/updateRecView").submit();
 			});
 		 
+		  //보관메세지함
 		 $("#saveBox").on("click" , function() {
 			 var userId = $(this).attr('userId');
 			 self.location = "/letter/getSaveLetterList?userId="+userId;
-			
 			});
 		 
+		  //읽음표시하기
+		 $("#readMark").on("click" , function() {
+			 $("form").attr("method" , "POST").attr("action" , "/letter/updateReadDate").submit();
+			});
+		 
+		  //메세지 보관/삭제
 		 $("i.fa").on("click" ,function() {
 				
 				var flag = $(this).attr('save');
@@ -497,9 +520,9 @@ ul {
                               <h5><a href="#">${user.userId}</a></h5>
                               
                           </div>
-                          <a class="mail-dropdown pull-right" href="javascript:;">
+                         <!--  <a class="mail-dropdown pull-right" href="javascript:;">
                               <i class="fa fa-chevron-down"></i>
-                          </a>
+                          </a> -->
                       </div>
                       <div class="inbox-body">
                           <a href="#myModal" data-toggle="modal"  title="Compose"    class="btn btn-compose">
@@ -541,7 +564,8 @@ ul {
                                               <div class="form-group">
                                                   <label class="col-lg-2 control-label">Mail</label>
                                                   <div class="col-lg-10">
-                                                      <textarea rows="10" cols="30" name="letDetail" placeholder="2000자까지 입력가능" class="form-control" id="" name=""></textarea>
+                                                      <textarea maxlength="2000" rows="10" cols="30" name="letDetail" placeholder="2000자까지 입력가능" class="form-control" ></textarea>
+                                                  	  <br/> 2000/<span id="chars">2000</span>
                                                   </div>
                                               </div>
 
@@ -589,7 +613,7 @@ ul {
 							<c:set var="i" value="${ i+1 }" />
 							
                           <li> 
-                          <a href="#"> 
+                          <a href="#" class="followProfile" userId="${user.userId}"> 
                           <i class=" fa fa-sign-blank text-danger"></i> 
                           ${follow.targetUserId} 
                           </a> 
@@ -644,8 +668,8 @@ ul {
                       </div>
                       <div class="inbox-body">
                          <div class="mail-option">
-                             <div class="chk-all">
-                                 <!-- <input type="checkbox" class="mail-checkbox mail-group-checkbox"> -->
+                            <!--  <div class="chk-all">
+                                 <input type="checkbox" class="mail-checkbox mail-group-checkbox">
                                  <div class="btn-group">
                                      <a data-toggle="dropdown" href="#" class="btn mini all" aria-expanded="false">
                                          All
@@ -657,7 +681,7 @@ ul {
                                          <li><a href="#"> Unread</a></li>
                                      </ul>
                                  </div>
-                             </div>
+                             </div> -->
 
                              <!-- <div class="btn-group">
                                  <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
@@ -670,7 +694,7 @@ ul {
                                      <i class="fa fa-angle-down"></i>
                                  </a>
                                  <ul class="dropdown-menu">
-                                     <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
+                                     <li><a href="#" id="readMark" letNo="${letter.letNo}"><i class="fa fa-pencil"></i> Mark as Read</a></li>
                                     <!--  <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li> -->
                                      <li class="divider"></li>
                                      <li><a href="#" id="deleteLetter" letNo="${letter.letNo}"><i class="fa fa-trash-o" ></i> Delete</a></li>

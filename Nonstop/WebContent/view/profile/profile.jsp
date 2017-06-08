@@ -13,19 +13,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>DASHGUM - FREE Bootstrap Admin Template</title>
-
+	<meta name="description" content="chart created using amCharts live editor" />
+	
+	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
     <!-- Bootstrap Core CSS -->
-      <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../..//resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -36,9 +36,50 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+	var dataSet = [];
+	
+	
+$.ajax("/statistics/getUserStatisticsList",{
+	method : "GET" ,
+	dataType : "json" ,
+	headers : {
+		"Accept" : "application/json"//,
+		//"Content-Type" : "application/json"
+	},
+	success : function(aaa) {
+		for (var i=0; i<aaa.dataList.length; i++){
+			dataSet.push({
+				TechName: aaa.dataList[i].techName,
+				UseTerm: aaa.dataList[i].careerUseTerm
+			});
+		}
+	}
+});
+
+AmCharts.makeChart("chartdiv",
+		{
+			"type": "pie",
+			"angle": 12,
+			"balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+			"depth3D": 15,
+			"titleField": "TechName",
+			"valueField": "UseTerm",
+			"allLabels": [],
+			"balloon": {},
+			"legend": {
+				"enabled": true,
+				"align": "center",
+				"markerType": "circle"
+			},
+			"titles": [],
+			"dataProvider": dataSet
+		}
+	);
+
+
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$("#addCareer").on("click" , function() {
+ 	$(".addCareer").on("click" , function() {
  		self.location = "/profile/addCareerView";
 	}); 
 	
@@ -115,13 +156,27 @@ $(function() {
 	#sidebar h5 {
 		color: #f2f2f2;
 		font-weight: 700;
+		margin-top : 20px;
 	}
 	
+	#sidebar h4 {
+		color: #f2f2f2;
+		font-weight: 700;
+	}
+	
+	#sidebar .followProfile{
+	color: #f2f2f2;
+	}
+	
+	#sidebar p {
+		color: #f2f2f2;
+		margin-top : 0px;
+	}
 	
 	ul.sidebar-menu {
 	    margin-top: 75px;
 	}
-	
+	 
 	/* MAIN CONTENT CONFIGURATION */
 	#main-content {
 	    margin-left: 270px;
@@ -153,6 +208,13 @@ $(function() {
 	    padding-top: 0px;
 	    width: 100%;
 	}
+	#profileImg{
+	display : block;
+	margin-left : auto;
+	margin-right : auto;
+	margin-bottom : 30px;
+	margin-top: 60px;
+	}
 		
 	
 	</style>
@@ -172,24 +234,24 @@ $(function() {
           <div id="sidebar"  class="nav-collapse ">
 
         <!-- sidebar menu start-->
-              <ul class="sidebar-menu">
+              <!-- <ul class="sidebar-menu"> -->
               
-              <br/><br/>
-              	  <img src="../../resources/images/upload/${user.image}" class="img-circle" width="64" hieght="60"> 
-              	  <h5 class="center">${user.userId}</h5>
-              	  <h5 class="center">${user.addr}</h5>
+             
+              	  <img src="../../resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
+              	  <h5 class="text-center">${user.userId}</h5>
+              	  <p class="text-center">${user.addr}</p>
               	  
               	  <c:if test="${user.role=='3'}">
-              	  <h5 class="center">기업대표자 : ${user.companyName}</h5>
-              	  <h5 class="center">직원수 : ${user.empNum}</h5>
-              	  <h5 class="center">설립일 : ${user.pubDate}</h5>
+              	  <h5 class="text-center">기업대표자 : ${user.companyName}</h5>
+              	  <h5 class="text-center">직원수 : ${user.empNum}</h5>
+              	  <h5 class="text-center">설립일 : ${user.pubDate}</h5>
               	  </c:if>
-				  
-				  <br/><br/><br/>
+				 <hr/>
+
 				  
 				<c:if test="${user.userId != sessionScope.user.userId }">
 				  <c:if test="${follow.reqUserId==sessionScope.user.userId && career.careerUserId==targetUserId }">
-				  <div class="col-sm-offset-4  col-sm-4 text-center">
+				  <div class="col-sm-12 text-center">
 					 <span class="follow" targetUserId="${user.userId}" id="follow">
 		      		<button type="button" class="btn btn-primary" id="profile" >언팔로우</button>
 		      		</span>
@@ -197,7 +259,7 @@ $(function() {
 		      		</c:if>
 		      		
 		      		<c:if test="${follow.reqUserId != sessionScope.user.userId}">
-		      		<div class="col-sm-offset-4  col-sm-4 text-center">
+		      		<div class="col-sm-12 text-center">
 					 <span class="follow" targetUserId="${user.userId}" id="follow">
 		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우</button>
 		      		</span>
@@ -206,13 +268,33 @@ $(function() {
 		      	</c:if>
 		      		
 		      		<c:if test="${session.user.userId  == param.userId}"> 
-		      		<div class="col-sm-offset-4  col-sm-4 text-center">
-					 <span class="listFollow" reqUserId="${user.userId}">
-		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button>
-		      		</span>
+		      		<div class="col-sm-12 text-center">
+					 <%-- <span class="listFollow" reqUserId="${user.userId}">
+		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button> --%>
+		      		<ul class="nav nav-pills nav-stacked labels-info inbox-divider">
+                          <li> <h4>Followers</h4> </li>
+                           <c:set var="i" value="0" />
+		  					<c:forEach var="follow" items="${follow}">
+							<c:set var="i" value="${ i+1 }" />
+							
+                          <li> 
+                          <a href="#" class="followProfile" userId="${user.userId}"> 
+                          <i class=" fa fa-sign-blank text-danger"></i> 
+                          ${follow.targetUserId} 
+                          </a> 
+                          
+                          </li>
+                         <!--  <li> <a href="#"> <i class=" fa fa-sign-blank text-success"></i> Design </a> </li>
+                          <li> <a href="#"> <i class=" fa fa-sign-blank text-info "></i> Family </a>
+                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-warning "></i> Friends </a>
+                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-primary "></i> Office </a>
+                          </li> -->
+                          </c:forEach>
+                      </ul> 
+		      		<!-- </span> -->
 		      		</div>
 		      		</c:if>	
-              </ul>
+              <!-- </ul> -->
               <!-- sidebar menu end-->
           </div>
       </aside>
@@ -240,35 +322,48 @@ $(function() {
 					    <c:if test="${user.role=='2'}">
 					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
 					    </c:if>
-					    <c:if test="${follow.reqUserId  == career.careerUserId}"> 
-					    <li role="presentation"><a href="#Scrap" aria-controls="Scrap" role="tab" data-toggle="tab" id=scrap>Scrap</a></li>
+
+					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
+					    <li role="presentation"><a href="#projectScrap" aria-controls="projectScrap" role="tab" data-toggle="tab" >projectScrap</a></li>
 					 	</c:if>
+					 	
+					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
+					    <li role="presentation"><a href="#portfolioScrap" aria-controls="portfolioScrap" role="tab" data-toggle="tab" >portfolioScrap</a></li>
+					 	</c:if> 
 					  </ul>
 			
 					  <!-- Tab panes -->
 					  <div class="tab-content">
+					  
 					    <div role="tabpanel" class="tab-pane active" id="Profile">
 					   <c:if test="${user.role=='2'}">
+					   <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
 					    <jsp:include page="/view/profile/listCareer.jsp" /> 
+					    
 					    </c:if>	
 					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
 					    </div>
-					    
-					    <div role="tabpanel" class="tab-pane" id="Portfolio">
-							<%-- <jsp:include page="/view/portfolio/Listportfolio.jsp" />  --%>
-						</div>
-						 <div role="tabpanel" class="tab-pane" id="Project">rffherg</div>
-					    <div role="tabpanel" class="tab-pane" id="Scrap">
-					    
-							<h3>스크랩 목록보기</h3> 
-							<br/>
-					    <button type="button" class="btn btn-default" id="portfolio" >포트폴리오</button> 
-					    <button type="button" class="btn btn-default" id="project" >프로젝트</button>
+					  <div role="tabpanel" class="tab-pane" id="Portfolio">
+					    	<br/> <h5>내가올린 포트폴리오 목록보기</h5> <br/>
+					   <jsp:include page="/view/profile/listMyPort.jsp" />
+						</div> 
+						
+						   <div role="tabpanel" class="tab-pane" id="Project">
+						 	<br/> <h5>내가올린 프로젝트 목록보기</h5> <br/>
+						 	<jsp:include page="/view/profile/listMyProj.jsp" />
+						 </div>
+						 
+					     <div role="tabpanel" class="tab-pane" id="portfolioScrap">
+							<br/> <h5>포트폴리오 스크랩 목록보기</h5> <br/>
 					   		<jsp:include page="/view/profile/listPortScrap.jsp"/>
-					    </div>
+					    </div> 
+					    
+					   <div role="tabpanel" class="tab-pane" id="projectScrap">
+							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
+					   		 <jsp:include page="/view/profile/listProjScrap.jsp"/> 
+					    </div>  
 					   
 					  </div>
-					
 					</div>
 				</div>
 			</div>
