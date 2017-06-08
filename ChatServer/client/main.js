@@ -8,7 +8,8 @@ var remoteView;
 var callButton;
 var audioCheckBox;
 var videoCheckBox;
-var audioOnlyView;
+var screenCheckBox;
+//var audioOnlyView;
 var signalingChannel;
 var pc;
 var peer;
@@ -46,6 +47,7 @@ window.onload = function () {
 	chatButton = document.getElementById("chat_but");
 	chatDiv = document.getElementById("chat_div");
 	chatCheckBox = document.getElementById("chat_cb");
+	screenCheckBox = document.getElementById("screen_cb");
 
 	audioCheckBox.checked = "true";
 	videoCheckBox.checked = "true";
@@ -57,18 +59,10 @@ window.onload = function () {
 		document.getElementById("session_txt").value = hash;
 		// log("Auto-joining session: " + hash);
 		// 채팅만 설정할때 바로 콜되네?
-		document.getElementById("join_but").click();
 	} else {// 최초 방 생성자
 		// set a random session id
-		document.getElementById("session_txt").value = Math.random().toString(16).substr(10);// 방ID
-																								// 부여
-																								// (여기에
-																								// 사용자
-																								// id넣으면
-																								// 되겠다.)
+		document.getElementById("session_txt").value = Math.random().toString(16).substr(5);// 방ID
 	}
-	
-
 	window.IsAndroidChrome = false;
 	try {
 		if (navigator.userAgent.toLowerCase().indexOf("android") > -1 && /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor)) {
@@ -105,20 +99,18 @@ window.onload = function () {
 			if(error == 'permission-denied') { alert('Please make sure you are using HTTPs. Because HTTPs is required.'); return; }
 
 			console.info('getScreenId callback \n(error, sourceId, screen_constraints) =>\n', error, sourceId, screen_constraints);
-			console.info()
-			// chromeMediaSourceId 가 없다는데 어떻게 해야되는걸까
-			// screen_constraints.mandatory.chromeMediaSourceId = sourceId;
-			
 			
 			document.getElementById('capture-screen').disabled = true;
 			navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 			navigator.getUserMedia(screen_constraints, function(stream) {
 				// share this "MediaStream" object using RTCPeerConnection API
 				// 화면캡처를 시작할때
-				screenMediaStream = stream
-				console.info("@@"+screenMediaStream);
+				screenMediaStream = stream;
+				selfView.srcObject = stream;
+				screenCheckBox.checked = true;
 				
-				document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
+				//캡쳐화면 띄워줄려했지
+				//document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
 
 				stream.oninactive = stream.onended = function() {
 					// 캡처를 종료할때
@@ -131,122 +123,60 @@ window.onload = function () {
 				console.error('getScreenId error', error);// 오류 발생시
 				alert('Failed to capture your screen. Please check Chrome console logs for further information.');
 			});
-			// aa = screen_constraints;
-			//console.info('??',screen_constraints);
-			
-			aa = screen_constraints;
-			//console.info('##',aa);
-			// ////////////////////////////////////////////////////////////////////////////////////////////////////
-			
 		});
 	}
 	
-	/*지울준비
-	var aa;
-	var video_constraints = {
-			mandatory : {},
-			optional : []
-		};
-	function bb(options) {
-        var n = navigator,
-            media;
-        n.getMedia = n.webkitGetUserMedia || n.mozGetUserMedia;
-        console.info(options.constraints );
-        n.getMedia(options.constraints || {
-            audio: true,
-            video: video_constraints
-        }, streaming, options.onerror || function(e) {
-            console.error(e);
-        });
-        function streaming(stream) {
-            var video = options.video;
-            if (video) {
-                video[moz ? 'mozSrcObject' : 'src'] = moz ? stream : window.webkitURL.createObjectURL(stream);
-                video.play();
-            }
-            options.onsuccess && options.onsuccess(stream);
-            media = stream;
-            console.info("#"+stream);
-        }
-
-        return media;
-    }*/
-	
 	// 채팅방 개설
-		// get a local stream
-	document.getElementById("join_but").onclick = function () {
-      /*지울준비
-		var videosContainer = document.getElementById('videos-container')
-		var video = document.createElement('video');
-        video.setAttribute('autoplay', true);
-        video.setAttribute('controls', true);
-        videosContainer.insertBefore(video, videosContainer.firstChild);
-        
-        bb({
-				video : video,// self view
-				constraints : aa,// send screendata
-				onsuccess : function(stream) {
-					config.attachStream = stream;
-					callback && callback();
-					video.setAttribute('muted', true);
-				},
-				onerror : function() {
-					if (location.protocol === 'http:') {
-						alert('Please test this WebRTC experiment on HTTPS.');
-					}
-				}
-			});
-        */
-        
-		navigator.mediaDevices.getUserMedia({ 
-			audio: true,
-			video: true})// screen_constraints})
-			.then(function (stream) {
-			
-			// .. show it in a self-view
-			selfView.srcObject = stream;
-			// .. and keep it to be sent later
-			localStream = stream;
-
-			
-			selfView.style.visibility = "visible";
-
-			var userId = document.getElementById("session_txt").value;
-			signalingChannel = new SignalingChannel(userId);
-
-			// show and update share link
-			var link = document.getElementById("share_link");
-			var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + userId);
-			link.href = link.textContent = window.location.href + maybeAddHash;
-			shareView.style.visibility = "visible";
-
-			callButton.onclick = function () {
-				start(true);
-			};
-
-			// another peer has joined our session
-			signalingChannel.onpeer = function (evt) {
-				callButton.disabled = false;
-				shareView.style.visibility = "hidden";
-
-				peer = evt.peer;
-				peer.onmessage = handleMessage;
-
-				peer.ondisconnect = function () {
-					callButton.disabled = true;
-					remoteView.style.visibility = "hidden";
-					alert('연결 종료');
-					if (pc)
-						pc.close();
-					pc = null;
-				};
-			};
-		}).catch(logError);
-	}
+	// get a local stream
+	navigator.mediaDevices.getUserMedia({ 
+		audio: true,
+		video: true})
+		.then(function (stream) {
 		
-	if (hash) {
-		// start(true);
-	}
+		// .. show it in a self-view
+		selfView.srcObject = stream;
+		// .. and keep it to be sent later
+		localStream = stream;
+
+		
+		selfView.style.visibility = "visible";
+
+		var sessionId = document.getElementById("session_txt").value;
+		signalingChannel = new SignalingChannel(sessionId);
+
+		// show and update share link
+		var link = document.getElementById("share_link");
+		var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
+		link.href = link.textContent = window.location.href + maybeAddHash;
+		shareView.style.visibility = "visible";
+
+		callButton.onclick = function () {
+			start(true);
+		};
+
+		// another peer has joined our session
+		signalingChannel.onpeer = function (evt) {
+			callButton.disabled = false;
+			shareView.style.visibility = "hidden";
+
+			peer = evt.peer;
+			peer.onmessage = handleMessage;
+
+			peer.ondisconnect = function () {
+				callButton.disabled = true;
+				remoteView.style.visibility = "hidden";
+				alert('연결 종료');
+				if (pc)
+					pc.close();
+				pc = null;
+			};
+		};
+	}).catch(logError);
+	
+		
+//	if (hash) {
+//		// start(true);
+//	}
 };
 
 // handle signaling messages received from the other peer
@@ -286,14 +216,13 @@ function handleMessage(evt) {
 		pc.addIceCandidate(new RTCIceCandidate(message.candidate), function () {}, logError);
 	}
 }
-var userId;
+
 // call start() to initiate
 function start(isInitiator) {	
+	document.querySelector('.init_form').style.display = "none";
+	document.querySelector('.view_form').style.display = "block";
 	callButton.disabled = true;
 	pc = new RTCPeerConnection(configuration);
-	
-	document.getElementById("init-section").style.display= 'none';
-	document.getElementById("main-room").style.display= 'block';
 
 	// send any ice candidates to the other peer
 	pc.onicecandidate = function (evt) {
@@ -325,18 +254,17 @@ function start(isInitiator) {
 		remoteView.srcObject = evt.stream;
 		if (videoCheckBox.checked)
 			remoteView.style.visibility = "visible";
-		else if (audioCheckBox.checked && !(chatCheckBox.checked))
-			audioOnlyView.style.visibility = "visible";
+//		else if (audioCheckBox.checked && !(chatCheckBox.checked))
+//			audioOnlyView.style.visibility = "visible";
 		sendOrientationUpdate();
 	};
 
-	if (audioCheckBox.checked || videoCheckBox.checked) {
+	if (screenCheckBox.checked) {
+		console.log("스크린");
 		pc.addStream(screenMediaStream);
-		//pc.addStream(localStream);//videoStream을 전달해줌 
 	}else{
-		alert('여기야');
-		//이런식으로 하니까 안가지네.. 내가 check를 그냥 고정해버렸나?
-		pc.addStream(screenMediaStream);
+		console.log("화상");
+		pc.addStream(localStream);
 	}
 	
 
@@ -408,7 +336,7 @@ function setupChat() {
 		chatButton.onclick = function () {
 			if(chatText.value) {
 				postChatMessage(chatText.value, true);
-				channel.send(/* document.getElementById("user_id").value */"userId"+": "+chatText.value);// 송신메세지
+				channel.send(chatText.value);// 송신메세지
 				chatText.value = "";
 				chatText.placeholder = "";
 			}
