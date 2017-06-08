@@ -79,10 +79,11 @@ public class StatisticsController {
 		model.addAttribute("dataList", statisticsService.getRegionStatisticsList(statistics));
 	}
 	
-	@RequestMapping(value="getJSONPostCountList", method=RequestMethod.POST)
-	public void getJSONPostCountList(Model model){
+	@RequestMapping(value="getJSONPostCountList", method=RequestMethod.GET)
+	public String getJSONPostCountList(Model model){
 		System.out.println("/statstics/getJSONPostCountList");
 		model.addAttribute("dataList", statisticsService.getPostCountList());
+		return "/index.jsp";
 	}
 	
 	

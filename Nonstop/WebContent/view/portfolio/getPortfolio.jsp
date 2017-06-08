@@ -404,17 +404,17 @@
        /* 좋아요 삭제*/
        $("#delPortLike").on("click" , function() {
     	   alert("좋아요를 취소합니다.");
-      		
       		$.ajax( 
 					{
-						url : "/portfolio/delJsonPortLike/"+$(this).next().val(),
-						method : "GET" ,
+						url : "/portfolio/delJsonPortLike",
+						method : "POST" ,
 						dataType : "json" ,
 						context : this,										 
-						headers : {
-			                        "Accept" : "application/json",
-			                        "Content-Type" : "application/json"   
-			                      },								
+						data : {								
+								PortNo : $("#portNo").val(),
+								UserId : $("#sessionUserId").val(),
+								portLikeNo : $(this).next().val(),
+								}, 								
 						success : function(data) {
 								  location.reload(); 
 						}
@@ -422,7 +422,7 @@
        });
    });
    
-   /* 팔로우하기, 쪽지보내기, 프로젝트 초대, 채팅하기 */
+   /* 팔로우하기, 쪽지보내기, 프로젝트 초대, 채팅하기, 수정, 삭제, 내 프로필 이동 */
    $(function() {
 	   /*팔로우*/
 	   $("#follow").on("click" , function() {       	
@@ -480,6 +480,21 @@
       $("#toProject").on("click" , function() {
  
       });
+      /* 수정 */
+      $("#updatePortfolio").on("click", function (e) {
+		   alert($("#portNo").val());
+		   self.location="/portfolio/updatePortfolio?portNo="+$("#portNo").val(); 
+	   });
+	  /* 삭제 */ 
+	   $("#deletePortfolio").on("click", function (e) {
+		   alert($("#portNo").val());
+		   self.location="/portfolio/deletePortfolio?portNo="+$("#portNo").val(); 
+	   });
+	  /* 내 프로필 이동 */
+	  $("#getProfile").on("click", function (e) {
+		   alert($("#portNo").val());
+		   self.location="/profile/getMineProfile"; 
+	   });
    });
    
    
@@ -519,74 +534,82 @@
 	    	});
 	    });
 	});
-    
+   
    </script>
 </head>
 
 <body>
 
 <div id="main">
-    <div class="container">
-        <div class="row">
+	<div class="container">
+		<div class="row">
         
            <!-- Blog Post (Left Body) Start -->
            <div class="col-md-9">
               <div class="col-md-12 page-body">
                  <div class="row">
                      
-                     <div class="sub-title">
-                            <!-- <a href="index.html" title="Go to Home Page"><h2>Back Home</h2></a>
-                           <a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->         
-                           <!-- 좋아요버튼 -->
-                           <c:if test="${portfolio.portLikeFlag == false}">
-                           <button type="button" class="btn btn-default btn-lg" id="portLike"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
-                           </c:if>
-                           
-                           <c:if test="${portfolio.portLikeFlag == true}">
-                           <button type="button" class="btn btn-default btn-lg" id="delPortLike"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요 취소</button>
-                           <input type="hidden" value="${portfolio.portLikeNo}">
-                           </c:if>
-                           <!-- 댓글버튼 -->
-                           <button type="button" class="btn btn-default btn-lg" onclick="fnMove(comment)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
-                           
-                           <!-- 스크랩버튼 -->
-                           <c:if test="${portfolio.scrapNo == 0}">
-                           <button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩</button>
-                           </c:if>
-                           
-                           <c:if test="${portfolio.scrapNo != 0}">
-                           <button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩 삭제</button>
-                           </c:if>
-                        </div>
+                 	<div class="sub-title">
+                            
+                    		<c:if test="${!empty sessionScope.user}">
+                           		<c:if test="${sessionScope.user.userId == portfolio.portUserId}">
+                           		<button type="button" class="btn btn-info btn-lg" id="updatePortfolio"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&ensp;게시물 수정</button>
+                           		<button type="button" class="btn btn-info btn-lg" id="deletePortfolio"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&ensp;게시물 삭제</button>
+                           		</c:if>
+                           	   
+                           		<c:if test="${sessionScope.user.userId != portfolio.portUserId}">
+	                           	   <!-- 좋아요버튼 -->
+		                           <c:if test="${portfolio.portLikeFlag == false}">
+		                           <button type="button" class="btn btn-info btn-lg" id="portLike"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
+		                           </c:if>
+		                           
+		                           <c:if test="${portfolio.portLikeFlag == true}">
+		                           <button type="button" class="btn btn-info btn-lg" id="delPortLike"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요 취소</button>
+		                           <input type="hidden" value="${portfolio.portLikeNo}">
+		                           </c:if>
+		                           <!-- 댓글버튼 -->
+		                           <button type="button" class="btn btn-info btn-lg" onclick="fnMove(comment)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
+		                           
+		                           <!-- 스크랩버튼 -->
+		                           <c:if test="${portfolio.scrapNo == 0}">
+		                           <button type="button" id="scrap" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩</button>
+		                           </c:if>
+		                           
+		                           <c:if test="${portfolio.scrapNo != 0}">
+		                           <button type="button" id="scrap" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩 삭제</button>
+		                           </c:if>
+								</c:if>
+							</c:if>       
+                        <!-- sub-title End -->   
+						</div>
                         
                         <div class="col-md-12 content-page">
-                            <div class="col-md-12 blog-post">
+                        	<div class="col-md-12 blog-post">
                               
-                              <!-- 왜 안나오는거야아아아ㅏ워ㅠㅜㅠㅜㅠㅜ -->
-                               <!-- Post Headline Start -->
-                               <div class="post-title">
+                        		<!-- Post Headline Start -->
+                        		<div class="post-title">
                                   <h1>${portfolio.portTitle}</h1> 
-                               </div>
-                               <!-- Post Headline End -->
+                        		</div>
+                        		<!-- Post Headline End -->
                                        
                                        
-                               <!-- Post Detail Start -->
-                               <div class="post-info">
-                                  <span>${portfolio.portMonth} ${portfolio.portDay}, ${portfolio.portYear} / by <a href="#" target="_blank">${portfolio.portUserId}</a></span>
-                               </div>
-                               <!-- Post Detail End -->
+								<!-- Post Detail Start -->
+								<div class="post-info">
+                                	<span>${portfolio.portMonth} ${portfolio.portDay}, ${portfolio.portYear} / by <a href="#" target="_blank">${portfolio.portUserId}</a></span>
+                              	</div>
+                              	<!-- Post Detail End -->
                                
-                               <!-- Post Image Start -->
+                              	<!-- Post Image Start -->
                                 <div class="post-image margin-top-40 margin-bottom-40">
-                                   <img src="../../resources/images/upload/${portfolio.portFile}" alt="">
-                                   <!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
+                                	<img src="../../resources/images/upload/${portfolio.portFile}" alt="">
+                                	<!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
                                 </div>
                                 <!-- Post Image End -->
                                
-                               <!-- 상세설명 -->
-                               <p>${portfolio.portDetail}</p>
+                              	<!-- 상세설명 -->
+                              	<p>${portfolio.portDetail}</p>
                                
-                               <div class="margin-top-50"></div>
+                              	<div class="margin-top-50"></div>
                                
                                	<!-- Post Comment (Disqus) Start -->
                                 <div id="comment" class="comment">
@@ -595,31 +618,33 @@
                                   	<h6>22 Comments</h6>
                                   	<hr class="thick-line">
                                    
-                                    <div class="media">
-									  <div class="media-left">
-									    <a href="#">
-									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
-									    </a>
-									  </div>
-									  
-							  	    <div class="media-body">
-							  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
-								  	  <div class="comment-btn" style="display:none;">
-								  		<div class="well">
-							            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-						                    <form role="form">
-						                    <div class="form-group">
-						                       <textarea id="comContent" maxlength="200" style="resize: none; wrap:hard; width:700px; height:120px;"></textarea><br/>
-                            					200 / <span id="chars">200</span> 글자 남았습니다.
-						                    </div>
-						                      <button type="button" name="comPortContent" value="" class="btn btn-primary" id="addComment">Submit</button>
-						                      <input type="hidden" id="portNo" value="${portfolio.portNo}">
-						                      <input type="hidden" id="sessionUserId" value="${sessionScope.user.userId}">
-						                    </form>
-						                 </div>						  	
-								  	  </div>
-								    </div>
-								
+                                    <c:if test="${!empty sessionScope.user}">
+	                                    <div class="media">
+										  <div class="media-left">
+										    <a href="#">
+										      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+										    </a>
+										  </div>
+									
+								  	      <div class="media-body">
+									  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
+										  	  <div class="comment-btn" style="display:none;">
+										  		<div class="well">
+									            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+								                    <form role="form">
+								                    <div class="form-group">
+								                       <textarea id="comContent" maxlength="200" style="resize: none; wrap:hard; width:700px; height:120px;"></textarea><br/>
+		                            					200 / <span id="chars">200</span> 글자 남았습니다.
+								                    </div>
+								                      <button type="button" name="comPortContent" value="" class="btn btn-primary" id="addComment">Submit</button>
+								                      <input type="hidden" id="portNo" value="${portfolio.portNo}">
+								                      <input type="hidden" id="sessionUserId" value="${sessionScope.user.userId}">
+								                    </form>
+								                 </div>						  	
+										  	  </div>
+									      </div>
+									    </div>
+									</c:if>
 								    <div class="margin-top-30"></div>								
 								
 									<!-- ajax로 받은 데이터 들어올 곳 -->						
@@ -652,64 +677,72 @@
 																	
 								</c:forEach>
 								
-                            </div>                                     
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-       	 <!-- Blog Post (Right Sidebar) End -->
-               
-               
-         <!-- About Me (Right Sidebar) Start -->
-         <div class="col-md-3">
-            <div class="about-fixed">
-             
-              <div class="my-pic">
-              	 <img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
-              </div>
-          
-               <div class="my-detail">
-                
-                  <div class="white-spacing">
-                      <h1>${user.userId}</h1>
-                      <span>${user.email}</span><br/>
-                      <%-- <span>${sessionScope.user.addr}</span> --%>
-                  </div> 
-                
-                  <div class="margin-top-20">
-                  	<c:set var="userRole" value="${user.role}"/>
-					<c:if test="${userRole eq '2'}">
-						<c:if test="${portfolio.portFollowFlag == true}">
-							<button type="button" class="btn btn-default btn-lg" id="follow">팔로우 취소</button>
-						</c:if>
-						<c:if test="${portfolio.portFollowFlag == false}">
-							<button type="button" class="btn btn-default btn-lg" id="follow">팔로우하기</button>
-						</c:if>
-                    </c:if>
-                    <c:if test="${userRole eq '3'}">
-                     	<button type="button" class="btn btn-default btn-lg" id="toProject">프로젝트 초대</button>
-                    </c:if>
-                  </div>
-                  <div class="margin-top-10">
-					<c:if test="${userRole eq '2'}">
-                     	<button type="button" class="btn btn-default btn-lg" id="sendLetter">쪽지 보내기</button>
-                    </c:if>
-                    <c:if test="${userRole eq '3'}">
-                     	<button type="button" class="btn btn-default btn-lg" id="chatting">채팅 문의</button>
-                    </c:if>
-                  </div>
-                  <div class="margin-bottom-20">&nbsp;</div>
+                            	</div>
+                            	<!-- comment End -->                                     
+                       		</div>
+               			</div>
+               		</div>
+           		</div>
+           	</div>
+            <!-- Blog Post (Right Sidebar) End -->
          
-              </div>
-           </div>
-         </div>
-         <!-- About Me (Right Sidebar) End -->
-      
-      </div>
-   </div>
+         	<!-- About Me (Right Sidebar) Start -->
+         	<div class="col-md-3">
+            	<div class="about-fixed">
+              
+	            	<div class="my-pic">
+	              		<img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
+	           		</div>
+          
+	              	<div class="my-detail">
+	                
+	                	<div class="white-spacing">
+	                    	<h1>${user.userId}</h1>
+	                    	<span>${user.email}</span><br/>
+	                    	<%-- <span>${sessionScope.user.addr}</span> --%>
+	                 	</div> 
+	                
+	                 	<div class="margin-top-20">
+	                  	<c:if test="${!empty sessionScope.user}">
+		                    <c:if test="${sessionScope.user.userId == portfolio.portUserId}">
+		                    	<button type="button" class="btn btn-info btn-lg" id="getProfile">내 프로필 보기</button>
+		                    </c:if>
+		                  	<c:if test="${sessionScope.user.userId != portfolio.portUserId}">
+		                  	
+		                  		<c:set var="userRole" value="${user.role}"/>
+								<c:if test="${userRole eq '2'}">
+									<c:if test="${portfolio.portFollowFlag == true}">
+										<button type="button" class="btn btn-info btn-lg" id="follow">팔로우 취소</button>
+									</c:if>
+									<c:if test="${portfolio.portFollowFlag == false}">
+										<button type="button" class="btn btn-info btn-lg" id="follow">팔로우하기</button>
+									</c:if>
+			                    </c:if>
+			                    <c:if test="${userRole eq '3'}">
+			                     	<button type="button" class="btn btn-info btn-lg" id="toProject">프로젝트 초대</button>
+			                    </c:if>
+			                  </div>
+			                  <div class="margin-top-10">
+								<c:if test="${userRole eq '2'}">
+			                     	<button type="button" class="btn btn-info btn-lg" id="sendLetter">쪽지 보내기</button>
+			                    </c:if>
+			                    <c:if test="${userRole eq '3'}">
+			                     	<button type="button" class="btn btn-info btn-lg" id="chatting">채팅 문의</button>
+			                    </c:if>
+			                    
+		                  	</c:if>
+	                  	</c:if>
+	                 	</div>
+	                  	<div class="margin-bottom-20">&nbsp;</div>
+					</div>
+				</div>
+			</div>
+	       	<!-- About Me (Right Sidebar) End -->
+         
+		</div>
+	</div>
 </div>
+
 
 
 

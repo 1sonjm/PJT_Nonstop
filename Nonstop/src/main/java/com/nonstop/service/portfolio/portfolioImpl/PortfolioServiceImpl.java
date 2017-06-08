@@ -11,6 +11,7 @@ import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.service.portfolio.PortfolioDAO;
 import com.nonstop.service.portfolio.PortfolioService;
+import com.nonstop.domain.Search;
 
 @Service("portfolioServiceImpl")
 public class PortfolioServiceImpl implements PortfolioService{
@@ -40,8 +41,8 @@ public class PortfolioServiceImpl implements PortfolioService{
 	}
 
 	@Override
-	public List<Portfolio> getPortfolioList(int portDivision, String sessionUserId) throws Exception {
-		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList(portDivision,sessionUserId);
+	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception {
+		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList(search,sessionUserId);
 		return portfolioList;
 	}
 
@@ -85,6 +86,18 @@ public class PortfolioServiceImpl implements PortfolioService{
 	public void deletePortLike(int portLikeNo) throws Exception {
 		// TODO Auto-generated method stub
 		portfolioDAO.deletePortLike(portLikeNo);
+	}
+
+	@Override
+	public void updatePortCount(Portfolio portfolio) throws Exception {
+		// TODO Auto-generated method stub
+		portfolioDAO.updatePortCount(portfolio);
+	}
+
+	@Override
+	public void deletePortfolio(int portNo) throws Exception {
+		// TODO Auto-generated method stub
+		portfolioDAO.deletePortfolio(portNo);
 	}
 	
 	

@@ -13,6 +13,7 @@ import com.nonstop.domain.PortComment;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.service.portfolio.PortfolioDAO;
+import com.nonstop.domain.Search;
 
 @Repository("portfolioDAOImpl")
 public class PortfolioDAOImpl  implements PortfolioDAO{
@@ -45,13 +46,14 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		return sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
 	}
 
-	public List<Portfolio> getPortfolioList(int portDivision,String sessionUserId) throws Exception {
+	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception {
 		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("sessionUserId", sessionUserId);
-		map.put("portDivision", portDivision);
+		map.put("search", search);
 		
+		System.out.println(map);
 		
 		return sqlSession.selectList("PortfolioMapper.getPortfolioList", map);
 	}
@@ -95,5 +97,18 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		// TODO Auto-generated method stub
 		sqlSession.delete("PortfolioMapper.deletePortLike", portLikeNo);
 	}
-	
+
+	@Override
+	public void updatePortCount(Portfolio portfolio) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("PortfolioMapper.updatePortCount", portfolio);
+	}
+
+	@Override
+	public void deletePortfolio(int portNo) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("PortfolioMapper.deletePortfolio", portNo);
+	}
+
+
 }
