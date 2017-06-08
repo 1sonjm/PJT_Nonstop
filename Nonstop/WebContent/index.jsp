@@ -35,13 +35,6 @@
 
     <!-- Theme JavaScript -->
     <script src="../../resources/javascript/mainpage.js"></script>
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
     
     <style>
     body {
@@ -67,14 +60,12 @@
 	$(function() {
 	 	$("#logout").on("click" , function() {
 			$(self.location).attr("href","/user/logout");
-			//self.location = "/user/logout"
 		}); 
 	 });
 	
 	 //============= login 이동 Event 처리 =============	
 	 $(function() {
 	 	$("#login").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
 			self.location = "/user/login"
 		}); 
 	 });
@@ -82,7 +73,6 @@
 	 //============= 회원가입 이동 Event 처리 =============	
 	 $(function() {
 	 	$("#addUser").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
 			self.location = "/user/addUser"
 		}); 
 	 });
@@ -146,43 +136,39 @@
 		
 	//============= toolbar project 이동 Event 처리 =============	
 	 $(function() {
-		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	 	$("#projDesigner").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
 			self.location = "/project/listProject?projDivision=2&sortFlag=0"
 		}); 
 	 });
 	
 	//============= toolbar project 이동 Event 처리 =============
 	 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDeveloper").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
 				self.location = "/project/listProject?projDivision=1&sortFlag=0"
 			}); 
 		 });
 	
 	//============= toolbar portfolio 이동 Event 처리 =============
 	 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#portDesigner").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/portfolio/listPortfolio?portDivision=2"
+				self.location = "/portfolio/listPortfolio?postDivision=2"
 			}); 
 		 });
 	
 	//============= toolbar portfolio 이동 Event 처리 =============
 	 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#portDeveloper").on("click" , function() {
-				//$(self.location).attr("href","/user/logout");
-				self.location = "/portfolio/listPortfolio?portDivision=1"
+				self.location = "/portfolio/listPortfolio?postDivision=1"
 			}); 
 		 });
 	
 	</script> 
 
 </head>
+
+<c:if test="${dataList==null}">
+<c:redirect url="/statistics/getJSONPostCountList"/>
+</c:if>
 
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
@@ -263,21 +249,21 @@
                         <div class="intro-main">
 	                        <ul class="main-ul">
 	                        	<li>
-	                        		<h1>123</h1>
+	                        		<h1>${dataList.DEVELOP}</h1>
 	                        		<p>개발자 포트폴리오</p>
 	                        	</li>
 	                        	<li>
 									<div class="verticle-line"><br/><br/><br/></div>
 	                        	</li>                        	
 	                        	<li>
-	                        		<h1>123</h1>
+	                        		<h1>${dataList.DESIGN}</h1>
 	                        		<p>디자인 포트폴리오</p>
 	                        	</li>
 	                        	<li>
 	                        		<div class="verticle-line"><br/><br/><br/></div>
 	                        	</li>
 	                        	<li>
-	                        		<h1>123</h1>
+	                        		<h1>${dataList.PROJECT}</h1>
 	                        		<p>등록된 프로젝트</p>
 	                        	</li>
 	                        </ul>

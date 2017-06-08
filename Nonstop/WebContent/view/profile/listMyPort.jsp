@@ -41,54 +41,10 @@
 
 	$(function() {
 
-		$(".img-circle").on("click", function() {
-			self.location = "/portfolio/addPortfolio";
-		});
-
 		$(".thumbnail").on("click",function() {
 			
 					self.location = "/portfolio/getPortfolio?portNo="+ $(this).find('input').val();
 				});
-
-		$("#button-all").on("click",function() {
-							var portDivision = $(this).val();
-
-							if (portDivision == 1 || portDivision == 10
-									|| portDivision == 11 || portDivision == 12) {
-								self.location = "/portfolio/listPortfolio?portDivision=10";
-							} else {
-								self.location = "/portfolio/listPortfolio?portDivision=20";
-							}
-						});
-
-		$("#button-web")
-				.on(
-						"click",
-						function() {
-							var portDivision = $(this).val();
-
-							if (portDivision == 1 || portDivision == 10
-									|| portDivision == 11 || portDivision == 12) {
-								self.location = "/portfolio/listPortfolio?portDivision=11";
-							} else {
-								self.location = "/portfolio/listPortfolio?portDivision=21";
-							}
-						});
-
-		$("#button-app")
-				.on(
-						"click",
-						function() {
-							var portDivision = $(this).val();
-
-							if (portDivision == 1 || portDivision == 10
-									|| portDivision == 11 || portDivision == 12) {
-								self.location = "/portfolio/listPortfolio?portDivision=12";
-							} else {
-								self.location = "/portfolio/listPortfolio?portDivision=22";
-							}
-						});
-
 	});
 
 </script>
@@ -207,13 +163,13 @@
       overflow: hidden; 
    } 
    
-   img { 
+   #aaaa , #aaa { 
       position: absolute; 
       top: 0; 
-      left: 0; 
+      margin-left: 10; 
       right: 0; 
       bottom: 0; 
-      max-width: 100%; 
+      
       height: auto; 
    }
    
@@ -222,12 +178,6 @@
       border-color: #bdbdbd;
    }
    
-   #listUserImg {
-   	  margin-top: 12%;
-   	  margin-left: 25%;
-   	  margin-right: 25%;
-   }
-
 	blockquote {
 	  padding: 0;
 	  padding-right: 5%;
@@ -248,53 +198,34 @@
 
 <body>
 
-
-
-<!-- Ranking contents -->
-
-
-	<!-- <div class="container">
-		<ol class="breadcrumb">
-			<li class="active">조회순</li>
-			<li><a href="#">추천순</a></li>
-			<li><a href="#">최신순</a></li>
-		</ol>
-	</div> -->
-
-	<!-- Page Content -->
+	
+	<div class="margin-bottom-30">
+				<div class="container">
+					<div class="row">
 	<c:set var="i" value="0" />
 	<c:forEach var="portfolio" items="${list3}">
 		<c:set var="i" value="${i+1}" />
 
-
-		<%-- <c:if test="${i%4==1}">  --%>
-			<div class="margin-bottom-30">
-				<div class="container">
-					<div class="row">
-		<%-- </c:if> --%> 
-
-
 		<c:if test="${portfolio.portUserId == sessionScope.user.userId }">
 
-			<div class="col-md-3 col-sm-6">
+			<div class="col-md-3 col-sm-3 hero-feature" style="margin-top: 30px; margin-bottom: 20px;">
 				<div class="thumbnail">
 					<figure class="effect-sadie">
 						<input type="hidden" id="portNo" name="portNo"
 							value="${portfolio.portNo}" />
 
 						<div class="thumbnail-portImage">
-							<img src="../../resources/images/upload/${portfolio.portFile}"
-								width="400px" height="300px" alt="">
+							<img src="../../resources/images/upload/${portfolio.portFile}" width="400px" height="300px" id="aaaa">
 						</div>
 						<div class="caption">
 
 							<blockquote>
 								<div class="row">
 									<div class="col-sm-3 text-center">
-										<img class="img-circle" src="http://placehold.it/50x50"
-											style="width: 50px; height: 50px;"> <input
-											type="hidden" id="portUserId" name="portUserId"
-											value="${portfolio.portUserId}" />
+									<span>
+										<img class="img-circle" id="aaa" src="http://placehold.it/50x50"style="width: 50px; height: 50px;"> 
+										</span>
+										<input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}" />
 									</div>
 									<div class="col-sm-9">
 										<h6>${portfolio.portTitle}</h6>
@@ -305,13 +236,11 @@
 											<span class="glyphicon glyphicon-search" aria-hidden="false"></span>
 											view portfolio<br />
 											<c:if test="${portfolio.scrapNo != 0}">
-												<button type="button" class="Scrap"
-													portNo="${portfolio.portNo}">delete to scrap</button>
+												<button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
 											</c:if>
 
 											<c:if test="${portfolio.scrapNo ==0}">
-												<button type="button" class="Scrap"
-													portNo="${portfolio.portNo}">add to scrap</button>
+												<button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
 											</c:if>
 
 
@@ -335,15 +264,12 @@
 				</div>
 				
 		</c:if>
-		    <%-- <c:if test="${i%4==0}">    --%>     
-         </div>
-     </div>
-</div>  
- <%-- </c:if> --%>
 
 	</c:forEach>
 
-
+  </div>
+     </div>
+</div>  
 	<!-- pagination -->
 	<nav align="center">
 		<ul class="pagination">

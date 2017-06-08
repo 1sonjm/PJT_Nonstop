@@ -12,7 +12,7 @@ public class Search {
 	private int pageSize;
 	private int projPageSize;
 	
-	
+	private int postDivision;
 
 	//==> ����Ʈȭ�� currentPage�� �ش��ϴ� ȸ�������� ROWNUM ��� SELECT ���� �߰��� Field 
 	//==> UserMapper.xml �� 
@@ -56,13 +56,21 @@ public class Search {
 	
 	//==> Select Query �� ROWNUM ������ �� 
 	public int getEndRowNum() {
-		return getCurrentPage()*getPageSize();
+		return this.endRowNum;
 	}
 	//==> Select Query �� ROWNUM ���� ��
 	public int getStartRowNum() {
-		return (getCurrentPage()-1)*getPageSize()+1;
+		return this.startRowNum;
 	}
 	
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
+
 	public int getProjPageSize() {
 		return projPageSize;
 	}
@@ -70,12 +78,20 @@ public class Search {
 	public void setProjPageSize(int projPageSize) {
 		this.projPageSize = projPageSize;
 	}
+	
+	public int getPostDivision() {
+		return postDivision;
+	}
+
+	public void setPostDivision(int postDivision) {
+		this.postDivision = postDivision;
+	}
 
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition="
 				+ searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + "]";
+				+ ", startRowNum=" + startRowNum + ", postDivision=" + postDivision + "]";
 	}
 }

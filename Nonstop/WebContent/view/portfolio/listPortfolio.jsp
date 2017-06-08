@@ -19,22 +19,17 @@
 
     <!-- Custom CSS -->
     <link href="/resources/css/full.css" rel="stylesheet">
-
-   <!-- jQuery -->
+    
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.2.0/animate.min.css">
+    
+    <!-- jQuery -->
     <script src="/resources/javascript/jquery.js"></script>
 
     <!-- Bootstrap Core JavaScript -->
     <script src="/resources/javascript/bootstrap.min.js"></script>
     
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-
-   <!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
+    <script src="/resources/javascript/animatedModal.min.js"></script>
+    
    <script type="text/javascript">
 
       $(document).ready(function() {
@@ -49,46 +44,49 @@
             alert("께헤헿");
             self.location="/portfolio/addPortfolio";
          }); 
-         
-         $(".thumbnail").on("click" , function() {
-            self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();
-         }); 
-         
+         //포트폴리오 상세보기
+         //동적으로 생성된 요소에 이벤트를 걸기위해 on메소드 사용($(document).on( '이벤트', '객체', '동작');)
+         //무한스크롤 적용시 스크롤 문제로 iziModal(fullScreen Modal, jquery Plugin)사용 
+         $(document).on('click', '.thumbnail', function() {
+             self.location="/portfolio/getPortfolio?portNo="+$(this).find('input').val();  
+         });
+       
+         //카테고리 버튼(all)
          $("#button-all").on("click" , function() {
-            var portDivision = $(this).val();
+            var postDivision = $(this).val();
             
-            if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
-               self.location="/portfolio/listPortfolio?portDivision=10";
+            if(postDivision == 1 || postDivision == 10 || postDivision == 11 || postDivision == 12){
+               self.location="/portfolio/listPortfolio?postDivision=10";
             }else{
-               self.location="/portfolio/listPortfolio?portDivision=20";
+               self.location="/portfolio/listPortfolio?postDivision=20";
             }
          });
-         
+         //카테고리 버튼(web)
          $("#button-web").on("click" , function() {
-            var portDivision = $(this).val();
+            var postDivision = $(this).val();
             
-            if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
-               self.location="/portfolio/listPortfolio?portDivision=11";
+            if(postDivision == 1 || postDivision == 10 || postDivision == 11 || postDivision == 12){
+               self.location="/portfolio/listPortfolio?postDivision=11";
             }else{
-               self.location="/portfolio/listPortfolio?portDivision=21";
+               self.location="/portfolio/listPortfolio?postDivision=21";
             }
          });
-         
+         //카테고리 버튼(app)
          $("#button-app").on("click" , function() {
-            var portDivision = $(this).val();
+            var postDivision = $(this).val();
             
-            if(portDivision == 1 || portDivision == 10 || portDivision == 11 || portDivision == 12){
-               self.location="/portfolio/listPortfolio?portDivision=12";
+            if(postDivision == 1 || postDivision == 10 || postDivision == 11 || postDivision == 12){
+               self.location="/portfolio/listPortfolio?postDivision=12";
             }else{
-               self.location="/portfolio/listPortfolio?portDivision=22";
+               self.location="/portfolio/listPortfolio?postDivision=22";
             }
          });
          
       });
       /* 스크랩추가 */
       $(function() {
-          
-          $(".Scrap").on("click" , function() {
+    	  //동적으로 생성된 요소에 이벤트를 걸기위해 on메소드 사용($(document).on( '이벤트', '객체', '동작');)
+          $(document).on("click", ".Scrap", function() {
 				
                 var flag = $(this).text().trim();
                 var requestTarget;
@@ -119,10 +117,117 @@
                          "Content-Type" : "application/json"   
                      },
                        success : function(data){
-                    	   		 location.reload();
-                     }
-                });
+                    	   
+                           if(flag=="add to scrap"){
+                              $(".Scrap").html("delete to scrap");  
+                           }else{
+                              $(".Scrap").html("add to scrap");
+                           }
+                          
+                     }//success
+                });//ajax
+                
+                //이벤드 전파 방지(상위 요소에 이벤트가 전파되는 것을 방지) 1.event.stopPropagation(); 이유 모르겠는데 안먹힘 2. return false;
+                return false;
            });
+          
+          /* 무한스크롤 */
+          $(document).ready(function () {
+        	  $(window).scroll(function() {
+	        	  var maxHeight = $(document).height();
+	        	  var currentScroll = $(window).scrollTop() + $(window).height();
+	
+	        	  if (maxHeight <= currentScroll) {
+		        	  $.ajax( 
+		  					{
+		  						url : "/portfolio/listJsonPortfolio",
+		  						method : "POST" ,
+		  						dataType : "json" ,
+		  						context : this,					
+		  						data : {								
+		  								postDivision: $("#postDivision").val(),
+		  								endRowNum : $(".scrolling:last").attr("endRowNum"),
+		  								}, 
+		  						success : function(data) {
+		  								 //넘어오는 데이터가 json타입이 아니면 파싱을 못함 > 컨트롤러 수정 @ResponseBody
+		  								  var displayValue = "";
+		  								  if(data != "") {
+		  									  $(data).each(function(index){
+		  										
+		  											    if(index%4==0) {
+		  											    	//if문 사용시 변수를 if문 안에서 찍어줘야 한다. 기본!
+		  											    	displayValue +='<div class="margin-bottom-30">'
+												  						 +'<div class="container">'    
+												  						 +'<div class="row">';  
+		  											  	}  
+		  											  
+		  											   displayValue += '<div class="col-md-3 col-sm-6">'
+									                	+'<div class="thumbnail">'
+									                    +'<figure class="effect-sadie">'
+									                    +'<input type="hidden" id="portNo" name="portNo" value="'+this.portNo+'"/>'
+									                                      
+									                    +'<div class="thumbnail-portImage">'
+									                    +'<img src="/resources/images/upload/'+this.portFile+'" width="400px" height="300px" alt="">'                       
+									                	+'</div>'   
+									              		+'<div class="caption">'
+									                           
+									            		+'<blockquote>'
+									          			+'<div class="row">'
+									        			+'<div class="col-sm-3 text-center">'
+									      				+'<img class="img-circle" src="/resources/images/upload/'+this.portUserImg+'" id="listUserImg" width="50px" height="50px" style="height:50px">'
+									    				+'<input type="hidden" id="portUserId" name="portUserId" value="'+this.portUserId+'"/>' 
+									  					+'</div>'
+														+'<div class="col-sm-9">'
+														+'<h5>'+this.portTitle+'</h5>'
+														+'<small>'+this.portUserId+'</small>'
+														+'</div>'
+														+'<figcaption>'          
+														+'<p class="hover__active">'
+														+'<span class="glyphicon glyphicon-search" aria-hidden="false"></span>'
+														+'view portfolio<br/>';
+														
+														if($(".sessionScope").val() != '') {
+							                                 if(this.scrapNo != 0){
+							                                	displayValue += '<button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>';
+							                                 }else {
+							                                	displayValue += '<button type="button" class="Scrap" portNo="'+this.portNo+'">add to scrap</button>';
+							                                 }	 
+														}
+						                                 displayValue +='</p>'
+														+'<p class="text-center">'                            
+														+'<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span> '+this.totalPortView+' &ensp;&ensp;&ensp;&ensp;&ensp;'
+														+'<span class="glyphicon glyphicon-heart" aria-hidden="true"></span> '+this.totalPortLike+' &ensp;&ensp;&ensp;&ensp;&ensp;'
+														+'<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>'+this.totalPortComment+'</p>'
+														+'</figcaption>'
+														+'</div>'
+														+'</blockquote>'                                        
+														+'<input type="hidden" class="scrolling" endRowNum="'+this.endRowNum+'">'
+														+'</div>'
+														+'</figure>'
+														+'</div>'
+														+'</div>';
+									         
+			  											 if(index%4==3) {
+			  												 displayValue +='</div></div></div>' ;
+			  											  } 
+		  										  
+		  										
+		  								  	  });//each
+		  								  	
+		  								  	//body태그 끝부분에 displayValue를 추가한다. .after()는 태그 후단에 추가시키기 때문에 문제발생 .append()는 태그 사이에 삽입됨  
+		  									$("body").append(displayValue);  
+		  								  	//무한스크롤 무한루프 방지. 맨 아래에서 1800만큼 윗부분에 스크롤을 위치시킨다.
+		  									$("body").scrollTop($(document).height()-1800);  
+		  									
+		  								  }else{
+		  									  alert("마지막 포트폴리오 입니다.");
+		  								  }//if문
+		  								
+		  					 }//success
+		  			  });//ajax   
+	        	  }
+	           })
+      	  });
       });
    </script>
    <style>
@@ -269,7 +374,7 @@
 	  border-left: 0;
 	}
 	
-	blockquote h6 {
+	blockquote h5 {
 	  margin-top: 10%;
 	  margin-bottom: 3px;
 	  overflow: hidden; 
@@ -292,82 +397,43 @@
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
    <div class="container"> <!-- <div class="container"> 獄�占쏙옙占쏙옙占� �⑨옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 / <div class="container-fluid"> ��怨�占싼�占쏙옙 占쏙옙筌ｋ��占쏙옙繹�占쏙�占� 占쏙옙占쎈��占쏙옙占쏙옙 筌ㅿ옙占쏙옙占쏙옙 ��占쏙옙占쏙옙��占쏙옙 -->
       <div class="input-group input-group-sm">
-      <div class="input-group-btn">
-        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span></button>
-        <ul class="dropdown-menu" role="menu">
-          <li><a href="#">Action</a></li>
-          <li><a href="#">Another action</a></li>
-          <li><a href="#">Something else here</a></li>
-          <li class="divider"></li>
-          <li><a href="#">Separated link</a></li>
-        </ul>
-      </div><!-- /btn-group -->
-      <span class="input-group-addon" id="sizing-addon3">@</span>
-      <input type="text" class="form-control" aria-label="...">
-      <span class="input-group-btn">
-        <button class="btn btn-success" type="button">검색</button>
-      </span>
-    </div><!-- /input-group -->
-  </div>
+	      <div class="input-group-btn">
+	        <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false">Action <span class="caret"></span></button>
+	        <ul class="dropdown-menu" role="menu">
+	          <li><a href="#">Action</a></li>
+	          <li><a href="#">Another action</a></li>
+	          <li><a href="#">Something else here</a></li>
+	          <li class="divider"></li>
+	          <li><a href="#">Separated link</a></li>
+	        </ul>
+	      </div><!-- /btn-group -->
+	      <span class="input-group-addon" id="sizing-addon3"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> </span>
+	      <input type="text" class="form-control" aria-label="...">
+	      <span class="input-group-btn">
+	        <button class="btn btn-success" type="button">검색</button>
+	      </span>
+	    </div><!-- /input-group -->
+	  </div>
  
- 
- 
- 
- 
- 
- 
- 
-<!--          Search-bar
-         <div class="input-group input-group-sm">
-            카테고리 선택                
-			<select class="form-control input-sm">
-			  <option>검색조건</option>
-			  <option>2</option>
-			  <option>3</option>
-			  <option>4</option>
-			  <option>5</option>
-			</select>
-		
-            돋보기모양
-            <span class="input-group-addon">                   
-               <span class="glyphicon glyphicon-search"></span>
-            </span>
-            
-            <input type="text" class="form-control" aria-label="...">
-            검색버튼
-            <span class="input-group-btn">
-               <button class="btn btn-success" type="button">검색</button>
-            </span>         
-         
-      </div>
-       -->
       <!-- ALL/WEB/APP 甕곤옙占쏙옙 -->
       <div class="row">   
          <div class="col-md-6 col-md-offset-3" align="center">
-              <button class="button button-neutral" type="button" id="button-all" value="${param.portDivision}">All</button>
-              <button class="button button-neutral" type="button" id="button-web" value="${param.portDivision}">Web</button>
-              <button class="button button-neutral" type="button" id="button-app" value="${param.portDivision}">App</button>
-              <input type="hidden" id="portDivision" name="portDivision" value="${param.portDivision}"/>
+              <button class="button button-neutral" type="button" id="button-all" value="${param.postDivision}">All</button>
+              <button class="button button-neutral" type="button" id="button-web" value="${param.postDivision}">Web</button>
+              <button class="button button-neutral" type="button" id="button-app" value="${param.postDivision}">App</button>
+              <input type="hidden" id="postDivision" name="postDivision" value="${param.postDivision}"/>
          </div>
 
-         <!-- 占쏙옙占쏙옙 / 占쏙옙 占쏙옙占싼�占쏙옙 占쏙옙占쏙옙占쏙옙椰���占� 占쏙옙 占쏙옙 占쏙옙占쏙옙 
-         <div class="col-md-3 col-md-offset-9" align="right">
-            <ol class="breadcrumb">
-              <li class="active">筌ㅿ옙占쏙옙占쏙옙</li>
-              <li><a href="#">�곤옙筌ｏ옙占쏙옙</a></li>
-              <li><a href="#">鈺곌�占쏙옙占쏙옙</a></li>
-            </ol>
-         </div> -->
       </div>
    </div>
 </nav>
 
 <!-- Ranking type-->
 <div class="container"> 
-  <div class="margin-top-70"></div>
+  <div class="margin-top-50"></div>
      <div class="text-center">   
       <span class="glyphicon glyphicon-tower" aria-hidden="true"></span>     
-       <h3 class="text-center">PORTFOLIO - RANKING</h3>
+       <h3 class="text-center" style="margin-bottom:0; margin-top:15px">PORTFOLIO - RANKING</h3>
        <p class="text-center">2017.05.10 - 2017.08.10 랭킹 순위</p>
      </div>
   <div class="margin-bottom-30"></div>
@@ -415,25 +481,30 @@
 		                           <blockquote>
 		                          <div class="row">
 		                            <div class="col-sm-3 text-center">
-		                              <img class="img-circle" src="/resources/images/upload/${sessionScope.user.image}" id="listUserImg" width="50px" height="50px">
+		                              <img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="listUserImg" width="50px" height="50px" style="height:50px">
 		                              <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/>                         
 		                            </div>
 		                            <div class="col-sm-9">
-		                              <h6>${portfolio.portTitle}</h6>
+		                              <h5>${portfolio.portTitle}</h5>
 		                              <small>${portfolio.portUserId}</small>
 		                            </div>
 		                            <figcaption>          
 		                               <p class="hover__active">
 		                                   <span class="glyphicon glyphicon-search" aria-hidden="false"></span>
 		                                   view portfolio<br/>
+
+											<!-- 스크랩버튼 -->
 		                                   <c:if test="${portfolio.scrapNo != 0}">
 		                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
 		                                   </c:if>
 		                                   
-		                                   <c:if test="${portfolio.scrapNo ==0}">
+		                                   <c:if test="${portfolio.scrapNo == 0 && !empty sessionScope.user}">
 		                                   <button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
 		                                   </c:if>
 		                                   
+		                                   <c:if test="${empty sessionScope.user}">
+		                                   <input type="hidden" class="sessionScope" value="">
+		                                   </c:if>
 		                                                                   
 		                                 </p>
 			                           <p class="text-center">                            
@@ -479,7 +550,7 @@
 
 <!-- Page Content -->
 <c:set var="i" value="0"/>
-<c:forEach var="portfolio" items="${list}" >
+<c:forEach var="portfolio" items="${list}" end="15" >
 <c:set var="i" value="${i+1}"/>
 
 
@@ -495,32 +566,35 @@
                    <input type="hidden" id="portNo" name="portNo" value="${portfolio.portNo}"/>
                                       
                       <div class="thumbnail-portImage">
-                          <img src="../../resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">                       
+                          <img src="/resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">                       
                        </div>   
                        <div class="caption">
                            
                            <blockquote>
                           <div class="row">
                             <div class="col-sm-3 text-center">
-                              <img class="img-circle" src="http://placehold.it/50x50" id="listUserImg" style="width: 50px;height:50px;">
-                              <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/>                         
+                              <img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="listUserImg" width="50px" height="50px" style="height:50px">
+                              <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/> 
                             </div>
                             <div class="col-sm-9">
-                              <h6>${portfolio.portTitle}</h6>
+                              <h5>${portfolio.portTitle}</h5>
                               <small>${portfolio.portUserId}</small>
                             </div>
                             <figcaption>          
                                <p class="hover__active">
                                    <span class="glyphicon glyphicon-search" aria-hidden="false"></span>
                                    view portfolio<br/>
+                                   <!-- 스크랩버튼 -->
                                    <c:if test="${portfolio.scrapNo != 0}">
                                    <button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
                                    </c:if>
                                    
-                                   <c:if test="${portfolio.scrapNo ==0}">
+                                   <c:if test="${portfolio.scrapNo == 0 && !empty sessionScope.user}">
                                    <button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
                                    </c:if>
                                    
+                                   <c:if test="${empty sessionScope.user}">
+                                   </c:if>
                                                                    
                                  </p>
 	                           <p class="text-center">                            
@@ -531,7 +605,7 @@
                         	</figcaption>
                           </div>
                         </blockquote>                                        
-                                 
+                        <input type="hidden" class="scrolling" endRowNum="${portfolio.endRowNum}">
                        </div>
                     </figure>
                 </div>
@@ -544,32 +618,6 @@
 </c:if>
    
 </c:forEach>
-
-
-<!-- pagination -->
-<nav align="center">
-  <ul class="pagination">
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-    <li><a href="#">1</a></li>
-    <li><a href="#">2</a></li>
-    <li><a href="#">3</a></li>
-    <li><a href="#">4</a></li>
-    <li><a href="#">5</a></li>
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  </ul>
-</nav>
-
-    
-
-    
 
 </body>
 
