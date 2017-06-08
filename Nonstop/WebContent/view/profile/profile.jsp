@@ -13,14 +13,16 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
+
     <meta name="author" content="Dashboard">
     <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-    <title>DASHGUM - FREE Bootstrap Admin Template</title>
-
+	<meta name="description" content="chart created using amCharts live editor" />
+	
+	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+		<script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
     <!-- Bootstrap Core CSS -->
-    <link href="/resources/css/nonstop.css" rel="stylesheet">
+    <link href="../..//resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
@@ -34,6 +36,47 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+	var dataSet = [];
+	
+	
+$.ajax("/statistics/getUserStatisticsList",{
+	method : "GET" ,
+	dataType : "json" ,
+	headers : {
+		"Accept" : "application/json"//,
+		//"Content-Type" : "application/json"
+	},
+	success : function(aaa) {
+		for (var i=0; i<aaa.dataList.length; i++){
+			dataSet.push({
+				TechName: aaa.dataList[i].techName,
+				UseTerm: aaa.dataList[i].careerUseTerm
+			});
+		}
+	}
+});
+
+AmCharts.makeChart("chartdiv",
+		{
+			"type": "pie",
+			"angle": 12,
+			"balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+			"depth3D": 15,
+			"titleField": "TechName",
+			"valueField": "UseTerm",
+			"allLabels": [],
+			"balloon": {},
+			"legend": {
+				"enabled": true,
+				"align": "center",
+				"markerType": "circle"
+			},
+			"titles": [],
+			"dataProvider": dataSet
+		}
+	);
+
+
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
  	$(".addCareer").on("click" , function() {
@@ -113,7 +156,16 @@ $(function() {
 	#sidebar h5 {
 		color: #f2f2f2;
 		font-weight: 700;
-		margin-top : 145px;
+		margin-top : 20px;
+	}
+	
+	#sidebar h4 {
+		color: #f2f2f2;
+		font-weight: 700;
+	}
+	
+	#sidebar .followProfile{
+	color: #f2f2f2;
 	}
 	
 	#sidebar p {
@@ -160,7 +212,7 @@ $(function() {
 	display : block;
 	margin-left : auto;
 	margin-right : auto;
-	margin-bottom : 0px;
+	margin-bottom : 30px;
 	margin-top: 60px;
 	}
 		
@@ -184,7 +236,6 @@ $(function() {
         <!-- sidebar menu start-->
               <!-- <ul class="sidebar-menu"> -->
               
-              <br/><br/><br/><br/><br/><br/>
              
               	  <img src="../../resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
               	  <h5 class="text-center">${user.userId}</h5>
@@ -195,7 +246,7 @@ $(function() {
               	  <h5 class="text-center">직원수 : ${user.empNum}</h5>
               	  <h5 class="text-center">설립일 : ${user.pubDate}</h5>
               	  </c:if>
-				 
+				 <hr/>
 
 				  
 				<c:if test="${user.userId != sessionScope.user.userId }">
@@ -218,8 +269,8 @@ $(function() {
 		      		
 		      		<c:if test="${session.user.userId  == param.userId}"> 
 		      		<div class="col-sm-12 text-center">
-					 <span class="listFollow" reqUserId="${user.userId}">
-		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button>
+					 <%-- <span class="listFollow" reqUserId="${user.userId}">
+		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button> --%>
 		      		<ul class="nav nav-pills nav-stacked labels-info inbox-divider">
                           <li> <h4>Followers</h4> </li>
                            <c:set var="i" value="0" />
@@ -240,7 +291,7 @@ $(function() {
                           </li> -->
                           </c:forEach>
                       </ul> 
-		      		</span>
+		      		<!-- </span> -->
 		      		</div>
 		      		</c:if>	
               <!-- </ul> -->
@@ -272,13 +323,13 @@ $(function() {
 					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
 					    </c:if>
 
-					 	<c:if test="${user.userId  == sessionScope.user.userId}"> 
+					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
 					    <li role="presentation"><a href="#projectScrap" aria-controls="projectScrap" role="tab" data-toggle="tab" >projectScrap</a></li>
 					 	</c:if>
 					 	
 					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
 					    <li role="presentation"><a href="#portfolioScrap" aria-controls="portfolioScrap" role="tab" data-toggle="tab" >portfolioScrap</a></li>
-					 	</c:if>
+					 	</c:if> 
 					  </ul>
 			
 					  <!-- Tab panes -->
@@ -286,29 +337,31 @@ $(function() {
 					  
 					    <div role="tabpanel" class="tab-pane active" id="Profile">
 					   <c:if test="${user.role=='2'}">
+					   <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
 					    <jsp:include page="/view/profile/listCareer.jsp" /> 
+					    
 					    </c:if>	
 					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
 					    </div>
-					    
 					  <div role="tabpanel" class="tab-pane" id="Portfolio">
 					    	<br/> <h5>내가올린 포트폴리오 목록보기</h5> <br/>
 					   <jsp:include page="/view/profile/listMyPort.jsp" />
 						</div> 
 						
-						 <div role="tabpanel" class="tab-pane" id="Project">
+						   <div role="tabpanel" class="tab-pane" id="Project">
 						 	<br/> <h5>내가올린 프로젝트 목록보기</h5> <br/>
+						 	<jsp:include page="/view/profile/listMyProj.jsp" />
 						 </div>
 						 
-					    <div role="tabpanel" class="tab-pane" id="portfolioScrap">
+					     <div role="tabpanel" class="tab-pane" id="portfolioScrap">
 							<br/> <h5>포트폴리오 스크랩 목록보기</h5> <br/>
 					   		<jsp:include page="/view/profile/listPortScrap.jsp"/>
-					    </div>
-					    
-					    <div role="tabpanel" class="tab-pane" id="projectScrap">
-							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
-					   		<jsp:include page="/view/profile/listProjScrap.jsp"/>
 					    </div> 
+					    
+					   <div role="tabpanel" class="tab-pane" id="projectScrap">
+							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
+					   		 <jsp:include page="/view/profile/listProjScrap.jsp"/> 
+					    </div>  
 					   
 					  </div>
 					</div>

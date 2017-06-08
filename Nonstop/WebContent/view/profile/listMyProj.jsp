@@ -29,7 +29,7 @@
 
 	<style>
 	
-		#table {
+/* 		#table {
         	border-collapse: collapse;
 		    border: collapse;
 		    width: 100%;
@@ -69,7 +69,7 @@
        .fa-star {
           color: #d5d5d5;
         }
-        
+         */
 
 	</style>
 
@@ -142,7 +142,7 @@
         		<c:set var="i" value="0" />
 				<c:forEach var="project" items="${list4}">
 				<c:set var="i" value="${ i+1 }" />
-				<c:if test="${project.scrapNo !=0}">
+				<c:if test="${project.projUserId == sessionScope.user.userId }">
 				
 					<div class="col-md-6 col-sm-6 hero-feature" style="margin-top: 30px; margin-bottom: 20px; height: 400px">
 						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" /> 

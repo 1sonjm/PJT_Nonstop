@@ -1470,7 +1470,7 @@ blockquote {
   padding: 10.5px 21px;
   margin: 0 0 21px;
   font-size: 17.5px;
-  border-left: 5px solid #ebebeb;
+  border-left: 0;
 }
 blockquote h1, blockquote h2, blockquote h3, blockquote h4, blockquote h5, blockquote h6 {
   color: #333333;
@@ -8197,7 +8197,7 @@ blockquote {
   padding: 10.5px 21px;
   margin: 0 0 21px;
   font-size: 17.5px;
-  border-left: 5px solid #ebebeb;
+  border-left: 0;
 }
 blockquote p:last-child,
 blockquote ul:last-child,
