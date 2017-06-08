@@ -70,14 +70,14 @@ public class ProjectController {
 	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
 		
 		System.out.println("여기는 addProject : "+project);
-		
-//		projDetail.replaceAll("\r\n", "<br>");
-//		session.setAttribute("projDetail", projDetail);
+		System.out.println("sdfkjsdhalksdaf"+project.getProjAnnoEnd());
+		System.out.println("sdfkjsdhalksdaf"+project.getProjStartDate());
+		System.out.println("sdfkjsdhalksdaf"+project.getProjEndDate());
 		projectService.addProject(project);
 		
 		model.addAttribute("project", project);
 		
-		return "redirect:/index.jsp";
+		return "forward:/index.jsp";
 	}
 	
 	
@@ -103,7 +103,6 @@ public class ProjectController {
 		model.addAttribute("project", project);
 		model.addAttribute("user", user);
 		
-	
 		return "forward:/view/project/getProject.jsp";
 	}
 	
@@ -173,7 +172,12 @@ public class ProjectController {
 		}
 		System.out.println("sortFlag"+ sortFlag);
 		search.setPageSize(projPageSize);
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		String scrapUserId = "testUser";
+		
+		if((User)session.getAttribute("user") != null) {
+			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+				
 		List<Project> list = projectService.listProject(projDivision,scrapUserId,search,sortFlag);
 		
 		System.out.println("getSearchKeyword"+search.getSearchKeyword());
