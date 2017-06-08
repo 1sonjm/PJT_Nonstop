@@ -81,14 +81,6 @@
 		}
 
 		$("input:hidden[name='projLocation']").val( projLocation );
-		alert(projUserId);
-		alert(projDivision);
-		alert(projTitle);
-		alert(projAnnoEnd);
-		alert(projStartDate);
-		alert(projEndDate);
-		alert(projDetail);
-		alert(projLocation);
 		
 		$("form").attr("method", "POST").attr("action", "/project/addProject").submit();
 		
@@ -112,121 +104,54 @@
 
     </script>
     
-    <!-- Include Required Prerequisites -->
-	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-	<!-- <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap/3/css/bootstrap.css" /> -->
-	 
-	<!-- Include Date Range Picker -->
-	<script type="text/javascript" src="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
-	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
-    <script>
-    /*데이트 픽커*/
-    $(function() {
- 		
- 		var nowDate = new Date();
- 		
- 		$('#daterange1').on('change',function(){
- 			
- 			var ss1 = $('#daterange1').val().split(' ~ ')[0];
- 			alert(ss1);
- 			var ss3 = new Date(ss1);
- 			alert(ss3);
- 			var ss5 = ss3.getFullYear()+"/"+(ss3.getMonth()+1)+"/"+ss3.getDate();
- 			$('input[name="projStartDate"]').val(ss5);
- 			alert($('input[name="projStartDate"]').val());
- 			
- 			var ss2 = $('#daterange1').val().split(' ~ ')[1];
- 			alert(ss2);
- 			var ss4 = new Date(ss2);
- 			alert(ss3);
- 			var ss6 = ss4.getFullYear()+"/"+(ss4.getMonth()+1)+"/"+ss4.getDate();
- 			$('input[name="projEndDate"]').val(ss6);
- 			alert($('input[name="projEndDate"]').val());
- 			
- 			
- 			
- 			
- 		/* 	$('input[name="projStartDate"]').val($('#daterange1').val().split(' ~ ')[0]);
- 			$('input[name="projEndDate"]').val($('#daterange1').val().split(' ~ ')[1]); */
- 		});
- 		
- 	
- 		$('input[name="daterange1"]').daterangepicker({
- 			"showDropdowns": true,
- 			"locale": {
- 					"format": "YYYY/MM/DD",
- 					"separator": " ~ ",
- 					"applyLabel": "적용",
- 					"cancelLabel": "취소",
- 					"weekLabel": "주",
- 					"daysOfWeek": ["일","월","화","수","목","금","토"],
- 					"monthNames": ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
- 					"firstDay": 1
- 			},
- 			"showCustomRangeLabel": false,
- 			"alwaysShowCalendars": true,
- 			"startDate": nowDate,
- 			"endDate": (nowDate,+1),
- 			"opens": "left"
- 		}, 
- 		
- 		function(start, end, label) {
- 			//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
- 		});
- 		
-    });
     
-	$(function() {
- 		
- 		var nowDate = new Date();
- 		
- 		$('input[name="daterange2"]').daterangepicker({
- 			"singleDatePicker" : true,
- 			"showDropdowns": true,
- 			"locale": {
- 					"format": "YYYY/MM/DD",
- 					"applyLabel": "적용",
- 					"cancelLabel": "취소",
- 					"weekLabel": "주",
- 					"daysOfWeek": ["일","월","화","수","목","금","토"],
- 					"monthNames": ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
- 					"firstDay": 1
- 			},
- 			"showCustomRangeLabel": false,
- 			"alwaysShowCalendars": true,
- 			"startDate": nowDate,
- 			"endDate": (nowDate,+1),
- 			"opens": "left"
- 		}, 
- 		
- 		function(start, end, label) {
- 			//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
- 		});
- 		
- 		
- 		
- 	/* 	var year = $('#daterange2').val().substr(0,4);
- 		var month = $('#daterange2').val().substr(5,2);
- 		var day = $('#daterange2').val().substr(8,2);
- 		var date = new Date(year, month, day);
- 		var date1 = new Date($('#daterange2').val());
- 		alert(year);
- 		alert(month);
- 		alert(day);
- 		alert(date);
- 		alert(date1); */
- 		$('#daterange2').on('change',function(){
- 			
- 			var ss1 = $('#daterange2').val();
- 			var ss2 = new Date(yyyy,mm,dd);
- 			ss2=dateToYYYYMMDD(ss2);
- 			alert("asdfadsfdsa"+ss2);
- 			var ss3 = ss2.getFullYear()+"/"+(ss2.getMonth()+1)+"/"+ss2.getDate();
- 			$('input[name="projAnnoEnd"]').val(ss3);
- 			alert($('input[name="projAnnoEnd"]').val());
- 		});
-    });
+    <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
+	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/sunny/jquery-ui.css">
+	
+	<style>
+		select{
+			text-align : center;
+		}
+	</style>
+	
+    <script>
+    
+    $( function() {
+	    $( "#projStartDate" ).datepicker({
+	      dateFormat : "yy-mm-dd",
+	      buttonImage: "http://kr.seaicons.com/wp-content/uploads/2015/06/calendar-icon.png",
+	      buttonImageOnly: true,
+	      showButtonPanel: true,
+	      buttonText: "Select date" 
+	    });
+	    $("img.ui-datepicker-trigger").attr("style", "width:35px; cursor: Pointer;");
+	});
+    
+    $( function() {
+	    $( "#projEndDate" ).datepicker({
+	      dateFormat : "yy-mm-dd",
+	      buttonImage: "http://kr.seaicons.com/wp-content/uploads/2015/06/calendar-icon.png",
+	      buttonImageOnly: true,
+	      showButtonPanel: true,
+	      buttonText: "Select date" 
+	    });
+	    $('#projEndDate').insertAfter( $('#projEndDate').next('img') );
+	    $("img.ui-datepicker-trigger").attr("style", "width:35px; cursor: Pointer;");
+	});
+    
+    $( function() {
+	    $( "#projAnnoEnd" ).datepicker({
+	      dateFormat : "yy-mm-dd",
+	      buttonImage: "http://kr.seaicons.com/wp-content/uploads/2015/06/calendar-icon.png",
+	      buttonImageOnly: true,
+	      showButtonPanel: true,
+	      buttonText: "Select date" 
+	    });
+	    $("img.ui-datepicker-trigger").attr("style", "width:35px; cursor: Pointer;");
+	});
+    
     </script>
     
 </head>
@@ -273,8 +198,8 @@
 					</div> -->
 					
 					<div class="form-group">
-					    <label for="division" class="col-sm-offset-1 col-sm-3 control-label">분류</label>
-					    <div class="col-sm-2">
+					    <label for="division" class="col-sm-offset-1 col-sm-2 control-label">분류</label>
+					    <div class="col-sm-3">
 					    	<select class="form-control" name="division" id="division">
 							  	<option value="11" >개발/WEB</option>
 								<option value="12" >개발/APP</option>
@@ -287,25 +212,26 @@
 					
 					<!-- Select Basic -->					
 					<div class="form-group">
-						<label class="col-md-4 control-label">소요기간</label>
-						<div class="col-md-5">
-							<input class="form-control" name="daterange1" type="text" id="daterange1"/>
-							<input type="hidden" name="projStartDate" id="projStartDate" value="">
-							<input type="hidden" name="projEndDate" id="projEndDate" value="">
-						</div>
+					  <label for="projectDate" class="col-sm-offset-1 col-sm-2 control-label">소요기간</label>
+						    <div class="col-sm-3">
+						      <input type="text" class="form-control" id="projStartDate" name="projStartDate" readonly>
+						    </div>
+						    <div class="col-sm-3">
+						      <input type="text" class="form-control" id="projEndDate" name="projEndDate" readonly>
+						    </div>
 					</div>
 					
 					<div class="form-group">
-					  <label class="col-md-4 control-label">프로젝트 제목</label>  
-					  <div class="col-md-5">
+					  <label class="col-md-3 control-label">프로젝트 제목</label>  
+					  <div class="col-md-6">
 					  	<input id="projTitle" name="projTitle" placeholder="제목을 입력해주세요" class="form-control input-md" type="text">					    
 					  </div>
 					</div>	
 					
 					<!-- Textarea -->
                		<div class="form-group">
-               			<label class="col-md-4 control-label">상세내용</label>
-					  	<div class="col-md-5">                     
+               			<label class="col-md-3 control-label">상세내용</label>
+					  	<div class="col-md-6">                     
                          <textarea class="form-control textarea" rows="13" name="projDetail" id="projDetail" placeholder="Message"></textarea>
                			</div>
                		</div>
@@ -313,27 +239,26 @@
 
 
 					<div class="form-group">
-					    <label for="projLocation" class="col-sm-offset-1 col-sm-3 control-label">지역</label>
-					    <div class="row">
-						    <div class="col-sm-2">
+					    <label for="projLocation" class="col-sm-offset-1 col-sm-2 control-label">지역</label>
+						    <div class="col-sm-3">
 						    	<select class="form-control" name="projLocation1" id="projLocation1">
 								  	<option value="서울" >서울</option>
 									<option value="인천" >인천</option>
 								</select>
+							</div>
+							<div class="col-sm-3">
 								<select class="form-control" name="projLocation2" id="projLocation2">
 								  	<option value="강서구" >강서구</option>
 									<option value="부평구" >부평</option>
 								</select>
 						    </div>
-					    </div>
 					    <input type="hidden" name="projLocation" />
 					</div>
 					
 					<div class="form-group">
-						<label class="col-md-4 control-label">마감일</label>
-						<div class="col-md-5">
-							<input class="form-control" type="text" name="daterange2" id="daterange2" />
-							<input type="hidden" name="projAnnoEnd" id="projAnnoEnd" value="">
+						<label class="col-md-3 control-label">마감일</label>
+						<div class="col-md-3">
+							<input class="form-control" type="text" name="projAnnoEnd" id="projAnnoEnd" readonly />
 						</div>
 					</div>
 					
@@ -450,3 +375,99 @@
 </div>
 </body>
 </html>
+
+
+
+<!-- /*데이트 픽커*/
+    $(function() {
+ 		
+ 		var nowDate = new Date();
+ 		
+ 		$('#daterange1').on('change',function(){
+ 			
+ 			var ss1 = $('#daterange1').val().split(' ~ ')[0];
+ 			var ss3 = new Date(ss1);
+ 			$('input[name="projStartDate"]').val(ss3);
+ 			
+ 			var ss2 = $('#daterange1').val().split(' ~ ')[1];
+ 			var ss4 = new Date(ss2);
+ 			$('input[name="projEndDate"]').val(ss4);
+ 			
+ 			
+ 		/* 	$('input[name="projStartDate"]').val($('#daterange1').val().split(' ~ ')[0]);
+ 			$('input[name="projEndDate"]').val($('#daterange1').val().split(' ~ ')[1]); */
+ 		});
+ 		
+ 	
+ 		$('input[name="daterange1"]').daterangepicker({
+ 			"showDropdowns": true,
+ 			"locale": {
+ 					"format": "YYYY/MM/DD",
+ 					"separator": " ~ ",
+ 					"applyLabel": "적용",
+ 					"cancelLabel": "취소",
+ 					"weekLabel": "주",
+ 					"daysOfWeek": ["일","월","화","수","목","금","토"],
+ 					"monthNames": ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+ 					"firstDay": 1
+ 			},
+ 			"showCustomRangeLabel": false,
+ 			"alwaysShowCalendars": true,
+ 			"startDate": nowDate,
+ 			"endDate": (nowDate,+1),
+ 			"opens": "left"
+ 		}, 
+ 		
+ 		function(start, end, label) {
+ 			//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
+ 		});
+ 		
+    });
+    
+	$(function() {
+ 		
+ 		var nowDate = new Date();
+ 		
+ 		$('input[name="daterange2"]').daterangepicker({
+ 			"singleDatePicker" : true,
+ 			"showDropdowns": true,
+ 			"locale": {
+ 					"format": "YYYY/MM/DD",
+ 					"applyLabel": "적용",
+ 					"cancelLabel": "취소",
+ 					"weekLabel": "주",
+ 					"daysOfWeek": ["일","월","화","수","목","금","토"],
+ 					"monthNames": ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
+ 					"firstDay": 1
+ 			},
+ 			"showCustomRangeLabel": false,
+ 			"alwaysShowCalendars": true,
+ 			"startDate": nowDate,
+ 			"endDate": (nowDate,+1),
+ 			"opens": "left"
+ 		}, 
+ 		
+ 		function(start, end, label) {
+ 			//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
+ 		});
+ 		
+ 		
+ 		
+ 	/* 	var year = $('#daterange2').val().substr(0,4);
+ 		var month = $('#daterange2').val().substr(5,2);
+ 		var day = $('#daterange2').val().substr(8,2);
+ 		var date = new Date(year, month, day);
+ 		var date1 = new Date($('#daterange2').val());
+ 		alert(year);
+ 		alert(month);
+ 		alert(day);
+ 		alert(date);
+ 		alert(date1); */
+ 		$('#daterange2').on('change',function(){
+ 			
+ 			var ss1 = $('#daterange2').val();
+ 			var ss2 = new Date(ss1);
+ 			alert(ss2)
+ 			$('input[name="projAnnoEnd"]').val(ss2);
+ 		});
+    });*-->

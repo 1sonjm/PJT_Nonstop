@@ -26,12 +26,19 @@
 	</resultMap>
 	
 	 <resultMap id="commentSelectMap" type="projComment">
-		<result property="comNo" 			column="com_no" 				jdbcType="INTEGER"/>
-		<result property="comProjNo" 		column="com_proj_no" 			jdbcType="INTEGER" />
-		<result property="comUserId" 		column="com_user_id" 			jdbcType="VARCHAR" />
-		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
-		<result property="comRegDate" 		column="com_proj_regdate" 		jdbcType="DATE" />
-		<result property="comContent" 		column="com_proj_content" 		jdbcType="VARCHAR" />
+		<result property="comNo" 			column="com_no" 			jdbcType="INTEGER"/>
+		<result property="comProjNo" 		column="com_proj_no" 		jdbcType="INTEGER" />
+		<result property="comUserId" 		column="com_user_id" 		jdbcType="VARCHAR" />
+		<result property="comUserImg" 		column="user_img" 			jdbcType="VARCHAR" />
+		<result property="comRegDate" 		column="com_proj_regdate" 	jdbcType="DATE" />
+		<result property="comContent" 		column="com_proj_content" 	jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<resultMap id="techUseSelectMap" type="techUse">
+		<result property="tuNo" 			column="tu_no" 				jdbcType="INTEGER"/>
+		<result property="tuPortNo" 		column="tu_port_no" 		jdbcType="INTEGER" />
+		<result property="tuProjNo" 		column="tu_proj_no" 		jdbcType="INTEGER" />
+		<result property="tuTechNo" 		column="tu_tech_no" 		jdbcType="INTEGER" />
 	</resultMap>
 	
 	
@@ -185,7 +192,6 @@
 		WHERE c.com_proj_no = #{comProjNo} 
 		AND u.user_id = c.com_user_id
 		ORDER BY com_proj_regdate DESC
-		
 	</select>
 	 
 	 
