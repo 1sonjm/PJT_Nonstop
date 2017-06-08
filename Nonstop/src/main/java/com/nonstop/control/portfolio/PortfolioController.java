@@ -164,7 +164,7 @@ public class PortfolioController {
 		//댓글
 		List<PortComment> portCommentList = portfolioService.getCommentList(portNo);
 		//팔로우 플래그
-		Follow follow = profileService.getFollow(sessionUserId);
+		Follow follow = profileService.getFollow(sessionUserId, portfolio.getPortUserId());
 		
 		if(follow != null){
 			portfolio.setPortFollowFlag(true);
