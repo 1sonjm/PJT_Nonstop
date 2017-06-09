@@ -71,6 +71,8 @@ window.onload = function () {
 	} catch (e) {}
 
 	document.getElementById("capture-screen").onclick = function () {
+		
+		////여기서 먼저 설치 확인
 		getScreenId(function(error, sourceId, screen_constraints) {
 			// error == null || 'permission-denied' || 'not-installed' ||
 			// 'installed-disabled' || 'not-chrome'
@@ -94,9 +96,15 @@ window.onload = function () {
 				error = null;
 			}
 
-			if(error == 'not-installed') { alert('Please install Chrome extension. See the link below.'); return; }
+			if(error == 'not-installed') {
+				var r = confirm("화면공유를 위한 확장프로그램이 필요합니다.");
+				if (r == true) {
+					window.open('https://chrome.google.com/webstore/detail/screen-capturing/ajhifddimkapgcifgcodmmfdlknahffk', '_blank'); 
+				}
+				return;
+			}
 			if(error == 'installed-disabled') { alert('Please install or enable Chrome extension. Please check "chrome://extensions" page.'); return; }
-			if(error == 'permission-denied') { alert('Please make sure you are using HTTPs. Because HTTPs is required.'); return; }
+			if(error == 'permission-denied') { /*alert('취소됨');*/ return; }
 
 			console.info('getScreenId callback \n(error, sourceId, screen_constraints) =>\n', error, sourceId, screen_constraints);
 			
@@ -108,6 +116,7 @@ window.onload = function () {
 				screenMediaStream = stream;
 				selfView.srcObject = stream;
 				screenCheckBox.checked = true;
+				postChatMessage("연결이 aaaaaaaaaaaaaaaaaaaaaa.");
 				
 				//캡쳐화면 띄워줄려했지
 				//document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
@@ -166,6 +175,7 @@ window.onload = function () {
 				callButton.disabled = true;
 				remoteView.style.visibility = "hidden";
 				alert('연결 종료');
+				postChatMessage("연결이 종료되었습니다.");
 				if (pc)
 					pc.close();
 				pc = null;
@@ -258,19 +268,38 @@ function start(isInitiator) {
 //			audioOnlyView.style.visibility = "visible";
 		sendOrientationUpdate();
 	};
-
+   var targetStream;
 	if (screenCheckBox.checked) {
 		console.log("스크린");
 		pc.addStream(screenMediaStream);
+		targetStream = screenMediaStream;
 	}else{
 		console.log("화상");
 		pc.addStream(localStream);
+		targetStream = localStream;
 	}
-	
 
 	if (isInitiator)
 		pc.createOffer(localDescCreated, logError);
 
+	//화상 on/off 버튼 구성
+	var screnToggleButton = document.createElement("button");
+	screnToggleButton.innerText = "화면on/off";
+	document.getElementById('view_controlset').appendChild(screnToggleButton);
+
+	screnToggleButton.onclick = function(){
+		targetStream.getVideoTracks()[0].enabled =
+        !(targetStream.getVideoTracks()[0].enabled);
+   }
+	
+	//음성 on/off 버튼 구성
+	var screnToggleButton = document.createElement("button");
+	screnToggleButton.innerText = "음성on/off";
+	document.getElementById('view_controlset').appendChild(screnToggleButton);
+	screnToggleButton.onclick = function(){
+		targetStream.getAudioTracks()[0].enabled =
+        !(targetStream.getAudioTracks()[0].enabled);
+   }
 	
 }
 
@@ -347,24 +376,30 @@ function setupChat() {
 	channel.onmessage = function (evt) {
 		postChatMessage(evt.data);
 	};
-
-	function postChatMessage(msg, author) {
-		var messageNode = document.createElement('div');
-		var messageContent = document.createElement('div');
-		messageNode.classList.add('chatMessage');
-		messageContent.textContent = msg;
-		messageNode.appendChild(messageContent);
-
-		if (author) {
-			messageNode.classList.add('selfMessage');
-		} else {
-			messageNode.classList.add('remoteMessage');
-		}
-
-		chatDiv.appendChild(messageNode);
-		chatDiv.scrollTop = chatDiv.scrollHeight;
-	}
 }
+function postChatMessage(msg, author) {
+	var messageNode = document.createElement('div');
+	var messageContent = document.createElement('div');
+	
+	messageNode.classList.add('chatMessage');
+	messageContent.textContent = msg;
+	messageNode.appendChild(messageContent);
+    
+    
+   var messageTime = messageContent.cloneNode(true);
+   messageTime.classList.add('chatMessageTime');
+	var d = new Date();
+	messageTime.textContent = d.getHours()+":"+ ((d.getMinutes()<10)?"0"+d.getMinutes():d.getMinutes());
+	messageNode.appendChild(messageTime);
 
+	if (author) {
+		messageNode.classList.add('selfMessage');
+	} else {
+		messageNode.classList.add('remoteMessage');
+	}
+
+	chatDiv.appendChild(messageNode);
+	chatDiv.scrollTop = chatDiv.scrollHeight;
+}
 
 

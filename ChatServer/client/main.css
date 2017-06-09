@@ -29,6 +29,8 @@
 #menu_state:checked ~ nav ul .menu_content {
 	display: inline;
 }
+
+
 nav ul .menu_content{
 	display: none;
 }
@@ -41,8 +43,6 @@ nav {
 	background: #2e2e2e;
 	color: #9aa3a8;
 	width: 50px;
-	font-family: 'Montserrat', sans-serif;
-	font-weight: lighter;
 }
 
 nav label[for="menu_state"] i {
@@ -175,9 +175,7 @@ main section {
 	background: #fff;
 	padding: 25px;
 	width:100%;
-	font-family: helvetica;
-	font-weight: lighter;
-	margin: 150px 75px;
+	margin: 30px;
 	transition: all 0.15s ease-in-out;
 }
 /* 
@@ -224,6 +222,10 @@ ul.sidebar-menu {
 	position: relative;
 }
 /*Chat message bubble container*/
+.chatMessageTime{
+
+}
+
 .chatMessage {
 	margin-top: 3px;
 }
@@ -244,7 +246,7 @@ ul.sidebar-menu {
 }
 /*Remote chat message bubbles*/
 .remoteMessage > div {
-	background-color: rgba(226,226,226);
+	background-color: rgb(226,226,226);
 }
 #chat_but {
 	position: relative;

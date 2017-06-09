@@ -14,15 +14,10 @@
 <script src="sdp.js"></script>
 <script src="main.js"></script>
 <script src="//cdn.WebRTC-Experiment.com/getScreenId.js"></script>
-<style type="text/css">
 
-.push-to-bottom {
-  position: absolute;
-  bottom: 50px;
-  left: 50%;
-  margin-left: -50px;
-}
+<style type="text/css">
 </style>
+
 <script type="text/javascript">
 $(function(){
 	resizeComponent($(window).width(),$(window).height());
@@ -50,12 +45,12 @@ function resizeComponent(browserWidth,browserHeight){
 			<li><a href="javascript:void(0)"> <i class="fa fa-home"></i> <span>홈페이지</span>
 			</a></li>
 			<li class="menu_content">
-			<video id="self_view" autoplay muted></video>
-					<button id="capture-screen">나를 눌러라</button>
-					<button onclick=" window.open('https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk','_blank')" id="install-button">Click
-						to Install</button>
+				<video id="self_view" autoplay muted></video>
+				<div id="view_controlset"></div>
+				<!-- 	<button onclick=" window.open('https://chrome.google.com/webstore/detail/ajhifddimkapgcifgcodmmfdlknahffk','_blank')" id="install-button">Click
+						to Install</button> -->
 			</li>
-			<li><a href="javascript:void(0)"> <i class="fa fa-pencil"></i> <span>Draft</span>
+			<li><a href="javascript:void(0)" id="capture-screen" disable> <i class="fa fa-pencil"></i> <span>화면공유</span>
 			</a></li>
 			<!-- unread 상태에서 content숫자만큼 메세지 -->
 			<li data-content="0" class="unread"><a href="javascript:void(0)"> <i class="fa fa-comments"></i> <span>채팅</span>
@@ -82,12 +77,9 @@ function resizeComponent(browserWidth,browserHeight){
 		</div>
 		<div id="log_div"></div>
 	</section>
-	<section class="view_form">
+	<section class="view_form" style="display: none;">
 		<video id="remote_view" autoplay controls style="width: 100%; height: 100%;"></video>
 	</section>
-	<!-- <section>
-		<video id="remote_view" autoplay controls style="width: 100%; height: 100%;"></video>
-	</section> --> 
 	</main>
 </body>
 </html>
