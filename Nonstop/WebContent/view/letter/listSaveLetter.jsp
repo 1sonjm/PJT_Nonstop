@@ -410,9 +410,20 @@ ul {
 	 $(function(){
 		 
 		 $("#send").on("click", function(){
-			 
-			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
-		 });
+				var receiveId=$("input[name='receiveId']").val();
+				var title=$("input[name='letTitle']").val();
+				var letDetail=$("input[name='letDetail']").val();
+				
+				if(receiveId == null || receiveId.length<1 ){
+					alert("수신자는 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(title == null || title.length<1){
+					alert("제목은 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+			 });
 		 
 		  $("#inBox").on("click", function(){
 			 var receiveId = $(this).attr('receiveId');

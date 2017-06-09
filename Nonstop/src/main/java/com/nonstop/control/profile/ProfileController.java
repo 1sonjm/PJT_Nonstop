@@ -90,7 +90,7 @@ public class ProfileController {
 		Search search = new Search();
 		search.setPostDivision(1);
 		search.setStartRowNum(1);
-		search.setEndRowNum(16);
+		search.setEndRowNum(120);
 		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
 		
 		search.setPostDivision(2);
@@ -144,9 +144,41 @@ public class ProfileController {
 		
 		Follow follow = profileService.getFollow(reqUserId , targetUserId);
 		
+		
+			
+			Search search = new Search();
+			search.setPostDivision(1);
+			search.setStartRowNum(1);
+			search.setEndRowNum(16);
+			String scrapUserId = reqUserId;
+			List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+			
+			search.setPostDivision(2);
+			List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
+			model.addAttribute("list3", portfolio);
+			model.addAttribute("list5", portfolio2);
+	
+		
+			
+			Search search2 = new Search();
+			
+			int projDivision = 1;
+			int sortFlag=0;
+			
+			
+			List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+			
+			projDivision = 2;
+			
+			List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+			model.addAttribute("list4", project);
+			model.addAttribute("list6", project2);
+	
+		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
+		
 		
 		return "forward:/view/profile/profile.jsp";
 	}

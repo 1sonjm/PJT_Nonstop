@@ -77,7 +77,7 @@
 
 		$(function() {
 
-			$(".detailButton").on("click", function(){
+			$(".detailProjButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
 		});
@@ -244,7 +244,7 @@
 
 								<tr>
 									<th colspan="4" ></th>
-									<th colspan="4" style="background-color: #dddddd; text-align: center" class="detailButton" value="${project.projNo}">상세보기</th>
+									<th colspan="4" style="background-color: #dddddd; text-align: center" class="detailProjButton" value="${project.projNo}">상세보기</th>
 									<th colspan="4" ></th>
 								</tr>
 							</table>

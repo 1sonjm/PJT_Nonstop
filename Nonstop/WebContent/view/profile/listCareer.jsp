@@ -77,9 +77,7 @@
             <span class="addCareer">
             <c:if test="${user.userId==sessionScope.user.userId }">
 			   <div class="btn-group">
-                              <a class="btn mini btn-info" href="javascript:;">
-                                  <i class="fa fa-cog"></i>
-                              </a>
+                              <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" > Sign in </button> 
                           </div>
 			  </c:if>
 			   </span>
