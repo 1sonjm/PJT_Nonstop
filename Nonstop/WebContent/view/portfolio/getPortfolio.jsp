@@ -258,7 +258,6 @@
    .scroll-to-top {
        display: none;
        font-size: 40px;
-       color: #1abc9c;
        position: fixed;
        right: 20px;
        bottom: 50px;

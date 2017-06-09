@@ -12,12 +12,13 @@ public class Search {
 	private int pageSize;
 	private int projPageSize;
 	
+	//게시물 구분용(10:웹,앱개발 / 11:웹개발 / 12: 앱개발 / 20:웹,앱 디자인 / 21:웹디 / 22:앱디 
 	private int postDivision;
+	
+	//게시물 소팅용(1:조회순 / 2:최신순 / 3:좋아요순)
+	private int postSorting;
 
-	//==> ����Ʈȭ�� currentPage�� �ش��ϴ� ȸ�������� ROWNUM ��� SELECT ���� �߰��� Field 
-	//==> UserMapper.xml �� 
-	//==> <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	//==> ����
+	//페이징, 무한스크롤 위한 게시물 번호
 	private int endRowNum;
 	private int startRowNum;
 	
@@ -86,12 +87,20 @@ public class Search {
 	public void setPostDivision(int postDivision) {
 		this.postDivision = postDivision;
 	}
+	
+	public int getPostSorting() {
+		return postSorting;
+	}
+
+	public void setPostSorting(int postSorting) {
+		this.postSorting = postSorting;
+	}
 
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition="
 				+ searchCondition + ", searchKeyword=" + searchKeyword
 				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + ", postDivision=" + postDivision + "]";
+				+ ", startRowNum=" + startRowNum + ", postDivision=" + postDivision +", postSorting=" + postSorting + "]";
 	}
 }
