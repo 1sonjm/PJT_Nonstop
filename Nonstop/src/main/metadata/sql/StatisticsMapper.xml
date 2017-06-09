@@ -134,9 +134,17 @@
 				,(SELECT COUNT(proj_no) project FROM project) pt
 	</select>
 	
-	 <!-- 개인 기술 통계 -->
-	<select	id="getListUserStatistics" parameterType="String" resultMap="statisticsSet">
-		SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
-		WHERE t.tech_no = c.career_tech_no AND c.career_user_id = #{value}
+	 <!-- 개인/기업 기술 통계 -->
+	<select	id="getListUserStatistics" parameterType="user" resultMap="statisticsSet">
+		<if test="role == 2">
+			SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
+			WHERE t.tech_no = c.career_tech_no AND c.career_user_id = #{userId}
+		</if>
+		<if test="role == 3">
+			SELECT COUNT(*)OVER(PARTITION BY tu_tech_no) AS career_use_month,tu_proj_no,tu.tu_tech_no AS stat_tech_no,
+					t.tech_name,t.tech_class from techuse tu, project pj, tech t
+			WHERE tu.tu_proj_no IS NOT NULL AND pj.proj_no = tu.tu_proj_no AND t.tech_no = tu.tu_tech_no
+			AND pj.proj_user_id = #{userId}
+		</if>
 	</select>
 </mapper>

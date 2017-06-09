@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 
 public interface StatisticsDAO {
 
@@ -24,6 +25,6 @@ public interface StatisticsDAO {
 	
 	public Map<String, Integer> getPostCountList();
 	
-	public List<Statistics> getUserStatisticsList(String userId);
+	public List<Statistics> getUserStatisticsList(User user);
 	
 }
