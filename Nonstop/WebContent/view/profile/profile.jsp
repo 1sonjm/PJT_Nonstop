@@ -36,8 +36,8 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
+
 	var dataSet = [];
-	
 	
 $.ajax("/statistics/getUserStatisticsList",{
 	method : "GET" ,
@@ -55,7 +55,6 @@ $.ajax("/statistics/getUserStatisticsList",{
 		}
 	}
 });
-
 AmCharts.makeChart("chartdiv",
 		{
 			"type": "pie",
@@ -284,11 +283,6 @@ $(function() {
                           </a> 
                           
                           </li>
-                         <!--  <li> <a href="#"> <i class=" fa fa-sign-blank text-success"></i> Design </a> </li>
-                          <li> <a href="#"> <i class=" fa fa-sign-blank text-info "></i> Family </a>
-                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-warning "></i> Friends </a>
-                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-primary "></i> Office </a>
-                          </li> -->
                           </c:forEach>
                       </ul> 
 		      		<!-- </span> -->
@@ -315,9 +309,7 @@ $(function() {
 					  <ul class="nav nav-tabs" role="tablist">
 					    <li role="presentation" class="active"><a href="#Profile" aria-controls="Profile" role="tab" data-toggle="tab">Profile</a></li>
 					    
-					    <c:if test="${user.role=='3'}">
-					    <li role="presentation"><a href="#Project" aria-controls="Project" role="tab" data-toggle="tab">Project</a></li>
-					    </c:if>
+					   
 					    
 					    <c:if test="${user.role=='2'}">
 					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
@@ -339,19 +331,22 @@ $(function() {
 					   <c:if test="${user.role=='2'}">
 					   <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
 					    <jsp:include page="/view/profile/listCareer.jsp" /> 
-					    
 					    </c:if>	
+					    
+					    <c:if test="${user.role=='3'}">
+					    <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+					    <br/> <h5>이 기업이 게시한 프로젝트 구인공고 목록</h5> <br/>
+					    <jsp:include page="/view/profile/listMyProj.jsp" /> 
+					    </c:if>
+					 
 					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
 					    </div>
+					    
 					  <div role="tabpanel" class="tab-pane" id="Portfolio">
-					    	<br/> <h5>내가올린 포트폴리오 목록보기</h5> <br/>
+					    	<br/> <h5>이 회원이 게시한 포트폴리오</h5> <br/>
 					   <jsp:include page="/view/profile/listMyPort.jsp" />
 						</div> 
 						
-						   <div role="tabpanel" class="tab-pane" id="Project">
-						 	<br/> <h5>내가올린 프로젝트 목록보기</h5> <br/>
-						 	<jsp:include page="/view/profile/listMyProj.jsp" />
-						 </div>
 						 
 					     <div role="tabpanel" class="tab-pane" id="portfolioScrap">
 							<br/> <h5>포트폴리오 스크랩 목록보기</h5> <br/>
@@ -361,7 +356,7 @@ $(function() {
 					   <div role="tabpanel" class="tab-pane" id="projectScrap">
 							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
 					   		 <jsp:include page="/view/profile/listProjScrap.jsp"/> 
-					    </div>  
+					    </div>   
 					   
 					  </div>
 					</div>

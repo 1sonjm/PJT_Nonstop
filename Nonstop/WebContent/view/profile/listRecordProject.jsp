@@ -68,6 +68,7 @@
 		  <c:forEach var="recordProject" items="${list2}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
+
 			<td align="center">${ i }</td>
 
 			  <td align="left">${recordProject.comName}</td>

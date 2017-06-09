@@ -39,14 +39,14 @@
 		})
 	});
 
-	$(function() {
+ 	$(function() {
 
-		$(".thumbnail").on("click",function() {
+		$(".portThumbnail").on("click",function() {
 			
 					self.location = "/portfolio/getPortfolio?portNo="+ $(this).find('input').val();
 				});
 	});
-
+ 
 </script>
 <style>
  .hover__active span {
@@ -209,7 +209,7 @@
 		<c:if test="${portfolio.portUserId == sessionScope.user.userId }">
 
 			<div class="col-md-3 col-sm-3 hero-feature" style="margin-top: 30px; margin-bottom: 20px;">
-				<div class="thumbnail">
+				<div class="portThumbnail">
 					<figure class="effect-sadie">
 						<input type="hidden" id="portNo" name="portNo"
 							value="${portfolio.portNo}" />
@@ -223,7 +223,7 @@
 								<div class="row">
 									<div class="col-sm-3 text-center">
 									<span>
-										<img class="img-circle" id="aaa" src="http://placehold.it/50x50"style="width: 50px; height: 50px;"> 
+										<img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="aaa" width="50px" height="50px" style="height:50px">
 										</span>
 										<input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}" />
 									</div>
@@ -266,6 +266,7 @@
 		</c:if>
 
 	</c:forEach>
+	
 
   </div>
      </div>
