@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
 import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.project.ProjectService;
+import com.nonstop.service.techuse.TechUseService;
 import com.nonstop.service.user.UserService;
 
 //==> ȸ������ Controller
@@ -41,6 +43,10 @@ public class ProjectController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("techUseServiceImpl")
+	private TechUseService techUseService;
 	//setter Method
 	
 	
@@ -92,6 +98,7 @@ public class ProjectController {
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		project = projectService.getProject(projNo ,scrapUserId);
 		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
+		List<TechUse> listTechUse = techUseService.listTechUse(projNo);
 		User user = userService.getUser(project.getProjUserId());
 		projectService.updateViewCount(project);
 		
@@ -100,6 +107,7 @@ public class ProjectController {
 		
 		session.setAttribute("projNo", projNo);
 		model.addAttribute("projCommentList", projCommentList);
+		model.addAttribute("listTechUse", listTechUse);
 		model.addAttribute("project", project);
 		model.addAttribute("user", user);
 		
@@ -174,17 +182,20 @@ public class ProjectController {
 		search.setPageSize(projPageSize);
 		String scrapUserId = "testUser";
 		
+		
 		if((User)session.getAttribute("user") != null) {
 			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 				
 		List<Project> list = projectService.listProject(projDivision,scrapUserId,search,sortFlag);
+//		List<TechUse> listTechUse = techUseService.listTechUse(project.getProjNo());
 		
 		System.out.println("getSearchKeyword"+search.getSearchKeyword());
 		System.out.println("getSearchCondition"+search.getSearchCondition());
 		
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
+//		model.addAttribute("listTechUse", listTechUse);
 		
 		return "forward:/view/project/listProject.jsp";
 	}

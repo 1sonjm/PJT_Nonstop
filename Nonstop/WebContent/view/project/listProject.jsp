@@ -111,7 +111,6 @@
 			$("#currentPage").val(currentPage);
 			var projDivision = $("#projDivision").val();
 			var sortFlag = $("#sortFlag").val();
-			alert(projDivision);
 	            if(projDivision == 1 || projDivision == 11 || projDivision == 12){
 	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag=0").submit();
 	            }else{
@@ -257,7 +256,6 @@
 
 	                  var flag = $(this).attr('scrap');
 	                  var requestTarget;
-	                  alert(flag);
 
 	                  if(flag==0){
 	                     requestTarget = "addJsonProjScrap";
@@ -467,7 +465,9 @@
 
 
 								<tr style="height: 20px; border-bottom: 1px solid #ddd">
-									<th colspan="12">개발 기술 : java</th>
+									<th colspan="12" var="listTechUse" item="listTechUse">개발 기술 : 
+										${listTechUse.tuTechNo}
+									</th>
 								</tr>
 
 								<tr style="height: 150px; text-align: top-left;" class="projDetail">

@@ -27,8 +27,6 @@ public class Project {
 	//follow
 	private boolean projFollowFlag;
 	
-	
-	
 
 	public int getProjNo() {
 		return projNo;

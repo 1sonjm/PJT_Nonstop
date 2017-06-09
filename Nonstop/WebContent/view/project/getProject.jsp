@@ -339,9 +339,12 @@ xmp{
 	
 	function fncDeleteProject() {
 		
-		alert("정말 삭제하시겠습니까?")
+		if(confirm("정말 삭제하시겠습니까?") !=0){
 		
-		$("form").attr("method", "POST").attr("action", "/project/deleteProject").submit();
+			$("form").attr("method", "POST").attr("action", "/project/deleteProject").submit();
+			
+		}else{
+		}
 	
 	}
 	
@@ -356,7 +359,7 @@ xmp{
 	 
 	$(function() {
 		$("#deleteButton").on("click", function(){
-			fncDeleteProject(1);
+				fncDeleteProject(1);
 		});
 		
 		$("#updateButton").on("click", function(){
@@ -372,6 +375,14 @@ xmp{
 		});
 		
 	});
+	
+	
+	/* function aaa(jsondata){
+		for(i=0;i<jsondata;i++){
+			'<input type="checkbox" value='+jsondata[i].techNo+'>'+jsondata[i]techName
+		}
+	} */
+	
 	
 	
 	$(function() {
@@ -650,9 +661,14 @@ xmp{
 											</tr>
 
 											<tr>
-												<th colspan="12"
-													style="background-color: rgb(236, 231, 231)">개발 기술 :
-													java</th>
+												<th colspan="12" style="background-color: rgb(236, 231, 231)">
+												개발 기술 :
+													<c:set var="i" value="0"/>
+														<c:forEach var="listTechUse" items="${listTechUse}" >
+														<c:set var="i" value="${i+1}"/>
+														${listTechUse.tuTechNo}
+													</c:forEach>
+												</th>
 											</tr>
 
 
