@@ -100,12 +100,14 @@ public class PortfolioController {
 	@RequestMapping(value="listPortfolio")
 	public String listPortfolio(@ModelAttribute("search") Search search, HttpSession session, Model model) throws Exception {
 		
+		//scrap 플래그 위한 session의 user정보
 		String sessionUserId="testUser";
 		
 		if((User)session.getAttribute("user") != null) {
 			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 		
+		//16개씩 리스트 가져오기
 		if(search.getEndRowNum() == 0) {
 			search.setStartRowNum(1);
 			search.setEndRowNum(16);
@@ -118,12 +120,31 @@ public class PortfolioController {
 		}
 		
 		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
+		
+		//Portfolio Ranking 출력
+		search.setStartRowNum(1);
+		search.setEndRowNum(12);
+		
+		//search.postDivision의 맨 앞글자가 1이면 개발 전체, 2이면 디자인 전체로 세팅
+		String postDivision = String.valueOf(search.getPostDivision());
+		
+		if(postDivision.startsWith("1")){
+			search.setPostDivision(1);
+		}else{
+			search.setPostDivision(2);
+		}
+		//추천순으로 나열
+		search.setPostSorting(3);
+		
+		List<Portfolio> portRanking = portfolioService.getPortfolioList(search, sessionUserId);
 
 		model.addAttribute("list", portfolioList);
+		model.addAttribute("ranking", portRanking);
 
 		return "forward:/view/portfolio/listPortfolio.jsp";
 	}
 	
+	//무한스크롤 용 listPortfolio. ajax로 요청이 들어오면 16개씩 list를 보내준다. Json타입으로 보내주기 위해 @ResponseBody사용
 	@RequestMapping(value="listJsonPortfolio", method = RequestMethod.POST)
 	@ResponseBody
 	public List<Portfolio> listJsonPortfolio(@ModelAttribute("search") Search search, HttpSession session, Model model) throws Exception {
