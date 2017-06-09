@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsDAO;
 import com.nonstop.service.statistics.StatisticsService;
 
@@ -89,8 +90,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public List<Statistics> getUserStatisticsList(String userId) {
-		return statisticsDAO.getUserStatisticsList(userId);
+	public List<Statistics> getUserStatisticsList(User user) {
+		return statisticsDAO.getUserStatisticsList(user);
 	}
 
 	@Override

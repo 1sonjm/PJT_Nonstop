@@ -86,13 +86,11 @@ public class StatisticsController {
 		return "/index.jsp";
 	}
 	
-	
 	@RequestMapping(value="getUserStatisticsList", method=RequestMethod.GET)
 	public void getJSONUserStatisticsList(Model model,HttpSession session){
 		System.out.println("/statstics/getUserStatisticsList");
 		User user = (User)session.getAttribute("user");
-		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user.getUserId()));
-		
+		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user));
 	}
 	
 }

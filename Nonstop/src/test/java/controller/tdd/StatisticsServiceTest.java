@@ -13,6 +13,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsService;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -70,7 +71,7 @@ public class StatisticsServiceTest {
 		System.out.println(statisticsService.getMajorStatisticsList(1));
 	}
 
-	@Test
+	//@Test
 	public void getPeriodStatisticsList()  throws Exception{
 		Statistics statistics = new Statistics();
 		statistics.setTechClass(1);
@@ -94,8 +95,12 @@ public class StatisticsServiceTest {
 		System.out.println(result.get("PROJECT"));
 	}
 
-	//@Test
+	@Test
 	public void getUserStatisticsList()  throws Exception{
-		//String userId
+		User user = new User();
+		user.setUserId("com02");
+		user.setRole("3");
+		
+		System.out.println(statisticsService.getUserStatisticsList(user));
 	}
 }
