@@ -19,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
 import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.project.ProjectService;
+import com.nonstop.service.techuse.TechUseService;
 import com.nonstop.service.user.UserService;
 
 //==> ȸ������ Controller
@@ -41,6 +43,10 @@ public class ProjectController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("techUseServiceImpl")
+	private TechUseService techUseService;
 	//setter Method
 	
 	
@@ -70,14 +76,14 @@ public class ProjectController {
 	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
 		
 		System.out.println("여기는 addProject : "+project);
-		
-//		projDetail.replaceAll("\r\n", "<br>");
-//		session.setAttribute("projDetail", projDetail);
+		System.out.println("sdfkjsdhalksdaf"+project.getProjAnnoEnd());
+		System.out.println("sdfkjsdhalksdaf"+project.getProjStartDate());
+		System.out.println("sdfkjsdhalksdaf"+project.getProjEndDate());
 		projectService.addProject(project);
 		
 		model.addAttribute("project", project);
 		
-		return "redirect:/index.jsp";
+		return "forward:/index.jsp";
 	}
 	
 	
@@ -92,6 +98,7 @@ public class ProjectController {
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		project = projectService.getProject(projNo ,scrapUserId);
 		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
+		List<TechUse> listTechUse = techUseService.listTechUse(projNo);
 		User user = userService.getUser(project.getProjUserId());
 		projectService.updateViewCount(project);
 		
@@ -100,10 +107,10 @@ public class ProjectController {
 		
 		session.setAttribute("projNo", projNo);
 		model.addAttribute("projCommentList", projCommentList);
+		model.addAttribute("listTechUse", listTechUse);
 		model.addAttribute("project", project);
 		model.addAttribute("user", user);
 		
-	
 		return "forward:/view/project/getProject.jsp";
 	}
 	
@@ -173,14 +180,22 @@ public class ProjectController {
 		}
 		System.out.println("sortFlag"+ sortFlag);
 		search.setPageSize(projPageSize);
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		String scrapUserId = "testUser";
+		
+		
+		if((User)session.getAttribute("user") != null) {
+			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+				
 		List<Project> list = projectService.listProject(projDivision,scrapUserId,search,sortFlag);
+//		List<TechUse> listTechUse = techUseService.listTechUse(project.getProjNo());
 		
 		System.out.println("getSearchKeyword"+search.getSearchKeyword());
 		System.out.println("getSearchCondition"+search.getSearchCondition());
 		
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
+//		model.addAttribute("listTechUse", listTechUse);
 		
 		return "forward:/view/project/listProject.jsp";
 	}

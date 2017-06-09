@@ -6,6 +6,7 @@ import java.util.Map;
 import com.nonstop.domain.PortComment;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Search;
 
 public interface PortfolioDAO {
 
@@ -13,9 +14,11 @@ public interface PortfolioDAO {
 
 	public Portfolio getPortfolio(int portNo, String sessionUserId) throws Exception;
 	
-	public List<Portfolio> getPortfolioList(int portDivision,String sessionUserId) throws Exception;
+	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception;
 	
 	public void updatePortfolio(Portfolio portfolio) throws Exception;
+	
+	public void deletePortfolio(int portNo) throws Exception;
 	
 	public int addComment(PortComment portComment) throws Exception;
 	
@@ -28,4 +31,6 @@ public interface PortfolioDAO {
 	public void addPortLike(PortLike portLike) throws Exception;
 	
 	public void deletePortLike(int portLikeNo) throws Exception;
+	
+	public void updatePortCount(Portfolio portfolio) throws Exception;
 }

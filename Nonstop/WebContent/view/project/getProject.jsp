@@ -10,30 +10,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="../../resources/javascript/jquery.js"></script>
+<script src="/resources/javascript/jquery.js"></script>
 
-<script src="../../resources/javascript/bootstrap.min.js"></script>
+<script src="/resources/javascript/bootstrap.min.js"></script>
 
 
 <!-- Bootstrap Core CSS -->
-<link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/nonstop.css" rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="../../resources/css/full.css" rel="stylesheet">
+<link href="/resources/css/full.css" rel="stylesheet">
 
 <style>
 .preloader {
@@ -307,31 +294,30 @@ hr.thick-line {
 #backButton, #applButton, #viewButton {
 	float: right;
 	margin-left: 5px;
-	padding: 10px, 14px;
-	font-size: 16px;
-	font-weight: 500;
-	background-color: #ececec;
-	border: 0;
-	border-radius: 0;
-	width: 120px; 
-}
-
-#updateButton, #deleteButton {
-	float: left;
-	margin-left: 5px;
-	padding: 10px, 14px;
 	font-size: 16px;
 	font-weight: 500;
 	background-color: #ececec;
 	border: 0;
 	border-radius: 0;
 	width: 120px;
+	text-align : center;
+}
+
+#updateButton, #deleteButton {
+	float: left;
+	margin-left: 5px;
+	font-size: 16px;
+	font-weight: 500;
+	background-color: #ececec;
+	border: 0;
+	border-radius: 0;
+	width: 120px;
+	text-align : center;
 }
 
 #follow1, #follow2, #messageQuestion{
 	margin-left:0%;
 	margin-right:0%;
-	padding: 10px, 14px;
 	font-size: 16px;
 	font-weight: 500;
 	background-color: #ececec;
@@ -339,6 +325,7 @@ hr.thick-line {
 	border-radius: 0;
 	width: 120px;
 	float : center;
+	text-align : center;
 }
 
 
@@ -352,9 +339,12 @@ xmp{
 	
 	function fncDeleteProject() {
 		
-		alert("정말 삭제하시겠습니까?")
+		if(confirm("정말 삭제하시겠습니까?") !=0){
 		
-		$("form").attr("method", "POST").attr("action", "/project/deleteProject").submit();
+			$("form").attr("method", "POST").attr("action", "/project/deleteProject").submit();
+			
+		}else{
+		}
 	
 	}
 	
@@ -369,7 +359,7 @@ xmp{
 	 
 	$(function() {
 		$("#deleteButton").on("click", function(){
-			fncDeleteProject(1);
+				fncDeleteProject(1);
 		});
 		
 		$("#updateButton").on("click", function(){
@@ -385,6 +375,14 @@ xmp{
 		});
 		
 	});
+	
+	
+	/* function aaa(jsondata){
+		for(i=0;i<jsondata;i++){
+			'<input type="checkbox" value='+jsondata[i].techNo+'>'+jsondata[i]techName
+		}
+	} */
+	
 	
 	
 	$(function() {
@@ -556,21 +554,21 @@ xmp{
 						<div class="row">
 							<div class="sub-title">
 								<c:if test="${sessionScope.user.role == '1'}">
-									<button type="button" class="btn btn-default btn-lg" id="backButton">목록으로 가기</button>
-									<button type="button" class="btn btn-default btn-lg" id="deleteButton">삭제</button>
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+									<button type="button" class="btn btn-info btn-lg" id="deleteButton">삭제</button>
 								</c:if>
 								<c:if test="${sessionScope.user.role == '2'}">
-									<button type="button" class="btn btn-default btn-lg" id="backButton">목록으로 가기</button>
-									<button type="button" class="btn btn-default btn-lg" id="applButton">지원하기</button>
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+									<button type="button" class="btn btn-info btn-lg" id="applButton">지원하기</button>
 								</c:if>
 								<c:if test="${sessionScope.user.role == '3' && sessionScope.user.userId == project.projUserId}">
-									<button type="button" class="btn btn-default btn-lg" id="updateButton">수정</button>
-									<button type="button" class="btn btn-default btn-lg" id="deleteButton">삭제</button>
-									<button type="button" class="btn btn-default btn-lg" id="backButton">목록으로 가기</button>
-									<button type="button" class="btn btn-default btn-lg" id="viewButton">지원자 보기</button>
+									<button type="button" class="btn btn-info btn-lg" id="updateButton">수정</button>
+									<button type="button" class="btn btn-info btn-lg" id="deleteButton">삭제</button>
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+									<button type="button" class="btn btn-info btn-lg" id="viewButton">지원자 보기</button>
 								</c:if>
 								<c:if test="${sessionScope.user.role == '3' && sessionScope.user.userId != project.projUserId}">
-									<button type="button" class="btn btn-default btn-lg" id="backButton">목록으로 가기</button>
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
 								</c:if>
 							</div>
 
@@ -663,9 +661,14 @@ xmp{
 											</tr>
 
 											<tr>
-												<th colspan="12"
-													style="background-color: rgb(236, 231, 231)">개발 기술 :
-													java</th>
+												<th colspan="12" style="background-color: rgb(236, 231, 231)">
+												개발 기술 :
+													<c:set var="i" value="0"/>
+														<c:forEach var="listTechUse" items="${listTechUse}" >
+														<c:set var="i" value="${i+1}"/>
+														${listTechUse.tuTechNo}
+													</c:forEach>
+												</th>
 											</tr>
 
 
@@ -804,11 +807,11 @@ xmp{
 						 <div class="margin-top-20">
 						 	<input type="hidden" name="projUserId" id="projUserId" value="${project.projUserId}"/>
 						 	<center>
-								<button type="button" class="btn btn-default btn-lg" id="messageQuestion">쪽지 문의</button>
+								<button type="button" class="btn btn-info btn-lg" id="messageQuestion">쪽지 문의</button>
 								<c:if test="${sessionScope.user.role == 2}">
 								<%-- 	<c:if test="${project.projFollowFlag == true}"> --%>
-										<button type="button" class="btn btn-default btn-lg" id="follow1">팔로우 하기</button>
-										<button type="button" class="btn btn-default btn-lg" id="follow2">팔로우 취소</button>
+										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
+										<button type="button" class="btn btn-info btn-lg" id="follow2">팔로우 취소</button>
 									<%-- </c:if>
 									<c:if test="${project.projFollowFlag == false}">
 										

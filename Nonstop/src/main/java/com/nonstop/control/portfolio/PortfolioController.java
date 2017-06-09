@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.PortComment;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
@@ -96,7 +98,7 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="listPortfolio")
-	public String listPortfolio(@RequestParam("portDivision") int portDivision,HttpSession session, Model model) throws Exception {
+	public String listPortfolio(@ModelAttribute("search") Search search, HttpSession session, Model model) throws Exception {
 		
 		String sessionUserId="testUser";
 		
@@ -104,11 +106,43 @@ public class PortfolioController {
 			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 		
-		List<Portfolio> portfolioList = portfolioService.getPortfolioList(portDivision,sessionUserId);
+		if(search.getEndRowNum() == 0) {
+			search.setStartRowNum(1);
+			search.setEndRowNum(16);
+		}else{
+			int startRowNum = search.getEndRowNum()+1;
+			int endRowNum = startRowNum+16;
+
+			search.setStartRowNum(startRowNum);
+			search.setEndRowNum(endRowNum);
+		}
+		
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
 
 		model.addAttribute("list", portfolioList);
 
 		return "forward:/view/portfolio/listPortfolio.jsp";
+	}
+	
+	@RequestMapping(value="listJsonPortfolio", method = RequestMethod.POST)
+	@ResponseBody
+	public List<Portfolio> listJsonPortfolio(@ModelAttribute("search") Search search, HttpSession session, Model model) throws Exception {
+		
+		String sessionUserId="testUser";
+		
+		if((User)session.getAttribute("user") != null) {
+			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+
+		int startRowNum = search.getEndRowNum()+1;
+		int endRowNum = startRowNum+15;
+
+		search.setStartRowNum(startRowNum);
+		search.setEndRowNum(endRowNum);
+
+		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
+
+		return portfolioList;
 	}
 	
 	@RequestMapping(value="getPortfolio")
@@ -130,7 +164,7 @@ public class PortfolioController {
 		//댓글
 		List<PortComment> portCommentList = portfolioService.getCommentList(portNo);
 		//팔로우 플래그
-		Follow follow = profileService.getFollow(sessionUserId,portfolio.getPortUserId());
+		Follow follow = profileService.getFollow(sessionUserId, portfolio.getPortUserId());
 		
 		if(follow != null){
 			portfolio.setPortFollowFlag(true);
@@ -143,7 +177,7 @@ public class PortfolioController {
 		int portViewCount = portfolio.getTotalPortView();
 		portfolio.setTotalPortView(++portViewCount);
 		portfolio.setPortViewFlag(true);		
-		portfolioService.updatePortfolio(portfolio);
+		portfolioService.updatePortCount(portfolio);
 		
 		//수정된 게시물의 경우 
 		if(portfolio.getPortUpdate() != null){
@@ -188,12 +222,9 @@ public class PortfolioController {
 	}
 
 	@RequestMapping(value="updatePortfolio", method=RequestMethod.GET)
-	public String updatePortfolio(Model model, HttpSession session) throws Exception {
+	public String updatePortfolio(@RequestParam("portNo") int portNo, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("updatePortfolio Controller");
-		
-		//getPortfolio.jsp에서 hidden 태그로 숨겨서 가져와야햇!!! 나중에수정햇!!
-		int portNo = 10;
 		
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
@@ -245,6 +276,14 @@ public class PortfolioController {
 		return "forward:/view/portfolio/getPortfolio.jsp";
 	}
 	
+	@RequestMapping(value="deletePortfolio")
+	public String deletePortfolio(@RequestParam("portNo") int portNo) throws Exception {
+		
+		portfolioService.deletePortfolio(portNo);
+		
+		return "forward:/index.jsp";
+	}
+	
 	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
 	public void addJsonComment( @ModelAttribute("portComment") PortComment portComment, HttpSession session, Model model ) throws Exception {
 		
@@ -267,23 +306,36 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="addJsonPortLike" , method=RequestMethod.POST)
-	public void addJsonProjScrap(@ModelAttribute("portLike") PortLike portLike) throws Exception{
+	public void addJsonPortLike(@ModelAttribute("portLike") PortLike portLike) throws Exception{
 		
 		System.out.println("/portfolio/addJsonPortLike");
-	
+		
+		Portfolio portfolio = portfolioService.getPortfolio(portLike.getPortNo(), portLike.getUserId());
+		//클릭시 추천수 추가
+		portfolio.setTotalPortLike(portfolio.getTotalPortLike()+1);
+		portfolio.setPortLikeFlag(true);
+		portfolioService.updatePortCount(portfolio);
+		
 		portfolioService.addPortLike(portLike);
 		
-
 	}
 	
-	@RequestMapping(value="delJsonPortLike/{portLikeNo}" , method=RequestMethod.GET)
-	public void delJsonProjScrap(@PathVariable("portLikeNo") int portLikeNo) throws Exception{
+	@RequestMapping(value="delJsonPortLike" , method=RequestMethod.POST)
+	public void delJsonPortLike(@ModelAttribute("portLike") PortLike portLike) throws Exception{
 		
 		System.out.println("/portfolio/delJsonPortLike");
 	
-		portfolioService.deletePortLike(portLikeNo);
+		Portfolio portfolio = portfolioService.getPortfolio(portLike.getPortNo(), portLike.getUserId());
 		
-
+		System.out.println("djfjowiejfojofgmkfl : "+portfolio.getTotalPortLike());
+		
+		//클릭시 추천수 감소
+		portfolio.setTotalPortLike(portfolio.getTotalPortLike()-1);
+		portfolio.setPortLikeFlag(true);
+		portfolioService.updatePortCount(portfolio);
+		
+		portfolioService.deletePortLike(portLike.getPortLikeNo());
+		
 	}
 
 }

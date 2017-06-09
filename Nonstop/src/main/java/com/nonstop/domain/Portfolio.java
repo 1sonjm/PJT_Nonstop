@@ -16,6 +16,8 @@ public class Portfolio{
 	private String portDay;
 	private String portDetail;
 	private String portFile;
+	private int endRowNum;
+	private int startRowNum;
 	private int scrapNo;
 	private int portLikeNo;
 	private int totalPortView;
@@ -103,7 +105,18 @@ public class Portfolio{
 	public void setPortFile(String portFile) {
 		this.portFile = portFile;
 	}
-	
+	public int getEndRowNum() {
+		return endRowNum;
+	}
+	public void setEndRowNum(int endRowNum) {
+		this.endRowNum = endRowNum;
+	}
+	public int getStartRowNum() {
+		return startRowNum;
+	}
+	public void setStartRowNum(int startRowNum) {
+		this.startRowNum = startRowNum;
+	}
 	public int getPortLikeNo() {
 		return portLikeNo;
 	}
@@ -116,7 +129,6 @@ public class Portfolio{
 	public void setTotalPortView(int totalPortView) {
 		this.totalPortView = totalPortView;
 	}
-	
 	public int getTotalPortLike() {
 		return totalPortLike;
 	}
@@ -193,6 +205,10 @@ public class Portfolio{
 		builder.append(portDetail);
 		builder.append(", portFile=");
 		builder.append(portFile);
+		builder.append(", endRowNum=");
+		builder.append(endRowNum);
+		builder.append(", startRowNum=");
+		builder.append(startRowNum);
 		builder.append(", scrapNo=");
 		builder.append(scrapNo);
 		builder.append(", portLikeNo=");

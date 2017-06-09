@@ -20,6 +20,7 @@ import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
@@ -79,16 +80,34 @@ public class ProfileController {
 		
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		
+		
 		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
 		
-		int portDivision = 1;
+		
 		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
-
+		Search search = new Search();
+		search.setPostDivision(1);
+		search.setStartRowNum(1);
+		search.setEndRowNum(16);
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+		
+		search.setPostDivision(2);
+		
+		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
+		
 		int projDivision = 1;
-		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
+		
+		int sortFlag=0;
+		
+		Search search2 = new Search();
+		
+		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		
+		projDivision = 2;
+		
+		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
 		
 		String reqUserId = scrapUserId;
 		
@@ -97,7 +116,9 @@ public class ProfileController {
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
-		//model.addAttribute("list4" , project);
+		model.addAttribute("list5" , portfolio2);
+		model.addAttribute("list4" , project);
+		model.addAttribute("list6" , project2);
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
 		
@@ -226,13 +247,15 @@ public class ProfileController {
 		
 		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
 		
-		int portDivision = 1;
-		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		Search search = new Search();
 		
-		int projDivision = 1;
+		search.setPostDivision(1);
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+		
+		//int projDivision = 1;
 		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
 		
 		model.addAttribute("list" , map.get("list"));
@@ -329,9 +352,11 @@ public class ProfileController {
 		
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
-		int portDivision = 1;
+		Search search = new Search();
 		
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(portDivision, scrapUserId);
+		search.setPostDivision(1);
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
 		
 		model.addAttribute("list" , portfolio);
 		
