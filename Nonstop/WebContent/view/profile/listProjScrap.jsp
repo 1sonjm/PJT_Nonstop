@@ -15,16 +15,12 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="../../resources/css/nonstop.css" rel="stylesheet">
-
+	
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<!-- jQuery -->
     <script src="../../resources/javascript/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
 	<style>
@@ -90,6 +86,7 @@
 	                  var flag = $(this).attr('scrap');
 	                  var requestTarget;
 	                  alert(flag);
+	                  alert($(this).attr('scrap'));
 
 	                  if(flag==0){
 	                     requestTarget = "addJsonProjScrap";
@@ -114,7 +111,7 @@
 	                               $(this).attr('scrap','1');
 	                            }else{
 	                               $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
-	                           $(this).attr('save','0');
+	                           $(this).attr('scrap','0');
 	                            }
 	                         }
 	                      });

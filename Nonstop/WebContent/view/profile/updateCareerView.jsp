@@ -64,6 +64,28 @@
 				//self.location="/product/listProduct?menu=manage";	
 		});
 		 
+		 $('#selectTechClass').on('change',function(){
+				var a = "?techClass="+document.querySelector('#selectTechClass').value
+				$.ajax("/statistics/getJSONListTechData"+a,{
+					method : "POST" ,
+					dataType : "json" ,
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(jsonData) {
+						//console.log(jsonData.techDataList[0].techName);
+						document.querySelector("#selectTechData").innerHTML = "";
+						for(var i=0;i<jsonData.techDataList.length;i++){
+							document.querySelector("#selectTechData").innerHTML 
+								+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
+											+jsonData.techDataList[i].techName
+										+"</option>";
+						}
+					}
+				});
+			})
+		 
 	});	
 	
 	</script>

@@ -80,11 +80,8 @@ public class ProfileController {
 		
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		
 		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
-		
-		
-		
+
 		String scrapUserId=((User)session.getAttribute("user")).getUserId();
 		
 		Search search = new Search();
@@ -113,6 +110,14 @@ public class ProfileController {
 		
 		List<Follow> follow = profileService.getFollowList(reqUserId);
 		
+		List<Statistics> techClassList = statisticsService.getTechClassList();
+		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
@@ -144,37 +149,30 @@ public class ProfileController {
 		
 		Follow follow = profileService.getFollow(reqUserId , targetUserId);
 		
+		Search search = new Search();
+		search.setPostDivision(1);
+		search.setStartRowNum(1);
+		search.setEndRowNum(16);
+		String scrapUserId = reqUserId;
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+			
+		search.setPostDivision(2);
+		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
+		model.addAttribute("list3", portfolio);
+		model.addAttribute("list5", portfolio2);
+			
+		Search search2 = new Search();
+			
+		int projDivision = 1;
+		int sortFlag=0;
 		
+		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
 			
-			Search search = new Search();
-			search.setPostDivision(1);
-			search.setStartRowNum(1);
-			search.setEndRowNum(16);
-			String scrapUserId = reqUserId;
-			List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+		projDivision = 2;
 			
-			search.setPostDivision(2);
-			List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
-			model.addAttribute("list3", portfolio);
-			model.addAttribute("list5", portfolio2);
-	
-		
-			
-			Search search2 = new Search();
-			
-			int projDivision = 1;
-			int sortFlag=0;
-			
-			
-			List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
-			
-			projDivision = 2;
-			
-			List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
-			model.addAttribute("list4", project);
-			model.addAttribute("list6", project2);
-	
-		
+		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		model.addAttribute("list4", project);
+		model.addAttribute("list6", project2);
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
@@ -182,24 +180,7 @@ public class ProfileController {
 		
 		return "forward:/view/profile/profile.jsp";
 	}
-	
-	@RequestMapping(value="addCareerView",method=RequestMethod.GET)
-	public String addCareer(Model model) throws Exception{
-		
-		System.out.println("/profile/addCareerView : GET");
-		
-		List<Statistics> techClassList = statisticsService.getTechClassList();
-		
-		int classNo = 1;
-		
-		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
-		
-		model.addAttribute("techClassList" , techClassList);
-		model.addAttribute("techDataList" , techDataList);
-		
-		return "forward:/view/profile/addCareerView.jsp";
-	}
-	
+
 	@RequestMapping(value="addCareer",method=RequestMethod.POST)
 	public String addCareer(@ModelAttribute("career") Career career , HttpSession session, Model model) throws Exception{
 		
@@ -232,36 +213,6 @@ public class ProfileController {
 		
 	}
 	
-	@RequestMapping(value="updateCareer",method=RequestMethod.GET)
-	public String updateCareer(@RequestParam("careerNo")int careerNo,@RequestParam("techClass") int techClass , Model model) throws Exception{
-		
-		System.out.println("/profile/updateCareer : GET");
-		
-		Career career = profileService.getCareer(careerNo,techClass);
-		
-		model.addAttribute("career", career);
-		
-		return "forward:/view/profile/updateCareerView.jsp";
-	}
-	
-	@RequestMapping(value="updateCareer",method=RequestMethod.POST)
-	public String updateCareer(@ModelAttribute("career") Career career , Model model, HttpSession session) throws Exception{
-		
-		System.out.println("/profile/updateCareer : POST");
-		
-		String careerUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		career.setCareerUserId(careerUserId);
-		
-		profileService.updateCareer(career);
-		
-		Map<String , Object> career2 = profileService.getCareerList(careerUserId);
-		
-		model.addAttribute("list", career2.get("list"));
-		
-		return "forward:/view/profile/profile.jsp";
-	}
-	
 	@RequestMapping(value="deleteCareer",method=RequestMethod.GET)
 	public String deleteCareer(@RequestParam("careerNo") int careerNo , HttpSession session, Model model) throws Exception{
 		
@@ -287,13 +238,17 @@ public class ProfileController {
 		
 		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
 		
-		//int projDivision = 1;
-		//List<Project> project = projectService.listProject(projDivision, scrapUserId);
+		Search search2 = new Search();
+		
+		int projDivision = 1;
+		int sortFlag=0;
+		
+		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
 		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
-		//model.addAttribute("list4" , project);
+		model.addAttribute("list4" , project);
 		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
