@@ -10,21 +10,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
+<script src="../../resources/javascript/jquery.js"></script>
     <title>프로젝트 목록보기</title>
 
-    <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/nonstop.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
-	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-	<!-- jQuery -->
-    <script src="../../resources/javascript/jquery.js"></script>
-
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../../resources/javascript/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 
 
 	<style>
@@ -77,7 +65,7 @@
 
 		$(function() {
 
-			$(".detailButton").on("click", function(){
+			$(".detailProjButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
 		});
@@ -114,7 +102,7 @@
 	                               $(this).attr('scrap','1');
 	                            }else{
 	                               $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
-	                           $(this).attr('save','0');
+	                           $(this).attr('scrap','0');
 	                            }
 	                         }
 	                      });
@@ -244,7 +232,7 @@
 
 								<tr>
 									<th colspan="4" ></th>
-									<th colspan="4" style="background-color: #dddddd; text-align: center" class="detailButton" value="${project.projNo}">상세보기</th>
+									<th colspan="4" style="background-color: #dddddd; text-align: center" class="detailProjButton" value="${project.projNo}">상세보기</th>
 									<th colspan="4" ></th>
 								</tr>
 							</table>

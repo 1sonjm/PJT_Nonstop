@@ -61,12 +61,7 @@ public class ProfileDAOImpl implements ProfileDAO{
 		map.put("techClass", techClass);
 		return sqlSession.selectOne("CareerMapper.getCareer", map);
 	}
-	
-	public void updateCareer(Career career) throws Exception {
-		
-		sqlSession.update("CareerMapper.updateCareer",career);
-	}
-	
+
 	public void deleteCareer(int careerNo) throws Exception {
 		sqlSession.delete("CareerMapper.deleteCareer",careerNo);
 	}

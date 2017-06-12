@@ -11,35 +11,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-
+<script src="../../resources/javascript/jquery.js"></script>
 <title>List_Portfolio</title>
 
-<!-- Bootstrap Core CSS -->
-<link href="/resources/css/nonstop.css" rel="stylesheet">
 
-<!-- Custom CSS -->
-<link href="../../resources/css/full.css" rel="stylesheet">
-
-<!-- jQuery -->
-<script src="../../resources/javascript/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="../../resources/javascript/bootstrap.min.js"></script>
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 <script type="text/javascript">
 	$(function() {
 
-		$(".thumbnail").on(
-				"click",
+		$(".getScrapPort").on("click",
 				function() {
-					self.location = "/portfolio/getPortfolio?portNo="
-							+ $(this).find('input').val();
+					self.location = "/portfolio/getPortfolio?portNo="+$(this).find('input').val();
 				});
 	});
 
@@ -68,9 +49,10 @@
 				success : function(JSONData, status) {
 
 					if (flag == "add to scrap") {
-						$(this).text("delete to scrap");
+						 $(this).html("delete to scrap");
 					} else {
-						$(this).text("add to scrap");
+						 $(this).html("add to scrap"); 
+						
 					}
 
 				}
@@ -101,7 +83,7 @@
 
 					<c:if test="${portfolio.scrapNo != 0 }">
 						<div class="col-md-3 col-sm-3 hero-feature" style="margin-top: 30px; margin-bottom: 20px;">
-							<div class="thumbnail">
+							<div class="getScrapPort">
 								<figure class="effect-sadie">
 									<input type="hidden" id="portNo" name="portNo"
 										value="${portfolio.portNo}" />
@@ -114,7 +96,7 @@
 										<blockquote>
 											<div class="row">
 												<div class="col-sm-3 text-center">
-													<img class="img-circle" src="http://placehold.it/50x50" id="aaa" style="width: 50px; height: 50px;">
+													<img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="aaa" width="50px" height="50px" style="height:50px">
 													 <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}" />
 												</div>
 												<div class="col-sm-9">
@@ -163,7 +145,7 @@
 
 					<c:if test="${portfolio.scrapNo != 0 }">
 						<div class="col-md-3 col-sm-3 hero-feature" style="margin-top: 30px; margin-bottom: 20px;">
-							<div class="thumbnail">
+							<div class="getScrapPort">
 								<figure class="effect-sadie">
 									<input type="hidden" id="portNo" name="portNo"
 										value="${portfolio.portNo}" />
@@ -176,7 +158,7 @@
 										<blockquote>
 											<div class="row">
 												<div class="col-sm-3 text-center">
-													<img class="img-circle" src="http://placehold.it/50x50" id="aaa" style="width: 50px; height: 50px;">
+													<img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="aaa" width="50px" height="50px" style="height:50px">
 													 <input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}" />
 												</div>
 												<div class="col-sm-9">

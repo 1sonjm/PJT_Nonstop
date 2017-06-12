@@ -47,17 +47,7 @@
 			FROM tech
 			GROUP BY tech_class
 	 </select>
-	 
-	
-	 <update id="updateCareer" parameterType="career">
-		UPDATE career
-		<set>
-		career_tech_no = #{techNo:NUMERIC},
-		career_use_month = #{careerUseTerm:NUMERIC}
-		</set>
-		WHERE career_user_id = #{careerUserId:VARCHAR} AND career_no=#{careerNo:NUMERIC}
-	</update>
-	
+
 	<delete id="deleteCareer" parameterType="int">
 	 	DELETE
 	 	FROM career WHERE career_no=#{careerNo} 

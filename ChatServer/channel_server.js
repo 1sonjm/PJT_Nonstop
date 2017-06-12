@@ -54,8 +54,8 @@ function requestListener(request, response) {
             return;
         }
 
-        if (parts[1] == "stoc") {
-            console.log("@" + sessionId + " - " + userId + " joined.");
+        if (parts[1] == "stoc") {//세션에 유저접근
+            console.log("@" + sessionId + " - userID: " + userId + " joined.");
 
             headers["Content-Type"] = "text/event-stream";
             response.writeHead(200, headers);
@@ -106,7 +106,7 @@ function requestListener(request, response) {
                 }
                 delete session.users[userId];
                 clearTimeout(response.keepAliveTimer);
-                console.log("@" + sessionId + " - " + userId + " left.");
+                console.log("@" + sessionId + " - userID: "+userId+" left.");
                 console.log("users in session " + sessionId + ": " + Object.keys(session.users).length);
             });
 
@@ -122,8 +122,8 @@ function requestListener(request, response) {
 
             var body = "";
             request.on("data", function (data) { body += data; });
-            request.on("end", function () {
-                console.log("@" + sessionId + " - " + userId + " => " + peerId + " :");
+            request.on("end", function () {//상호간 통신교환
+                console.log("@"+sessionId+" - userID: "+userId+" => peerID: "+peerId);
                 // console.log(body);
                 var evtdata = "data:" + body.replace(/\n/g, "\ndata:") + "\n";
                 peer.esResponse.write("event:user-" + userId + "\n" + evtdata + "\n");
@@ -141,9 +141,7 @@ function requestListener(request, response) {
     var url = request.url.split("?", 1)[0];
     var filePath = path.join(clientDir, url);
     if (filePath.indexOf(clientDir) != 0 || filePath == clientDir)
-    ////////////////////////////////
     	filePath = path.join(clientDir, "webrtc.html");
-    	//filePath = path.join(clientDir, "screenSharing/index.html");//화면공유 test
 
     fs.stat(filePath, function (err, stats) {
         if (err || !stats.isFile()) {

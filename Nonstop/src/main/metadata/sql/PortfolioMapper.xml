@@ -93,7 +93,20 @@
 					    </if>   
 			
 					</where>
-				  	ORDER BY port_viewcount DESC NULLS LAST) inner_table, users
+				  	
+				  	<if test="search.postSorting == 1 or search.postSorting == 0">
+				  	ORDER BY p.port_viewcount DESC NULLS LAST
+				  	</if>
+				  	
+				  	<if test="search.postSorting == 2">
+				  	ORDER BY p.port_regdate DESC NULLS LAST
+				  	</if>
+				  	
+				  	<if test="search.postSorting == 3">
+				  	ORDER BY p.port_like_count DESC NULLS LAST
+				  	</if>
+				  	
+				  	) inner_table, users
 			WHERE users.user_id=inner_table.port_user_id)
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 

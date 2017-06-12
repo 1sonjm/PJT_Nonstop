@@ -16,8 +16,6 @@ public interface ProfileDAO {
 	
 	public Career getCareer(int careerNo,int techClass) throws Exception;
 	
-	public void updateCareer(Career career) throws Exception;
-	
 	public void deleteCareer(int careerNo) throws Exception;
 	
 	public void addFollow(String reqUserId,String targetUserId) throws Exception;

@@ -84,14 +84,6 @@
 		 
 		  
 		    <label for="techNo" class="col-sm-offset-1 col-sm-3 control-label">분류</label> 
-		    <!-- <div class="col-sm-4" id="techNo">
-		     
-		    <select class="form-control" name="techNo" >
-			 <option value="1000">JAVA</option>
-			 <option value="1001">python</option>
-			 <option value="1002">php</option>
-			</select>
-		    </div> -->
 		    
 			<div class="form-group">
 			<div class="col-md-2">

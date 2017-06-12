@@ -11,42 +11,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-
+<script src="../../resources/javascript/jquery.js"></script>
 <title>List_Portfolio</title>
 
-<!-- Bootstrap Core CSS -->
-<link href="/resources/css/nonstop.css" rel="stylesheet">
-
-<!-- Custom CSS -->
-<link href="../../resources/css/full.css" rel="stylesheet">
-
-<!-- jQuery -->
-<script src="../../resources/javascript/jquery.js"></script>
-
-<!-- Bootstrap Core JavaScript -->
-<script src="../../resources/javascript/bootstrap.min.js"></script>
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
 <script type="text/javascript">
-	$(document).ready(function() {
-		$('#Carousel').carousel({
-			interval : 5000
-		})
-	});
 
-	$(function() {
+ 	$(function() {
 
-		$(".thumbnail").on("click",function() {
+		$(".portThumbnail").on("click",function() {
 			
 					self.location = "/portfolio/getPortfolio?portNo="+ $(this).find('input').val();
 				});
 	});
-
+ 
 </script>
 <style>
  .hover__active span {
@@ -209,7 +186,7 @@
 		<c:if test="${portfolio.portUserId == sessionScope.user.userId }">
 
 			<div class="col-md-3 col-sm-3 hero-feature" style="margin-top: 30px; margin-bottom: 20px;">
-				<div class="thumbnail">
+				<div class="portThumbnail">
 					<figure class="effect-sadie">
 						<input type="hidden" id="portNo" name="portNo"
 							value="${portfolio.portNo}" />
@@ -223,7 +200,7 @@
 								<div class="row">
 									<div class="col-sm-3 text-center">
 									<span>
-										<img class="img-circle" id="aaa" src="http://placehold.it/50x50"style="width: 50px; height: 50px;"> 
+										<img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="aaa" width="50px" height="50px" style="height:50px">
 										</span>
 										<input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}" />
 									</div>
@@ -235,15 +212,6 @@
 										<p class="hover__active">
 											<span class="glyphicon glyphicon-search" aria-hidden="false"></span>
 											view portfolio<br />
-											<c:if test="${portfolio.scrapNo != 0}">
-												<button type="button" class="Scrap" portNo="${portfolio.portNo}">delete to scrap</button>
-											</c:if>
-
-											<c:if test="${portfolio.scrapNo ==0}">
-												<button type="button" class="Scrap" portNo="${portfolio.portNo}">add to scrap</button>
-											</c:if>
-
-
 										</p>
 										<p class="text-center">
 											<span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
@@ -266,6 +234,7 @@
 		</c:if>
 
 	</c:forEach>
+	
 
   </div>
      </div>
