@@ -14,23 +14,7 @@
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link href="/resources/css/nonstop.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   
-   
-   
-   <!-- jQuery UI toolTip 사용 CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip 사용 JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	
+
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
@@ -41,19 +25,35 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	 $(function() {
-		 $("span.updateCareer").on("click" , function() {
+		 $("span.deleteCareer").on("click" , function() {
 				var careerNo=$(this).attr('careerNo');
-				var techClass=$(this).attr('techClass');
-			self.location ="/profile/updateCareer?careerNo="+careerNo+"&techClass="+techClass;
+				self.location ="/profile/deleteCareer?careerNo="+careerNo;
 			});
 		 
-		 $("span.deleteCareer").on("click" , function() {
-				
-				var careerNo=$(this).attr('careerNo');
-				
-			self.location ="/profile/deleteCareer?careerNo="+careerNo;
-			
-			});
+		 $("#addCareer").on("click" , function() {
+		 		$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
+			}); 
+			 $('#selectTechClass').on('change',function(){
+					var a = "?techClass="+document.querySelector('#selectTechClass').value
+					$.ajax("/statistics/getJSONListTechData"+a,{
+						method : "POST" ,
+						dataType : "json" ,
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(jsonData) {
+							//console.log(jsonData.techDataList[0].techName);
+							document.querySelector("#selectTechData").innerHTML = "";
+							for(var i=0;i<jsonData.techDataList.length;i++){
+								document.querySelector("#selectTechData").innerHTML 
+									+= "<option value='"+jsonData.techDataList[i].techNo+"'>"
+												+jsonData.techDataList[i].techName
+											+"</option>";
+							}
+						}
+					});
+				})
 	});	
 </script>
 </head>
@@ -63,7 +63,7 @@
 	<div class="container">
 	<div class="page-header text-center">
 	       <h5 class=" text-left" >개인 기술정보</h5>
-	    </div>
+	</div>
 
       <table class="table table-hover table-striped" >
       
@@ -74,15 +74,70 @@
             <th align="left" >기능명</th>
             <th align="left">경력</th>
             <th align="left">
-            <span class="addCareer">
+            
             <c:if test="${user.userId==sessionScope.user.userId }">
 			   <div class="btn-group">
-                              <a class="btn mini btn-info" href="javascript:;">
-                                  <i class="fa fa-cog"></i>
-                              </a>
-                          </div>
-			  </c:if>
-			   </span>
+                   <button type="button" class="btn btn-info btn-md" data-toggle="modal" data-target="#myModal" ><i class="fa fa-cog"></i></button> 
+                      <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" style="display: none;">
+                         <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                                  <h4 class="modal-title">개인기술정보 추가</h4>
+                              </div>
+                                      
+                              <div class="modal-body">
+                                <form role="form" id="addMail" class="form-horizontal"> 
+                                   <div class="form-group">
+                                     <label class="col-lg-2 control-label">분류</label>
+                                       <div class="col-lg-5">
+                                         <select class="form-control" id="selectTechClass" name="techClass">
+											<c:forEach var="classValue" items="${techClassList}" begin="0" step="1">
+											  <option value="${classValue.techClass}">
+												<c:choose>
+													<c:when test="${classValue.techClass == 1}">Language</c:when>
+													<c:when test="${classValue.techClass == 2}">Framework</c:when>
+													<c:when test="${classValue.techClass == 3}">DBMS</c:when>
+												</c:choose>
+											 </option>
+										   </c:forEach>
+										 </select>
+                                       </div>
+                                   </div>
+                                          
+                                   <div class="form-group">
+                                     <label class="col-lg-2 control-label">기술명</label>
+                                       <div class="col-lg-5">
+                                         <select class="form-control" id="selectTechData"name="techNo" >
+										    <c:forEach var="career" items="${techDataList}" begin="0" step="1">
+												<option value="${career.techNo}">${career.techName}</option>
+											</c:forEach>
+										 </select>
+                                       </div>
+                                   </div>
+                                              
+                                   <div class="form-group">
+                                   	 <label class="col-lg-2 control-label">기술사용기간</label>
+                                       <div class="col-lg-7">
+                                         <input type="text" name="careerUseTerm" placeholder="개월단위로 입력해 주세요. ex)24" class="form-control">
+                                       </div>
+                                   </div>
+
+                                   <div class="form-group">
+                                     <div class="col-lg-offset-2 col-lg-10">
+                             		   <span>
+                                         <button class="btn btn-send" type="submit" id="addCareer">add</button>
+                                       </span>
+                            		 </div>
+                                   </div>
+                                </form>
+                              </div>
+                            </div><!-- /.modal-content -->
+                          </div><!-- /.modal-dialog -->
+                        </div><!-- /.modal -->
+               </div>
+			</c:if>
+			   
             </th>
           </tr>
         </thead>
@@ -117,13 +172,9 @@
 			  <td align="left">${career.careerUseTerm}개월  &nbsp; &nbsp;
 			  
 			  	<c:if test="${career.careerUserId==sessionScope.user.userId }">
-			  
-			  		<span class="updateCareer" careerNo="${career.careerNo}" techClass="${career.techClass}">
-			  			<button type="button" class="btn btn-primary">수정</button> &nbsp; &nbsp;
-			   		</span>
 			   
-			  		<span class="deleteCareer" careerNo="${career.careerNo}">
-			   			<button type="button" class="btn btn-danger">삭제</button>
+			  		<span class="deleteCareer" careerUserId="${career.careerUserId}" careerNo="${career.careerNo}">
+			   		<button type="button" class="btn btn-danger">삭제</button>
 			   		</span>
 			   
 				</c:if>
@@ -140,7 +191,6 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>
- 	
  	
 	
 </body>

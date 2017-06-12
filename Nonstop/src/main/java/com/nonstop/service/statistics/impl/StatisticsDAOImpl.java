@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsDAO;
 
 @Repository("statisticsDAOImpl")
@@ -77,8 +78,8 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 	}
 
 	@Override
-	public List<Statistics> getUserStatisticsList(String userId) {
-		return sqlSession.selectList("StatisticsMapper.getListUserStatistics", userId);
+	public List<Statistics> getUserStatisticsList(User user) {
+		return sqlSession.selectList("StatisticsMapper.getListUserStatistics", user);
 	}
 
 }

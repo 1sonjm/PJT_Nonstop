@@ -43,11 +43,6 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileDAO.getCareer(careerNo,techClass);
 	}
 
-	public void updateCareer(Career career) throws Exception {
-		profileDAO.updateCareer(career);
-		
-	}
-
 	public void deleteCareer(int careerNo) throws Exception {
 		profileDAO.deleteCareer(careerNo);
 	}

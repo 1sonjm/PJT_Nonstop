@@ -22,7 +22,7 @@
 	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
 		<script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
     <!-- Bootstrap Core CSS -->
-    <link href="../..//resources/css/nonstop.css" rel="stylesheet">
+    <link href="../../resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
     <link href="../../resources/css/full.css" rel="stylesheet">
@@ -30,16 +30,17 @@
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
-
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+<script src="../../resources/javascript/jquery.js"></script>
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script type="text/javascript">
+  <script type="text/javascript">
+
+
 	var dataSet = [];
-	
-	
-$.ajax("/statistics/getUserStatisticsList",{
+	var userId = "${user.userId}";
+	var role = "${user.role}";
+$.ajax("/statistics/getUserStatisticsList/"+userId+"/"+role,{
 	method : "GET" ,
 	dataType : "json" ,
 	headers : {
@@ -55,7 +56,6 @@ $.ajax("/statistics/getUserStatisticsList",{
 		}
 	}
 });
-
 AmCharts.makeChart("chartdiv",
 		{
 			"type": "pie",
@@ -78,41 +78,26 @@ AmCharts.makeChart("chartdiv",
 
 
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
- 	$(".addCareer").on("click" , function() {
- 		self.location = "/profile/addCareerView";
-	}); 
 	
- 	$("span.listFollow").on("click" , function() {
- 		
-		var reqUserId = $(this).attr('reqUserId');
-	
-		self.location = "/profile/getFollowList?reqUserId="+reqUserId;
-		
-	  	 popWin 
-		= window.open("/view/profile/listFollow.jsp",
-								"popWin", 
-								"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
-								"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
-		});
- 	
-	$("#follow").on("click" ,function() {
+	$(".followProfile").on("click", function(){
+		 var userId = $(this).text().trim();
+		 self.location = "/profile/getOtherProfile?userId="+userId;
+	 });
+
+	$(document).on("click","#follow",function() {
 		
 		var flag = $(this).text().trim();
 		var requestTarget;
-		var asdf;
+		alert(flag);
 		
 		//alert(flag);
 		if(flag == "팔로우"){
 			requestTarget = "addJsonFollow";
-			asdf = "언팔로우";
 		}else{
 			requestTarget = "deleteJsonFollow";
-			asdf = "팔로우";
 		}
-		//alert(1);
 		var targetUserId = $(this).attr('targetUserId');
-		//alert(targetUserId);
+		
 		$.ajax(
 			{
 				url : "/profile/"+requestTarget+"/"+targetUserId,
@@ -123,15 +108,11 @@ $(function() {
 					"Content-Type" : "application/json"	
 				},
 				success : function(JSONData , status) {
-					$(document).on("click", "#unFollow", function(){
-						var targetUserId = $(this).attr('targetUserId');
-						self.location="/profile/deleteJsonFollow?targetUserId="+targetUserId;	
-						});
 
 			      		if(flag=="팔로우"){
-			      			$( "#followflag" ).html("언팔로우");
+			      			$( "#followflag" ).text("언팔로우");
 			      		}else{
-			      			$( "#followflag" ).html("팔로우");
+			      			$( "#followflag" ).text("팔로우");
 			      		}
 				}
 			});
@@ -215,6 +196,7 @@ $(function() {
 	margin-bottom : 30px;
 	margin-top: 60px;
 	}
+	
 		
 	
 	</style>
@@ -253,7 +235,7 @@ $(function() {
 				  <c:if test="${follow.reqUserId==sessionScope.user.userId && career.careerUserId==targetUserId }">
 				  <div class="col-sm-12 text-center">
 					 <span class="follow" targetUserId="${user.userId}" id="follow">
-		      		<button type="button" class="btn btn-primary" id="profile" >언팔로우</button>
+		      		<button type="button" class="btn btn-primary" id="followflag" >언팔로우</button>
 		      		</span>
 		      		</div>
 		      		</c:if>
@@ -269,8 +251,7 @@ $(function() {
 		      		
 		      		<c:if test="${session.user.userId  == param.userId}"> 
 		      		<div class="col-sm-12 text-center">
-					 <%-- <span class="listFollow" reqUserId="${user.userId}">
-		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우목록보기</button> --%>
+		      		
 		      		<ul class="nav nav-pills nav-stacked labels-info inbox-divider">
                           <li> <h4>Followers</h4> </li>
                            <c:set var="i" value="0" />
@@ -278,17 +259,12 @@ $(function() {
 							<c:set var="i" value="${ i+1 }" />
 							
                           <li> 
-                          <a href="#" class="followProfile" userId="${user.userId}"> 
+                          <a href="#" class="followProfile" role="${user.role}" userId="${user.userId}"> 
                           <i class=" fa fa-sign-blank text-danger"></i> 
                           ${follow.targetUserId} 
                           </a> 
                           
                           </li>
-                         <!--  <li> <a href="#"> <i class=" fa fa-sign-blank text-success"></i> Design </a> </li>
-                          <li> <a href="#"> <i class=" fa fa-sign-blank text-info "></i> Family </a>
-                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-warning "></i> Friends </a>
-                          </li><li> <a href="#"> <i class=" fa fa-sign-blank text-primary "></i> Office </a>
-                          </li> -->
                           </c:forEach>
                       </ul> 
 		      		<!-- </span> -->
@@ -315,9 +291,7 @@ $(function() {
 					  <ul class="nav nav-tabs" role="tablist">
 					    <li role="presentation" class="active"><a href="#Profile" aria-controls="Profile" role="tab" data-toggle="tab">Profile</a></li>
 					    
-					    <c:if test="${user.role=='3'}">
-					    <li role="presentation"><a href="#Project" aria-controls="Project" role="tab" data-toggle="tab">Project</a></li>
-					    </c:if>
+					   
 					    
 					    <c:if test="${user.role=='2'}">
 					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
@@ -337,21 +311,26 @@ $(function() {
 					  
 					    <div role="tabpanel" class="tab-pane active" id="Profile">
 					   <c:if test="${user.role=='2'}">
+					   	<br/> <h5>개인 기술능력 그래프</h5> <br/>
 					   <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
 					    <jsp:include page="/view/profile/listCareer.jsp" /> 
-					    
 					    </c:if>	
+					    
+					    <c:if test="${user.role=='3'}">
+					    <br/> <h5>기업 기술사용 그래프</h5> <br/>
+					    <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
+					    <br/> <h5>이 기업이 게시한 프로젝트 구인공고 목록</h5> <br/>
+					    <jsp:include page="/view/profile/listMyProj.jsp" /> 
+					    </c:if>
+					 
 					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
 					    </div>
+					    
 					  <div role="tabpanel" class="tab-pane" id="Portfolio">
-					    	<br/> <h5>내가올린 포트폴리오 목록보기</h5> <br/>
+					    	<br/> <h5>이 회원이 게시한 포트폴리오</h5> <br/>
 					   <jsp:include page="/view/profile/listMyPort.jsp" />
 						</div> 
 						
-						   <div role="tabpanel" class="tab-pane" id="Project">
-						 	<br/> <h5>내가올린 프로젝트 목록보기</h5> <br/>
-						 	<jsp:include page="/view/profile/listMyProj.jsp" />
-						 </div>
 						 
 					     <div role="tabpanel" class="tab-pane" id="portfolioScrap">
 							<br/> <h5>포트폴리오 스크랩 목록보기</h5> <br/>
@@ -361,7 +340,7 @@ $(function() {
 					   <div role="tabpanel" class="tab-pane" id="projectScrap">
 							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
 					   		 <jsp:include page="/view/profile/listProjScrap.jsp"/> 
-					    </div>  
+					    </div>   
 					   
 					  </div>
 					</div>
@@ -378,8 +357,10 @@ $(function() {
 	<script src="../../resources/javascript/jquery.js"></script>
 	
 	<!-- Bootstrap Core JavaScript -->
-	<script src="../../resources/javascript/bootstrap.min.js"></script>
+	<<!-- script src="../../resources/javascript/bootstrap.min.js"></script> -->
   
+  
+ 	       
 	
   </body>
 </html>

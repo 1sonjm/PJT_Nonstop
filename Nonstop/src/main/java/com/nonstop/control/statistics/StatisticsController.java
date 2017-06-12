@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -86,13 +87,13 @@ public class StatisticsController {
 		return "/index.jsp";
 	}
 	
-	
-	@RequestMapping(value="getUserStatisticsList", method=RequestMethod.GET)
-	public void getJSONUserStatisticsList(Model model,HttpSession session){
+	@RequestMapping(value="getUserStatisticsList/{userId}/{role}", method=RequestMethod.GET)
+	public void getJSONUserStatisticsList(Model model,@PathVariable("userId")String userId, @PathVariable("role")String role){
 		System.out.println("/statstics/getUserStatisticsList");
-		User user = (User)session.getAttribute("user");
-		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user.getUserId()));
-		
+		User user = new User();
+		user.setUserId(userId);
+		user.setRole(role);
+		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user));
 	}
 	
 }
