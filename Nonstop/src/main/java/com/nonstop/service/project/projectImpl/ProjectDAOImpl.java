@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.RecordApplicant;
 import com.nonstop.domain.Search;
 import com.nonstop.service.project.ProjectDAO;
 
@@ -68,25 +69,12 @@ public class ProjectDAOImpl implements ProjectDAO{
 
 	
 	public List<Project> listProject(int projDivision , String scrapUserId, Search search, int sortFlag) throws Exception {
-		
-		Project project = new Project();
-		String searchCondition = search.getSearchCondition();
-		String searchKeyword = search.getSearchKeyword();
-		//Map<String , Object> map = new HashMap<String , Object>();
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("scrapUserId", scrapUserId);
 		map.put("projDivision", projDivision);
 		map.put("search", search);
 		map.put("sortFlag", sortFlag);
-//		map.put("searchCondition", searchCondition);
-//		map.put("searchKeyword", searchKeyword);
-		//map.put("search", search);
-		//map.put("scrapUserId", scrapUserId);
-		
-		System.out.println("searchCondition다오임플"+searchCondition);
-		System.out.println("searchKeyword다오임플"+searchKeyword);
-		System.out.println("sortFlag"+ project.getSortFlag());
 		
 		return sqlSession.selectList("ProjectMapper.listProject", map);
 	}
@@ -102,20 +90,60 @@ public class ProjectDAOImpl implements ProjectDAO{
 
 	@Override
 	public List<ProjComment> getCommentList(int comProjNo) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("ProjectMapper.getCommentList", comProjNo);
 	}
 
 	@Override
 	public ProjComment getComment(int comNo) throws Exception {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("ProjectMapper.getComment", comNo);
 	}
 
 	@Override
 	public void deleteComment(int comNo) throws Exception {
-		// TODO Auto-generated method stub
 		sqlSession.delete("ProjectMapper.deleteComment", comNo);
 	}
 
+	@Override
+	public void deleteCommentTotal(int comProjNo) throws Exception  {
+		sqlSession.delete("ProjectMapper.deleteCommentTotal", comProjNo);
+	}
+	
+	@Override
+	public void addApplicant(int recProjNo, String recUserId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		map.put("recProjNo", recProjNo);
+		map.put("recUserId", recUserId);
+		sqlSession.insert("ProjectMapper.addApplicant", map);
+	}
+	
+	public RecordApplicant getApplicant(int recProjNo, String recUserId) throws Exception{
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("recProjNo", recProjNo);
+		map.put("recUserId", recUserId);
+		
+		return sqlSession.selectOne("ProjectMapper.getApplicant", map);
+	}
+	
+	public List<RecordApplicant> getApplicantList(List<Integer> projNoList) throws Exception{
+		
+		return sqlSession.selectList("ProjectMapper.getApplicantList", projNoList);
+	}
+	
+	public void deleteApplicant(int recProjNo, String recUserId) throws Exception{
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("recProjNo", recProjNo);
+		map.put("recUserId", recUserId);
+		
+		sqlSession.delete("ProjectMapper.deleteApplicant", map);
+	}
+	
+	public void deleteApplicantTotal(int recProjNo) throws Exception{
+		sqlSession.delete("ProjectMapper.deleteApplicantTotal", recProjNo);
+	}
 }
+	
