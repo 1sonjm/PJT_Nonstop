@@ -743,10 +743,9 @@ body {
 	left: -70px;
     height: 40px;
 	width: 40px;
-    background: none repeat scroll 0 0 #222222;
-    border: 4px solid #FFFFFF;
-    border-radius: 23px 23px 23px 23px;
-    margin-top: 105px;
+    background:none !important;
+    text-shadow: none !important;
+    margin-top: 10%;
 }
 .carousel-control.right {
 	right: -70px;
@@ -763,6 +762,6 @@ body {
 	background: #cecece;
 }
 .carousel-indicators .active {
-	background: #428bca;
+	background: rgb(255, 102, 0);
 }
 /* End carousel */

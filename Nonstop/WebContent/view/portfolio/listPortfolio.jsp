@@ -52,9 +52,6 @@
         	var prevDiv = $("#postDivision").val();
         	var nextDiv = $(this).text().trim();
         	
-        	alert(prevDiv);
-        	alert(nextDiv);
-        	
         	if(nextDiv == "전체"){
         		nextDiv = 1;  
  			}else if(nextDiv=="WEB + APP"){
@@ -122,6 +119,30 @@
         	//$(this).addClass("active").text(activeText); 
         	
         	self.location = "/portfolio/listPortfolio?postDivision="+$("#postDivision").val()+"&postSorting="+postSorting;
+        });
+        
+        /* 검색 카테고리 */
+        $("#searchCondition-li li").on("click" , function() {
+			var displayValue = $(this).text().trim();
+        	$("#searchCondition").text(displayValue).append('&nbsp;&nbsp;&nbsp;<span class="caret"></span>'); 
+        	$("#searchCondition").val(displayValue);
+        });
+        
+        /* 검색버튼 */
+        $("#search").on("click", function() {
+        	
+        	if($("#searchCondition").prev().text().trim() == "검색조건") {
+        		alert("검색 조건을 먼저 설정해주세요.");
+        		return false;
+        	}
+        	
+        	var searchCondition = $("#searchCondition").val();
+        	var searchKeyword = $("#searchKeyword").val();
+        	var postDivision = $("#postDivision").val(); 
+        	var postSorting = $("#postSorting").val(); 
+			
+			$("form").attr("method" , "POST").attr("action" , "/portfolio/listPortfolio").submit();
+        	
         });
 	});
 	
@@ -318,7 +339,7 @@
    
    .hover__active button:hover {
       background: rgba(255, 255, 255, 1);
-       color: #64bb5d;
+       color: #ff6600;
    }
    
    .hover__active button:hover:before {
@@ -474,16 +495,6 @@
 				</ul>
 			</li>
 			
-			      <%-- <!-- ALL/WEB/APP 甕곤옙占쏙옙 -->
-      <div class="row">   
-         <div class="col-md-6 col-md-offset-3" align="center">
-              <button class="button button-neutral" type="button" id="button-all" value="${param.postDivision}">All</button>
-              <button class="button button-neutral" type="button" id="button-web" value="${param.postDivision}">Web</button>
-              <button class="button button-neutral" type="button" id="button-app" value="${param.postDivision}">App</button>
-              <input type="hidden" id="postDivision" name="postDivision" value="${param.postDivision}"/>
-         </div>
-      </div> --%>
-			
 			<!-- 사용기술 분류 -->
 			<li class="dropdown">
 				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -491,8 +502,8 @@
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">개인정보조회</a></li>
-					<li><a href="#">회원정보조회</a></li>
+					<li><a href="#">Language</a></li>
+					<li><a href="#">Framework</a></li>
 					<li class="divider"></li>
 					<li><a href="#">etc...</a></li>
 				</ul>
@@ -501,6 +512,7 @@
 			<!-- 소팅 분류 -->
 			<li class="dropdown">
 				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+				<input type="hidden" id="postSorting" name="postSorting" val="${param.postSorting}"/>
 					<c:choose>
 					<c:when test ="${param.postSorting==1}">
 						<span>조회순</span>
@@ -528,17 +540,17 @@
 		<form class="navbar-form navbar-right" role="search">
 		<div class="input-group input-group-sm">
 			<div class="input-group-btn">
-				<button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background: #fff">
+				<button type="button" class="btn btn-success dropdown-toggle" id="searchCondition" name="searchCondition" data-toggle="dropdown" aria-expanded="false" style="background: #fff">
 	        		검색조건&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
-	        	<ul class="dropdown-menu" role="menu">
+	        	<ul class="dropdown-menu" id="searchCondition-li" role="menu">
 	          		<li><a href="#">제목</a></li>
 	          		<li><a href="#">작성자</a></li>
 	        	</ul>
 			</div><!-- /btn-group -->
 			<span class="input-group-addon" id="sizing-addon3"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> </span>
-			<input type="text" class="form-control" aria-label="...">
+			<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" aria-label="...">
 	      	<span class="input-group-btn">
-	        	<button class="btn btn-default" type="button">검색</button>
+	        	<button class="btn btn-default" id="search" type="button">검색</button>
 			</span>
 		</div><!-- /input-group -->
 		</form>
@@ -562,10 +574,10 @@
    		<h3 class="text-left" style="margin-bottom:0; margin-top:-5px">
 		<c:choose>
 			<c:when test ="${param.postDivision==1 || param.postDivision==10 || param.postDivision==11 || param.postDivision==12}">
-			DEVELOPER &nbsp; 
+			DEVELOPER&nbsp; 
 			</c:when>
 			<c:otherwise>
-			DESIGNER &nbsp;
+			DESIGNER&nbsp;
 			</c:otherwise>
 		</c:choose>
 		PORTFOLIO RANKING</h3>
@@ -664,8 +676,8 @@
            
           </div><!--.Carousel-->
       </div>
-      <a data-slide="prev" href="#Carousel" class="left carousel-control"><span class="glyphicon glyphicon-menu-left" aria-hidden="true"></span></a>
-   	  <a data-slide="next" href="#Carousel" class="right carousel-control"><span class="glyphicon glyphicon-menu-right" aria-hidden="true"></span></a>
+      <a data-slide="prev" href="#Carousel" class="left carousel-control"><span class="glyphicon glyphicon-menu-left" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"></span></a>
+   	  <a data-slide="next" href="#Carousel" class="right carousel-control"><span class="glyphicon glyphicon-menu-right" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"></span></a>
    </div>
 </div>
         
