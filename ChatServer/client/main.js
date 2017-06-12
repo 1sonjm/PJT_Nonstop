@@ -116,7 +116,6 @@ window.onload = function () {
 				screenMediaStream = stream;
 				selfView.srcObject = stream;
 				screenCheckBox.checked = true;
-				postChatMessage("연결이 aaaaaaaaaaaaaaaaaaaaaa.");
 				
 				//캡쳐화면 띄워줄려했지
 				//document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
@@ -174,8 +173,7 @@ window.onload = function () {
 			peer.ondisconnect = function () {
 				callButton.disabled = true;
 				remoteView.style.visibility = "hidden";
-				alert('연결 종료');
-				postChatMessage("연결이 종료되었습니다.");
+				postChatMessage("[연결이 종료되었습니다]");
 				if (pc)
 					pc.close();
 				pc = null;
@@ -270,11 +268,11 @@ function start(isInitiator) {
 	};
    var targetStream;
 	if (screenCheckBox.checked) {
-		console.log("스크린");
+		//console.log("스크린");
 		pc.addStream(screenMediaStream);
 		targetStream = screenMediaStream;
 	}else{
-		console.log("화상");
+		//console.log("화상");
 		pc.addStream(localStream);
 		targetStream = localStream;
 	}
@@ -282,24 +280,18 @@ function start(isInitiator) {
 	if (isInitiator)
 		pc.createOffer(localDescCreated, logError);
 
-	//화상 on/off 버튼 구성
-	var screnToggleButton = document.createElement("button");
-	screnToggleButton.innerText = "화면on/off";
-	document.getElementById('view_controlset').appendChild(screnToggleButton);
-
-	screnToggleButton.onclick = function(){
+	//화상,음성 on/off
+	document.querySelector('.panel-body').style.display = "block";
+	document.getElementById("videoToggleButton").onclick = function(){
 		targetStream.getVideoTracks()[0].enabled =
-        !(targetStream.getVideoTracks()[0].enabled);
+			!(targetStream.getVideoTracks()[0].enabled);
+   }
+	document.getElementById("audioToggleButton").onclick = function(){
+		targetStream.getAudioTracks()[0].enabled =
+			!(targetStream.getAudioTracks()[0].enabled);
    }
 	
-	//음성 on/off 버튼 구성
-	var screnToggleButton = document.createElement("button");
-	screnToggleButton.innerText = "음성on/off";
-	document.getElementById('view_controlset').appendChild(screnToggleButton);
-	screnToggleButton.onclick = function(){
-		targetStream.getAudioTracks()[0].enabled =
-        !(targetStream.getAudioTracks()[0].enabled);
-   }
+	postChatMessage("[상대와 연결되었습니다]");
 	
 }
 
@@ -381,7 +373,6 @@ function postChatMessage(msg, author) {
 	var messageNode = document.createElement('div');
 	var messageContent = document.createElement('div');
 	
-	messageNode.classList.add('chatMessage');
 	messageContent.textContent = msg;
 	messageNode.appendChild(messageContent);
     
@@ -393,9 +384,9 @@ function postChatMessage(msg, author) {
 	messageNode.appendChild(messageTime);
 
 	if (author) {
-		messageNode.classList.add('selfMessage');
+		messageNode.classList.add('self-Message');
 	} else {
-		messageNode.classList.add('remoteMessage');
+		messageNode.classList.add('remote-Message');
 	}
 
 	chatDiv.appendChild(messageNode);
