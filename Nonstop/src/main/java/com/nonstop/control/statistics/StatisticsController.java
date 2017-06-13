@@ -87,9 +87,9 @@ public class StatisticsController {
 		return "/index.jsp";
 	}
 	
-	@RequestMapping(value="getUserStatisticsList/{userId}/{userRole}", method=RequestMethod.GET)
-	public void getJSONUserStatisticsList(Model model,@PathVariable("userId")String userId,@PathVariable("userRole")String role){
-		System.out.println("/statstics/getJSONUserStatisticsList");
+	@RequestMapping(value="getUserStatisticsList/{userId}/{role}", method=RequestMethod.GET)
+	public void getJSONUserStatisticsList(Model model,@PathVariable("userId")String userId, @PathVariable("role")String role){
+		System.out.println("/statstics/getUserStatisticsList");
 		User user = new User();
 		user.setUserId(userId);
 		user.setRole(role);

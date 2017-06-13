@@ -1,5 +1,6 @@
 package com.nonstop.control.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.RecordApplicant;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.Tech;
 import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
 import com.nonstop.service.profile.ProfileService;
@@ -49,7 +52,6 @@ public class ProjectController {
 	private TechUseService techUseService;
 	//setter Method
 	
-	
 	public ProjectController(){
 		System.out.println(this.getClass());
 	}
@@ -73,15 +75,24 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="addProject", method=RequestMethod.POST)
-	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
+	public String addProject( @ModelAttribute("project") Project project,  
+							  @ModelAttribute("techUse") TechUse techUse, 
+							  @RequestParam("checkBoxes") int [] items,
+							  Model model, HttpSession session) throws Exception {
 		
-		System.out.println("여기는 addProject : "+project);
-		System.out.println("sdfkjsdhalksdaf"+project.getProjAnnoEnd());
-		System.out.println("sdfkjsdhalksdaf"+project.getProjStartDate());
-		System.out.println("sdfkjsdhalksdaf"+project.getProjEndDate());
+		int [] tuTechNo = items;
+		
 		projectService.addProject(project);
+//		
+		int tuProjNo = project.getProjNo();
 		
+		if(tuTechNo.length > 0){
+			for(int i=0; i<tuTechNo.length;i++){
+				techUseService.addTechUse(tuTechNo[i], tuProjNo);
+			}
+		}
 		model.addAttribute("project", project);
+		model.addAttribute("techUse", techUse);
 		
 		return "forward:/index.jsp";
 	}
@@ -95,14 +106,14 @@ public class ProjectController {
 		
 		
 		Project project = new Project();
+	
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		project = projectService.getProject(projNo ,scrapUserId);
 		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
-		List<TechUse> listTechUse = techUseService.listTechUse(projNo);
+		List<TechUse> listTechUse = techUseService.getTechUseList(projNo);
 		User user = userService.getUser(project.getProjUserId());
+		RecordApplicant recordApplicant = projectService.getApplicant(projNo, scrapUserId);
 		projectService.updateViewCount(project);
-		
-		System.out.println(scrapUserId);
 		
 		
 		session.setAttribute("projNo", projNo);
@@ -110,6 +121,7 @@ public class ProjectController {
 		model.addAttribute("listTechUse", listTechUse);
 		model.addAttribute("project", project);
 		model.addAttribute("user", user);
+		model.addAttribute("recordApplicant", recordApplicant);
 		
 		return "forward:/view/project/getProject.jsp";
 	}
@@ -145,11 +157,25 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="updateProject", method=RequestMethod.POST)
-	public String updateProject( @ModelAttribute("project") Project project , Model model , HttpSession session) throws Exception{
+	public String updateProject( @ModelAttribute("project") Project project , 
+								 @ModelAttribute("techUse") TechUse techUse , 
+								 @RequestParam("checkBoxes") int [] items,
+								 Model model , HttpSession session) throws Exception{
 
 		System.out.println("/view/project/updateProject: POST");
-		//Business Logic
-			
+		
+		int tuProjNo = project.getProjNo();
+		techUseService.deleteTechUse(tuProjNo);
+		
+		int [] tuTechNo = items;
+		
+		if(tuTechNo.length > 0){
+			for(int i=0; i<tuTechNo.length;i++){
+				techUseService.addTechUse(tuTechNo[i], tuProjNo);
+				System.out.println(tuTechNo[i]);
+			}
+		}
+		
 		projectService.updateProject(project);
 		
 		model.addAttribute("project", project);
@@ -159,7 +185,14 @@ public class ProjectController {
 	
 	@RequestMapping(value="deleteProject", method=RequestMethod.POST)
 	public String deleteProject( @ModelAttribute("project") Project project, Model model ) throws Exception {
-
+		
+		int projNo = project.getProjNo();
+		techUseService.deleteTechUse(projNo);
+		
+		projectService.deleteCommentTotal(projNo);
+		
+		projectService.deleteApplicantTotal(projNo);
+		
 		projectService.deleteProject(project);
 		
 		model.addAttribute("project", project);
@@ -170,15 +203,16 @@ public class ProjectController {
 	
 	@RequestMapping(value="listProject")
 	public String listProject( @ModelAttribute("search") Search search,
-								@RequestParam("sortFlag") int sortFlag , 
-								@RequestParam("projDivision") int projDivision , 
-								Model model ,HttpSession session , HttpServletRequest request) throws Exception{
-		Project project = new Project();
+							   @RequestParam("sortFlag") int sortFlag , 
+							   @RequestParam("projDivision") int projDivision , 
+							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		System.out.println("/project/listProject");
+//		Tech tech = new Tech();
+//		TechUse techUse = new TechUse();
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		System.out.println("sortFlag"+ sortFlag);
 		search.setPageSize(projPageSize);
 		String scrapUserId = "testUser";
 		
@@ -186,19 +220,24 @@ public class ProjectController {
 		if((User)session.getAttribute("user") != null) {
 			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
-				
+		
 		List<Project> list = projectService.listProject(projDivision,scrapUserId,search,sortFlag);
-//		List<TechUse> listTechUse = techUseService.listTechUse(project.getProjNo());
-		
-		System.out.println("getSearchKeyword"+search.getSearchKeyword());
-		System.out.println("getSearchCondition"+search.getSearchCondition());
-		
+		List<Integer> projNoList = new ArrayList<Integer>();
+		for(int i=0; i<list.size(); i++){
+			projNoList.add(list.get(i).getProjNo());
+	    }
+        List<TechUse> listTechUse = techUseService.listTechUse(projNoList);
+//        List<RecordApplicant> recordApplicant = projectService.getApplicantList(projNoList);
+        
+        
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);
-//		model.addAttribute("listTechUse", listTechUse);
+		model.addAttribute("listTechUse", listTechUse);
+//		model.addAttribute("recordApplicant", recordApplicant);
 		
 		return "forward:/view/project/listProject.jsp";
 	}
+	
 	
 	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
 	public void addJsonComment( @ModelAttribute("projComment") ProjComment projComment, HttpSession session, Model model ) throws Exception {
@@ -221,7 +260,39 @@ public class ProjectController {
 		
 	}
 	
+	@RequestMapping(value="addApplicant" , method=RequestMethod.POST)
+	public String addApplicant(@ModelAttribute("recordApplicant") RecordApplicant recordApplicant, 
+							   @ModelAttribute("project") Project project, 
+							   HttpSession session, Model model) throws Exception{
+		
+		int recProjNo = project.getProjNo();
+		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		System.out.println("recProjNo="+recProjNo);
+		System.out.println("recUserId="+recUserId);
+		
+		projectService.addApplicant(recProjNo, recUserId);
+		
+		model.addAttribute("recordApplicant", recordApplicant);
+		model.addAttribute("project", project);
+		
+		return "forward:/index.jsp";
+		
+	}
 	
+	@RequestMapping(value="deleteApplicant", method=RequestMethod.POST)
+	public String deleteApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+								   @ModelAttribute("project") Project project, 
+								   HttpSession session, Model model ) throws Exception {
+		int recProjNo = project.getProjNo();	
+		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		projectService.deleteApplicant(recProjNo, recUserId);
+		
+		model.addAttribute("recordApplicant", recordApplicant);
+		model.addAttribute("project", project);
+		
+		return "forward:/index.jsp";
+	}
 	
 	
 }

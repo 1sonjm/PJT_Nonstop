@@ -27,23 +27,18 @@ public class TechUseServiceImpl implements TechUseService{
 		System.out.println(this.getClass());
 	}
 	
-	public void addTechUse(TechUse techUse) throws Exception {
-		techUseDAO.addTechUse(techUse);
+	public void addTechUse(int tuTechNo, int tuProjNo) throws Exception{
+		techUseDAO.addTechUse(tuTechNo, tuProjNo);
 	}
 	
-//	public List<TechUse> getTechUse(int techNo) throws Exception{
-//		
-//		List<TechUse> list = techUseDAO.getTechUse(techNo);
-//		return list;
-//	}
 	public TechUse getTechUse(int tuNo) throws Exception{
 		
 		return techUseDAO.getTechUse(tuNo);
 	}
 	
-	public List<TechUse> listTechUse(int tuProjNo) throws Exception {
+	public List<TechUse> getTechUseList(int tuProjNo) throws Exception {
 		
-		return techUseDAO.listTechUse(tuProjNo);
+		return techUseDAO.getTechUseList(tuProjNo);
 	}
 	
 	public void updateTechUse(TechUse techUse) throws Exception {
@@ -51,38 +46,13 @@ public class TechUseServiceImpl implements TechUseService{
 		techUseDAO.updateTechUse(techUse);
 	}
 	
-	public void deleteTechUse(TechUse techUse) throws Exception{
+	public void deleteTechUse(int tuProjNo) throws Exception{
 		
-		techUseDAO.deleteTechUse(techUse);
+		techUseDAO.deleteTechUse(tuProjNo);
 	}
-	
-	
-	/*@Override
-	public void addComment(ProjComment projComment) throws Exception {
-		// TODO Auto-generated method stub
-		projectDAO.addComment(projComment);
-	}
-
 	@Override
-	public List<TechUse> getTechUseList(int tuProjNo) throws Exception {
-		// TODO Auto-generated method stub		
-		return techUseDAO.getTechUseList(tuProjNo);
+	public List<TechUse> listTechUse(List<Integer> projNoList) throws Exception {
+		return techUseDAO.listTechUse(projNoList);
 	}
 	
-	@Override
-	public ProjComment getComment(int comNo) throws Exception {
-		// TODO Auto-generated method stub
-		return projectDAO.getComment(comNo);
-	}
-
-	@Override
-	public void deleteComment(int comNo) throws Exception {
-		// TODO Auto-generated method stub
-		projectDAO.deleteComment(comNo);
-	}*/
-
-	
-	
-	
-
 }

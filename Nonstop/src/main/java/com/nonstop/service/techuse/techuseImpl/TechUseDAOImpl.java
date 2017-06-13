@@ -32,20 +32,16 @@ public class TechUseDAOImpl implements TechUseDAO{
 		System.out.println(this.getClass());
 	}
 	
-	public void addTechUse(TechUse techUse) throws Exception {
+	public void addTechUse(int tuTechNo, int tuProjNo) throws Exception {
 		
-		sqlSession.insert("TechUseMapper.addTechUse", techUse);
+		Map<String , Object> map = new HashMap<String , Object>();
+		map.put("tuTechNo", tuTechNo);
+		map.put("tuProjNo", tuProjNo);
+		
+		sqlSession.insert("TechUseMapper.addTechUse", map);
 		
 	}
 
-//	public List<TechUse> getTechUse(int techNo) throws Exception{
-//		
-//		Map<String , Object> map = new HashMap<String , Object>();
-//		
-//		map.put("techNo", techNo);
-//		
-//		return sqlSession.selectOne("TechUseMapper.getTechUse", map);
-//	}
 	
 	public TechUse getTechUse(int tuNo) throws Exception{
 		
@@ -58,38 +54,20 @@ public class TechUseDAOImpl implements TechUseDAO{
 		
 	}
 	
-	public List<TechUse> listTechUse(int tuProjNo) throws Exception {
+	public List<TechUse> getTechUseList(int tuProjNo) throws Exception {
 		
-		return sqlSession.selectList("TechUseMapper.listTechUse", tuProjNo);
+		return sqlSession.selectList("TechUseMapper.getTechUseList", tuProjNo);
 	}
 	
-	public void deleteTechUse(TechUse techUse) throws Exception{
+	public void deleteTechUse(int tuProjNo) throws Exception{
 		
-		sqlSession.delete("TechUseMapper.deleteTechUse", techUse);
-	}
-
-	
-	/*@Override
-	public int addComment(ProjComment projComment) throws Exception {
-		return sqlSession.insert("ProjectMapper.addComment", projComment);		
+		sqlSession.delete("TechUseMapper.deleteTechUse", tuProjNo);
 	}
 
 	@Override
-	public List<ProjComment> getCommentList(int comProjNo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectList("ProjectMapper.getCommentList", comProjNo);
+	public List<TechUse> listTechUse(List<Integer> projNoList) throws Exception {
+		return sqlSession.selectList("TechUseMapper.listTechUse", projNoList);
 	}
 
-	@Override
-	public ProjComment getComment(int comNo) throws Exception {
-		// TODO Auto-generated method stub
-		return sqlSession.selectOne("ProjectMapper.getComment", comNo);
-	}
-
-	@Override
-	public void deleteComment(int comNo) throws Exception {
-		// TODO Auto-generated method stub
-		sqlSession.delete("ProjectMapper.deleteComment", comNo);
-	}*/
 
 }

@@ -23,6 +23,7 @@
 		<result property="scrapUserId" 		column="user_id" 			jdbcType="VARCHAR" />
 		<result property="scrapNo" 			column="scrap_no" 			jdbcType="NUMERIC" />
 		<result property="sortFlag"			column="sort_flag" 			jdbcType="NUMERIC" />
+		<result property="recCount"			column="rec_count" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	 <resultMap id="commentSelectMap" type="projComment">
@@ -39,6 +40,19 @@
 		<result property="tuPortNo" 		column="tu_port_no" 		jdbcType="INTEGER" />
 		<result property="tuProjNo" 		column="tu_proj_no" 		jdbcType="INTEGER" />
 		<result property="tuTechNo" 		column="tu_tech_no" 		jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="techSelectMap" type="tech">
+		<result property="techNo" 			column="tech_no" 			jdbcType="INTEGER"/>
+		<result property="techName" 		column="tech_name" 		    jdbcType="INTEGER" />
+		<result property="techClass" 		column="tech_class" 		jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="recordApplicantSelectMap" type="recordApplicant">
+		<result property="recNo" 			column="rec_no" 			jdbcType="INTEGER"/>
+		<result property="recProjNo" 		column="rec_proj_no" 		jdbcType="INTEGER" />
+		<result property="recUserId" 		column="rec_user_id" 		jdbcType="VARCHAR" />
+		<result property="recStatus" 		column="rec_status" 		jdbcType="INTEGER" />
 	</resultMap>
 	
 	
@@ -58,25 +72,34 @@
 		#{projLocation:VARCHAR}, 
 		#{projDetail:VARCHAR}, 
 		0)
+		<selectKey keyProperty="projNo" resultType="Integer" order="AFTER">
+        SELECT seq_project_proj_no.currval FROM dual
+    	</selectKey>
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getProject"	parameterType="map"	resultMap="projectSelectMap">
 		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
 		round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-		round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
+		round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no,
+		(select count(rec_user_id) from record_applicant WHERE rec_proj_no = #{projNo}) as rec_count
 		FROM project p , (SELECT * FROM scrap WHERE user_id=#{scrapUserId:VARCHAR}) a
 		WHERE p.proj_no=a.proj_no(+) AND p.proj_no=#{projNo}
+		<!-- GROUP by  p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, 
+		p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount, r.rec_proj_no, r.rec_user_id, a.proj_no, a.user_id -->
 	
 	 </select>
 	 
 	 <select  id="listProject"  parameterType="map"	resultMap="projectSelectMap">
 		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
 			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no	
-	    FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
+			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no
+			 <!--   (select count(rec_user_id) from record_applicant WHERE rec_proj_no = #{projNo} ) as rec_count -->
+	    FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a 
+	    <!--     , (SELECT t.tech_name FROM techuse tu, tech t WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no = #{tuProjNo})t -->
 		 <where>
 		 	 p.proj_no=a.proj_no(+) And
+		 <!-- 	 p.proj_no=t.tu_proj_no(+) And -->
 		 	 <if test="projDivision == 1">
 		         p.proj_division IN (11,12)  
 		     </if>   
@@ -91,6 +114,9 @@
 			     <if test="search.searchCondition == 0"> 
 				 	   AND p.proj_title like '%' || #{search.searchKeyword} ||'%'
 				 </if>
+			<!-- <if test="search.searchCondition == 1"> 
+				 	   AND t.tech_name '%' || #{search.searchKeyword} ||'%'
+				 </if> -->
 			     <if test="search.searchCondition == 2 and searchKeyword !='' ">
 					   AND p.proj_location like '%' || #{search.searchKeyword} ||'%'
 				 </if>
@@ -103,6 +129,9 @@
 			 <if test="sortFlag == 2">
 			 	ORDER BY proj_dday ASC
 			 </if>
+			 <!-- <if test="sortFlag == 3">
+			 	ORDER BY rec_count DESC
+			 </if> -->
 			 <if test="sortFlag == 4">
 			 	ORDER BY proj_ViewCount DESC
 			 </if>
@@ -124,6 +153,7 @@
 							</where>
 						</if> ) countTable						
 	 </select>
+	
 	 
 	 
 	 
@@ -183,6 +213,11 @@
 		DELETE from proj_comment
 		where com_no = #{value}
 	</delete>
+	
+	<delete id="deleteCommentTotal" parameterType="int">
+		DELETE from proj_comment
+		where com_proj_no = #{comProjNo}
+	</delete>
 	 
 	 
 	<select  id="getCommentList"  parameterType="int"	resultMap="commentSelectMap">
@@ -193,7 +228,46 @@
 		AND u.user_id = c.com_user_id
 		ORDER BY com_proj_regdate DESC
 	</select>
+	
+	<insert id="addApplicant"	parameterType="recordApplicant" >
+	 	INSERT INTO record_applicant ( 
+			rec_no, 
+			rec_proj_no, 
+			rec_user_id, 
+			rec_status
+		) VALUES ( 
+			seq_record_applicant_rec_no.nextval, 
+			#{recProjNo:NUMERIC},
+			#{recUserId:VARCHAR},
+			0
+		)
+	 </insert>
 	 
+	 <select 	id="getApplicant"	parameterType="map"	resultMap="recordApplicantSelectMap">
+		SELECT rec_proj_no, rec_user_id
+		FROM record_applicant
+		WHERE rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
+	 </select>
+	 
+	<!--  <select  id="getApplicantList"  parameterType="list"	resultMap="techUseSelectMap">
+
+		SELECT rec_proj_no, rec_user_id
+		FROM record_applicant
+		WHERE rec_proj_no IN
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+	</select> -->
+	 
+	  <select 	id="deleteApplicant"	parameterType="map"	resultMap="recordApplicantSelectMap">
+		DELETE from record_applicant
+		where rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
+	 </select>
+	 
+	 <select 	id="deleteApplicantTotal"	parameterType="map"	resultMap="recordApplicantSelectMap">
+		DELETE from record_applicant
+		where rec_proj_no = #{recProjNo:NUMERIC}
+	 </select>
 	 
 	
 	 

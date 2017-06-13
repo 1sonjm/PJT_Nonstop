@@ -132,14 +132,16 @@ public class LetterController {
 		}
 		
 		Letter letter = letterService.getLetter(letNo);
+		List<Follow> follow =profileService.getFollowList(receiveId);
 		
+		
+		model.addAttribute("list2", follow);
 		model.addAttribute("letter",letter);
 		
 		return "forward:/view/letter/getLetter.jsp";
 		
 	}
 
-	
 	@RequestMapping(value="addSave/{letNo}",method=RequestMethod.GET)
 	public void updateSave(@PathVariable int letNo) throws Exception{
 	

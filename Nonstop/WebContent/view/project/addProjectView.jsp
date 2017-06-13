@@ -46,6 +46,7 @@
 		var projStartDate = $("input[name='projStartDate']").val();
 		var projEndDate = $("input[name='projEndDate']").val();
 		var projDetail = $("textarea[name='projDetail']").val();
+		
 		/*String을 Date로 형변환*/
 		$("input:hidden[name='projDivision']").val(projDivision);
 		
@@ -74,6 +75,13 @@
 			return;
 		}
 		
+	    
+		var items = [];
+		$("input:checkbox[name=tuTechNo]:checked").each(function(){
+			items.push($(this).val());
+		});
+		
+		$("input:hidden[name='checkBoxes']").val( items );
 		
 		var projLocation = "";	
 		if( $("select[name='projLocation1']").val() != ""  &&  $("select[name='projLocation2']").val() != "") {
@@ -94,13 +102,14 @@
 		});
    });
    
+   
    $(function() {
 		
 		$( "#cancle" ).bind("click", function(){
 		
 			history.go(-1);
 		});
-  });
+   });
 
     </script>
     
@@ -173,30 +182,6 @@
 				
 				<!-- Text input-->
 				<div class="margin-top-30">
-					
-					<!-- Multiple Radios (inline) -->
-					<!-- <div class="form-group">
-					  <label class="col-md-4 control-label">개발구분</label>
-					  <div class="col-md-5"> 
-					    <label class="radio-inline">
-					      <input name="projDivision" id="projDivision" value="11" type="radio">
-					      	개발/WEB
-					      </label> 
-					    <label class="radio-inline">
-					      <input name="projDivision" id="projDivision" value="12" type="radio">
-					       	개발/APP
-					    </label>
-					    <label class="radio-inline">
-					      <input name="projDivision" id="projDivision" value="21" type="radio">
-					       	디자이너/WEB
-					    </label>
-					    <label class="radio-inline">
-					      <input name="projDivision" id="projDivision" value="22" type="radio">
-					       	디자이너/APP
-					    </label>					 
-					  </div>
-					</div> -->
-					
 					<div class="form-group">
 					    <label for="division" class="col-sm-offset-1 col-sm-2 control-label">분류</label>
 					    <div class="col-sm-3">
@@ -263,60 +248,75 @@
 					</div>
 					
 					<!-- Multiple Checkboxes -->
-				<!-- 	<div class="form-group">
-					  <label class="col-md-4 control-label" for="checkboxes">개발언어</label>
+					<div class="form-group">
+					  <label class="col-md-3 control-label" for="checkboxes">개발언어</label>
 					  	<div class="row">
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 						  	<div class="checkbox">
 								<label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
+							      <input name="tuTechNo" id="Java" value="1000" type="checkbox">
 							      Java
 						    	</label>
 							</div>						  	
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="2" type="checkbox">
+							      <input name="tuTechNo" id="Python" value="1001" type="checkbox">
 							      Python
 							    </label>
 							</div>							  
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="3" type="checkbox">
-							      Php
+							      <input name="tuTechNo" id="PHP" value="1002" type="checkbox">
+							      PHP
 							    </label>
 							  </div>							 
 							</div>
+						 <div class="col-md-1">
+						  <div class="checkbox">
+						    <label for="checkboxes-0">
+						      <input name="tuTechNo" id="JavaScript" value="1003" type="checkbox">
+						      JavaScript
+						    </label>
+						  </div>							 
+						  </div>
+						  <div class="col-md-1">
+						  <div class="checkbox">
+						    <label for="checkboxes-0">
+						      <input name="tuTechNo" id="Swift" value="1004" type="checkbox">
+						      Swift
+						    </label>
+						  </div>							 
+						  </div>
 						</div>
 					</div>
 					
-					Multiple Checkboxes
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="checkboxes">프레임워크</label>
+					  <label class="col-md-3 control-label" for="checkboxes">프레임워크</label>
 					  	<div class="row">
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 						  	<div class="checkbox">
 								<label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
+							      <input name="tuTechNo" id="Spring" value="2000" type="checkbox">
 							      Spring
 						    	</label>
 							</div>						  	
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
+							      <input name="tuTechNo" id="Django" value="2001" type="checkbox">
 							      Django
 							    </label>
 							</div>							  
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
+							      <input name="tuTechNo" id="Symfony" value="2002" type="checkbox">
 							      Symfony
 							    </label>
 							  </div>							 
@@ -325,39 +325,45 @@
 					</div>
 					
 					
-					Multiple Checkboxes
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="checkboxes">DBMS</label>
+					  <label class="col-md-3 control-label" for="checkboxes">DBMS</label>
 					  	<div class="row">
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 						  	<div class="checkbox">
 								<label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
+							      <input name="tuTechNo" id="Oracle" value="3000" type="checkbox">
 							      Oracle
 						    	</label>
 							</div>						  	
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Mssql
+							      <input name="tuTechNo" id="MsSQL" value="3001" type="checkbox">
+							      MsSQL
 							    </label>
 							</div>							  
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Mysql
+							      <input name="tuTechNo" id="MySQL" value="3002" type="checkbox">
+							      MySQL
 							    </label>
 							  </div>
-						  </div>							 
+						  </div>
+						  <div class="col-md-1">
+							  <div class="checkbox">
+							    <label for="checkboxes-0">
+							      <input name="tuTechNo" id="SQLite" value="3003" type="checkbox">
+							      SQLite
+							    </label>
+							  </div>
+						  </div>
 						</div>
-					  </div>				
-					</div>	
-					<br/>
-					<br/> -->
+					</div>
+					 <input type="hidden" name="checkBoxes"/>
+					<br/>		
 
 					<div class="row">
 						<div class="col-md-2 col-md-offset-4">
@@ -366,7 +372,8 @@
 						<div class="col-md-2">
 							<a href="#" class="btn btn-success btn-block btn-lg" id="cancle">취&nbsp;소</a>
 						</div>
-					</div>	
+					</div>
+					
 		
 				</fieldset>
 			</form>
@@ -377,97 +384,3 @@
 </html>
 
 
-
-<!-- /*데이트 픽커*/
-    $(function() {
- 		
- 		var nowDate = new Date();
- 		
- 		$('#daterange1').on('change',function(){
- 			
- 			var ss1 = $('#daterange1').val().split(' ~ ')[0];
- 			var ss3 = new Date(ss1);
- 			$('input[name="projStartDate"]').val(ss3);
- 			
- 			var ss2 = $('#daterange1').val().split(' ~ ')[1];
- 			var ss4 = new Date(ss2);
- 			$('input[name="projEndDate"]').val(ss4);
- 			
- 			
- 		/* 	$('input[name="projStartDate"]').val($('#daterange1').val().split(' ~ ')[0]);
- 			$('input[name="projEndDate"]').val($('#daterange1').val().split(' ~ ')[1]); */
- 		});
- 		
- 	
- 		$('input[name="daterange1"]').daterangepicker({
- 			"showDropdowns": true,
- 			"locale": {
- 					"format": "YYYY/MM/DD",
- 					"separator": " ~ ",
- 					"applyLabel": "적용",
- 					"cancelLabel": "취소",
- 					"weekLabel": "주",
- 					"daysOfWeek": ["일","월","화","수","목","금","토"],
- 					"monthNames": ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
- 					"firstDay": 1
- 			},
- 			"showCustomRangeLabel": false,
- 			"alwaysShowCalendars": true,
- 			"startDate": nowDate,
- 			"endDate": (nowDate,+1),
- 			"opens": "left"
- 		}, 
- 		
- 		function(start, end, label) {
- 			//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
- 		});
- 		
-    });
-    
-	$(function() {
- 		
- 		var nowDate = new Date();
- 		
- 		$('input[name="daterange2"]').daterangepicker({
- 			"singleDatePicker" : true,
- 			"showDropdowns": true,
- 			"locale": {
- 					"format": "YYYY/MM/DD",
- 					"applyLabel": "적용",
- 					"cancelLabel": "취소",
- 					"weekLabel": "주",
- 					"daysOfWeek": ["일","월","화","수","목","금","토"],
- 					"monthNames": ["1월","2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"],
- 					"firstDay": 1
- 			},
- 			"showCustomRangeLabel": false,
- 			"alwaysShowCalendars": true,
- 			"startDate": nowDate,
- 			"endDate": (nowDate,+1),
- 			"opens": "left"
- 		}, 
- 		
- 		function(start, end, label) {
- 			//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
- 		});
- 		
- 		
- 		
- 	/* 	var year = $('#daterange2').val().substr(0,4);
- 		var month = $('#daterange2').val().substr(5,2);
- 		var day = $('#daterange2').val().substr(8,2);
- 		var date = new Date(year, month, day);
- 		var date1 = new Date($('#daterange2').val());
- 		alert(year);
- 		alert(month);
- 		alert(day);
- 		alert(date);
- 		alert(date1); */
- 		$('#daterange2').on('change',function(){
- 			
- 			var ss1 = $('#daterange2').val();
- 			var ss2 = new Date(ss1);
- 			alert(ss2)
- 			$('input[name="projAnnoEnd"]').val(ss2);
- 		});
-    });*-->

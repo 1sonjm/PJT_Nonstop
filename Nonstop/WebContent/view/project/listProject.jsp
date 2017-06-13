@@ -40,7 +40,7 @@
 		th, tr {
 		    padding: 8px;
 		    text-align: left;
-		   
+		    table-layout:fixed;
 		    text-overflow:ellipsis;
 		    overflow:hidden;
 		}
@@ -97,6 +97,12 @@
         .navbar-static-top {
 		  padding-top: 30px;
 		  height: 120px;
+		}
+		#techNameButton{
+			padding : 2px;
+			heigth : 8px;
+			border : 0;
+			text-decoration:none;
 		}
 		
 		::selection { color:white; background:blue; }
@@ -169,6 +175,25 @@
 		$(function() {
 			$( "#projDday1" ).on("click" , function() {
 				fncSortList2();
+			});
+		});
+		
+		/*지원자순*/
+		function fncSortList3(){
+			var projDivision = $("#projDivision").val();
+			var sortFlag = $("#sortFlag").val();
+			sortFlag = 3;
+			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
+	            }else{
+	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
+	            }
+		}
+	
+		/*지원자순*/	
+		$(function() {
+			$( "#projApplicant1" ).on("click" , function() {
+				fncSortList3();
 			});
 		});
 		
@@ -280,7 +305,7 @@
 	                               $(this).attr('scrap','1');
 	                            }else{
 	                               $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
-	                           $(this).attr('save','0');
+	                           $(this).attr('scrap','0');
 	                            }
 	                         }
 	                      });
@@ -339,7 +364,7 @@
 			<ol class="breadcrumb" >
 			  <li><a href="#" id="projAnnoStart1">최신등록순</a></li>
 			  <li><a href="#" id="projDday1">마감임박순</a></li>
-			  <li><a href="#" id="">지원자순</a></li>
+			  <li><a href="#" id="projApplicant1">지원자순</a></li>
 			  <li><a href="#" id="projViewCount1" >조회순</a></li>
 			</ol>
 		</form>
@@ -437,7 +462,7 @@
 										</c:choose>
 									</th>
 									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value="">${project.projExpectDate}일</th>
-									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">sdsdfsdf</th>
+									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">${project.recCount}명</th>
 									<th colspan="3" style="text-align: center">${project.projLocation}</th>
 								</tr>
 
@@ -464,9 +489,15 @@
 								</tr>
 
 
-								<tr style="height: 20px; border-bottom: 1px solid #ddd">
-									<th colspan="12" var="listTechUse" item="listTechUse">개발 기술 : 
-										${listTechUse.tuTechNo}
+								<tr style="height: 20px; border-bottom: 1px solid #ddd;">
+									<th colspan="12">개발 기술 : 
+										<c:set var="i" value="0"/>
+											<c:forEach var="listTechUse" items="${listTechUse}" >
+											<c:set var="i" value="${i+1}"/>
+											<c:if test="${listTechUse.tuProjNo== project.projNo}">
+												<a type="button" class="btn btn-info" id="techNameButton">${listTechUse.tuTechName}</a>
+											</c:if>
+										</c:forEach>
 									</th>
 								</tr>
 
@@ -495,94 +526,4 @@
 </body>
 
 </html>
-
-
-<!-- pagination -->
-  <!--      <nav align="center">
-	  <ul class="pagination">
-	    <li>
-	      <a href="#" aria-label="Previous">
-	        <span aria-hidden="true">&laquo;</span>
-	      </a>
-	    </li>
-	    <li><a href="#">1</a></li>
-	    <li><a href="#">2</a></li>
-	    <li><a href="#">3</a></li>
-	    <li><a href="#">4</a></li>
-	    <li><a href="#">5</a></li>
-	    <li>
-	      <a href="#" aria-label="Next">
-	        <span aria-hidden="true">&raquo;</span>
-	      </a>
-	    </li>
-	  </ul>
-	</nav>
- -->
-    
-
-
-<!-- // 기술 제이슨으로 보내기
-
-	function aaa(jsondata){
-		for(i=0;i<jsondata;i++){
-			'<input type="checkbox" value='+jsondata[i].techNo+'>'+jsondata[i]techName
-		}
-	}
-
-
-
-안녕하세요김준영입니다새롭게보게되   타이틀 최대숫자
-
-
-
-	        
-	             
-	<div class="container text-center">
-		 
-		 <nav>
-		  <ul class="pagination" >
-		    
-		  	<c:if test="${ resultPage.currentPage <= resultPage.pageUnit }">
-		 		<li class="disabled">
-			</c:if>
-			<c:if test="${ resultPage.currentPage > resultPage.pageUnit }">
-				<li>
-			</c:if>
-		      <a href="javascript:fncGetList('${ resultPage.currentPage-1}')" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		      </a>
-		    </li>
-		    
-			<c:forEach var="i"  begin="${resultPage.beginUnitPage}" end="${resultPage.endUnitPage}" step="1">
-				
-				<c:if test="${ resultPage.currentPage == i }">
-				    <li class="active">
-				    	<a href="javascript:fncGetList('${ i }');">${ i }<span class="sr-only">(current)</span></a>
-				    </li>
-				</c:if>	
-				
-				<c:if test="${ resultPage.currentPage != i}">	
-					<li>
-						<a href="javascript:fncGetList('${ i }');">${ i }</a>
-					</li>
-				</c:if>
-			</c:forEach>
-		    
-		     <c:if test="${ resultPage.endUnitPage >= resultPage.maxPage }">
-		  		<li class="disabled">
-			</c:if>
-			<c:if test="${ resultPage.endUnitPage < resultPage.maxPage }">
-				<li>
-			</c:if>
-		      <a href="javascript:fncGetList('${resultPage.endUnitPage+1}')" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav>
-		
-	</div>
-
-
- -->
 
