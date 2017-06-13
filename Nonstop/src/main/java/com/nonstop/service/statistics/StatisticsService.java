@@ -15,6 +15,8 @@ public interface StatisticsService {
 	public List<Statistics> getTechClassList();
 	public List<Statistics> getTechDataList(int classDiv);
 	
+	public List<Statistics> getCarreerDataList(String userId);
+	
 	public List<Statistics> getTotalStatisticsList();
 
 	public List<Statistics> getMajorStatisticsList(int techClass);

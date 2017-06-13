@@ -9,7 +9,7 @@ var callButton;
 var audioCheckBox;
 var videoCheckBox;
 var screenCheckBox;
-//var audioOnlyView;
+// var audioOnlyView;
 var signalingChannel;
 var pc;
 var peer;
@@ -20,6 +20,7 @@ var chatText;
 var chatButton;
 var chatCheckBox;
 var channel;
+var fileChannel;
 
 if (!window.hasOwnProperty("orientation"))
 	window.orientation = -90;
@@ -72,15 +73,13 @@ window.onload = function () {
 
 	document.getElementById("capture-screen").onclick = function () {
 		
-		////여기서 먼저 설치 확인
+		// //여기서 먼저 설치 확인
 		getScreenId(function(error, sourceId, screen_constraints) {
 			// error == null || 'permission-denied' || 'not-installed' ||
 			// 'installed-disabled' || 'not-chrome'
 			// sourceId == null || 'string' || 'firefox'
 			// getUserMedia(screen_constraints, onSuccess, onFailure);
-
-			document.getElementById('capture-screen').disabled = false;
-
+			
 			if (IsAndroidChrome) {
 				screen_constraints = {
 					mandatory: {
@@ -104,11 +103,10 @@ window.onload = function () {
 				return;
 			}
 			if(error == 'installed-disabled') { alert('Please install or enable Chrome extension. Please check "chrome://extensions" page.'); return; }
-			if(error == 'permission-denied') { /*alert('취소됨');*/ return; }
+			if(error == 'permission-denied') { /* alert('취소됨'); */ return; }
 
 			console.info('getScreenId callback \n(error, sourceId, screen_constraints) =>\n', error, sourceId, screen_constraints);
 			
-			document.getElementById('capture-screen').disabled = true;
 			navigator.getUserMedia = navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
 			navigator.getUserMedia(screen_constraints, function(stream) {
 				// share this "MediaStream" object using RTCPeerConnection API
@@ -117,8 +115,9 @@ window.onload = function () {
 				selfView.srcObject = stream;
 				screenCheckBox.checked = true;
 				
-				//캡쳐화면 띄워줄려했지
-				//document.querySelector('#screenvideo').src = URL.createObjectURL(stream);
+				// 캡쳐화면 띄워줄려했지
+				// document.querySelector('#screenvideo').src =
+				// URL.createObjectURL(stream);
 
 				stream.oninactive = stream.onended = function() {
 					// 캡처를 종료할때
@@ -182,9 +181,9 @@ window.onload = function () {
 	}).catch(logError);
 	
 		
-//	if (hash) {
-//		// start(true);
-//	}
+// if (hash) {
+// // start(true);
+// }
 };
 
 // handle signaling messages received from the other peer
@@ -228,7 +227,7 @@ function handleMessage(evt) {
 // call start() to initiate
 function start(isInitiator) {	
 	document.querySelector('.init_form').style.display = "none";
-	document.querySelector('.view_form').style.display = "block";
+	// document.querySelector('.view_form').style.display = "block";
 	callButton.disabled = true;
 	pc = new RTCPeerConnection(configuration);
 
@@ -262,17 +261,17 @@ function start(isInitiator) {
 		remoteView.srcObject = evt.stream;
 		if (videoCheckBox.checked)
 			remoteView.style.visibility = "visible";
-//		else if (audioCheckBox.checked && !(chatCheckBox.checked))
-//			audioOnlyView.style.visibility = "visible";
+// else if (audioCheckBox.checked && !(chatCheckBox.checked))
+// audioOnlyView.style.visibility = "visible";
 		sendOrientationUpdate();
 	};
    var targetStream;
 	if (screenCheckBox.checked) {
-		//console.log("스크린");
+		// console.log("스크린");
 		pc.addStream(screenMediaStream);
 		targetStream = screenMediaStream;
 	}else{
-		//console.log("화상");
+		// console.log("화상");
 		pc.addStream(localStream);
 		targetStream = localStream;
 	}
@@ -280,8 +279,8 @@ function start(isInitiator) {
 	if (isInitiator)
 		pc.createOffer(localDescCreated, logError);
 
-	//화상,음성 on/off
-	document.querySelector('.panel-body').style.display = "block";
+	// 화상,음성 on/off
+	document.querySelector('.setting-inline').style.display = "block";
 	document.getElementById("videoToggleButton").onclick = function(){
 		targetStream.getVideoTracks()[0].enabled =
 			!(targetStream.getVideoTracks()[0].enabled);
@@ -290,7 +289,18 @@ function start(isInitiator) {
 		targetStream.getAudioTracks()[0].enabled =
 			!(targetStream.getAudioTracks()[0].enabled);
    }
-	
+	document.getElementById("chatToggleButton").onclick = function(){
+		var chatToggleButton = document.getElementById("chatToggleButton");
+		chatToggleButton.checked = !chatToggleButton.checked;
+		if(chatToggleButton.checked==true){
+			document.querySelector('.chat_form').style.display = "none";
+			document.querySelector('.view_form').style.display = "block";
+		}else{
+			document.querySelector('.chat_form').style.display = "block";
+			document.querySelector('.view_form').style.display = "none";
+		}
+   }
+	document.querySelector("#file_share").style.visibility = "visible";
 	postChatMessage("[상대와 연결되었습니다]");
 	
 }
@@ -381,7 +391,7 @@ function postChatMessage(msg, author) {
    messageTime.classList.add('chatMessageTime');
 	var d = new Date();
 	messageTime.textContent = d.getHours()+":"+ ((d.getMinutes()<10)?"0"+d.getMinutes():d.getMinutes());
-	messageNode.appendChild(messageTime);
+	messageContent.appendChild(messageTime);
 
 	if (author) {
 		messageNode.classList.add('self-Message');

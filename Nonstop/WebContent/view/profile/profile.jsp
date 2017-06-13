@@ -39,7 +39,7 @@
 
 	var dataSet = [];
 	
-$.ajax("/statistics/getUserStatisticsList",{
+$.ajax("/statistics/getUserStatisticsList/",{
 	method : "GET" ,
 	dataType : "json" ,
 	headers : {
