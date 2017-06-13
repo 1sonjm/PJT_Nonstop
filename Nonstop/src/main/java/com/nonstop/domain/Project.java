@@ -27,7 +27,11 @@ public class Project {
 	//follow
 	private boolean projFollowFlag;
 	
+	//Applicant
+	private int recCount;
+	
 
+	
 	public int getProjNo() {
 		return projNo;
 	}
@@ -133,6 +137,13 @@ public class Project {
 	public void setProjFollowFlag(boolean projFollowFlag) {
 		this.projFollowFlag = projFollowFlag;
 	}
+	//applicant
+	public int getRecCount() {
+		return recCount;
+	}
+	public void setRecCount(int recCount) {
+		this.recCount = recCount;
+	}
 	
 	@Override
 	public String toString() {
@@ -167,6 +178,8 @@ public class Project {
 		builder.append(scrapNo);
 		builder.append(", sortFlag=");
 		builder.append(sortFlag);
+		builder.append(", recCount=");
+		builder.append(recCount);
 		builder.append("]");
 		return builder.toString();
 	}

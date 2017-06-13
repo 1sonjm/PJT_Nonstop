@@ -20,10 +20,6 @@
 <title>Profile</title>
 
 
-<!-- Bootstrap Core CSS -->
-
-
-<!-- jQuery -->
 <script src="/resources/javascript/jquery.js"></script>
 
 <!-- Latest compiled and minified JavaScript -->
@@ -283,7 +279,9 @@
 <script type="text/javascript">
     
     //그래프 생성 시작
+
 	var dataSet = [];
+
 	var userId = "${user.userId}";
 	var role = "${user.role}";
 $.ajax("/statistics/getUserStatisticsList/"+userId+"/"+role,{
