@@ -72,7 +72,7 @@
 	<script type="text/javascript">
 
 		$(function() {
-
+			//프로젝트 상세보기
 			$(".detailButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
@@ -80,13 +80,11 @@
 		
 		
 		   $(function() {
-
-	            $("i.fa").on("click" , function() {
+				//프로젝트 스크랩
+	            $(".fa-star").on("click" , function() {
 
 	                  var flag = $(this).attr('scrap');
 	                  var requestTarget;
-	                  alert(flag);
-	                  alert($(this).attr('scrap'));
 
 	                  if(flag==0){
 	                     requestTarget = "addJsonProjScrap";

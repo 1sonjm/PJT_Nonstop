@@ -478,75 +478,94 @@ ul {
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 <script type="text/javascript">
-	
-		//============= "가입"  Event 연결 =============
-		 $(function() {
-			 
-			 $("#send").on("click", function(){
-				 
-				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
-			 });
-			 
-			$("#send2").on("click", function(){
-				 
-				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
-			 });
-			 
-			 $( "#close" ).on("click" , function() {
-					
-				 var receiveId = $(this).attr('receiveId');
-				
-				self.location ="/letter/getReceiveLetterList?receiveId="+receiveId;
-				});
-			 
-			  $("#inBox").on("click", function(){
-					 var receiveId = $(this).attr('receiveId');
-					 self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
+	//============= "가입"  Event 연결 =============
+	$(function() {
 
-				 });
-				  
-				  $("#sendBox").on("click", function(){
-						 var sendId = $(this).attr('sendId');
-						 self.location = "/letter/getSendLetterList?sendId="+sendId;
-					 });
-				  
-				  $("i.fa").on("click" ,function() {
-						
-						var flag = $(this).attr('save');
-						var requestTarget;
-						if(flag == "0"){
-							requestTarget = "addSave";
-							asdf = "fa fa-star inbox-started";
-						}else{
-							requestTarget = "deleteSave";
-							asdf = "fa fa-star";
+		$("#send").on(
+				"click",
+				function() {
+
+					$("form").attr("method", "POST").attr("action",
+							"/letter/addLetter").submit();
+				});
+
+		$("#send2").on(
+				"click",
+				function() {
+
+					$("form").attr("method", "POST").attr("action",
+							"/letter/addLetter").submit();
+				});
+
+		$("#close").on(
+				"click",
+				function() {
+
+					var receiveId = $(this).attr('receiveId');
+
+					self.location = "/letter/getReceiveLetterList?receiveId="
+							+ receiveId;
+				});
+		//팔로워프로필로 이동
+		$(".followProfile").on("click", function() {
+			var userId = $(this).text().trim();
+			self.location = "/profile/getOtherProfile?userId=" + userId;
+		});
+
+		$("#inBox").on(
+				"click",
+				function() {
+					var receiveId = $(this).attr('receiveId');
+					self.location = "/letter/getReceiveLetterList?receiveId="
+							+ receiveId;
+
+				});
+
+		$("#sendBox").on("click", function() {
+			var sendId = $(this).attr('sendId');
+			self.location = "/letter/getSendLetterList?sendId=" + sendId;
+		});
+
+		$("i.fa").on(
+				"click",
+				function() {
+
+					var flag = $(this).attr('save');
+					var requestTarget;
+					if (flag == "0") {
+						requestTarget = "addSave";
+						asdf = "fa fa-star inbox-started";
+					} else {
+						requestTarget = "deleteSave";
+						asdf = "fa fa-star";
+					}
+					var letNo = $(this).attr('letNo');
+					$.ajax({
+						url : "/letter/" + requestTarget + "/" + letNo,
+						method : "GET",
+						dateType : "json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						context : this,
+						success : function(JSONData, status) {
+
+							if (flag == 0) {
+								$(this).removeClass('fa fa-star').addClass(
+										'fa fa-star inbox-started');
+								$(this).attr('save', '1');
+							} else {
+								$(this).removeClass('fa fa-star inbox-started')
+										.addClass('fa fa-star');
+								$(this).attr('save', '0');
+							}
 						}
-						var letNo = $(this).attr('letNo');
-						$.ajax(
-							{
-								url : "/letter/"+requestTarget+"/"+letNo,
-								method : "GET" ,
-								dateType : "json",
-								headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"	
-								},
-								context : this,
-								success : function(JSONData , status) {
-									
-									if(flag==0){
-										$(this).removeClass('fa fa-star').addClass('fa fa-star inbox-started');
-										$(this).attr('save','1');
-									}else{
-										$(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
-										$(this).attr('save','0');
-									}
-								}
-							});
-						});
-		});	zz
-		
-	</script>
+					});
+				});
+	});
+	zz
+</script>
 
 </head>
 
@@ -658,7 +677,8 @@ ul {
 					<c:forEach var="follow" items="${list2}">
 						<c:set var="i" value="${ i+1 }" />
 
-						<li><a href="#"> <i class=" fa fa-sign-blank text-danger"></i>
+						<li><a href="#" class="followProfile" userId="${user.userId}">
+								<i class=" fa fa-sign-blank text-danger"></i>
 								${follow.targetUserId}
 						</a></li>
 
@@ -684,28 +704,23 @@ ul {
 					<table class="table table-inbox table-hover">
 
 						<td class="inbox-small-cells"><c:if
-								test="${letter.letSave!=1}">
-
-
-								<i id="${letter.letNo }" save="${letter.letSave}"
-									letNo="${letter.letNo}" class="fa fa-star"></i>
-
-							</c:if> <c:if test="${letter.letSave==1}">
-
-								<i id="${letter.letNo }" save="${letter.letSave}"
-									letNo="${letter.letNo}" class="fa fa-star inbox-started"></i>
-
+								test="${letter.sendId != sessionScope.user.userId }">
+								<c:if test="${letter.letSave!=1}">
+									<i id="${letter.letNo }" save="${letter.letSave}"
+										letNo="${letter.letNo}" class="fa fa-star"></i>
+								</c:if>
+								<c:if test="${letter.letSave==1}">
+									<i id="${letter.letNo }" save="${letter.letSave}"
+										letNo="${letter.letNo}" class="fa fa-star inbox-started"></i>
+								</c:if>
 							</c:if>
 							<div class="form-group">
-
 								<label class="col-lg-2 control-label">Title</label>
 								<div class="col-lg-10">
 									<input class="form-control" name="sendId"
 										value=" ${letter.letTitle}" readOnly>
-
 								</div>
-							</div> <br />
-						<br />
+							</div> <br /> <br />
 							<div class="form-group">
 								<label class="col-lg-2 control-label">From</label>
 								<div class="col-lg-10">
@@ -732,8 +747,7 @@ ul {
 							</div>
 
 							<div class="col-md-4 col-md-offset-8" aline="right">
-								<br />
-								<br />
+								<br /> <br />
 								<div class="modal-footer">
 									<c:if
 										test="${sessionScope.user.userId.trim() != letter.sendId.trim()}">

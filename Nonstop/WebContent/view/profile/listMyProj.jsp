@@ -17,38 +17,7 @@
 
 	<style>
 	
-/* 		#table {
-        	border-collapse: collapse;
-		    border: collapse;
-		    width: 100%;
-            padding-left : 20px;
-            table-layout : fixed;
-		}
-		
-		 th, tr {
-		    padding: 8px;
-		    text-align: left;
-		   
-		    text-overflow:ellipsis;
-		    overflow:hidden;
-		} 
-		
-	     #projThumbnail:hover{
-	    	background-color:#ffffe6;
-	    	border: 2px solid orange;
-	    } 
-        
-     	#shape1{
-        	margin:0;
-        	padding:5px;
-        	background-color: #dddddd;
-     	}
-     	#shape2{
-        	margin:0;
-        	padding:5px;
-        	background-color: orange;
-     	}
-     	
+
      	/* scrap button */
      	.fa-star.inbox-started, .fa-star:hover {
           color: #f78a09;
@@ -64,51 +33,12 @@
 	<script type="text/javascript">
 
 		$(function() {
-
+			//프로젝트 상세보기
 			$(".detailProjButton").on("click", function(){
 				self.location ="/project/getProject?projNo="+$(this).attr("value");
 			});
 		});
 		
-		
-		   $(function() {
-
-	            $("i.fa").on("click" , function() {
-
-	                  var flag = $(this).attr('scrap');
-	                  var requestTarget;
-	                  alert(flag);
-
-	                  if(flag==0){
-	                     requestTarget = "addJsonProjScrap";
-	                  }else{
-	                     requestTarget = "deleteJsonProjScrap";
-	                  }
-	                   var projNo=$(this).attr('projNo');
-	                   $.ajax(
-	                      {
-	                         url : "/profile/"+requestTarget+"/"+projNo,
-	                         method : "GET",
-	                         dateType : "json",
-	                         headers : {
-	                            "Accept" : "application/json",
-	                           "Content-Type" : "application/json"   
-	                       },
-	                         context : this,
-	                         success : function(JSONData , status){
-	                          
-	                            if(flag==0){
-	                               $(this).removeClass('fa fa-star').addClass('fa fa-star inbox-started');
-	                               $(this).attr('scrap','1');
-	                            }else{
-	                               $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
-	                           $(this).attr('scrap','0');
-	                            }
-	                         }
-	                      });
-	                   });
-	            });
-
 	</script>
 
 
