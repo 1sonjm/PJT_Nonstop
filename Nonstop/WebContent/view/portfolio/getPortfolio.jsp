@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <html lang="ko">
 
 <head>
@@ -46,6 +47,7 @@
     }
     .comment-div h6{
     	margin-top:5px;
+    	margin-bottom: 3px;
     	font-weight: 400;
     	font-size: 12px;
     	color: #656c7e;
@@ -248,7 +250,7 @@
        color: #d6d6d6;
        position: fixed;
        right: 40px;
-       top: 80px;
+       top: 40px;
        z-index: 999;
        transition: all 0.3s ease-in-out;
    }
@@ -599,10 +601,25 @@
                               	<!-- Post Detail End -->
                                
                               	<!-- Post Image Start -->
+                              	<c:set var="portFile" value="${portfolio.portFile}" />
+                              	<c:set var="portFileArray" value="${fn:split(portFile, '.')}" />
+
                                 <div class="post-image margin-top-40 margin-bottom-40">
-                                	<img src="../../resources/images/upload/${portfolio.portFile}" alt="">
-                                	<!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
+                                
+                                <c:choose>
+								<c:when test="${portFileArray[fn:length(portFileArray)-1]=='pdf' || portFileArray[fn:length(portFileArray)-1] == 'odp' || portFileArray[fn:length(portFileArray)-1] == 'odt' || portFileArray[fn:length(portFileArray)-1] == 'ods'}">
+									<iframe src = "/resources/ViewerJS/#../../resources/images/upload/${portfolio.portFile}" width="100%" height="100%" allowfullscreen webkitallowfullscreen></iframe>
+								</c:when>
+<%-- 							<c:when test="${portFileArray[fn:length(portFileArray)-1] == 'odp'}">
+									<iframe src = "/resources/ViewerJS/#../../resources/images/upload/${portfolio.portFile}" width="100%" height="100%" allowfullscreen webkitallowfullscreen></iframe>
+								</c:when> --%>
+								<c:otherwise>
+									<img src="../../resources/images/upload/${portfolio.portFile}" alt="">
+								</c:otherwise>
+								</c:choose>	
+                                
                                 </div>
+                                
                                 <!-- Post Image End -->
                                
                               	<!-- 상세설명 -->
