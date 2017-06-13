@@ -511,6 +511,11 @@ ul {
 			 self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
 
 		 });
+		//팔로워프로필로 이동
+			$(".followProfile").on("click", function(){
+				 var userId = $(this).text().trim();
+				 self.location = "/profile/getOtherProfile?userId="+userId;
+			 });
 		  
 		  $("#sendBox").on("click", function(){
 				 var sendId = $(this).attr('sendId');
@@ -565,7 +570,7 @@ ul {
 						}
 					});
 				});
-	});	z
+	});	
 </script>
 </head>
 
@@ -677,7 +682,8 @@ ul {
 					<c:forEach var="follow" items="${list2}">
 						<c:set var="i" value="${ i+1 }" />
 
-						<li><a href="#"> <i class=" fa fa-sign-blank text-danger"></i>
+						<li><a href="#" class="followProfile" userId="${user.userId}">
+								<i class=" fa fa-sign-blank text-danger"></i>
 								${follow.targetUserId}
 						</a></li>
 
@@ -706,9 +712,7 @@ ul {
 								aria-expanded="false"> More <i class="fa fa-angle-down"></i>
 							</a>
 							<ul class="dropdown-menu">
-								<!-- <li><a href="#"><i class="fa fa-pencil"></i> Mark as Read</a></li>
-                                     <li><a href="#"><i class="fa fa-ban"></i> Spam</a></li>
-                                     <li class="divider"></li> -->
+
 								<li><a href="#" id="deleteLetter" letNo="${letter.letNo}"><i
 										class="fa fa-trash-o"></i> Delete</a></li>
 							</ul>
