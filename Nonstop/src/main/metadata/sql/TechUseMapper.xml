@@ -11,6 +11,8 @@
 		<result property="tuPortNo" 		column="tu_port_no" 		jdbcType="INTEGER" />
 		<result property="tuProjNo" 		column="tu_proj_no" 		jdbcType="INTEGER" />
 		<result property="tuTechNo" 		column="tu_tech_no" 		jdbcType="INTEGER" />
+		<result property="tuTechName" 		column="tech_name" 			jdbcType="VARCHAR" />
+		<result property="tuTechClass" 		column="tech_class" 		jdbcType="INTEGER" />
 	</resultMap>
 	
 	<resultMap id="techSelectMap" type="tech">
@@ -20,70 +22,44 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addTechUse"		parameterType="techUse" >
-	 	INSERT 
-		INTO techuse ( tu_no, tu_port_no, tu_proj_no, tu_tech_no) 
-		VALUES ( SEQUENCE seq_techuse_tu_no, 
-		#{tuPortNo:NUMERIC}, 
-		#{tuProjNo:NUMERIC},
-		#{tuTechNo:NUMERIC}, 
+	<insert 	id="addTechUse"	 parameterType="map" >
+	 	INSERT INTO techuse ( 
+			tu_no, 
+			tu_port_no, 
+			tu_proj_no, 
+			tu_tech_no) 
+		VALUES ( 
+			seq_techuse_tu_no.nextval, 
+			#{tuPortNo:NUMERIC}, 
+			#{tuProjNo:NUMERIC},
+			#{tuTechNo:NUMERIC}
 		)
 	 </insert>
-	 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getTechUse"	 parameterType="map"	resultMap="techUseSelectMap">
-		SELECT*
-		FROM techuse
-		WHERE tu_no=#{tuNo:NUMERIC}
 		
-		<!-- SELECT *
-		FROM techuse
-		WHERE tu_no=#{tuNo:NUMERIC}
-		 -->
-		<!-- AND u.tu_proj_no = p.proj_No 
-		
-		SELECT t.tech_name	
-		FROM techuse u, tech t
-		WHERE u.tu_tech_no = t.tech_no
-		AND u.tu_no=#{tuNo:NUMERIC}
-		
-		-->
-	 </select>
-	 
-	 <select  id="listTechUse"  parameterType="int"	resultMap="techUseSelectMap">
+	 <select  id="getTechUseList"  parameterType="int"	resultMap="techUseSelectMap">
 
-		SELECT tu_tech_no
-		FROM techuse
-		WHERE tu_proj_no = #{tuProjNo} 
+		SELECT t.tech_name
+		FROM techuse tu, tech t
+		WHERE tu.tu_tech_no = t.tech_no
+		AND tu_proj_no = #{tuProjNo} 
 		ORDER BY tu_no DESC
 	</select>
 	 
-	 <update	id="updateTechUse"	parameterType="techUse" >
-	   	UPDATE techuse
-	   	<set>
-	   		tu_tech_no	= #{tuTechNo:NUMERIC}, 
-	   	</set>
-	   	WHERE tu_no = #{tuNo:NUMERIC}
-	 </update>
+	 <select  id="listTechUse"  parameterType="list"	resultMap="techUseSelectMap">
+
+		SELECT tu.tu_proj_no, tu.tu_tech_no, t.tech_name, t.tech_class
+		FROM techuse tu, tech t
+		WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no IN
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		ORDER BY tu_no ASC
+	</select>
+	 
 	  	
-	  	
-	 <delete id="deleteTechUse" parameterType="techUse">
+	<delete id="deleteTechUse" parameterType="int">
 		DELETE from techuse
 		where tu_proj_no=#{tuProjNo:NUMERIC}
-	 </delete>
-	 
-	 
-
-	<!-- <select  id="getCommentList"  parameterType="int"	resultMap="commentSelectMap">
-
-		SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
-		FROM proj_comment c, users u 
-		WHERE c.com_proj_no = #{comProjNo} 
-		AND u.user_id = c.com_user_id
-		ORDER BY com_proj_regdate DESC
-	</select> -->
-	 
-	 
-	
+	</delete>
 	 
 </mapper>

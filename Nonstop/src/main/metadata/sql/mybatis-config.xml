@@ -30,6 +30,8 @@
 		<typeAlias alias="recordProject" type="com.nonstop.domain.RecordProject" />
 		<typeAlias alias="techUse" type="com.nonstop.domain.TechUse" />
 		<typeAlias alias="tech" type="com.nonstop.domain.Tech" />
+		<typeAlias alias="recordApplicant" type="com.nonstop.domain.RecordApplicant" />
+		
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

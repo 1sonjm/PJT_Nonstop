@@ -122,17 +122,13 @@ public class LetterController {
 		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
-		System.out.println(sessionId);
-		System.out.println(receiveId);
-		
-		
 		if(sessionId.equals(receiveId)){
 			
 		letterService.updateReadDate(letNo);
 		}
 		
 		Letter letter = letterService.getLetter(letNo);
-		List<Follow> follow =profileService.getFollowList(receiveId);
+		List<Follow> follow =profileService.getFollowList(sessionId);
 		
 		
 		model.addAttribute("list2", follow);

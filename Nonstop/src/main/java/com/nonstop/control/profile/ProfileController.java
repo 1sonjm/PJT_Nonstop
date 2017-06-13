@@ -193,7 +193,19 @@ public class ProfileController {
 		profileService.addCareer(career);
 		
 		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		List<Statistics> techClassList = statisticsService.getTechClassList();
 		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		String reqUserId = careerUserId;
+		
+		List<Follow> follow = profileService.getFollowList(reqUserId);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
+		model.addAttribute("follow", follow);
 		model.addAttribute("list" , map.get("list"));
 		
 		return "forward:/view/profile/profile.jsp";
@@ -244,6 +256,14 @@ public class ProfileController {
 		int sortFlag=0;
 		
 		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		List<Statistics> techClassList = statisticsService.getTechClassList();
+		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
 		
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
@@ -254,18 +274,7 @@ public class ProfileController {
 		return "forward:/view/profile/profile.jsp";
 	}
 	
-	@RequestMapping(value="addFollow",method=RequestMethod.GET)
-	public void addFollow(@RequestParam("targetUserId") String targetUserId ,HttpSession session) throws Exception{
-		
-		System.out.println("/profile/addFollow : GET");
-		
-		String reqUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		
-		System.out.println(reqUserId+targetUserId);
-		profileService.addFollow(reqUserId, targetUserId);
-	}
-	
+
 	@RequestMapping(value="addJsonFollow/{targetUserId}",method=RequestMethod.GET)
 	public void addJsonFollow(@PathVariable String targetUserId ,HttpSession session) throws Exception{
 		
@@ -297,16 +306,6 @@ public class ProfileController {
 	public void deleteJsonFollow(@PathVariable String targetUserId , HttpSession session) throws Exception{
 		
 		System.out.println("/profile/deleteJsonFollow : POST");
-		
-		String reqUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		profileService.deleteFollow(reqUserId, targetUserId);
-	}
-	
-	@RequestMapping(value="deleteFollow/{teargetUserId}",method=RequestMethod.GET)
-	public void deleteFollow(@RequestParam("targetUserId") String targetUserId , HttpSession session) throws Exception{
-		
-		System.out.println("/profile/deleteFollow : POST");
 		
 		String reqUserId = ((User)session.getAttribute("user")).getUserId();
 		

@@ -11,6 +11,7 @@
 <meta name="description" content="">
 <meta name="author" content="">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 <script src="/resources/javascript/jquery.js"></script>
 
 <script src="/resources/javascript/bootstrap.min.js"></script>
@@ -291,7 +292,7 @@ hr.thick-line {
 }
 
 
-#backButton, #applButton, #viewButton {
+#backButton, #applButton, #viewButton, #applCancleButton {
 	float: right;
 	margin-left: 5px;
 	font-size: 16px;
@@ -332,6 +333,22 @@ hr.thick-line {
 xmp{
 	font-weight: bold;
 }
+
+#techNameButton{
+			padding : 3px;
+			heigth : 10px;
+			border : 0;
+			text-decoration:none;
+		}
+
+.fa-star.inbox-started, .fa-star:hover {
+	color: #f78a09;
+    }
+      
+.fa-star {
+	color: #d5d5d5;
+    }
+    
 </style>
 
 <script type="text/javascript">
@@ -370,6 +387,20 @@ xmp{
 			history.go(-1);
 		});
 		
+		$("#applButton").on("click", function(){
+			if(confirm("정말 지원하시겠습니까?") !=0){
+				$("form").attr("method", "POST").attr("action", "/project/addApplicant").submit();
+			}else{
+			}
+		});
+		
+		$("#applCancleButton").on("click", function(){
+			if(confirm("정말 지원을 취소하시겠습니까?") !=0){
+				$("form").attr("method", "POST").attr("action", "/project/deleteApplicant").submit();
+			}else{
+			}
+		});
+		
 		$("#viewButton").on("click", function(){
 			
 		});
@@ -377,55 +408,44 @@ xmp{
 	});
 	
 	
-	/* function aaa(jsondata){
-		for(i=0;i<jsondata;i++){
-			'<input type="checkbox" value='+jsondata[i].techNo+'>'+jsondata[i]techName
-		}
-	} */
-	
-	
 	
 	$(function() {
-	      /* 스크랩추가 */
-	      $(".glyphicon.glyphicon-star").on("click" , function() {
 
-	            var flag = $(this).attr('value');
-	            var requestTarget;
-	            var asdf;
-	            var qwer;
-	            alert(flag);
-	            
-	            
-	            if(flag=="addScrap"){
-	               requestTarget = "addJsonProjScrap";
-				   asdf = "스크랩 해제";
-				   qwer = "deleteScrap";
-	            }else{
-	               requestTarget = "deleteJsonProjScrap";
-	               asdf = "스크랩 추가";
-	               qwer = "addScrap";
-	            }
-	            alert(requestTarget+"컨트롤러 어디로가니");
+        $("i.fa").on("click" , function() {
 
-	             var projNo=$(this).attr('projNo');
-	             alert(projNo);
-	             $.ajax(
-	                {
-	                   url : "/profile/"+requestTarget+"/"+projNo,
-	                   method : "GET",
-	                   dateType : "json",
-	                   headers : {
-	                      "Accept" : "application/json",
-	                     "Content-Type" : "application/json"   
-	                 },
-	                   success : function(JSONData , status){
-	                      var displatValue = 
-	                     "<button type='button' title='"+asdf+"' class='glyphicon glyphicon-star' style='font-size: 25px' id='deleteScrap' projNo='${project.projNo}' value='"+qwer+"'></button>"
-	                      $(".glyphicon.glyphicon-star").html(displayValue);
-	                   }
-	                });
-	             });
-	      });
+              var flag = $(this).attr('scrap');
+              var requestTarget;
+              alert(flag);
+
+              if(flag==0){
+                 requestTarget = "addJsonProjScrap";
+              }else{
+                 requestTarget = "deleteJsonProjScrap";
+              }
+               var projNo=$(this).attr('projNo');
+               $.ajax(
+                  {
+                     url : "/profile/"+requestTarget+"/"+projNo,
+                     method : "GET",
+                     dateType : "json",
+                     headers : {
+                        "Accept" : "application/json",
+                       "Content-Type" : "application/json"   
+                   },
+                     context : this,
+                     success : function(JSONData , status){
+                      
+                        if(flag==0){
+                           $(this).removeClass('fa fa-star').addClass('fa fa-star inbox-started');
+                           $(this).attr('scrap','1');
+                        }else{
+                           $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
+                       $(this).attr('save','0');
+                        }
+                     }
+                  });
+               });
+        });
 	
 	   function fnMove(comment){
 	        var position = $("#comment").offset();
@@ -548,6 +568,7 @@ xmp{
 
 			<div class="row">
 				<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+				<input type="hidden" class="userId" name="userId" id="userId" value="${user.userId}" />
 				<!-- Blog Post (Left Body) Start -->
 				<div class="col-md-9">
 					<div class="col-md-12 page-body">
@@ -559,7 +580,14 @@ xmp{
 								</c:if>
 								<c:if test="${sessionScope.user.role == '2'}">
 									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
-									<button type="button" class="btn btn-info btn-lg" id="applButton">지원하기</button>
+								 	 <c:choose>
+										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId}">
+											<button type="button" class="btn btn-info btn-lg" id="applCancleButton">지원취소</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-info btn-lg" id="applButton">지원하기</button>
+										</c:otherwise>
+									</c:choose> 
 								</c:if>
 								<c:if test="${sessionScope.user.role == '3' && sessionScope.user.userId == project.projUserId}">
 									<button type="button" class="btn btn-info btn-lg" id="updateButton">수정</button>
@@ -578,15 +606,14 @@ xmp{
 									<div class="post-title" style="padding-bottom: 10px;">
 
 										<c:if test="${project.scrapNo==0}">
-											<button type="button" title="스크랩 추가"
-												class="glyphicon glyphicon-star" style="font-size: 25px"
-												id="addScrap" projNo="${project.projNo}" value="addScrap"></button>
+											<i title="스크랩 추가"
+												class="fa fa-star" style="font-size: 25px"
+												id="addScrap" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
 										</c:if>
 										<c:if test="${project.scrapNo!=0}">
-											<button type="button" title="스크랩 해제"
-												class="glyphicon glyphicon-star" style="font-size: 25px"
-												id="deleteScrap" projNo="${project.projNo}"
-												value="deleteScrap"></button>
+											<i  title="스크랩 해제"
+												class="fa fa-star inbox-started" style="font-size: 25px"
+												id="deleteScrap" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
 										</c:if>
 
 										<strong style="font-size: 25px;">${project.projTitle}</strong>
@@ -629,7 +656,7 @@ xmp{
 													</c:choose>
 												</th>
 												<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value="">${project.projExpectDate}일</th>
-												<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">sdsdfsdf</th>
+												<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">${project.recCount}명</th>
 												<th colspan="3" style="text-align: center">${project.projLocation}</th>
 											</tr>
 
@@ -666,7 +693,7 @@ xmp{
 													<c:set var="i" value="0"/>
 														<c:forEach var="listTechUse" items="${listTechUse}" >
 														<c:set var="i" value="${i+1}"/>
-														${listTechUse.tuTechNo}
+														<a type="button" class="btn btn-info" id="techNameButton">${listTechUse.tuTechName}</a>
 													</c:forEach>
 												</th>
 											</tr>

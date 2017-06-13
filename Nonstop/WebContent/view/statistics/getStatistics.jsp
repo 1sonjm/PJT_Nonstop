@@ -49,9 +49,6 @@
 .ui-datepicker-year{
 		display:none;
 }
-.container{
-	padding-top: 50px
-}
 </style>
 <script type="text/javascript">
 function getJsonDataList(type,addr){
@@ -204,10 +201,6 @@ $(function(){
 		//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
 	});
 });
-
-function aa(){
-	self.location = "https://192.168.0.16:8444/";
-}
 </script>
 
 </head>
@@ -215,14 +208,12 @@ function aa(){
 
 <jsp:include page="/view/common/toolbar.jsp" />
 
-<div class="container">
-	<button onclick="aa()">채팅창으로 이동</button>
-	
+<div class="container" style="margin-top: 20px">
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>
 		<li><a data-toggle="tab" href="#period">기간별 수요/공급</a></li>
-		<li><a data-toggle="tab" href="#region">지역별 수요/공급</a></li>
+		<li style="display: none;"><a data-toggle="tab" href="#region">지역별 수요/공급</a></li>
 	</ul>
 	<input type="hidden" id="tabIndex" value="0">
 	<div class="row" id="searchInfo" style="display: none;">
@@ -278,7 +269,7 @@ function aa(){
 		</div>
 		<div id="period" class="tab-pane" style="width: 100%; height: 600px;">
 		</div>
-		<div id="region" class="tab-pane" style="width: 100%; height: 600px;"></div>
+		<div id="region" class="tab-pane" style="width: 100%; height: 600px; display: none;"></div>
 	</div>
 </div>
 </body>

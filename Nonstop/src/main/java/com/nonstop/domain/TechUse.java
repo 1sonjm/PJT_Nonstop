@@ -7,8 +7,8 @@ public class TechUse {
 	private int tuPortNo;
 	private int tuProjNo;
 	private int tuTechNo;
-	
-	
+	private String tuTechName;
+	private int tuTechClass;
 	public int getTuNo() {
 		return tuNo;
 	}
@@ -33,14 +33,34 @@ public class TechUse {
 	public void setTuTechNo(int tuTechNo) {
 		this.tuTechNo = tuTechNo;
 	}
+	public String getTuTechName() {
+		return tuTechName;
+	}
+	public void setTuTechName(String tuTechName) {
+		this.tuTechName = tuTechName;
+	}
+	public int getTuTechClass() {
+		return tuTechClass;
+	}
+	public void setTuTechClass(int tuTechClass) {
+		this.tuTechClass = tuTechClass;
+	}
 	@Override
 	public String toString() {
-		return "TechUse [tuNo=" + tuNo + ", tuPortNo=" + tuPortNo + ", tuProjNo=" + tuProjNo + ", tuTechNo=" + tuTechNo
-				+ "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("TechUse [tuNo=");
+		builder.append(tuNo);
+		builder.append(", tuPortNo=");
+		builder.append(tuPortNo);
+		builder.append(", tuProjNo=");
+		builder.append(tuProjNo);
+		builder.append(", tuTechNo=");
+		builder.append(tuTechNo);
+		builder.append(", tuTechName=");
+		builder.append(tuTechName);
+		builder.append(", tuTechClass=");
+		builder.append(tuTechClass);
+		builder.append("]");
+		return builder.toString();
 	}
-	
-	
-	
-	
-
 }

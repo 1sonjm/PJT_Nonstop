@@ -41,7 +41,8 @@
 
 	      
 	      
-	      <li><a href="#">STATISTICS</a></li>
+	      <li><a id="statistics" href="#">STATISTICS</a></li>
+	      <li><a id="chat" href="#">CHAT</a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
@@ -167,7 +168,7 @@
    //============= 통계 이동 Event 처리 =============   
     $(function() {
       //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-       $("a:contains('Statistics')").on("click" , function() {
+       $("#statistics").on("click" , function() {
          $(self.location).attr("href","/statistics/getListStatistics");
          //self.location = "/user/logout"
       }); 
@@ -199,16 +200,25 @@
             self.location = "/portfolio/listPortfolio?postDivision=2"
          }); 
        });
-   
-   //============= toolbar portfolio 이동 Event 처리 =============
-    $(function() {
-         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-          $("#portDeveloper").on("click" , function() {
-            //$(self.location).attr("href","/user/logout");
-            self.location = "/portfolio/listPortfolio?postDivision=1"
-         }); 
-       });
-   
+
+    //============= toolbar portfolio 이동 Event 처리 =============
+     $(function() {
+          //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+           $("#portDeveloper").on("click" , function() {
+             //$(self.location).attr("href","/user/logout");
+             self.location = "/portfolio/listPortfolio?postDivision=1"
+          }); 
+        });
+
+     //============= toolbar chat 이동 Event 처리 =============
+      $(function() {
+           //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $("#chat").on("click" , function() {
+              //$(self.location).attr("href","/user/logout");
+               self.location = "https://192.168.0.16:8444/#"+Math.random().toString(16).substr(2);
+           }); 
+         });
+     
    </script>   
 
 
