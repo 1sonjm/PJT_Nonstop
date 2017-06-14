@@ -45,6 +45,12 @@ public class PortfolioServiceImpl implements PortfolioService{
 		List<Portfolio> portfolioList = portfolioDAO.getPortfolioList(search,sessionUserId);
 		return portfolioList;
 	}
+	
+	@Override
+	public List<Portfolio> getProfilePortList(String sessionUserId, String profileUserId) throws Exception {
+		List<Portfolio> portfolioList = portfolioDAO.getProfilePortList(sessionUserId, profileUserId);
+		return portfolioList;
+	}
 
 	@Override
 	public void updatePortfolio(Portfolio portfolio) throws Exception {
@@ -99,7 +105,5 @@ public class PortfolioServiceImpl implements PortfolioService{
 		// TODO Auto-generated method stub
 		portfolioDAO.deletePortfolio(portNo);
 	}
-	
-	
-	
+
 }

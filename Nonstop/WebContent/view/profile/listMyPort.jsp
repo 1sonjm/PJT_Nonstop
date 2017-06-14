@@ -16,8 +16,10 @@
 
 <script type="text/javascript">
 
- 	$(function() {
 
+ 	$(function() {
+ 		
+		//포트폴리오 상세보기
 		$(".portThumbnail").on("click",function() {
 			
 					self.location = "/portfolio/getPortfolio?portNo="+ $(this).find('input').val();

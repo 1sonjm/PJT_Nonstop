@@ -17,7 +17,7 @@
 
 <script type="text/javascript">
 	$(function() {
-
+		//포트폴리오 상세보기
 		$(".getScrapPort").on("click",
 				function() {
 					self.location = "/portfolio/getPortfolio?portNo="+$(this).find('input').val();
@@ -35,7 +35,6 @@
 			} else {
 				requestTarget = "deleteJsonPortScrap";
 			}
-			alert(requestTarget);
 			var portNo = $(this).attr('portNo');
 			$.ajax({
 				url : "/profile/" + requestTarget + "/" + portNo,
@@ -50,13 +49,15 @@
 
 					if (flag == "add to scrap") {
 						 $(this).html("delete to scrap");
+						 return false;
 					} else {
 						 $(this).html("add to scrap"); 
-						
+						 return false;
 					}
 
 				}
 			});
+			 return false;
 		});
 	});
 </script>

@@ -1,0 +1,205 @@
+#main-wrapper {
+    width: 100%;
+}
+
+.left-sidebar {
+	overflow: visible;
+    position: fixed;
+    width: 240px;
+    height: 100%;
+    top: 0px;
+    z-index: 20;
+    padding-top: 45px;
+    background: #fff;
+    box-shadow: 1px 0px 20px rgba(0,0,0,0.08);
+}
+
+.scroll-sidebar {
+    padding-top: 50px;
+}
+
+.user-profile {
+    text-align: center;
+    position: relative;
+}
+
+.user-profile .profile-img {
+    width: 150px;
+    margin: 0 auto;
+    border-radius: 100%;
+}
+.user-profile .profile-img img {
+    width: 100%;
+    border-radius: 100%;
+}	
+.user-profile .profile-text {
+    padding: 5px 0;
+    position: relative;
+}
+#sidebarnav{
+    padding-left:0;
+}
+.sidebar-nav ul li {
+    list-style: none;
+}
+.sidebar-nav li>div {
+    height: 20px;
+    margin-right: 5px;
+    display: inline-block;
+    text-align: center;
+    vertical-align: middle;
+    color: #cccccc;
+	/*border-radius: 100%; */
+}
+.sidebar-nav li>i {
+    float: right;
+    width: auto;
+    font-size: 14px;
+    margin-top: 4px;
+    color: #cccccc;
+}
+.sidebar-nav ul li.nav-small-cap {
+    font-size: 13.5px;
+    padding: 14px 14px 14px 20px;
+    color: #666666;
+    font-weight: 500;
+    text-align: center;
+}
+.sidebar-nav ul li.nav-small {
+    font-size: 14px;
+    padding: 14px 14px 14px 20px;
+    /* color: #90a4ae;
+    font-weight: 500; */
+    /* border-top: 1px solid #ebebeb; */
+    border-bottom: 1px solid #ebebeb;
+}
+.sidebar-nav hr{
+	margin-top: 30px;
+    margin-bottom: 0px;
+    border-top: 3px solid #ff6600;
+    width: 20px;
+}
+
+.page-wrapper {
+	background: #f1f1f1;
+	min-height: 760px;
+    margin-left: 240px;
+}
+
+.container-fluid {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+.card {
+    position: relative;
+    margin-top: 20px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background-color: #fff;
+    border: 1px solid #eee;
+    border-radius: .25rem;
+}
+
+/* Tabs panel */
+.tabbable-panel {
+  border:1px solid #eee;
+  padding: 10px;
+}
+
+/* Default mode */
+.tabbable-line > .nav-tabs {
+  border: none;
+  margin: 0px;
+}
+.tabbable-line > .nav-tabs > li {
+  margin-right: 2px;
+}
+.tabbable-line > .nav-tabs > li > a {
+  border: 0;
+  margin-right: 0;
+  color: #737373;
+}
+.tabbable-line > .nav-tabs > li > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open, .tabbable-line > .nav-tabs > li:hover {
+  border-bottom: 4px solid #fbcdcf;
+}
+.tabbable-line > .nav-tabs > li.open > a, .tabbable-line > .nav-tabs > li:hover > a {
+  border: 0;
+  background: none !important;
+  color: #333333;
+}
+.tabbable-line > .nav-tabs > li.open > a > i, .tabbable-line > .nav-tabs > li:hover > a > i {
+  color: #a6a6a6;
+}
+.tabbable-line > .nav-tabs > li.open .dropdown-menu, .tabbable-line > .nav-tabs > li:hover .dropdown-menu {
+  margin-top: 0px;
+}
+.tabbable-line > .nav-tabs > li.active {
+  border-bottom: 4px solid #ff6600;
+  position: relative;
+}
+.tabbable-line > .nav-tabs > li.active > a {
+  border: 0;
+  color: #333333;
+  font-weight: 500;
+}
+.tabbable-line > .nav-tabs > li.active > a > i {
+  color: #404040;
+}
+.tabbable-line > .tab-content {
+  margin-top: -3px;
+  background-color: #fff;
+  border: 0;
+  border-top: 1px solid #eee;
+  padding: 15px 0;
+}
+.portlet .tabbable-line > .tab-content {
+  padding-bottom: 0;
+}
+
+/* Below tabs mode */
+
+.tabbable-line.tabs-below > .nav-tabs > li {
+  border-top: 4px solid transparent;
+}
+.tabbable-line.tabs-below > .nav-tabs > li > a {
+  margin-top: 0;
+}
+.tabbable-line.tabs-below > .nav-tabs > li:hover {
+  border-bottom: 0;
+  border-top: 4px solid #fbcdcf;
+}
+.tabbable-line.tabs-below > .nav-tabs > li.active {
+  margin-bottom: -2px;
+  border-bottom: 0;
+  border-top: 4px solid #f3565d;
+}
+.tabbable-line.tabs-below > .tab-content {
+  margin-top: -10px;
+  border-top: 0;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 15px;
+}
+
+.table>thead>tr>th {
+  border-bottom: 2px solid #ebebeb;
+}
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+  border-top: 1px solid #ebebeb;
+  padding: 10px;
+  line-height: 1.42857143;
+  font-size: 13px;
+}
+.table i {
+  color: #a5a5a5;
+}

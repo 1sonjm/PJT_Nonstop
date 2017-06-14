@@ -279,12 +279,14 @@ function statisticsByPeriod(jsonData){
 						"position": "right",
 						"gridAlpha": 0,
 						"title": "수요",
-						"titleBold": false
+						"titleBold": false,
+						"integersOnly": true
 					},
 					{
 						"id": "ValueAxis-2",
 						"title": "공급",
-						"titleBold": false
+						"titleBold": false,
+						"integersOnly": true
 					}
 				],
 				"balloon": {

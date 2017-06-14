@@ -49,14 +49,11 @@
 .ui-datepicker-year{
 		display:none;
 }
-.container{
-	padding-top: 50px
-}
 </style>
 <script type="text/javascript">
 function getJsonDataList(type,addr){
 	$.ajax("/statistics/"+addr,{
-		method : "POST" ,
+		method : "GET" ,
 		dataType : "json" ,
 		headers : {
 			"Accept" : "application/json"//,
@@ -128,6 +125,9 @@ $(function(){
 			$('#searchTarget').css('display','block');
 			$('#searchDate').css('display','none');
 			$('#tabIndex').val('2');
+			document.getElementById("selectTechClass").parentNode.parentNode.className = "col-md-5";
+			document.getElementById("TechData").parentNode.className = "";
+			document.getElementById("TechData").style.display = "none";
 		}
 	})
 	$('li a:contains("기간별 수요/공급")').on('click',function(){
@@ -137,6 +137,9 @@ $(function(){
 			$('#searchTarget').css('display','none');
 			$('#searchDate').css('display','block');
 			$('#tabIndex').val('3');
+			document.getElementById("selectTechClass").parentNode.parentNode.className = "col-md-2";
+			document.getElementById("TechData").parentNode.className = "col-md-3";
+			document.getElementById("TechData").style.display = "block";
 		}
 	})
 	$('li a:contains("지역별 수요/공급")').on('click',function(){
@@ -204,10 +207,6 @@ $(function(){
 		//console.log('선택기간: ' + start.format('YYYY/MM/DD') + ' to ' + end.format('YYYY/MM/DD') + ' (' + label + ')');
 	});
 });
-
-function aa(){
-	self.location = "https://192.168.0.16:8444/";
-}
 </script>
 
 </head>
@@ -215,14 +214,14 @@ function aa(){
 
 <jsp:include page="/view/common/toolbar.jsp" />
 
-<div class="container">
-	<button onclick="aa()">채팅창으로 이동</button>
-	
+<div class="container" style="margin-top: 20px">
+	<img alt="" src="https://chart.googleapis.com/chart?cht=qr&chs=210x210&chl=http://www.naver.com&chld=M
+https://developers.google.com/chart/infographics/docs/qr_codes"/>
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>
 		<li><a data-toggle="tab" href="#period">기간별 수요/공급</a></li>
-		<li><a data-toggle="tab" href="#region">지역별 수요/공급</a></li>
+		<li style="display: none;"><a data-toggle="tab" href="#region">지역별 수요/공급</a></li>
 	</ul>
 	<input type="hidden" id="tabIndex" value="0">
 	<div class="row" id="searchInfo" style="display: none;">
@@ -278,7 +277,7 @@ function aa(){
 		</div>
 		<div id="period" class="tab-pane" style="width: 100%; height: 600px;">
 		</div>
-		<div id="region" class="tab-pane" style="width: 100%; height: 600px;"></div>
+		<div id="region" class="tab-pane" style="width: 100%; height: 600px; display: none;"></div>
 	</div>
 </div>
 </body>

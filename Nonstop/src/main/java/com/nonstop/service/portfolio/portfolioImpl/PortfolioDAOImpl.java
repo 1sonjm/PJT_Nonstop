@@ -57,6 +57,16 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		
 		return sqlSession.selectList("PortfolioMapper.getPortfolioList", map);
 	}
+	
+	@Override
+	public List<Portfolio> getProfilePortList(String sessionUserId, String profileUserId) throws Exception {
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sessionUserId", sessionUserId);
+		map.put("profileUserId", profileUserId);
+		
+		return sqlSession.selectList("PortfolioMapper.getProfilePortList", map);
+	}
 
 	@Override
 	public void updatePortfolio(Portfolio portfolio) throws Exception {
@@ -109,6 +119,5 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		// TODO Auto-generated method stub
 		sqlSession.delete("PortfolioMapper.deletePortfolio", portNo);
 	}
-
 
 }

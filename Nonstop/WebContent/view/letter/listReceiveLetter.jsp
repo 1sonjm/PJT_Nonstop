@@ -555,6 +555,7 @@ ul {
 		 $("#readMark").on("click" , function() {
 			 $("form").attr("method" , "POST").attr("action" , "/letter/updateReadDate").submit();
 			});
+		
 		 
 		  //메세지 보관/삭제
 		 $("i.fa").on("click" ,function() {
@@ -733,26 +734,7 @@ ul {
 				</div>
 				<div class="inbox-body">
 					<div class="mail-option">
-						<!--  <div class="chk-all">
-                                 <input type="checkbox" class="mail-checkbox mail-group-checkbox">
-                                 <div class="btn-group">
-                                     <a data-toggle="dropdown" href="#" class="btn mini all" aria-expanded="false">
-                                         All
-                                         <i class="fa fa-angle-down "></i>
-                                     </a>
-                                     <ul class="dropdown-menu">
-                                         <li><a href="#"> All</a></li>
-                                         <li><a href="#"> Read</a></li>
-                                         <li><a href="#"> Unread</a></li>
-                                     </ul>
-                                 </div>
-                             </div> -->
-
-						<!-- <div class="btn-group">
-                                 <a data-original-title="Refresh" data-placement="top" data-toggle="dropdown" href="#" class="btn mini tooltips">
-                                     <i class=" fa fa-refresh"></i>
-                                 </a>
-                             </div> -->
+					
 						<div class="btn-group hidden-phone">
 							<a data-toggle="dropdown" href="#" class="btn mini blue"
 								aria-expanded="false"> More <i class="fa fa-angle-down"></i>

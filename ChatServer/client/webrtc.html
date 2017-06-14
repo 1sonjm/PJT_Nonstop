@@ -11,36 +11,41 @@
 <link rel="stylesheet" type="text/css" href="nonstop.css">
 <link rel="stylesheet" type="text/css" href="main.css">
 <link rel="stylesheet" type="text/css" href="togglebtn.css">
+<link rel="stylesheet" type="text/css" href="fileShare.css">
+<!-- <link rel="stylesheet" href="circular-progress-bar.css"> -->
 <script src="signaling_channel.js"></script>
 <script src="sdp.js"></script>
 <script src="main.js"></script>
+<!-- <script src="filetransfer.js"></script> -->
 <script src="//cdn.WebRTC-Experiment.com/getScreenId.js"></script>
+<script src="//www.webrtc-experiment.com/FileBufferReader/FileBufferReader.js"></script>
+<script src="PeerConnection.js"> </script>
+<script src="PeerUI.js"></script>
 <style type="text/css">
 </style>
-<script type="text/javascript">/*
-	$(function()
-	{
+<script type="text/javascript">
+	$(function() {
 		resizeComponent($(window).width(), $(window).height());
-
-		//$('#videoToggleButton').on('click',function(){
-		//	alert('dd');
-		//}); 
 	})
 	var changeSizeDelay;
-	$(window).resize(function()
-	{
+	$(window).resize(function() {
 		clearTimeout(changeSizeDelay);
-		changeSizeDelay = setTimeout(function()
-		{
+		changeSizeDelay = setTimeout(function() {
 			var browserWidth = $(window).width();
 			var browserHeight = $(window).height();
 			console.log(browserWidth + " X " + browserHeight);
 			resizeComponent(browserWidth, browserHeight);
-		}, 500);
+		}, 200);
 	});
 	function resizeComponent(browserWidth, browserHeight)
 	{
-		$('#chat_div').height(browserHeight - 700);
+		$('#remote_view').height(browserHeight - 70);
+		$('#chat_div').height(browserHeight - 180);
+		$('#fileshare_div').height(browserHeight - 340);
+
+
+
+	//channel.send(browserWidth + " X " + browserHeight);// 이 channel을 filedata 전송에 사용
 	}
 </script>
 </head>
@@ -51,50 +56,68 @@
 		<ul>
 			<li><a href="javascript:void(0)"> <i class="fa fa-home"></i> <span>홈페이지</span>
 			</a></li>
-			<li class="menu_content">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<video id="self_view" autoplay muted></video>
+			<li class="menu_content strame_controler">
+				<div>
+					<video id="self_view" autoplay muted></video>
+				</div>
+				<div class="setting-inline">
+					<i class="fa fa-camera" aria-hidden="true"></i>
+					<div class="switch">
+						<input id="videoToggle" class="cmn-toggle cmn-toggle-round" type="checkbox" checked> <label id="videoToggleButton" for="videoToggle"></label>
 					</div>
-					<div class="panel-body">
-						<i class="fa fa-camera" aria-hidden="true"></i>
-						<div class="switch">
-							<input id="videoToggle" class="cmn-toggle cmn-toggle-round" type="checkbox" checked> <label id="videoToggleButton" for="videoToggle"></label>
-						</div>
-						<i class="fa fa-microphone" aria-hidden="true"></i>
-						<div class="switch">
-							<input id="audioToggle" class="cmn-toggle cmn-toggle-round" type="checkbox" checked> <label id="audioToggleButton" for="audioToggle"></label>
-						</div>
+					<i class="fa fa-microphone" aria-hidden="true"></i>
+					<div class="switch">
+						<input id="audioToggle" class="cmn-toggle cmn-toggle-round" type="checkbox" checked> <label id="audioToggleButton" for="audioToggle"></label>
 					</div>
+					<i class="fa fa-comments" aria-hidden="true"></i>
+					<div class="switch">
+						<input id="chatToggle" class="cmn-toggle cmn-toggle-round" type="checkbox" checked> <label id="chatToggleButton" for="chatToggle"></label>
+					</div>
+				</div>
 				</div>
 			</li>
-			<li><a href="javascript:void(0)" id="capture-screen" disable> <i class="fa fa-desktop"></i> <span>화면 공유</span>
+			<li><a href="javascript:void(0)" id="capture-screen"> <i class="fa fa-desktop"></i> <span>화면 공유</span>
 			</a></li>
-			<li><a href="javascript:void(0)"> <i class="fa fa-download"></i> <span>파일 공유</span>
+			<li><a href="javascript:void(0)" id="file_share" style="visibility: hidden;"> <i class="fa fa-download"></i> <span>파일 공유</span>
 			</a></li>
 			<li class="menu_content">
-				<div class="chatForm">
-					<div id="chat_div"></div>
-					<div class="form-inline" id="chat-container">
-						<input type="sendtext" class="form-control" id="chat_txt" disabled> <input type="button" class="btn" id="chat_but" value="Send" disabled
-							style="visibility: visible;">
-					</div>
-				</div>
+				<div id="fileshare_div"></div>
 			</li>
 		</ul>
 	</nav>
 	<main> <header></header>
 	<section class="init_form">
-		<input type="hidden" id="session_txt" value="" size="10"> <input class="btn" type="button" id="call_but" value="Call" disabled><br>
-		<input type="checkbox" id="video_cb" checked> <input type="checkbox" id="audio_cb" checked> <input type="checkbox" id="chat_cb"
-			checked> <input type="checkbox" id="screen_cb">
+		<div style="display: none;">
+			<input type="hidden" id="session_txt" value="" size="10"> <br> <input type="checkbox" id="video_cb" checked> <input
+				type="checkbox" id="audio_cb" checked> <input type="checkbox" id="chat_cb" checked> <input type="checkbox" id="screen_cb">
+		</div>
+		<input class="btn" type="button" id="call_but" value="Call" disabled>
 		<div id="share-container">
 			link: <a id="share_link" target="_blank" href=""></a>
 		</div>
 		<div id="log_div"></div>
 	</section>
-	<section class="view_form" style="display: none;">
-		<video id="remote_view" autoplay controls style="width: 100%; height: 100%;"></video>
+	<section class="view_form">
+		<video id="remote_view" autoplay controls></video>
+		<div style="text-align: center;"><!-- fileshaer를 관리하던 화면구역  display: none; -->
+			<br>
+			<button id="setup-offer" disabled="">
+				<span>Connecting</span> <span>Signaling Socket..</span>
+			</button>
+			<br> <span id="share-this-link"></span> <br>
+			<br>
+			<button id="select-file" disabled style="font-size: 2em;">Select & Share A File</button>
+		</div>
+		<ol class="output-panel"></ol>
+		<blockquote id="info" style="display: none;"></blockquote>
+	</section>
+	<section class="chat_form">
+		<div class="chatForm">
+			<div id="chat_div"></div>
+			<div class="form-inline" id="chat-container">
+				<input type="sendtext" class="form-control" id="chat_txt" placeholder="메세지를 입력해 주세요." disabled /> <i id="chat_but" class="fa fa-paper-plane"></i>
+			</div>
+		</div>
 	</section>
 	</main>
 </body>

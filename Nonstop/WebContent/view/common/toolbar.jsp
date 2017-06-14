@@ -41,7 +41,8 @@
 
 	      
 	      
-	      <li><a href="#">STATISTICS</a></li>
+	      <li><a id="statistics" href="#">STATISTICS</a></li>
+	      <li><a id="chat" href="#">CHAT</a></li>
             </ul>
             
             <ul class="nav navbar-nav navbar-right">
@@ -51,8 +52,13 @@
                     </c:if>
                <c:if test="${!empty sessionScope.user.userId }">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
-                    <li><a href="#" id="listLetter"><span class="glyphicon glyphicon-envelope"></span></a></li>
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify"></span></a>
+                    <li>
+	                    <a href="#" id="listLetter">
+	                    	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+	                    	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;">NEW</span>
+	                    </a>
+                    </li>
+                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
                     <ul class="dropdown-menu">
                       <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}"/>                     
                       <li><a href="#" id="profile2">프로필</a></li>
@@ -83,7 +89,7 @@
     }
     @media (min-width: 1200px) {
       #center {
-      	margin-left:29%;
+      	margin-left:24%;
       	margin-right:5%;
       }
     }
@@ -167,7 +173,7 @@
    //============= 통계 이동 Event 처리 =============   
     $(function() {
       //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-       $("a:contains('Statistics')").on("click" , function() {
+       $("#statistics").on("click" , function() {
          $(self.location).attr("href","/statistics/getListStatistics");
          //self.location = "/user/logout"
       }); 
@@ -199,16 +205,25 @@
             self.location = "/portfolio/listPortfolio?postDivision=2"
          }); 
        });
-   
-   //============= toolbar portfolio 이동 Event 처리 =============
-    $(function() {
-         //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-          $("#portDeveloper").on("click" , function() {
-            //$(self.location).attr("href","/user/logout");
-            self.location = "/portfolio/listPortfolio?postDivision=1"
-         }); 
-       });
-   
+
+    //============= toolbar portfolio 이동 Event 처리 =============
+     $(function() {
+          //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+           $("#portDeveloper").on("click" , function() {
+             //$(self.location).attr("href","/user/logout");
+             self.location = "/portfolio/listPortfolio?postDivision=1"
+          }); 
+        });
+
+     //============= toolbar chat 이동 Event 처리 =============
+      $(function() {
+           //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+            $("#chat").on("click" , function() {
+              //$(self.location).attr("href","/user/logout");
+               self.location = "https://192.168.0.16:8444/#"+Math.random().toString(16).substr(2);
+           }); 
+         });
+     
    </script>   
 
 

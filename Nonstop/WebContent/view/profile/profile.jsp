@@ -1,43 +1,287 @@
-<%@ page contentType="text/html; charset=utf-8" %>
-<%@ page pageEncoding="utf-8"%>
-
-<!--  ///////////////////////// JSTL  ////////////////////////// -->
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-<!DOCTYPE html>
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html lang="ko">
 
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<meta name="description"
+	content="chart created using amCharts live editor" />
+<!-- amCharts javascript sources -->
+<script type="text/javascript"
+	src="https://www.amcharts.com/lib/3/amcharts.js"></script>
+<script type="text/javascript"
+	src="https://www.amcharts.com/lib/3/pie.js"></script>
 
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Profile</title>
 
-    <meta name="author" content="Dashboard">
-    <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
 
-	<meta name="description" content="chart created using amCharts live editor" />
-	
-	<script type="text/javascript" src="https://www.amcharts.com/lib/3/amcharts.js"></script>
-		<script type="text/javascript" src="https://www.amcharts.com/lib/3/pie.js"></script>
-    <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/nonstop.css" rel="stylesheet">
+<script src="/resources/javascript/jquery.js"></script>
 
-    <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
-<script src="../../resources/javascript/jquery.js"></script>
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  <script type="text/javascript">
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 
+<!-- Bootstrap Core JavaScript -->
+<!-- 
+<script src="/resources/javascript/bootstrap.min.js"></script> -->
+
+<!-- 아이콘 - fontawesome -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+
+<link href="/resources/css/nonstop.css" rel="stylesheet">
+<style>
+#main-wrapper {
+	width: 100%;
+}
+
+.left-sidebar {
+	overflow: visible;
+	position: fixed;
+	width: 240px;
+	height: 100%;
+	top: 0px;
+	z-index: 20;
+	padding-top: 45px;
+	background: #fff;
+	box-shadow: 1px 0px 20px rgba(0, 0, 0, 0.08);
+}
+
+.scroll-sidebar {
+	padding-top: 50px;
+}
+
+.user-profile {
+	text-align: center;
+	position: relative;
+}
+
+.user-profile .profile-img {
+	width: 150px;
+	margin: 0 auto;
+	border-radius: 100%;
+}
+
+.user-profile .profile-img img {
+	width: 100%;
+	border-radius: 100%;
+}
+
+.user-profile .profile-text {
+	padding: 5px 0;
+	position: relative;
+}
+
+#sidebarnav {
+	padding-left: 0;
+}
+
+.sidebar-nav ul li {
+	list-style: none;
+}
+
+.sidebar-nav li>div {
+	height: 20px;
+	margin-right: 5px;
+	display: inline-block;
+	text-align: center;
+	vertical-align: middle;
+	color: #cccccc;
+	/*border-radius: 100%; */
+}
+
+.sidebar-nav a>i {
+	float: right;
+	width: auto;
+	font-size: 14px;
+	margin-top: 4px;
+	color: #cccccc;
+}
+
+.sidebar-nav ul li.nav-small-cap {
+	font-size: 13.5px;
+	padding: 14px 14px 14px 20px;
+	color: #666666;
+	font-weight: 500;
+	text-align: center;
+}
+
+.sidebar-nav ul li.nav-small {
+	font-size: 14px;
+	padding: 14px 14px 14px 20px;
+	/* color: #90a4ae;
+    font-weight: 500; */
+	/* border-top: 1px solid #ebebeb; */
+	border-bottom: 1px solid #ebebeb;
+}
+
+.sidebar-nav hr {
+	margin-top: 30px;
+	margin-bottom: 0px;
+	border-top: 3px solid #ff6600;
+	width: 20px;
+}
+
+.page-wrapper {
+	background: #f1f1f1;
+	min-height: 760px;
+	margin-left: 240px;
+}
+
+.container-fluid {
+	padding-right: 30px;
+	padding-left: 30px;
+}
+
+.card {
+	position: relative;
+	margin-top: 20px;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	-ms-flex-direction: column;
+	flex-direction: column;
+	background-color: #fff;
+	border: 1px solid #eee;
+	border-radius: .25rem;
+}
+
+/* Tabs panel */
+.tabbable-panel {
+	border: 1px solid #eee;
+	padding: 10px;
+}
+
+/* Default mode */
+.tabbable-line>.nav-tabs {
+	border: none;
+	margin: 0px;
+}
+
+.tabbable-line>.nav-tabs>li {
+	margin-right: 2px;
+}
+
+.tabbable-line>.nav-tabs>li>a {
+	border: 0;
+	margin-right: 0;
+	color: #737373;
+}
+
+.tabbable-line>.nav-tabs>li>a>i {
+	color: #a6a6a6;
+}
+
+.tabbable-line>.nav-tabs>li.open, .tabbable-line>.nav-tabs>li:hover {
+	border-bottom: 4px solid #fbcdcf;
+}
+
+.tabbable-line>.nav-tabs>li.open>a, .tabbable-line>.nav-tabs>li:hover>a
+	{
+	border: 0;
+	background: none !important;
+	color: #333333;
+}
+
+.tabbable-line>.nav-tabs>li.open>a>i, .tabbable-line>.nav-tabs>li:hover>a>i
+	{
+	color: #a6a6a6;
+}
+
+.tabbable-line>.nav-tabs>li.open .dropdown-menu, .tabbable-line>.nav-tabs>li:hover .dropdown-menu
+	{
+	margin-top: 0px;
+}
+
+.tabbable-line>.nav-tabs>li.active {
+	border-bottom: 4px solid #ff6600;
+	position: relative;
+}
+
+.tabbable-line>.nav-tabs>li.active>a {
+	border: 0;
+	color: #333333;
+	font-weight: 500;
+}
+
+.tabbable-line>.nav-tabs>li.active>a>i {
+	color: #404040;
+}
+
+.tabbable-line>.tab-content {
+	margin-top: -3px;
+	background-color: #fff;
+	border: 0;
+	border-top: 1px solid #eee;
+	padding: 15px 0;
+}
+
+.portlet .tabbable-line>.tab-content {
+	padding-bottom: 0;
+}
+
+/* Below tabs mode */
+.tabbable-line.tabs-below>.nav-tabs>li {
+	border-top: 4px solid transparent;
+}
+
+.tabbable-line.tabs-below>.nav-tabs>li>a {
+	margin-top: 0;
+}
+
+.tabbable-line.tabs-below>.nav-tabs>li:hover {
+	border-bottom: 0;
+	border-top: 4px solid #fbcdcf;
+}
+
+.tabbable-line.tabs-below>.nav-tabs>li.active {
+	margin-bottom: -2px;
+	border-bottom: 0;
+	border-top: 4px solid #f3565d;
+}
+
+.tabbable-line.tabs-below>.tab-content {
+	margin-top: -10px;
+	border-top: 0;
+	border-bottom: 1px solid #eee;
+	padding-bottom: 15px;
+}
+
+.table>thead>tr>th {
+	border-bottom: 2px solid #ebebeb;
+}
+
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th,
+	.table>thead>tr>td, .table>thead>tr>th {
+	border-top: 1px solid #ebebeb;
+	padding: 10px;
+	line-height: 1.42857143;
+	font-size: 13px;
+}
+
+.table i {
+	color: #a5a5a5;
+}
+</style>
+
+<script type="text/javascript">
+    
+    //그래프 생성 시작
 
 	var dataSet = [];
+
 	var userId = "${user.userId}";
 	var role = "${user.role}";
 $.ajax("/statistics/getUserStatisticsList/"+userId+"/"+role,{
@@ -75,292 +319,310 @@ AmCharts.makeChart("chartdiv",
 			"dataProvider": dataSet
 		}
 	);
+	//그래프 생성 끝
 
-
-$(function() {
-	
-	$(".followProfile").on("click", function(){
-		 var userId = $(this).text().trim();
-		 self.location = "/profile/getOtherProfile?userId="+userId;
-	 });
-
-	$(document).on("click","#follow",function() {
-		
-		var flag = $(this).text().trim();
-		var requestTarget;
-		alert(flag);
-		
-		//alert(flag);
-		if(flag == "팔로우"){
-			requestTarget = "addJsonFollow";
-		}else{
-			requestTarget = "deleteJsonFollow";
-		}
-		var targetUserId = $(this).attr('targetUserId');
-		
-		$.ajax(
-			{
-				url : "/profile/"+requestTarget+"/"+targetUserId,
-				method : "GET" ,
-				dateType : "json",
-				headers : {
-					"Accept" : "application/json",
-					"Content-Type" : "application/json"	
-				},
-				success : function(JSONData , status) {
-
-			      		if(flag=="팔로우"){
-			      			$( "#followflag" ).text("언팔로우");
-			      		}else{
-			      			$( "#followflag" ).text("팔로우");
-			      		}
-				}
-			});
-		});
-	
-});
-
-
-</script>
-
-
-	<style>
-	/*sidebar navigation*/
-
-	#sidebar {
-	    width: 270px;
-	    height: 100%;
-	    position: fixed;
-	    background: #424a5d;
-	}
-	
-	#sidebar h5 {
-		color: #f2f2f2;
-		font-weight: 700;
-		margin-top : 20px;
-	}
-	
-	#sidebar h4 {
-		color: #f2f2f2;
-		font-weight: 700;
-	}
-	
-	#sidebar .followProfile{
-	color: #f2f2f2;
-	}
-	
-	#sidebar p {
-		color: #f2f2f2;
-		margin-top : 0px;
-	}
-	
-	ul.sidebar-menu {
-	    margin-top: 75px;
-	}
-	 
-	/* MAIN CONTENT CONFIGURATION */
-	#main-content {
-	    margin-left: 270px;
-	}
-	
-	.header, .footer {
-	    min-height: 60px;
-	    padding: 0 15px;
-	}
-	
-	.header {
-	    position: fixed;
-	    left: 0;
-	    right: 0;
-	    z-index: 1002;
-	}
-	
-	.black-bg {
-	    background: #ffd777;
-	    border-bottom: 1px solid #c9aa5f;
-	}
-	
-	.wrapper {
-	    display: inline-block;
-	    margin-top: 60px;
-	    padding-left: 15px;
-	    padding-right: 15px;
-	    padding-bottom: 15px;
-	    padding-top: 0px;
-	    width: 100%;
-	}
-	#profileImg{
-	display : block;
-	margin-left : auto;
-	margin-right : auto;
-	margin-bottom : 30px;
-	margin-top: 60px;
-	}
-	
-		
-	
-	</style>
-
-  </head>
-
-  <body>
- 
-  <jsp:include  page="/view/common/toolbar.jsp" />
-  <section id="container" >    
-      <!-- **********************************************************************************************************************************************************
-      MAIN SIDEBAR MENU
-      *********************************************************************************************************************************************************** -->
-      <!--sidebar start-->
-      <aside>
-        
-          <div id="sidebar"  class="nav-collapse ">
-
-        <!-- sidebar menu start-->
-              <!-- <ul class="sidebar-menu"> -->
-              
-             
-              	  <img src="../../resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
-              	  <h5 class="text-center">${user.userId}</h5>
-              	  <p class="text-center">${user.addr}</p>
-              	  
-              	  <c:if test="${user.role=='3'}">
-              	  <h5 class="text-center">기업대표자 : ${user.companyName}</h5>
-              	  <h5 class="text-center">직원수 : ${user.empNum}</h5>
-              	  <h5 class="text-center">설립일 : ${user.pubDate}</h5>
-              	  </c:if>
-				 <hr/>
-
-				  
-				<c:if test="${user.userId != sessionScope.user.userId }">
-				  <c:if test="${follow.reqUserId==sessionScope.user.userId && career.careerUserId==targetUserId }">
-				  <div class="col-sm-12 text-center">
-					 <span class="follow" targetUserId="${user.userId}" id="follow">
-		      		<button type="button" class="btn btn-primary" id="followflag" >언팔로우</button>
-		      		</span>
-		      		</div>
-		      		</c:if>
-		      		
-		      		<c:if test="${follow.reqUserId != sessionScope.user.userId}">
-		      		<div class="col-sm-12 text-center">
-					 <span class="follow" targetUserId="${user.userId}" id="follow">
-		      		<button type="button" class="btn btn-primary" id="followflag" >팔로우</button>
-		      		</span>
-		      		</div>
-		      		</c:if>
-		      	</c:if>
-		      		
-		      		<c:if test="${session.user.userId  == param.userId}"> 
-		      		<div class="col-sm-12 text-center">
-		      		
-		      		<ul class="nav nav-pills nav-stacked labels-info inbox-divider">
-                          <li> <h4>Followers</h4> </li>
-                           <c:set var="i" value="0" />
-		  					<c:forEach var="follow" items="${follow}">
-							<c:set var="i" value="${ i+1 }" />
-							
-                          <li> 
-                          <a href="#" class="followProfile" role="${user.role}" userId="${user.userId}"> 
-                          <i class=" fa fa-sign-blank text-danger"></i> 
-                          ${follow.targetUserId} 
-                          </a> 
-                          
-                          </li>
-                          </c:forEach>
-                      </ul> 
-		      		<!-- </span> -->
-		      		</div>
-		      		</c:if>	
-              <!-- </ul> -->
-              <!-- sidebar menu end-->
-          </div>
-      </aside>
-      <!--sidebar end-->
-      
-      <!-- **********************************************************************************************************************************************************
-      MAIN CONTENT
-      *********************************************************************************************************************************************************** -->
-      <!--main content start-->
-      <section id="main-content">
-          <section class="wrapper">
-
-             <div class="container">
-				<div class="row">
-					<div>
-				
-					  <!-- Nav tabs -->
-					  <ul class="nav nav-tabs" role="tablist">
-					    <li role="presentation" class="active"><a href="#Profile" aria-controls="Profile" role="tab" data-toggle="tab">Profile</a></li>
-					    
-					   
-					    
-					    <c:if test="${user.role=='2'}">
-					    <li role="presentation"><a href="#Portfolio" aria-controls="Portfolio" role="tab" data-toggle="tab">Portfolio</a></li>
-					    </c:if>
-
-					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
-					    <li role="presentation"><a href="#projectScrap" aria-controls="projectScrap" role="tab" data-toggle="tab" >projectScrap</a></li>
-					 	</c:if>
-					 	
-					 	 <c:if test="${user.userId  == sessionScope.user.userId}"> 
-					    <li role="presentation"><a href="#portfolioScrap" aria-controls="portfolioScrap" role="tab" data-toggle="tab" >portfolioScrap</a></li>
-					 	</c:if> 
-					  </ul>
+    $(function() {
+    	
+    	//팔로우한 회원 프로필로 이동
+    	$(".followProfile").on("click", function(){
+    		 var userId = $(this).text().trim();
+    		 self.location = "/profile/getOtherProfile?userId="+userId;
+    	 });
+    	
+    	$(".fa-envelope").on('click' , function(){
+    		var userId = $(this).text().trim();
+    		$(this).val(userId);
+    	})
+    	
+    	//글자수 표시
+	       $('textarea').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
+		 //메일전송
+		 $("#send").on("click", function(){
+			var receiveId=$("input[name='receiveId']").val();
+			var title=$("input[name='letTitle']").val();
+			var letDetail=$("input[name='letDetail']").val();
 			
-					  <!-- Tab panes -->
-					  <div class="tab-content">
-					  
-					    <div role="tabpanel" class="tab-pane active" id="Profile">
-					   <c:if test="${user.role=='2'}">
-					   	<br/> <h5>개인 기술능력 그래프</h5> <br/>
-					   <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
-					    <jsp:include page="/view/profile/listCareer.jsp" /> 
-					    </c:if>	
-					    
-					    <c:if test="${user.role=='3'}">
-					    <br/> <h5>기업 기술사용 그래프</h5> <br/>
-					    <div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
-					    <br/> <h5>이 기업이 게시한 프로젝트 구인공고 목록</h5> <br/>
-					    <jsp:include page="/view/profile/listMyProj.jsp" /> 
-					    </c:if>
-					 
-					    <jsp:include page="/view/profile/listRecordProject.jsp" /> 					    	  
-					    </div>
-					    
-					  <div role="tabpanel" class="tab-pane" id="Portfolio">
-					    	<br/> <h5>이 회원이 게시한 포트폴리오</h5> <br/>
-					   <jsp:include page="/view/profile/listMyPort.jsp" />
-						</div> 
-						
-						 
-					     <div role="tabpanel" class="tab-pane" id="portfolioScrap">
-							<br/> <h5>포트폴리오 스크랩 목록보기</h5> <br/>
-					   		<jsp:include page="/view/profile/listPortScrap.jsp"/>
-					    </div> 
-					    
-					   <div role="tabpanel" class="tab-pane" id="projectScrap">
-							<br/> <h5>프로젝트 스크랩 목록보기</h5> <br/>
-					   		 <jsp:include page="/view/profile/listProjScrap.jsp"/> 
-					    </div>   
-					   
-					  </div>
+			if(receiveId == null || receiveId.length<1 ){
+				alert("수신자는 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			if(title == null || title.length<1){
+				alert("제목은 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+		 });
+
+    	
+    	//팔로우 add /delete
+    	$(document).on("click","#follow",function() {
+    		
+    		var flag = $(this).text().trim();
+    		var requestTarget;
+    		
+    		if(flag == "팔로우"){
+    			requestTarget = "addJsonFollow";
+    		}else{
+    			requestTarget = "deleteJsonFollow";
+    		}
+    		var targetUserId = $(this).attr('targetUserId');
+    		
+    		$.ajax(
+    			{
+    				url : "/profile/"+requestTarget+"/"+targetUserId,
+    				method : "GET" ,
+    				dateType : "json",
+    				headers : {
+    					"Accept" : "application/json",
+    					"Content-Type" : "application/json"	
+    				},
+    				success : function(JSONData , status) {
+
+    			      		if(flag=="팔로우"){
+    			      			$( "#followflag" ).text("언팔로우");
+    			      		}else{
+    			      			$( "#followflag" ).text("팔로우");
+    			      		}
+    				}
+    			});
+    		});
+    	
+    });
+	
+    	
+
+    </script>
+
+</head>
+<body>
+	<div id="main-wrapper">
+		<header>
+			<jsp:include page="/view/common/toolbar.jsp" />
+		</header>
+
+		<aside class="left-sidebar">
+			<div class="slimScrollDiv"
+				style="position: relative; overflow: visible; width: auto; height: 100%;">
+				<div class="scroll-sidebar"
+					style="overflow-x: visible; overflow-y: hidden; width: auto; height: 100%;">
+					<div class="user-profile">
+						<div class="profile-img">
+							<img src="../../resources/images/upload/${user.image}"
+								id="profileImg" class="img-circle" width="160px">
+						</div>
+						<div class="profile-text">
+							<h5 style="font-size: 16px">${user.userId}</h5>
+							<p style="margin-top: 10px; margin-bottom: 5px; font-size: 14px">
+								<i class="fa fa-map-marker" aria-hidden="true"
+									style="color: #cccccc; font-size: 16px"></i>
+								&nbsp;&nbsp;${user.addr}
+							</p>
+
+							<c:if test="${user.role=='3'}">
+								<h5 style="font-size: 16px">기업대표자 : ${user.companyName}</h5>
+								<h5 style="font-size: 16px">직원수 : ${user.empNum}</h5>
+								<h5 style="font-size: 16px">설립일 : ${user.pubDate}</h5>
+							</c:if>
+						</div>
 					</div>
+					<!-- user-profile -->
+					<c:if test="${session.user.userId  == param.userId}">
+						<nav class="sidebar-nav active">
+
+							<ul id="sidebarnav">
+								<hr>
+								<li class="nav-small-cap">FOLLOW</li>
+								<c:set var="i" value="0" />
+								<c:forEach var="follow" items="${follow}">
+									<c:set var="i" value="${ i+1 }" />
+									<li class="nav-small">
+										<div class="icon">
+											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+										</div> <span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
+											${follow.targetUserId} </span> 
+											<a href="#followLetter" data-toggle="modal">
+											 <i class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다." aria-hidden="true"></i>
+											</a>
+									</li>
+								</c:forEach>
+
+							</ul>
+
+						</nav>
+					</c:if>
+					<c:if test="${user.userId != sessionScope.user.userId }">
+						<c:if
+							test="${follow.reqUserId==sessionScope.user.userId && career.careerUserId==targetUserId }">
+							<div class="col-sm-12 text-center">
+								<span class="follow" targetUserId="${user.userId}" id="follow">
+									<button type="button" class="btn btn-primary" id="followflag">언팔로우</button>
+								</span>
+							</div>
+						</c:if>
+
+						<c:if test="${follow.reqUserId != sessionScope.user.userId}">
+							<div class="col-sm-12 text-center">
+								<span class="follow" targetUserId="${user.userId}" id="follow">
+									<button type="button" class="btn btn-primary" id="followflag">팔로우</button>
+								</span>
+							</div>
+						</c:if>
+					</c:if>
 				</div>
 			</div>
-          </section>
-      </section>
+		</aside>
+	</div>
 
-    
-  </section>
+	<div class="page-wrapper">
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Column -->
+				<div class="col-md-12">
+					<div class="card">
 
-  
-	<!-- jQuery -->
-	<script src="../../resources/javascript/jquery.js"></script>
-	
-	<!-- Bootstrap Core JavaScript -->
-	<<!-- script src="../../resources/javascript/bootstrap.min.js"></script> -->
-  
-  
- 	       
-	
-  </body>
+						<div class="tabbable-panel">
+							<div class="tabbable-line">
+								<ul class="nav nav-tabs ">
+									<li class="active"><a href="#profile" data-toggle="tab">Profile
+									</a></li>
+									<li><c:if test="${user.role=='2'}">
+											<a href="#portfolio" data-toggle="tab">My Portfolio </a>
+										</c:if></li>
+									<li><c:if test="${user.role=='3'}">
+											<a href="#project" data-toggle="tab">My Project </a>
+										</c:if></li>
+									<li><c:if
+											test="${user.userId  == sessionScope.user.userId}">
+											<a href="#portfolioScrap" data-toggle="tab">Portfolio
+												Scrap </a>
+										</c:if></li>
+									<li><c:if
+											test="${user.userId  == sessionScope.user.userId}">
+											<a href="#projectScrap" data-toggle="tab">Project Scrap </a>
+										</c:if></li>
+								</ul>
+								<div class="tab-content">
+									<div class="tab-pane active" id="profile">
+										<c:if test="${user.role=='2'}">
+											<p>사용가능 기술 그래프</p>
+											<div id="chartdiv"
+												style="width: 100%; height: 400px; background-color: #FFFFFF;"></div>
+											<jsp:include page="/view/profile/listCareer.jsp" />
+										</c:if>
+										<c:if test="${user.role=='3'}">
+											<p>사용 기술 그래프</p>
+											<div id="chartdiv"
+												style="width: 100%; height: 400px; background-color: #FFFFFF;"></div>
+										</c:if>
+
+										<jsp:include page="/view/profile/listRecordProject.jsp" />
+
+									</div>
+									<div class="tab-pane" id="portfolio">
+										<p>이 회원이 게시한 포트폴리오</p>
+										<jsp:include page="/view/profile/listMyPort.jsp" />
+									</div>
+
+									<div class="tab-pane" id="project">
+										<p>이 기업이 게시한 프로젝트 구인공고</p>
+										<jsp:include page="/view/profile/listMyProj.jsp" />
+									</div>
+
+									<div class="tab-pane" id="projectScrap">
+										<p>프로젝트 스크랩 목록</p>
+										<jsp:include page="/view/profile/listProjScrap.jsp" />
+									</div>
+
+									<div class="tab-pane" id="portfolioScrap">
+										<p>포트폴리오 스크랩 목록</p>
+										<jsp:include page="/view/profile/listPortScrap.jsp" />
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+				</div>
+				<!-- Column -->
+			</div>
+
+		</div>
+
+	</div>
+
+<div aria-hidden="true" aria-labelledby="myModalLabel"
+						role="dialog" tabindex="-1" id="followLetter" class="modal fade"
+						style="display: none;">
+						<div class="modal-dialog">
+
+							<div class="modal-content">
+								<div class="modal-header">
+									<button aria-hidden="true" data-dismiss="modal" class="close"
+										type="button">×</button>
+									<h4 class="modal-title">Send to mail your partner</h4>
+								</div>
+								<div class="modal-body">
+									<form role="form" id="addMail" class="form-horizontal">
+
+										<div class="form-group">
+											<label class="col-lg-2 control-label">From</label>
+											<div class="col-lg-10">
+												<input type="text" class="form-control" name="sendId"
+													value="${sessionScope.user.userId}" readOnly>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-lg-2 control-label">To</label>
+											<div class="col-lg-10">
+												<input type="text" placeholder="수신자를 입력하세요" name="receiveId" value=""
+													id="inputEmail1" class="form-control">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-lg-2 control-label">Title</label>
+											<div class="col-lg-10">
+												<input type="text" name="letTitle"
+													placeholder="메일 제목을 입력하세요" class="form-control">
+											</div>
+										</div>
+
+										<div class="form-group">
+											<label class="col-lg-2 control-label">Mail</label>
+											<div class="col-lg-10">
+												<textarea maxlength="2000" rows="10" cols="30"
+													name="letDetail" placeholder="2000자까지 입력가능"
+													class="form-control"></textarea>
+												<br /> 2000/<span id="chars">2000</span>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div class="col-lg-offset-2 col-lg-10">
+												<span>
+													<button class="btn btn-send" type="submit" id="send"
+														receiveId="${sessionScope.user.userId}">send</button>
+												</span>
+											</div>
+										</div>
+									</form>
+								</div>
+							</div>
+							<!-- /.modal-content -->
+						</div>
+						<!-- /.modal-dialog -->
+					</div>
+					<!-- /.modal -->
+
+
+
+
+</body>
 </html>

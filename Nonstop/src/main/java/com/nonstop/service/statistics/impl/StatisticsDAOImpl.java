@@ -41,7 +41,7 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 		
 		return sqlSession.insert("StatisticsMapper.addListStatisticsData",dataList);
 	}
-
+	
 	@Override
 	public List<Statistics> getTechClassList(){
 		return sqlSession.selectList("StatisticsMapper.getListTechClass");
