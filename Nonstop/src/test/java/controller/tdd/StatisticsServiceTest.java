@@ -57,12 +57,7 @@ public class StatisticsServiceTest {
 	public void getTechDataList(){
 		System.out.println(statisticsService.getTechDataList(1));
 	}
-	
-	@Test
-	public void getCarreerDataList(){
-		System.out.println(statisticsService.getCarreerDataList("user01"));
-	}
-	
+
 	//@Test
 	public void getTotalStatisticsList()  throws Exception{
 		List<Statistics> result = statisticsService.getTotalStatisticsList();

@@ -29,12 +29,13 @@
 	 </insert>
 	 
 	 <select  id="getListCareer"  parameterType="String"	resultMap="careerSelectMap">
-			SELECT c.career_tech_no , c.career_use_month , c.career_no , c.career_user_id, t.tech_class
+			SELECT c.career_tech_no , c.career_use_month , c.career_no , c.career_user_id, t.tech_class , t.tech_name
              FROM career c ,tech t
              WHERE c.career_user_id=#{careerUserId} AND t.tech_no= c.career_tech_no 
 
           
 	 </select>
+	 
 	 
 	  <select  id="getCareer"  parameterType="map"	resultMap="careerSelectMap">
 			SELECT c.career_tech_no , c.career_use_month,t.tech_class
