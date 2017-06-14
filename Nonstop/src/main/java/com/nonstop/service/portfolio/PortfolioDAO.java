@@ -17,6 +17,8 @@ public interface PortfolioDAO {
 	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception;
 	
 	public List<Portfolio> getProfilePortList(String sessionUserId, String profileUserId) throws Exception;
+	
+	public List<Portfolio> getProfilePortScrapList(String sessionUserId, String profileUserId) throws Exception;
 	 
 	public void updatePortfolio(Portfolio portfolio) throws Exception;
 	

@@ -79,7 +79,7 @@
 			<div class="row">
 				<!-- Page Content -->
 				<c:set var="i" value="0" />
-				<c:forEach var="portfolio" items="${list3}">
+				<c:forEach var="portfolio" items="${scrap}">
 					<c:set var="i" value="${i+1}" />
 
 					<c:if test="${portfolio.scrapNo != 0 }">

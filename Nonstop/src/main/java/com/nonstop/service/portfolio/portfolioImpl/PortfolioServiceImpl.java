@@ -51,6 +51,12 @@ public class PortfolioServiceImpl implements PortfolioService{
 		List<Portfolio> portfolioList = portfolioDAO.getProfilePortList(sessionUserId, profileUserId);
 		return portfolioList;
 	}
+	
+	@Override
+	public List<Portfolio> getProfilePortScrapList(String sessionUserId, String profileUserId) throws Exception {
+		List<Portfolio> portfolioList = portfolioDAO.getProfilePortScrapList(sessionUserId, profileUserId);
+		return portfolioList;
+	}
 
 	@Override
 	public void updatePortfolio(Portfolio portfolio) throws Exception {

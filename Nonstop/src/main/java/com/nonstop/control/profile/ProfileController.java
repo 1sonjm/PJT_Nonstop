@@ -70,45 +70,26 @@ public class ProfileController {
 		
 		System.out.println("/profile/getMineProfile");
 		
-		String careerUserId = ((User)session.getAttribute("user")).getUserId();
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
-		User user = userService.getProfileMine(careerUserId);
+		User user = userService.getProfileMine(sessionId);
 		
-		System.out.println("/profile/getMineProfile in getCareerList");
+		Map<String , Object> map = profileService.getCareerList(sessionId);
 		
-		Map<String , Object> map = profileService.getCareerList(careerUserId);
-		
-		String recUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
 
-		String scrapUserId=((User)session.getAttribute("user")).getUserId();
-		
-		Search search = new Search();
-		search.setPostDivision(1);
-		search.setStartRowNum(1);
-		search.setEndRowNum(120);
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
-		
-		search.setPostDivision(2);
-		
-		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
-		
+		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, sessionId);
+
 		int projDivision = 1;
-		
 		int sortFlag=0;
-		
 		Search search2 = new Search();
-		
-		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
-		
+		List<Project> project = projectService.listProject(projDivision, sessionId, search2, sortFlag);
 		projDivision = 2;
+		List<Project> project2 = projectService.listProject(projDivision, sessionId, search2, sortFlag);
 		
-		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		List<Follow> follow = profileService.getFollowList(sessionId);
 		
-		String reqUserId = scrapUserId;
-		
-		List<Follow> follow = profileService.getFollowList(reqUserId);
+		List<Portfolio> scrapPort = portfolioService.getProfilePortScrapList(sessionId, sessionId);
 		
 		List<Statistics> techClassList = statisticsService.getTechClassList();
 		
@@ -121,7 +102,7 @@ public class ProfileController {
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
-		model.addAttribute("list5" , portfolio2);
+		model.addAttribute("scrap" , scrapPort);
 		model.addAttribute("list4" , project);
 		model.addAttribute("list6" , project2);
 		model.addAttribute("user", user);
@@ -141,41 +122,32 @@ public class ProfileController {
 		
 		Map<String , Object> map = profileService.getCareerList(userId);
 		
-		String reqUserId = ((User)session.getAttribute("user")).getUserId();
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
 		System.out.println("/profile/getOtherProfile in getFollow");
 		
 		String targetUserId = userId;
 		
-		Follow follow = profileService.getFollow(reqUserId , targetUserId);
+		Follow follow = profileService.getFollow(sessionId , targetUserId);
 		
-		Search search = new Search();
-		search.setPostDivision(1);
-		search.setStartRowNum(1);
-		search.setEndRowNum(16);
-		String scrapUserId = reqUserId;
-		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
-			
-		search.setPostDivision(2);
-		List<Portfolio> portfolio2 = portfolioService.getPortfolioList(search, scrapUserId);
-		model.addAttribute("list3", portfolio);
-		model.addAttribute("list5", portfolio2);
-			
+		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, userId);
+
 		Search search2 = new Search();
 			
 		int projDivision = 1;
 		int sortFlag=0;
 		
-		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		List<Project> project = projectService.listProject(projDivision, sessionId, search2, sortFlag);
 			
 		projDivision = 2;
 			
-		List<Project> project2 = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		List<Project> project2 = projectService.listProject(projDivision, sessionId, search2, sortFlag);
 		model.addAttribute("list4", project);
 		model.addAttribute("list6", project2);
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
+		model.addAttribute("list3", portfolio);
 		
 		
 		return "forward:/view/profile/profile.jsp";
