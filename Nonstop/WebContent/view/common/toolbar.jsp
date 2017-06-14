@@ -184,7 +184,7 @@
       //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
        $("#projDesigner").on("click" , function() {
          //$(self.location).attr("href","/user/logout");
-         self.location = "/project/listProject?projDivision=2&sortFlag=0"
+         self.location = "/project/listProject?postDivision=2"
       }); 
     });
    
@@ -193,7 +193,7 @@
          //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
           $("#projDeveloper").on("click" , function() {
             //$(self.location).attr("href","/user/logout");
-            self.location = "/project/listProject?projDivision=1&sortFlag=0"
+            self.location = "/project/listProject?postDivision=1"
          }); 
        });
    

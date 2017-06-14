@@ -115,7 +115,7 @@ public class ProjectController {
 		User user = userService.getUser(project.getProjUserId());
 		recordApplicant = projectService.getApplicant(projNo, scrapUserId);
 		projectService.updateViewCount(project);
-		List<RecordApplicant> listApplicant = projectService.listApplicant(projNo);
+		List<RecordApplicant> listApplicant = projectService.getApplicantList(projNo);
 		
 		System.out.println("listApplicant="+listApplicant);
 		
@@ -208,8 +208,6 @@ public class ProjectController {
 	
 	@RequestMapping(value="listProject")
 	public String listProject( @ModelAttribute("search") Search search,
-							   @RequestParam("sortFlag") int sortFlag , 
-							   @RequestParam("projDivision") int projDivision , 
 							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		System.out.println("/project/listProject");
 		
@@ -224,12 +222,24 @@ public class ProjectController {
 			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 		
-		List<Project> list = projectService.listProject(projDivision,scrapUserId,search,sortFlag);
+		List<Project> list = projectService.getProjectList(search, scrapUserId);
+        
+        //search.postDivision의 맨 앞글자가 1이면 개발 전체, 2이면 디자인 전체로 세팅
+        String postDivision = String.valueOf(search.getPostDivision());
+		
+		if(postDivision.startsWith("1")){
+			search.setPostDivision(1);
+		}else{
+			search.setPostDivision(2);
+		}
+		//추천순으로 나열
+		search.setPostSorting(3);
+		
 		List<Integer> projNoList = new ArrayList<Integer>();
 		for(int i=0; i<list.size(); i++){
 			projNoList.add(list.get(i).getProjNo());
 	    }
-        List<TechUse> listTechUse = techUseService.listTechUse(projNoList);
+		List<TechUse> listTechUse = techUseService.listTechUse(projNoList);
         
         
 		model.addAttribute("list", list);
@@ -286,7 +296,7 @@ public class ProjectController {
 							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		System.out.println("/project/listApplicant");
 		
-		List<RecordApplicant> listApplicant = projectService.listApplicant(recProjNo);
+		List<RecordApplicant> listApplicant = projectService.getApplicantList(recProjNo);
         
 		model.addAttribute("listApplicant", listApplicant);
 		

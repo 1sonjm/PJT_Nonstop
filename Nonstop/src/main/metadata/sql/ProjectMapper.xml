@@ -91,7 +91,7 @@
 	
 	 </select>
 	 
-	 <select  id="listProject"  parameterType="map"	resultMap="projectSelectMap">
+	 <select  id="getProjectList"  parameterType="map"	resultMap="projectSelectMap">
 		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
 			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
 			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no, 
@@ -101,58 +101,42 @@
 		 <where>
 		 	 p.proj_no=a.proj_no(+) And
 		 <!-- 	 p.proj_no=t.tu_proj_no(+) And -->
-		 	 <if test="projDivision == 1">
+		 	 <if test="search.postDivision == 1">
 		         p.proj_division IN (11,12)  
 		     </if>   
-		     <if test="projDivision == 2">
+		     <if test="search.postDivision == 2">
 		         p.proj_division IN (21,22)
 		     </if>
-		     <if test="projDivision != 1 and projDivision != 2">
-		         p.proj_division = #{projDivision}
+		     <if test="search.postDivision != 1 and search.postDivision != 2">
+		         p.proj_division = #{search.postDivision}
 		     </if>
 		     
 		 	<if test="search.searchCondition != null">
 			     <if test="search.searchCondition == 0"> 
 				 	   AND p.proj_title like '%' || #{search.searchKeyword} ||'%'
 				 </if>
-			<!-- <if test="search.searchCondition == 1"> 
-				 	   AND t.tech_name '%' || #{search.searchKeyword} ||'%'
-				 </if> -->
 			     <if test="search.searchCondition == 2 and searchKeyword !='' ">
 					   AND p.proj_location like '%' || #{search.searchKeyword} ||'%'
 				 </if>
 			 </if>
 		 </where>
-		 <if test="sortFlag != null">
-			 <if test="sortFlag == 1">
-			 	ORDER BY proj_annostart DESC
-			 </if>
-			 <if test="sortFlag == 2">
-			 	ORDER BY (CASE WHEN proj_dday=0 THEN proj_dday END) DESC, (CASE WHEN proj_dday>0 THEN proj_dday END) ASC
-			 </if>
-			 <if test="sortFlag == 3">
-			 	ORDER BY rec_count DESC
-			 </if>
-			 <if test="sortFlag == 4">
-			 	ORDER BY proj_ViewCount DESC
-			 </if>
-		 </if>
-	 </select>
-	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount
-						FROM project
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-									proj_title = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-									proj_location = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
+			 
+			<if test="search.postSorting == 1 or search.postSorting == 0">
+		  		ORDER BY proj_ViewCount DESC
+		  	</if>
+		  	
+		  	<if test="search.postSorting == 2">
+		  		ORDER BY proj_annostart DESC
+		  	</if>
+		  	
+		  	<if test="search.postSorting == 3">
+		  		ORDER BY (CASE WHEN proj_dday=0 THEN proj_dday END) DESC, (CASE WHEN proj_dday>0 THEN proj_dday END) ASC
+		  	</if>
+		  	
+		  	<if test="search.postSorting == 4">
+		  		ORDER BY rec_count DESC
+		  	</if>
+			 
 	 </select>
 	 
 	 <update	id="updateViewCount"	parameterType="project" >
@@ -247,7 +231,7 @@
 		WHERE rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
 	 </select>
 	 
-	 <select  id="listApplicant"  parameterType="int"	resultMap="recordApplicantSelectMap">
+	 <select  id="getApplicantList"  parameterType="int"	resultMap="recordApplicantSelectMap">
 		SELECT r.rec_no, r.rec_proj_no, r.rec_user_id, r.rec_status, u.user_id, u.user_img as rec_user_img
 		FROM record_applicant r, users u
 		WHERE r.rec_user_id = u.user_id

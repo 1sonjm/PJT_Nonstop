@@ -93,11 +93,7 @@
           float : right;
           margin : 0;
         }
-        /*  회색 부분 all,web,app */
-        .navbar-static-top {
-		  padding-top: 30px;
-		  height: 120px;
-		}
+        
 		#techNameButton{
 			padding : 2px;
 			heigth : 8px;
@@ -107,12 +103,116 @@
 		
 		::selection { color:white; background:blue; }
 		::-moz-selection { color:white; background:blue; }
+		
+		.navbar-static-top .dropdown{
+		   margin-top: 9px;
+		}
+		.navbar-static-top .input-group-sm{
+		   margin-top: 15px;
+		}
      	
      	
 	</style>
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
 	<script type="text/javascript">
-		/*검색 */
+	
+	$(function( ) {
+		
+		$("#division li").on("click" , function() {
+        	var prevDiv = $("#postDivision").val();
+        	var nextDiv = $(this).text().trim();
+        	
+        	if(nextDiv == "전체"){
+        		nextDiv = 1;  
+ 			}else if(nextDiv=="WEB"){
+ 				nextDiv = 2;
+        	}else{
+ 				nextDiv = 3;  
+            }
+            
+            if(prevDiv == 1 || prevDiv == 11 || prevDiv == 12){
+            	
+            	switch(nextDiv) {
+            	case 1:
+            		self.location="/project/listProject?postDivision=1";
+            		break;
+            	case 2:
+            		self.location="/project/listProject?postDivision=11";
+            		break;
+            	case 3:
+            		self.location="/project/listProject?postDivision=12";
+            		break;
+            	}
+            	
+            }else{
+            	switch(nextDiv) {
+            	case 1:
+            		self.location="/project/listProject?postDivision=2";
+            		break;
+            	case 2:
+            		self.location="/project/listProject?postDivision=21";
+            		break;
+            	case 3:
+            		self.location="/project/listProject?postDivision=22";
+            		break;
+            	}
+            }
+        });
+        
+        //(1:조회순 / 2:최신순 / 3:마감임박순 / 4:지원자순)
+        $("#sorting li").on("click" , function() {
+        	var postSorting = $(this).text().trim();
+        	
+        	if(postSorting == "조회순"){
+        		postSorting = 1;  
+ 			}else if(postSorting=="최신순"){
+ 				postSorting = 2;  
+ 			}else if(postSorting=="마감임박순"){
+ 				postSorting = 3;  
+ 			}else{
+ 				postSorting = 4;  
+            }
+        	alert(postSorting)
+        	
+        	self.location = "/project/listProject?postDivision="+$("#postDivision").val()+"&postSorting="+postSorting;
+        });
+        
+        /* 검색 카테고리 */
+        $("#searchCondition-li li").on("click" , function() {
+			var displayValue = $(this).text().trim();
+        	if(displayValue=="제목"){
+        		$("#searchButton").text(displayValue); 
+        		$("#searchButton").val(0);
+        	}else if(displayValue=="개발지역"){
+        		$("#searchButton").text(displayValue);
+        		$("#searchButton").val(2);
+        	}
+        	alert($("#searchButton").val())
+        	$("input:hidden[name=searchCondition]").val($("#searchButton").val());
+        	alert($("input:hidden[name=searchCondition]").val() );
+        });
+        
+        /* 검색버튼 */
+        $("#search").on("click", function() {
+        	
+        	$("#currentPage").val();
+        	
+        	var searchCondition = $("input:hidden[name=searchCondition]").val();
+        	var searchKeyword = $("#searchKeyword").val();
+        	var postDivision = $("#postDivision").val(); 
+        	var postSorting = $("#postSorting").val(); 
+        	alert("searchCondition"+searchCondition);
+        	alert("searchKeyword"+searchKeyword);
+        	alert("postDivision"+postDivision);
+        	alert("postSorting"+postSorting);
+        	
+        	$("form").attr("method" , "POST").attr("action" , "/project/listProject?postDivision="+postDivision).submit();
+        	
+        });
+	});
+		
+	
+		/*검색 
 		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage);
 			var projDivision = $("#projDivision").val();
@@ -123,98 +223,25 @@
 	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag=0").submit();
 	            }
 		
-		}
+		}*/	
 		
-		/*검색기능*/		
-		$(function() {
-			$( "button.btn.btn-default" ).on("click" , function() {
+		/* 검색기능	 */	
+		/* $(function() {
+			$( "#search" ).on("click" , function() {
 				fncGetList(1);
 			});
-		});
-		/*검색기능 엔터첬을때 넘어가기*/	
-		$(function() {
+		}); */
+		
+		/* 검색기능 엔터첬을때 넘어가기	 */
+		/* $(function() {
 			$( "#searchKeyword" ).keypress( function(e) {
 				if(e.keyCode==13){
 					fncGetList(1);
 				}
 			});
 		});
-	
-		/*최신등록순*/	
-		function fncSortList1(){
-			var projDivision = $("#projDivision").val();
-			var sortFlag = $("#sortFlag").val();
-			sortFlag = 1;
-			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
-	            }else{
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
-	            }
-		}
-				
-		/*최신등록순*/	
-		$(function() {
-			$( "#projAnnoStart1" ).on("click" , function() {
-				fncSortList1();
-			});
-		});
+	 */
 		
-		/*마감임박순*/
-		function fncSortList2(){
-			var projDivision = $("#projDivision").val();
-			var sortFlag = $("#sortFlag").val();
-			sortFlag = 2;
-			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
-	            }else{
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
-	            }
-		}
-	
-		/*마감임박순*/	
-		$(function() {
-			$( "#projDday1" ).on("click" , function() {
-				fncSortList2();
-			});
-		});
-		
-		/*지원자순*/
-		function fncSortList3(){
-			var projDivision = $("#projDivision").val();
-			var sortFlag = $("#sortFlag").val();
-			sortFlag = 3;
-			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
-	            }else{
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
-	            }
-		}
-	
-		/*지원자순*/	
-		$(function() {
-			$( "#projApplicant1" ).on("click" , function() {
-				fncSortList3();
-			});
-		});
-		
-		/*조회순*/
-		function fncSortList4(){
-			var projDivision = $("#projDivision").val();
-			var sortFlag = $("#sortFlag").val();
-			sortFlag = 4;
-			if(projDivision == 1 || projDivision == 11 || projDivision == 12){
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag="+sortFlag).submit();
-	            }else{
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag="+sortFlag).submit();
-	            }
-		}
-	
-		/*조회순*/	
-		$(function() {
-			$( "#projViewCount1" ).on("click" , function() {
-				fncSortList4();
-			});
-		});
 			
 		
 		
@@ -241,37 +268,6 @@
 				});
 			}
 			
-			$("#button-all").on("click" , function() {
-	            var projDivision = $(this).val();
-	            
-	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=1&sortFlag=0";
-	            }else{
-	               self.location="/project/listProject?projDivision=2&sortFlag=0";
-	            }
-	         });
-		         
-	         $("#button-web").on("click" , function() {
-	            var projDivision = $(this).val();
-	            
-	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=11&sortFlag=0";
-	            }else{
-	               self.location="/project/listProject?projDivision=21&sortFlag=0";
-	            }
-	         });
-	         
-	         $("#button-app").on("click" , function() {
-	            var projDivision = $(this).val();
-	            
-	            if(projDivision == 1 || projDivision == 10 || projDivision == 11 || projDivision == 12){
-	               self.location="/project/listProject?projDivision=12&sortFlag=0";
-	            }else{
-	               self.location="/project/listProject?projDivision=22&sortFlag=0";
-	            }
-	         });
-			
-		
 		});
 		
 		
@@ -321,10 +317,123 @@
 
 <jsp:include page="/view/common/toolbar.jsp" />
 
-<!-- Second Navigation -->
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
+	<div class="container"> 
+	<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+	<input type="hidden" class="projUserId" name="projUserId" id="projUserId" value="${project.projUserId}" />
+	<input type="hidden" class="sessionUserId" name="sessionUserId" id="sessionUserId" value="${sessionScope.user.userId}" />
+	      
+		<ul class="nav navbar-nav">
+			<!-- all / web / app 카테고리 분류 -->
+			<li class="dropdown">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+					<c:choose>
+					<c:when test ="${param.postDivision==1 || param.postDivision==2}">
+						<span>전체</span>
+					</c:when>
+					<c:when test ="${param.postDivision==11 || param.postDivision==21}">
+						<span>WEB</span>
+					</c:when>
+					<c:otherwise>
+						<span>APP</span>
+					</c:otherwise>
+					</c:choose>
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" id="division">
+					<li val="1"><a href="#">전체</a></li>
+					<li val="2"><a href="#">WEB</a></li>
+					<li val="3"><a href="#">APP</a></li>
+					<!-- hidden Tag -->
+					<input type="hidden" id="postDivision" name="postDivision" value="${param.postDivision}"/>
+				</ul>
+			</li>
+			
+			<!-- 사용기술 분류 -->
+			<li class="dropdown">
+				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+					<span >사용 기술</span>
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li><a href="#">Language</a></li>
+					<li><a href="#">Framework</a></li>
+					<li class="divider"></li>
+					<li><a href="#">etc...</a></li>
+				</ul>
+			</li>
+			
+			<!-- 소팅 분류 -->
+			<li class="dropdown">
+				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+				<input type="hidden" id="postSorting" name="postSorting" val="${param.postSorting}"/>
+					<c:choose>
+					<c:when test ="${param.postSorting==1}">
+						<span>조회순</span>
+					</c:when>
+					<c:when test ="${param.postSorting==2}">
+						<span>최신순</span>
+					</c:when>
+					<c:when test ="${param.postSorting==3}">
+						<span>마감임박순</span>
+					</c:when>
+					<c:when test ="${param.postSorting==4}">
+						<span>지원자순</span>
+					</c:when>
+					<c:otherwise>
+						<span>조회순</span>
+					</c:otherwise>
+					</c:choose>
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu" id="sorting">
+					<li><a href="#">조회순</a></li>
+					<li><a href="#">최신순</a></li>
+					<li><a href="#">마감임박순</a></li>
+					<li><a href="#">지원자순</a></li>
+				</ul>
+			</li>
+		</ul>
+		
+		<form class="navbar-form navbar-right" role="search">
+		<div class="input-group input-group-sm">
+			<div class="input-group-btn">
+				<input type="hidden" id="searchCondition" name="searchCondition" value="${search.searchCondition}"/>
+				<button type="button" class="btn btn-success dropdown-toggle" id="searchButton" name="searchButton" 
+						data-toggle="dropdown" aria-expanded="false" style="background: #fff" >
+	        		검색조건&nbsp;&nbsp;&nbsp;
+	        	
+	        	<span class="caret"></span></button>
+	        	<ul class="dropdown-menu" id="searchCondition-li" role="menu">
+	          		<li><a href="#" value="0">제목</a></li>
+	          		<li><a href="#" value="2">개발지역</a></li>
+	        	</ul>
+			</div><!-- /btn-group -->
+			<span class="input-group-addon" id="sizing-addon3"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> </span>
+			<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" 
+				   value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+	      	<span class="input-group-btn">
+	        	<button class="btn btn-default" id="search" type="button">검색</button>
+	        	<input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
+			</span>
+		</div><!-- /input-group -->
+		</form>
+
+   </div>
+</nav>
+
+<div class="container">
+  <div class="row">
+	  <div class="margin-top-20">
+		  <div class="text">	
+		     <h2 class="text" style="font-weight: 600; padding-left : 18px">PROJECT<c:if test="${sessionScope.user.role == 3}"><button type="button" class="glyphicon glyphicon-plus-sign" style="font-size: 35px"/></c:if></h2>
+		  </div>
+	  </div>
+  </div>
+</div>
+
+<%-- <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container">
-		<!-- ALL/WEB/APP -->
 		<div class="row">	
 			<div class="col-md-6 col-md-offset-3" align="center">
 				<input type="hidden" id="projDivision" name="projDivision" value="${param.projDivision}"/>
@@ -337,9 +446,6 @@
 </nav>
 
 
-
-<!-- Ranking -->
-<!-- type -->
 <div class="container">
   <input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
   <input type="hidden" class="projUserId" name="projUserId" id="projUserId" value="${project.projUserId}" />
@@ -387,12 +493,11 @@
 		  </div>
 		  
 		  <button type="button" class="btn btn-default">검색</button>
-		  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 		  <input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
 		</form>
 		</div>
 	</div>
-</div>
+</div> --%>
 
 
     <!-- Page Content -->
@@ -408,7 +513,6 @@
 						<input type="hidden" name="projAnnoEnd" id="projAnnoEnd" value="${project.projAnnoEnd}" /> 
 						<input type="hidden" name="projStartDate" id="projStartDate" value="${project.projStartDate}" /> 
 						<input type="hidden" name="projEndDate" id="projEndDate" value="${project.projEndDate}" />
-						<input type="hidden" name="sortFlag" id="sortFlag" class="sortFlag" value="${project.sortFlag}" />
 						<div class="thumbnail">
 							<table style="height: 400px; overflow:hidden;">
 								<tr style="height: 40px; border-bottom: 1px solid #ddd">

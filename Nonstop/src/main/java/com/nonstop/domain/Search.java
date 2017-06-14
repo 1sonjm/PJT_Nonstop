@@ -12,11 +12,14 @@ public class Search {
 	private int pageSize;
 	private int projPageSize;
 	
-	//게시물 구분용(10:웹,앱개발 / 11:웹개발 / 12: 앱개발 / 20:웹,앱 디자인 / 21:웹디 / 22:앱디 
+	//게시물 구분용(10:웹,앱개발 / 11:웹개발 / 12: 앱개발 / 20:웹,앱 디자인 / 21:웹디 / 22:앱디 ) : portfolio
+	//게시물 구분용(11:웹개발 / 12: 앱개발 / 21:웹디 / 22:앱디 ) : project
 	private int postDivision;
 	
-	//게시물 소팅용(1:조회순 / 2:최신순 / 3:좋아요순)
+	//게시물 소팅용(1:조회순 / 2:최신순 / 3:좋아요순) : portfolio
+	//게시물 소팅용(1:조회순 / 2:최신순 / 3:마감임박순 / 4:지원자순) : project
 	private int postSorting;
+	
 
 	//페이징, 무한스크롤 위한 게시물 번호
 	private int endRowNum;
@@ -95,7 +98,7 @@ public class Search {
 	public void setPostSorting(int postSorting) {
 		this.postSorting = postSorting;
 	}
-
+    
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition="

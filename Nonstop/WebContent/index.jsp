@@ -122,14 +122,14 @@ body {
 	//============= toolbar project 이동 Event 처리 =============	
 	$(function() {
 		$("#projDesigner").on("click", function() {
-			self.location = "/project/listProject?projDivision=2&sortFlag=0"
+			self.location = "/project/listProject?postDivision=2"
 		});
 	});
 
 	//============= toolbar project 이동 Event 처리 =============
 	$(function() {
 		$("#projDeveloper").on("click", function() {
-			self.location = "/project/listProject?projDivision=1&sortFlag=0"
+			self.location = "/project/listProject?postDivision=1"
 		});
 	});
 
