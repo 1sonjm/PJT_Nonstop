@@ -156,15 +156,19 @@ window.onload = function () {
 		var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
 		link.href = link.textContent = window.location.href + maybeAddHash;
 		shareView.style.visibility = "visible";
-
+		var qrLink = document.getElementById("share_link_qr");
+		qrLink.src = "http://www.qr-code-generator.com/phpqrcode/getCode.php?cht=qr&chl=https%3A%2F%2F192.168.0.16%3A8444%2F%23"+sessionId+"&chs=150x150&choe=UTF-8&chld=L|0";
+		
 		callButton.onclick = function () {
 			start(true);
 		};
 
 		// another peer has joined our session
 		signalingChannel.onpeer = function (evt) {
+			callButton.value = "연결";
 			callButton.disabled = false;
 			shareView.style.visibility = "hidden";
+			shareView.style.display = "none";
 
 			peer = evt.peer;
 			peer.onmessage = handleMessage;
