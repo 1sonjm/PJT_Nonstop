@@ -239,8 +239,10 @@ public class ProjectController {
 		for(int i=0; i<list.size(); i++){
 			projNoList.add(list.get(i).getProjNo());
 	    }
-		List<TechUse> listTechUse = techUseService.listTechUse(projNoList);
-        
+		List<TechUse> listTechUse = new ArrayList<TechUse>();
+		if(projNoList.size() != 0 ){
+			listTechUse = techUseService.listTechUse(projNoList);
+		}
         
 		model.addAttribute("list", list);
 		model.addAttribute("search", search);

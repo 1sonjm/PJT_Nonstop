@@ -112,10 +112,10 @@
 		     </if>
 		     
 		 	<if test="search.searchCondition != null">
-			     <if test="search.searchCondition == 0"> 
+			     <if test="search.searchCondition == 0 and searchKeyword !='' "> 
 				 	   AND p.proj_title like '%' || #{search.searchKeyword} ||'%'
 				 </if>
-			     <if test="search.searchCondition == 2 and searchKeyword !='' ">
+			     <if test="search.searchCondition == 1 and searchKeyword !='' ">
 					   AND p.proj_location like '%' || #{search.searchKeyword} ||'%'
 				 </if>
 			 </if>

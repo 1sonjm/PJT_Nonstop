@@ -172,12 +172,11 @@
  			}else{
  				postSorting = 4;  
             }
-        	alert(postSorting)
         	
         	self.location = "/project/listProject?postDivision="+$("#postDivision").val()+"&postSorting="+postSorting;
         });
         
-        /* 검색 카테고리 */
+        /* 검색 카테고리 버튼 나오게 하기 */
         $("#searchCondition-li li").on("click" , function() {
 			var displayValue = $(this).text().trim();
         	if(displayValue=="제목"){
@@ -185,14 +184,14 @@
         		$("#searchButton").val(0);
         	}else if(displayValue=="개발지역"){
         		$("#searchButton").text(displayValue);
-        		$("#searchButton").val(2);
+        		$("#searchButton").val(1);
+        	}else{
+        		$("#searchButton").val();
         	}
-        	alert($("#searchButton").val())
         	$("input:hidden[name=searchCondition]").val($("#searchButton").val());
-        	alert($("input:hidden[name=searchCondition]").val() );
         });
         
-        /* 검색버튼 */
+        /* 검색버튼 클릭햇을때*/
         $("#search").on("click", function() {
         	
         	$("#currentPage").val();
@@ -200,52 +199,47 @@
         	var searchCondition = $("input:hidden[name=searchCondition]").val();
         	var searchKeyword = $("#searchKeyword").val();
         	var postDivision = $("#postDivision").val(); 
-        	var postSorting = $("#postSorting").val(); 
-        	alert("searchCondition"+searchCondition);
-        	alert("searchKeyword"+searchKeyword);
-        	alert("postDivision"+postDivision);
-        	alert("postSorting"+postSorting);
+        	var postSorting = $("#postSorting").val();
         	
-        	$("form").attr("method" , "POST").attr("action" , "/project/listProject?postDivision="+postDivision).submit();
+        	if(searchCondition==""){
+        		alert("검색 조건을 먼저 설정해주세요.");
+        		return ;
+        	}
+        	
+        	if(postSorting == ""){
+        		$("form").attr("method" , "POST").attr("action" , "/project/listProject?postDivision="+postDivision+"&postSorting=1").submit();
+        	}else{
+        	$("form").attr("method" , "POST").attr("action" , "/project/listProject?postDivision="+postDivision+"&postSorting="+postSorting).submit();
+        	}
         	
         });
-	});
-		
-	
-		/*검색 
-		function fncGetList(currentPage) {
-			$("#currentPage").val(currentPage);
-			var projDivision = $("#projDivision").val();
-			var sortFlag = $("#sortFlag").val();
-	            if(projDivision == 1 || projDivision == 11 || projDivision == 12){
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=1&sortFlag=0").submit();
-	            }else{
-	               $("form").attr("method" , "POST").attr("action" , "/project/listProject?projDivision=2&sortFlag=0").submit();
-	            }
-		
-		}*/	
-		
-		/* 검색기능	 */	
-		/* $(function() {
-			$( "#search" ).on("click" , function() {
-				fncGetList(1);
-			});
-		}); */
-		
-		/* 검색기능 엔터첬을때 넘어가기	 */
-		/* $(function() {
+      /*검색 엔터첬을때    */
+        $(function() {
 			$( "#searchKeyword" ).keypress( function(e) {
 				if(e.keyCode==13){
-					fncGetList(1);
+					$("#currentPage").val();
+		        	
+		        	var searchCondition = $("input:hidden[name=searchCondition]").val();
+		        	var searchKeyword = $("#searchKeyword").val();
+		        	var postDivision = $("#postDivision").val(); 
+		        	var postSorting = $("#postSorting").val();
+		        	
+		        	if(searchCondition==""){
+		        		alert("검색 조건을 먼저 설정해주세요.");
+		        		return false;
+		        	}
+		        	
+		        	if(postSorting == ""){
+		        		$("form").attr("method" , "POST").attr("action" , "/project/listProject?postDivision="+postDivision+"&postSorting=1").submit();
+		        	}else{
+		        	$("form").attr("method" , "POST").attr("action" , "/project/listProject?postDivision="+postDivision+"&postSorting="+postSorting).submit();
+		        	}
 				}
 			});
 		});
-	 */
+	});
 		
-			
-		
-		
-		
+	
 		$(document).ready(function() {
 		    $('#Carousel').carousel({
 		        interval: 5000
@@ -366,7 +360,6 @@
 			<!-- 소팅 분류 -->
 			<li class="dropdown">
 				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-				<input type="hidden" id="postSorting" name="postSorting" val="${param.postSorting}"/>
 					<c:choose>
 					<c:when test ="${param.postSorting==1}">
 						<span>조회순</span>
@@ -391,6 +384,7 @@
 					<li><a href="#">최신순</a></li>
 					<li><a href="#">마감임박순</a></li>
 					<li><a href="#">지원자순</a></li>
+					<input type="hidden" id="postSorting" name="postSorting" value="${param.postSorting}"/>
 				</ul>
 			</li>
 		</ul>
@@ -406,7 +400,7 @@
 	        	<span class="caret"></span></button>
 	        	<ul class="dropdown-menu" id="searchCondition-li" role="menu">
 	          		<li><a href="#" value="0">제목</a></li>
-	          		<li><a href="#" value="2">개발지역</a></li>
+	          		<li><a href="#" value="1">개발지역</a></li>
 	        	</ul>
 			</div><!-- /btn-group -->
 			<span class="input-group-addon" id="sizing-addon3"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> </span>
@@ -431,73 +425,6 @@
 	  </div>
   </div>
 </div>
-
-<%-- <nav class="navbar navbar-default navbar-static-top" role="navigation">
-	<div class="container">
-		<div class="row">	
-			<div class="col-md-6 col-md-offset-3" align="center">
-				<input type="hidden" id="projDivision" name="projDivision" value="${param.projDivision}"/>
-	        	<button class="button button-neutral" type="button" id="button-all" value="${param.projDivision}">All</button>
-	        	<button class="button button-neutral" type="button" id="button-web" value="${param.projDivision}">Web</button>
-	        	<button class="button button-neutral" type="button" id="button-app" value="${param.projDivision}">App</button>
-			</div>
-		</div>
-	</div>
-</nav>
-
-
-<div class="container">
-  <input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
-  <input type="hidden" class="projUserId" name="projUserId" id="projUserId" value="${project.projUserId}" />
-  <input type="hidden" class="sessionUserId" name="sessionUserId" id="sessionUserId" value="${sessionScope.user.userId}" />
-  <div class="row">
-	  <div class="margin-top-20">
-		  <div class="text">	
-		     <h2 class="text">Project<c:if test="${sessionScope.user.role == 3}"><button type="button" class="glyphicon glyphicon-plus-sign" style="font-size: 35px"/></c:if></h2>
-		  </div>
-	  </div>
-  </div>
-</div>
-
-<div class="container">
-	<hr class="margin-top-10"/>
-</div>
-            
-<div class="container">
-	<div class="row">
-		<div class="col-md-6">	
-		<form class="form-inline" name="detailForm">
-			<ol class="breadcrumb" >
-			  <li><a href="#" id="projAnnoStart1">최신등록순</a></li>
-			  <li><a href="#" id="projDday1">마감임박순</a></li>
-			  <li><a href="#" id="projApplicant1">지원자순</a></li>
-			  <li><a href="#" id="projViewCount1" >조회순</a></li>
-			</ol>
-		</form>
-		</div>
-		
-		<div class="col-md-6">
-	    <form class="form-inline" name="detailForm">
-		  <div class="form-group">
-		    <select class="form-control" name="searchCondition" >
-				<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
-				<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>개발기술</option>
-				<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>개발지역</option>
-			</select>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label class="sr-only" for="searchKeyword">검색어</label>
-		    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword" 
-		    	   value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
-		  </div>
-		  
-		  <button type="button" class="btn btn-default">검색</button>
-		  <input type="hidden" id="currentPage" name="currentPage" value="${search.currentPage}"/>
-		</form>
-		</div>
-	</div>
-</div> --%>
 
 
     <!-- Page Content -->
