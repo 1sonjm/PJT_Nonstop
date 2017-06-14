@@ -17,7 +17,7 @@ public interface StatisticsDAO {
 	
 	public List<Statistics> getTotalStatisticsList();
 
-	public List<Statistics> getMajorStatisticsList(int techClass);
+	public List<Statistics> getMajorStatisticsList(Map<String, Object> valueSet);
 	
 	public List<Statistics> getPeriodStatisticsList(Statistics statistics);
 	

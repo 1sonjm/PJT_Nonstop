@@ -93,16 +93,16 @@
 	</select>
 	
 	<!-- 과반수 조회 -->
-	<select id="getListMajorStatistics" parameterType="int" resultMap="statisticsSet">
+	<select id="getListMajorStatistics" parameterType="map" resultMap="statisticsSet">
 		SELECT DISTINCT stat_tech_no,tech_name,tech_class
 			<choose>
-				<when test="value == 1">,SUM(stat_demand) AS stat_demand</when>
-				<when test="value == 2">,SUM(stat_supply) AS stat_supply</when>
-				<when test="value == 3">,ROUND(AVG(stat_user_rate),3) AS stat_user_rate</when>
+				<when test="division == 1">,SUM(stat_demand) AS stat_demand</when>
+				<when test="division == 2">,SUM(stat_supply) AS stat_supply</when>
+				<when test="division == 3">,ROUND(AVG(stat_user_rate),3) AS stat_user_rate</when>
 			</choose>
 		FROM statistics s, tech t
 		WHERE s.stat_tech_no = t.tech_no 
-		AND t.tech_class = #{value}
+		AND t.tech_class = #{techClass}
 		AND rownum &lt;= 5
 		GROUP BY stat_tech_no,tech_name,tech_class
 		ORDER BY stat_tech_no

@@ -50,9 +50,10 @@ nav {
 	width: 50px;
 }
 
-nav label[for="menu_state"]{
+nav label[for="menu_state"] {
 	display: inline;
 }
+
 nav label[for="menu_state"] i {
 	cursor: pointer;
 	position: absolute;
@@ -111,10 +112,26 @@ nav ul li.unread:after {
 	font-size: 8px;
 }
 
-nav ul li :not (:last-child ){
-	border-bottom: none;
-}
+nav
+ 
+ul
+ 
+li
+ 
+:not
+ 
+(
+:last-child
+ 
+){
+border-bottom
+:
+ 
+none
+;
 
+
+}
 nav ul li.active a {
 	background: #4c515d;
 	color: #fff;
@@ -183,6 +200,8 @@ main section {
 	background: #fff;
 	padding: 15px;
 	width: 100%;
+	height: 100%;
+	text-align:center;
 	transition: all 0.15s ease-in-out;
 }
 /* 
@@ -237,73 +256,72 @@ ul.sidebar-menu {
 .setting-inline {
 	display: none;
 }
-.setting-inline *{
+
+.setting-inline * {
 	margin: 0 auto;
 	display: inline-block;
 }
-.setting-inline label{
+
+.setting-inline label {
 	margin: 0;
 }
 /*Chat message bubble container*/
-#chat_div div{
+#chat_div div {
 	display: table;
-} 
-.self-Message 
-{
-margin-top:5px;
-float: right;
-clear: both;
-position: relative;
-padding: 7px;
-margin-bottom: 13px;
-background: #c9c9c9;
-max-width:60%;
-min-width:10%;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
 }
 
-.self-Message :after 
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 8px 0 8px 20px;
-border-color: transparent #c9c9c9;
-display: block;
-width: 0;
-z-index: 1;
-right: -20px;
-top: 17px;
+.self-Message {
+	margin-top: 5px;
+	float: right;
+	clear: both;
+	position: relative;
+	padding: 7px;
+	margin-bottom: 13px;
+	background: #c9c9c9;
+	max-width: 60%;
+	min-width: 10%;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
 }
 
-.remote-Message 
-{
-margin-top:5px;
-float: left;
-    clear: both;
-position: relative;
-padding: 7px;
-margin-bottom: 13px;
-background: #FFFFFF;
-max-width:60%;
-min-width:10%;
--webkit-border-radius: 10px;
--moz-border-radius: 10px;
+.self-Message :after {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 8px 0 8px 20px;
+	border-color: transparent #c9c9c9;
+	display: block;
+	width: 0;
+	z-index: 1;
+	right: -20px;
+	top: 17px;
 }
 
-.remote-Message :after 
-{
-content: '';
-position: absolute;
-border-style: solid;
-border-width: 8px 20px 8px 0;
-border-color: transparent #FFFFFF;
-display: block;
-width: 0;
-z-index: 1;
-left: -20px;
-top: 17px;
+.remote-Message {
+	margin-top: 5px;
+	float: left;
+	clear: both;
+	position: relative;
+	padding: 7px;
+	margin-bottom: 13px;
+	background: #FFFFFF;
+	max-width: 60%;
+	min-width: 10%;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+}
+
+.remote-Message :after {
+	content: '';
+	position: absolute;
+	border-style: solid;
+	border-width: 8px 20px 8px 0;
+	border-color: transparent #FFFFFF;
+	display: block;
+	width: 0;
+	z-index: 1;
+	left: -20px;
+	top: 17px;
 }
 
 .chatMessageTime {
@@ -312,18 +330,21 @@ top: 17px;
 }
 
 #chat_txt {
-	width: calc(100% - 50px);;
+	width: 100%;
 	height: 60px;
 	border: 1px solid #dedede;
-	/*padding-left: 60px;*/
 	font-size: 16px;
 	font-weight: 600;
+	display: block;
 }
 
 #chat_but {
-	vertical-align: middle; color : #f96900;
-	font-size: 30px;
+	vertical-align: middle;
 	color: #f96900;
+	font-size: 30px;
+	position: relative;
+	left: calc(100% - 50px);
+	top: -45px;
 }
 
 .view_form {
@@ -363,10 +384,15 @@ video {
 	height: 700px;
 }
 
-.strame_controler{
+.strame_controler {
 	text-align: center;
 }
 
+#call_but{
+	width: 400px;
+	font-size: 3em;
+	font-weight: 500;
+}
 /*
 @media screen and (max-width : 768px) {
 	h2 {

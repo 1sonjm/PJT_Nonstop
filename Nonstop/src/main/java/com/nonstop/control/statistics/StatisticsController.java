@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
@@ -63,9 +64,9 @@ public class StatisticsController {
 	}
 	
 	@RequestMapping(value="getJSONMajorStatisticsList", method=RequestMethod.GET)
-	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics){
+	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics, @RequestParam("aa") int division){
 		System.out.println("/statstics/getJSONMajorStatisticsList");
-		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass()));
+		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass(),division));
 	}
 	
 	@RequestMapping(value="getJSONPeriodStatisticsList", method=RequestMethod.GET)

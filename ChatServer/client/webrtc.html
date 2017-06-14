@@ -26,6 +26,8 @@
 <script type="text/javascript">
 	$(function() {
 		resizeComponent($(window).width(), $(window).height());
+		
+		$('qu')
 	})
 	var changeSizeDelay;
 	$(window).resize(function() {
@@ -40,7 +42,7 @@
 	function resizeComponent(browserWidth, browserHeight)
 	{
 		$('#remote_view').height(browserHeight - 70);
-		$('#chat_div').height(browserHeight - 180);
+		$('#chat_div').height(browserHeight - 230);
 		$('#fileshare_div').height(browserHeight - 340);
 
 
@@ -54,7 +56,7 @@
 	<nav class="sidemenu">
 		<label for="menu_state"><i class="fa"></i></label>
 		<ul>
-			<li><a href="javascript:void(0)"> <i class="fa fa-home"></i> <span>홈페이지</span>
+			<li><a href="http://192.168.0.16:8080"> <i class="fa fa-home"></i> <span>홈페이지</span>
 			</a></li>
 			<li class="menu_content strame_controler">
 				<div>
@@ -91,9 +93,10 @@
 			<input type="hidden" id="session_txt" value="" size="10"> <br> <input type="checkbox" id="video_cb" checked> <input
 				type="checkbox" id="audio_cb" checked> <input type="checkbox" id="chat_cb" checked> <input type="checkbox" id="screen_cb">
 		</div>
-		<input class="btn" type="button" id="call_but" value="Call" disabled>
+		<input class="btn btn-default" type="button" id="call_but" value="접속 대기중" disabled>
 		<div id="share-container">
-			link: <a id="share_link" target="_blank" href=""></a>
+			link: <a id="share_link" target="_blank" href=""></a><br/>
+			<img id="share_link_qr"/>
 		</div>
 		<div id="log_div"></div>
 	</section>
