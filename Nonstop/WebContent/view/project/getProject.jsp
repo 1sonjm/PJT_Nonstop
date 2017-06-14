@@ -726,7 +726,7 @@ xmp{
 													<c:set var="i" value="0"/>
 														<c:forEach var="listTechUse" items="${listTechUse}" >
 														<c:set var="i" value="${i+1}"/>
-														<a type="button" class="btn btn-info" id="techNameButton">${listTechUse.tuTechName}</a>
+														<span class="label label-info" style="color : #000;">${listTechUse.tuTechName}</span>
 													</c:forEach>
 												</th>
 											</tr>

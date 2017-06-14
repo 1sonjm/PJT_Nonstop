@@ -495,7 +495,7 @@
 											<c:forEach var="listTechUse" items="${listTechUse}" >
 											<c:set var="i" value="${i+1}"/>
 											<c:if test="${listTechUse.tuProjNo== project.projNo}">
-												<a type="button" class="btn btn-info" id="techNameButton">${listTechUse.tuTechName}</a>
+												<span class="label label-info" style="color : #000;">${listTechUse.tuTechName}</span>
 											</c:if>
 										</c:forEach>
 									</th>
@@ -512,7 +512,9 @@
 
 								<tr>
 									<th colspan="4" ></th>
-									<th colspan="4" style="background-color: #dddddd; text-align: center" class="detailButton" value="${project.projNo}">상세보기</th>
+									<th colspan="4" class="detailButton" value="${project.projNo}">
+										<button type="button" class="label label-info" style="font-size : 15px; color : #000; margin : 0; width :100% ; height : 100%">상 세 보 기</button>
+									</th>
 									<th colspan="4" ></th>
 								</tr>
 							</table>
