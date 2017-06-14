@@ -52,11 +52,6 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 	}
 	
 	@Override
-	public List<Statistics> getCarreerDataList(String userId){
-		return sqlSession.selectList("StatisticsMapper.getListCarreerData",userId);
-	}
-	
-	@Override
 	public List<Statistics> getTotalStatisticsList() {
 		return sqlSession.selectList("StatisticsMapper.getListTotalStatistics");
 	}

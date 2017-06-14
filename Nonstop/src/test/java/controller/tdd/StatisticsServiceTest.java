@@ -3,9 +3,7 @@ package controller.tdd;
 
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -21,7 +19,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsService;
-import com.sun.org.glassfish.external.statistics.Statistic;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 
@@ -66,12 +63,6 @@ public void getTechClassList()
 public void getTechDataList()
 {
 	System.out.println(statisticsService.getTechDataList(1));
-}
-
-@Test
-public void getCarreerDataList()
-{
-	System.out.println(statisticsService.getCarreerDataList("user01"));
 }
 
 // @Test
@@ -142,12 +133,12 @@ public void createData() throws Exception
 		cal.add(Calendar.DAY_OF_MONTH, -7);
 		for(Statistics value: techList)
 		{
-			System.out.println("INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,"+value.getTechNo()+","+randValue(1,10)+","
-			      +randValue(0,5)+","+randValue(5,30)+",'"+sdf.format(cal.getTime())+"');");
+			System.out.println("INSERT INTO statistics VALUES (seq_statisics_stat_no.nextval,"+value.getTechNo()+","
+			      +randValue(1, 10)+","+randValue(0, 5)+","+randValue(5, 30)+",'"+sdf.format(cal.getTime())+"');");
 		}
 	}
 }
-private int randValue(int min,int range)
+private int randValue(int min, int range)
 {
 	Random rand = new Random();
 	// nextInt is normally exclusive of the top value,

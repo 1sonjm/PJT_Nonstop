@@ -328,6 +328,36 @@ AmCharts.makeChart("chartdiv",
     		 var userId = $(this).text().trim();
     		 self.location = "/profile/getOtherProfile?userId="+userId;
     	 });
+    	
+    	$(".fa-envelope").on('click' , function(){
+    		var userId = $(this).text().trim();
+    		$(this).val(userId);
+    	})
+    	
+    	//글자수 표시
+	       $('textarea').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
+		 //메일전송
+		 $("#send").on("click", function(){
+			var receiveId=$("input[name='receiveId']").val();
+			var title=$("input[name='letTitle']").val();
+			var letDetail=$("input[name='letDetail']").val();
+			
+			if(receiveId == null || receiveId.length<1 ){
+				alert("수신자는 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			if(title == null || title.length<1){
+				alert("제목은 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+		 });
 
     	
     	//팔로우 add /delete
@@ -364,6 +394,7 @@ AmCharts.makeChart("chartdiv",
     		});
     	
     });
+	
     	
 
     </script>
@@ -550,7 +581,7 @@ AmCharts.makeChart("chartdiv",
 										<div class="form-group">
 											<label class="col-lg-2 control-label">To</label>
 											<div class="col-lg-10">
-												<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
+												<input type="text" placeholder="수신자를 입력하세요" name="receiveId" value=""
 													id="inputEmail1" class="form-control">
 											</div>
 										</div>
