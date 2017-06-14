@@ -9,6 +9,8 @@ public class RecordApplicant {
 	private int recProjNo;
 	private String recUserId;
 	private int recStatus;
+	private String recUserImg;
+	
 	
 	public int getRecNo() {
 		return recNo;
@@ -35,6 +37,13 @@ public class RecordApplicant {
 		this.recStatus = recStatus;
 	}
 	
+	public String getRecUserImg() {
+		return recUserImg;
+	}
+	public void setRecUserImg(String recUserImg) {
+		this.recUserImg = recUserImg;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -46,7 +55,8 @@ public class RecordApplicant {
 		builder.append(recUserId);
 		builder.append(", recStatus=");
 		builder.append(recStatus);
-		builder.append(", recUserName=");
+		builder.append(", recUserImg=");
+		builder.append(recUserImg);
 		builder.append("]");
 		return builder.toString();
 	}

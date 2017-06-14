@@ -67,6 +67,16 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		
 		return sqlSession.selectList("PortfolioMapper.getProfilePortList", map);
 	}
+	
+	@Override
+	public List<Portfolio> getProfilePortScrapList(String sessionUserId, String profileUserId) throws Exception {
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sessionUserId", sessionUserId);
+		map.put("profileUserId", profileUserId);
+		
+		return sqlSession.selectList("PortfolioMapper.getProfilePortScrapList", map);
+	}
 
 	@Override
 	public void updatePortfolio(Portfolio portfolio) throws Exception {

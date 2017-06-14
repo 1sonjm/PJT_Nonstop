@@ -99,14 +99,19 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 	
 	@Override
-	public List<RecordApplicant> getApplicantList(List<Integer> projNoList) throws Exception {
-		return projectDAO.getApplicantList(projNoList);
+	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception {
+		return projectDAO.listApplicant(recProjNo);
 	}
 	
 	@Override
 	public void deleteApplicant(int recProjNo, String recUserId) throws Exception{
 		
 		projectDAO.deleteApplicant(recProjNo, recUserId);
+	}
+	
+	public void inviteApplicant(int recNo) throws Exception{
+		
+		projectDAO.inviteApplicant(recNo);
 	}
 	
 	@Override

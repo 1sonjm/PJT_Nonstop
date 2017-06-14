@@ -53,7 +53,7 @@
 <script type="text/javascript">
 function getJsonDataList(type,addr){
 	$.ajax("/statistics/"+addr,{
-		method : "POST" ,
+		method : "GET" ,
 		dataType : "json" ,
 		headers : {
 			"Accept" : "application/json"//,
@@ -125,6 +125,9 @@ $(function(){
 			$('#searchTarget').css('display','block');
 			$('#searchDate').css('display','none');
 			$('#tabIndex').val('2');
+			document.getElementById("selectTechClass").parentNode.parentNode.className = "col-md-5";
+			document.getElementById("TechData").parentNode.className = "";
+			document.getElementById("TechData").style.display = "none";
 		}
 	})
 	$('li a:contains("기간별 수요/공급")').on('click',function(){
@@ -134,6 +137,9 @@ $(function(){
 			$('#searchTarget').css('display','none');
 			$('#searchDate').css('display','block');
 			$('#tabIndex').val('3');
+			document.getElementById("selectTechClass").parentNode.parentNode.className = "col-md-2";
+			document.getElementById("TechData").parentNode.className = "col-md-3";
+			document.getElementById("TechData").style.display = "block";
 		}
 	})
 	$('li a:contains("지역별 수요/공급")').on('click',function(){
@@ -209,6 +215,8 @@ $(function(){
 <jsp:include page="/view/common/toolbar.jsp" />
 
 <div class="container" style="margin-top: 20px">
+	<img alt="" src="https://chart.googleapis.com/chart?cht=qr&chs=210x210&chl=http://www.naver.com&chld=M
+https://developers.google.com/chart/infographics/docs/qr_codes"/>
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>

@@ -14,9 +14,12 @@
 <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 <script src="/resources/javascript/jquery.js"></script>
 
-<script src="/resources/javascript/bootstrap.min.js"></script>
+<!-- <script src="/resources/javascript/bootstrap.min.js"></script> -->
 
-
+<script
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+   crossorigin="anonymous"></script>
 <!-- Bootstrap Core CSS -->
 <link href="/resources/css/nonstop.css" rel="stylesheet">
 
@@ -292,7 +295,7 @@ hr.thick-line {
 }
 
 
-#backButton, #applButton, #viewButton, #applCancleButton {
+#backButton, #applButton, #viewButton, #applCancleButton, #xApplButton {
 	float: right;
 	margin-left: 5px;
 	font-size: 16px;
@@ -349,6 +352,20 @@ xmp{
 	color: #d5d5d5;
     }
     
+.modal-header h4.modal-title {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 300;
+}
+
+.modal-body label {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 400;
+}
+
+.modal-dialog {
+	width : 300px;
+}
+    
 </style>
 
 <script type="text/javascript">
@@ -375,34 +392,46 @@ xmp{
 	
 	 
 	$(function() {
+		//프로젝트 삭제
 		$("#deleteButton").on("click", function(){
 				fncDeleteProject(1);
 		});
-		
+		//프로젝트 수정
 		$("#updateButton").on("click", function(){
 			self.location ="/project/updateProjectView?projNo="+$(".projNo").attr("value");
 		});
-		
+		// 목록으로 가기
 		$("#backButton").on("click", function(){
 			history.go(-1);
 		});
-		
+		//프로젝트 지원하기
 		$("#applButton").on("click", function(){
 			if(confirm("정말 지원하시겠습니까?") !=0){
 				$("form").attr("method", "POST").attr("action", "/project/addApplicant").submit();
 			}else{
 			}
 		});
-		
+		//프로젝트 지원 취소하기
 		$("#applCancleButton").on("click", function(){
 			if(confirm("정말 지원을 취소하시겠습니까?") !=0){
 				$("form").attr("method", "POST").attr("action", "/project/deleteApplicant").submit();
 			}else{
 			}
 		});
-		
-		$("#viewButton").on("click", function(){
+		//프로젝트 초대하기
+	 	$("#invite").on("click", function(){
+	 		
+	 		var items = [];
+			$("input:checkbox[name=recNo]:checked").each(function(){
+				items.push($(this).val());
+			});
 			
+			$("input:hidden[name='checkBoxes']").val( items );
+	 		
+			if(confirm("프로젝트에 한번 초대된 인원은 수정이 불가능합니다.\n정말 프로젝트에 초대하시겠습니까? ") !=0){
+				$("form").attr("method", "POST").attr("action", "/project/inviteApplicant").submit();
+			}else{
+			}
 		});
 		
 	});
@@ -569,6 +598,7 @@ xmp{
 			<div class="row">
 				<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
 				<input type="hidden" class="userId" name="userId" id="userId" value="${user.userId}" />
+				<input type="hidden" class="recNo" name="recNo" id="recNo" value="${recordApplicant.recNo}" />
 				<!-- Blog Post (Left Body) Start -->
 				<div class="col-md-9">
 					<div class="col-md-12 page-body">
@@ -584,6 +614,9 @@ xmp{
 										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId}">
 											<button type="button" class="btn btn-info btn-lg" id="applCancleButton">지원취소</button>
 										</c:when>
+										<c:when test="${project.projDday<=0}">
+											<button type="button" class="btn btn-info btn-lg" id="xApplButton">지원불가</button>
+										</c:when>
 										<c:otherwise>
 											<button type="button" class="btn btn-info btn-lg" id="applButton">지원하기</button>
 										</c:otherwise>
@@ -593,7 +626,7 @@ xmp{
 									<button type="button" class="btn btn-info btn-lg" id="updateButton">수정</button>
 									<button type="button" class="btn btn-info btn-lg" id="deleteButton">삭제</button>
 									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
-									<button type="button" class="btn btn-info btn-lg" id="viewButton">지원자 보기</button>
+									<button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-info btn-lg" id="viewButton">지원자 보기</button>
 								</c:if>
 								<c:if test="${sessionScope.user.role == '3' && sessionScope.user.userId != project.projUserId}">
 									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
@@ -801,7 +834,7 @@ xmp{
 					<div class="about-fixed">
 
 						<div class="my-pic">
-						    <img class="userImg" src="../../resources/images/upload/user01img.jpg" alt="">
+						    <img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
               			</div>
               			
               			<div class="my-detail">
@@ -834,7 +867,9 @@ xmp{
 						 <div class="margin-top-20">
 						 	<input type="hidden" name="projUserId" id="projUserId" value="${project.projUserId}"/>
 						 	<center>
+						 	<c:if test="${sessionScope.user.userId != project.projUserId}">
 								<button type="button" class="btn btn-info btn-lg" id="messageQuestion">쪽지 문의</button>
+							</c:if>
 								<c:if test="${sessionScope.user.role == 2}">
 								<%-- 	<c:if test="${project.projFollowFlag == true}"> --%>
 										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
@@ -854,6 +889,8 @@ xmp{
 			</div>
 		</div>
 	</div>
+	
+	
 
 
 
@@ -865,5 +902,74 @@ xmp{
 
 	<!-- jQuery -->
 </form>
+	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" 	style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+					<h4 class="modal-title">지원자 목록</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="addMail" class="form-horizontal">
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+						<div class="form-group" style="height : 250; overflow-y: scroll; overflow-x:hidden; layout:fixed;">
+							<c:if test="${project.projDday<=0}">
+							<c:set var="i" value="0" />
+							<c:set var="isChk" value="false"/>
+							<c:forEach var="recordApplicant" items="${listApplicant}">
+								<c:set var="i" value="${ i+1 }" />
+								<div class="form-group">
+									  <div class="col-md-12">
+									  	<div class="checkbox">
+											<label for="checkboxes-0" style="font-size : 20px">
+										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox">
+										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
+										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										      </button>
+										      ${recordApplicant.recUserId}
+										      <c:if test="${recordApplicant.recStatus==1}">
+										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
+										      <c:set var="isChk" value="true"/>
+										      </c:if>
+									    	</label>
+										</div>		
+									  </div>
+								</div>
+							</c:forEach>
+							</c:if>
+							<c:if test="${project.projDday>0}">
+							<c:set var="i" value="0" />
+							<c:forEach var="recordApplicant" items="${listApplicant}">
+								<c:set var="i" value="${ i+1 }" />
+								<div class="form-group">
+									<div class="col-md-12">
+										<label style="font-size : 20px; margin-left:35px">
+										    <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
+										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										    </button>
+										      ${recordApplicant.recUserId}
+										      <c:if test="${recordApplicant.recStatus==1}">
+										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
+										      </c:if>
+										</label>
+									</div>
+								</div>
+							</c:forEach>
+							</c:if>
+							<input type="hidden" name="checkBoxes"/>
+						</div>
+					</form>
+				</div>
+				
+				<div class="modal-footer" style="background-color : white;">
+					<c:if test="${project.projDday<=0 && isChk eq false}">
+					<center><button class="btn btn-send" type="submit" id="invite">프로젝트 초대</button></center>
+					</c:if>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+</div>
 </body>
 </html>

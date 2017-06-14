@@ -114,9 +114,19 @@
 	 
 	 
 	<select  id="getProfilePortList" parameterType="map" resultMap="portfolioSelectMap">
-		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no
-		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a
-		WHERE   port_user_id = #{profileUserId} AND p.port_no = a.port_no(+)
+		
+		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no,users.user_img, users.user_id
+		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a , users
+		WHERE   p.port_user_id =#{profileUserId} AND p.port_no = a.port_no(+) AND users.user_id=#{profileUserId}
+		
+	</select>
+	
+	<select  id="getProfilePortScrapList" parameterType="map" resultMap="portfolioSelectMap">
+		
+		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no,users.user_img, users.user_id
+		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a , users
+		WHERE   p.port_no = a.port_no(+)AND users.user_id=p.port_user_id AND a.user_id=#{profileUserId}
+		
 	</select>
 	 
 	<!-- SQL : INSERT -->

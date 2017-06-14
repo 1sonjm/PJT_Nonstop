@@ -64,10 +64,6 @@ public class StatisticsServiceImpl implements StatisticsService {
 		return statisticsDAO.getTechDataList(classDiv);
 	}
 	
-	public List<Statistics> getCarreerDataList(String userId){
-		return statisticsDAO.getCarreerDataList(userId);		
-	}
-	
 	@Override
 	public List<Statistics> getTotalStatisticsList() {
 		return statisticsDAO.getTotalStatisticsList();
