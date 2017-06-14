@@ -1,6 +1,7 @@
 package com.nonstop.service.project.projectImpl;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -69,13 +70,17 @@ public class ProjectDAOImpl implements ProjectDAO{
 
 	
 	public List<Project> listProject(int projDivision , String scrapUserId, Search search, int sortFlag) throws Exception {
-		Map<String , Object> map = new HashMap<String , Object>();
 		
+		
+		
+		Map<String , Object> map = new HashMap<String , Object>();
 		map.put("scrapUserId", scrapUserId);
 		map.put("projDivision", projDivision);
 		map.put("search", search);
 		map.put("sortFlag", sortFlag);
 		
+		
+		System.out.println("Asfsdfdsf"+map);
 		return sqlSession.selectList("ProjectMapper.listProject", map);
 	}
 	
@@ -127,9 +132,9 @@ public class ProjectDAOImpl implements ProjectDAO{
 		return sqlSession.selectOne("ProjectMapper.getApplicant", map);
 	}
 	
-	public List<RecordApplicant> getApplicantList(List<Integer> projNoList) throws Exception{
+	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception{
 		
-		return sqlSession.selectList("ProjectMapper.getApplicantList", projNoList);
+		return sqlSession.selectList("ProjectMapper.listApplicant", recProjNo);
 	}
 	
 	public void deleteApplicant(int recProjNo, String recUserId) throws Exception{
@@ -140,6 +145,12 @@ public class ProjectDAOImpl implements ProjectDAO{
 		map.put("recUserId", recUserId);
 		
 		sqlSession.delete("ProjectMapper.deleteApplicant", map);
+	}
+	
+	public void inviteApplicant(int recNo) throws Exception{
+		
+		sqlSession.update("ProjectMapper.inviteApplicant", recNo);
+		
 	}
 	
 	public void deleteApplicantTotal(int recProjNo) throws Exception{

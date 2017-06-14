@@ -59,6 +59,16 @@ INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_
 VALUES ('user03','개인3','1234','zxc3@naver,com','user03img',2,010-1234-5678,'서울 강남구');
 INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_tel,user_addr)
 VALUES ('user04','개인4','1234','zxc4@naver,com','user04img',2,010-1234-5678,'서울 강남구');
+INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_tel,user_addr)
+VALUES ('user05','개인5','1234','zxc5@naver,com','user01img',2,010-1234-5678,'서울 강남구');
+INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_tel,user_addr)
+VALUES ('user06','개인6','1234','zxc6@naver,com','user02img',2,010-1234-5678,'서울 강남구');
+INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_tel,user_addr)
+VALUES ('user07','개인7','1234','zxc7@naver,com','user03img',2,010-1234-5678,'서울 강남구');
+INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_tel,user_addr)
+VALUES ('user08','개인8','1234','zxc8@naver,com','user04img',2,010-1234-5678,'서울 강남구');
+
+
 
 INSERT INTO users(user_id,user_name,user_pwd,user_email,user_img,user_role,user_tel,user_emp,user_est,user_ceo,user_addr)
 VALUES ('com01','기업1','1234','qwe1@naver,com','com01img',3,010-1234-5678,
