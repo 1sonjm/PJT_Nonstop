@@ -37,7 +37,9 @@ public interface ProjectService {
 
 	public RecordApplicant getApplicant(int recProjNo, String recUserId) throws Exception ;
 	
-	public List<RecordApplicant> getApplicantList(List<Integer> projNoList) throws Exception;
+	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception;
+	
+	public void inviteApplicant(int recNo) throws Exception;
 	
 	public void deleteApplicant(int recProjNo, String recUserId) throws Exception;
 	

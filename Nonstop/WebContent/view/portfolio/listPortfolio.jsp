@@ -146,6 +146,46 @@
         });
 	});
 	
+	$(function () {
+		'use strict';
+	    /* 스크롤 버튼 */
+		//DOM(Document Object Model)이 로드되었을 때 실행되어야 하는 코드
+	    jQuery(document).ready(function () {
+	
+	    	/* Smooth Scroll */		
+		    $('a.smoth-scroll').on("click", function (e) {
+		        var anchor = $(this);
+		        $('html, body').stop().animate({
+		            scrollTop: $(anchor.attr('href')).offset().top - 50
+		        }, 1000);
+		        e.preventDefault();
+		    });
+			
+			/* Scroll To Top */			
+		    $(window).scroll(function(){
+		    if ($(this).scrollTop() >= 500) {
+		        $('.scroll-to-top').fadeIn();
+		     } else {
+		        $('.scroll-to-top').fadeOut();
+		     }
+		     });
+		
+		    $('.scroll-to-top').click(function(){
+		      $('html, body').animate({scrollTop : 0},800);
+		      return false;
+		      });
+	    });
+	    /* 포트폴리오 등록 */
+    	$(".addPortfolio").on("click" , function() { 
+    		if($(".sessionScope").val() == ""){
+    			alert("로그인 후 이용해 주세요.");
+    			return false;
+    		}
+    		self.location="/portfolio/addPortfolio";
+    	});
+	});
+	    
+	    
 	/* 스크랩추가 */
 	$(function() {
 		//동적으로 생성된 요소에 이벤트를 걸기위해 on메소드 사용($(document).on( '이벤트', '객체', '동작');)
@@ -292,6 +332,39 @@
 	});
    </script>
    <style>
+
+	/* 등록 */   
+   .addPortfolio {
+       font-size: 35px;
+       color: #d6d6d6;
+       position: fixed;
+       right: 40px;
+       top: 58.5px;
+       z-index: 1010;
+       transition: all 0.3s ease-in-out;
+   }
+   
+   /* Scroll To Top */
+   .scroll-to-top {
+       display: none;
+       font-size: 35px;
+       position: fixed;
+       right: 40px;
+       bottom: 50px;
+       z-index: 999;
+       transition: all 0.3s ease-in-out;
+   }
+   
+   .scroll-to-top:hover,
+   .scroll-to-top:focus {
+       color: #333333;
+   }
+   
+   @media only screen and (max-width:435px) {
+       .scroll-to-top {
+          font-size: 25px;
+       }
+   }
    
    /* listportfolio 상단 서브네비바 */
    .navbar-static-top .dropdown{
@@ -649,7 +722,7 @@
 		                                   </c:if>
 		                                   
 		                                   <c:if test="${empty sessionScope.user}">
-		                                   <input type="hidden" class="sessionScope" value="">
+		                                   <input type="hidden" class="sessionScope" value="${sessionScope.user}">
 		                                   </c:if>
 		                                                                   
 		                                 </p>
@@ -754,6 +827,13 @@
 </c:if>
    
 </c:forEach>
+
+
+<!-- Back to Top Start -->
+<!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->
+<a href="#" class="scroll-to-top"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span></a>
+<!-- Back to Top End -->
+<a href="#" class="addPortfolio"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true"></span></a>  
 
 </body>
 

@@ -185,8 +185,6 @@
 	<c:forEach var="portfolio" items="${list3}">
 		<c:set var="i" value="${i+1}" />
 
-		<c:if test="${portfolio.portUserId == sessionScope.user.userId }">
-
 			<div class="col-md-3 col-sm-3 hero-feature" style="margin-top: 30px; margin-bottom: 20px;">
 				<div class="portThumbnail">
 					<figure class="effect-sadie">
@@ -232,9 +230,7 @@
 					</figure>
 				</div>
 				</div>
-				
-		</c:if>
-
+			
 	</c:forEach>
 	
 

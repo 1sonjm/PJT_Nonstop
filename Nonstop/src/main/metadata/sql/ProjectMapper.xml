@@ -53,6 +53,7 @@
 		<result property="recProjNo" 		column="rec_proj_no" 		jdbcType="INTEGER" />
 		<result property="recUserId" 		column="rec_user_id" 		jdbcType="VARCHAR" />
 		<result property="recStatus" 		column="rec_status" 		jdbcType="INTEGER" />
+		<result property="recUserImg" 		column="rec_user_img" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -93,9 +94,9 @@
 	 <select  id="listProject"  parameterType="map"	resultMap="projectSelectMap">
 		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
 			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no
-			 <!--   (select count(rec_user_id) from record_applicant WHERE rec_proj_no = #{projNo} ) as rec_count -->
-	    FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a 
+			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no, 
+			   (select count(rec_user_id) from record_applicant where rec_proj_no=p.proj_no) as rec_count
+	    FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
 	    <!--     , (SELECT t.tech_name FROM techuse tu, tech t WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no = #{tuProjNo})t -->
 		 <where>
 		 	 p.proj_no=a.proj_no(+) And
@@ -127,11 +128,11 @@
 			 	ORDER BY proj_annostart DESC
 			 </if>
 			 <if test="sortFlag == 2">
-			 	ORDER BY proj_dday ASC
+			 	ORDER BY (CASE WHEN proj_dday=0 THEN proj_dday END) DESC, (CASE WHEN proj_dday>0 THEN proj_dday END) ASC
 			 </if>
-			 <!-- <if test="sortFlag == 3">
+			 <if test="sortFlag == 3">
 			 	ORDER BY rec_count DESC
-			 </if> -->
+			 </if>
 			 <if test="sortFlag == 4">
 			 	ORDER BY proj_ViewCount DESC
 			 </if>
@@ -153,9 +154,6 @@
 							</where>
 						</if> ) countTable						
 	 </select>
-	
-	 
-	 
 	 
 	 <update	id="updateViewCount"	parameterType="project" >
 	   	UPDATE project
@@ -249,17 +247,22 @@
 		WHERE rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
 	 </select>
 	 
-	<!--  <select  id="getApplicantList"  parameterType="list"	resultMap="techUseSelectMap">
-
-		SELECT rec_proj_no, rec_user_id
-		FROM record_applicant
-		WHERE rec_proj_no IN
-		<foreach item="item" collection="list" open="(" separator="," close=")">
-			#{item}
-		</foreach>
-	</select> -->
-	 
-	  <select 	id="deleteApplicant"	parameterType="map"	resultMap="recordApplicantSelectMap">
+	 <select  id="listApplicant"  parameterType="int"	resultMap="recordApplicantSelectMap">
+		SELECT r.rec_no, r.rec_proj_no, r.rec_user_id, r.rec_status, u.user_id, u.user_img as rec_user_img
+		FROM record_applicant r, users u
+		WHERE r.rec_user_id = u.user_id
+		AND r.rec_proj_no = #{recProjNo:NUMERIC}
+	 </select>
+	
+	 <update	id="inviteApplicant" parameterType="int" >
+	   	UPDATE record_applicant
+	   	<set>
+	   		rec_status	=  1
+	   	</set>
+	   	WHERE rec_no = #{recNo:NUMERIC}
+	 </update>
+	
+	 <select 	id="deleteApplicant"	parameterType="map"	resultMap="recordApplicantSelectMap">
 		DELETE from record_applicant
 		where rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
 	 </select>
