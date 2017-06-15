@@ -268,7 +268,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<<jsp:include page="/view/common/toolbar.jsp" />
+	<jsp:include page="/view/common/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->

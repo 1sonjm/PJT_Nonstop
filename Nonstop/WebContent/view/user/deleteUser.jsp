@@ -11,7 +11,7 @@
     <script type="text/javascript">
 		
 		window.onload = function()
-		{
+		{	
 			setTimeout(function(){location.href="../";}, 5000);
 		};
 		 

@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -17,6 +18,12 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -249,13 +256,11 @@
 		<h1 class="bg-primary text-center">개 인 회 원 가 입</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" method="post" enctype="multipart/form-data">
-		
-		
+		<form class="form-horizontal" method="post" enctype="multipart/form-data">		
 		<div class="form-group">
                   <label class="col-md-4 control-label" for="userId">아이디</label>      
-                  <div class="col-md-4">      
-                     <input class="form-control input-md" type="text" id="userId" name="userId">
+                  <div class="col-md-4">
+                  	 <input class="form-control input-md" type="text" id="userId" name="userId" value="${param.userId }">
                         <div id="checkId" style="color:red; font-size:12px;">아이디를 입력해주세요.</div>
                   </div>
                </div>
@@ -279,7 +284,7 @@
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
 
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
+		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름" value="${param.nickname }">
 
 
 
