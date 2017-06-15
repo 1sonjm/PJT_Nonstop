@@ -20,6 +20,7 @@ import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.RecordProject;
 import com.nonstop.domain.Search;
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
@@ -66,7 +67,7 @@ public class ProfileController {
 	int pageSize;
 	
 	@RequestMapping(value="getMineProfile",method=RequestMethod.GET)
-	public String getMineProfile( Model model , HttpSession session) throws Exception{
+	public String getMineProfile(@RequestParam("role") String role, Model model , HttpSession session) throws Exception{
 		
 		System.out.println("/profile/getMineProfile");
 		
@@ -75,8 +76,16 @@ public class ProfileController {
 		User user = userService.getProfileMine(sessionId);
 		//개인기술경력 리스트 
 		Map<String , Object> map = profileService.getCareerList(sessionId);
+		
+		if(role.equals("2")){
 		//프로젝트 작업이력 
-		Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
+		List<RecordProject> recordProject = profileService.getRecordProjectList(sessionId);
+		//프로젝트 작업이력 리스트
+		model.addAttribute("recordProject"  , recordProject);
+		}else if(role.equals("3")){
+		List<RecordProject> recordProject = profileService.getRecordProjectList2(sessionId);
+		model.addAttribute("recordProject"  , recordProject);
+		}
 		//포트폴리오 리스트
 		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, sessionId);
 		//스크랩한 포트폴리오 리스트
@@ -96,8 +105,7 @@ public class ProfileController {
 		
 		//개인기술경력 리스트
 		model.addAttribute("list" , map.get("list"));
-		//프로젝트 작업이력 리스트
-		model.addAttribute("list2"  ,map2.get("list2"));
+		
 		model.addAttribute("list3" , portfolio);
 		model.addAttribute("scrapPort" , scrapPort);
 		model.addAttribute("scrapProj" , scrapProj);
@@ -120,8 +128,16 @@ public class ProfileController {
 		
 		Map<String , Object> map = profileService.getCareerList(userId);
 		
-		Map<String , Object> map2 = profileService.getRecordProjectList(userId);
-		
+		System.out.println(user.getRole());
+		if(user.getRole().equals("2")){
+			
+		List<RecordProject> recordProject = profileService.getRecordProjectList(userId);
+		model.addAttribute("recordProject"  , recordProject);
+		}else if(user.getRole().equals("3")){
+			
+		List<RecordProject> recordProject = profileService.getRecordProjectList2(userId);
+		model.addAttribute("recordProject"  , recordProject);
+		}
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
 		String targetUserId = userId;
@@ -135,7 +151,7 @@ public class ProfileController {
 		//개인기술경력 리스트
 		model.addAttribute("list" , map.get("list"));
 		//프로젝트 작업이력 리스트
-		model.addAttribute("list2"  ,map2.get("list2"));
+		///model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
 		model.addAttribute("list3", portfolio);
@@ -160,7 +176,7 @@ public class ProfileController {
 		//개인기술경력 리스트 
 		Map<String , Object> map = profileService.getCareerList(sessionId);
 		//프로젝트 작업이력 
-		Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
+		///Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
 		//포트폴리오 리스트
 		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, sessionId);
 		//스크랩한 포트폴리오 리스트
@@ -181,7 +197,7 @@ public class ProfileController {
 		//개인기술경력 리스트
 		model.addAttribute("list" , map.get("list"));
 		//프로젝트 작업이력 리스트
-		model.addAttribute("list2"  ,map2.get("list2"));
+		///model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
 		model.addAttribute("scrapPort" , scrapPort);
 		model.addAttribute("scrapProj" , scrapProj);
@@ -208,7 +224,7 @@ public class ProfileController {
 		
 		Map<String , Object> map = profileService.getCareerList(sessionId);
 
-		Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
+		//Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
 		
 		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, sessionId);
 		
@@ -229,7 +245,7 @@ public class ProfileController {
 		model.addAttribute("techClassList" , techClassList);
 		model.addAttribute("techDataList" , techDataList);
 		model.addAttribute("list" , map.get("list"));
-		model.addAttribute("list2"  ,map2.get("list2"));
+		///model.addAttribute("list2"  ,map2.get("list2"));
 		model.addAttribute("list3" , portfolio);
 		model.addAttribute("list4" , project);
 		model.addAttribute("user", user);
