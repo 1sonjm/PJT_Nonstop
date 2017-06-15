@@ -113,24 +113,38 @@ nav ul li.unread:after {
 }
 
 nav
+
  
+
 ul
+
  
+
 li
+
  
+
 :not
+
  
+
 (
 :last-child
+
  
+
 ){
 border-bottom
+
+
 :
+
  
+
 none
+
+
 ;
-
-
 }
 nav ul li.active a {
 	background: #4c515d;
@@ -201,7 +215,7 @@ main section {
 	padding: 15px;
 	width: 100%;
 	height: 100%;
-	text-align:center;
+	text-align: center;
 	transition: all 0.15s ease-in-out;
 }
 /* 
@@ -240,10 +254,7 @@ ul.sidebar-menu {
 	width: 100%;
 	height: calc(100% - 200px);
 	position: absolute;
-	right: 0px;
-	bottom: 0px;
 	font-size: 1.1em;
-	margin: 15px;
 	padding: 30px;
 	visibility: hidden;
 	overflow-y: scroll;
@@ -282,6 +293,7 @@ ul.sidebar-menu {
 	min-width: 10%;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
+	word-wrap: break-word;
 }
 
 .self-Message :after {
@@ -295,6 +307,7 @@ ul.sidebar-menu {
 	z-index: 1;
 	right: -20px;
 	top: 17px;
+	word-wrap: break-word;
 }
 
 .remote-Message {
@@ -339,12 +352,12 @@ ul.sidebar-menu {
 }
 
 #chat_but {
-	vertical-align: middle;
 	color: #f96900;
 	font-size: 30px;
 	position: relative;
 	left: calc(100% - 50px);
 	top: -45px;
+	display: table;
 }
 
 .view_form {
@@ -388,92 +401,28 @@ video {
 	text-align: center;
 }
 
-#call_but{
-	width: 400px;
+#call_but {
+	width: 300px;
 	font-size: 3em;
 	font-weight: 500;
 }
-/*
-@media screen and (max-width : 768px) {
-	h2 {
-		margin-top: 0.3em;
-		font-size: 1.8em;
-		width: 400px;
+
+@media screen and (max-width : 500px) {
+	.remote-Message {
+		max-width: 100%;
 	}
-	#self_view {
-		margin-bottom: 0.8em;
-		margin: 0.4em 0em;
-		-webkit-transform: rotate(90deg);
-		-moz-transform: rotate(90deg);
-		transform: rotate(90deg);
+	.self-Message {
+		max-width: 100%;
 	}
 }
-@media screen and (max-width : 414px) {
-	h2 {
-		margin-top: 0.3em;
-		font-size: 1.2em;
-		width: 260px;
-	}
 
-	input[type="text"] {
-		width: 120px;
+@media screen and (max-width : 650px) {
+	#call_but {
+		width: 100%;
+		font-size: 30px;
+		font-weight: 200;
 	}
-
-	section {
-		margin: 0em;
-		padding: 0em;
-		min-height: 500px;
-		height: 100%;
-	}
-
-	#self_view {
-		margin-bottom: 0.8em;
-		margin: 0.4em 0em;
-		transition: transform 0.5s;
-		-webkit-transition: -webkit-transform 500ms;
-	}
-
-	#remote_view {
-		width: 320px;
-		height: 280px;
-		transition: transform 0.5s;
-		-webkit-transition: -webkit-transform 500ms;
+	#share_link_qr {
+		width: 100%;
 	}
 }
-@media screen and (max-width : 320px) {
-	h2 {
-		margin-top: -0.3em;
-		font-size: 1.1em;
-		width: 200px;
-	}
-
-	input[type="text"] {
-		width: 100px;
-	}
-
-	section {
-		margin: 0em;
-		padding: 0em;
-		min-height: 600px;
-		height: 100%;
-	}
-
-	#self_view {
-		width: 160px;
-		height: 120px;
-		margin: 0.4em 0em;
-		transition: transform 0.5s;
-		-webkit-transition: -webkit-transform 500ms;
-	}
-	#remote_view {
-		width: 320px;
-		height: 280px;
-		transition: transform 0.5s;
-		-webkit-transition: -webkit-transform 500ms;
-	}
-
-	#share-container {
-		display: none;
-	}
-}
-*/
