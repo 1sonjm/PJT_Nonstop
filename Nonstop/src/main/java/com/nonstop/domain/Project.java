@@ -18,11 +18,25 @@ public class Project {
 	private int projViewcount;
 	private int projExpectDate;
 	private int projDday;
+	private int sortFlag;
+	
+	//scrap
 	private String scrapUserId;
 	private int scrapNo;
 	
+	//follow
+	private boolean projFollowFlag;
+	
+	//Applicant
+	private int recCount;
+	
+
+	
 	public int getProjNo() {
 		return projNo;
+	}
+	public void setProjNo(int projNo) {
+		this.projNo = projNo;
 	}
 	public String getProjUserId() {
 		return projUserId;
@@ -108,9 +122,29 @@ public class Project {
 	public void setScrapNo(int scrapNo) {
 		this.scrapNo = scrapNo;
 	}
-	public void setProjNo(int projNo) {
-		this.projNo = projNo;
+	public int getSortFlag() {
+		return sortFlag;
 	}
+	public void setSortFlag(int sortFlag) {
+		this.sortFlag = sortFlag;
+	}
+
+	
+	// 팔로우
+	public boolean isProjFollowFlag() {
+		return projFollowFlag;
+	}
+	public void setProjFollowFlag(boolean projFollowFlag) {
+		this.projFollowFlag = projFollowFlag;
+	}
+	//applicant
+	public int getRecCount() {
+		return recCount;
+	}
+	public void setRecCount(int recCount) {
+		this.recCount = recCount;
+	}
+	
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -132,8 +166,6 @@ public class Project {
 		builder.append(projEndDate);
 		builder.append(", projLocation=");
 		builder.append(projLocation);
-		builder.append(", projDetail=");
-		builder.append(projDetail);
 		builder.append(", projViewcount=");
 		builder.append(projViewcount);
 		builder.append(", projExpectDate=");
@@ -144,7 +176,13 @@ public class Project {
 		builder.append(scrapUserId);
 		builder.append(", scrapNo=");
 		builder.append(scrapNo);
+		builder.append(", sortFlag=");
+		builder.append(sortFlag);
+		builder.append(", recCount=");
+		builder.append(recCount);
 		builder.append("]");
 		return builder.toString();
 	}
+	
+	
 }

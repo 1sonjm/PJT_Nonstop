@@ -38,8 +38,12 @@
    	<mvc:interceptors>
 		
    		<mvc:interceptor>
-			<mvc:mapping path="/"/>
-			<!-- <mvc:mapping path="/user/**"/> -->
+			<!-- <mvc:mapping path="/**"/> -->
+			<mvc:mapping path="/user/**"/>
+			<mvc:mapping path="/profile/**"/>
+			<mvc:mapping path="/letter/**"/>
+			<mvc:mapping path="/portfoilo/**"/>
+			<mvc:mapping path="/project/**"/>
 			<bean class="com.nonstop.common.Interceptor.LogonCheckInterceptor" />
    		</mvc:interceptor>
 

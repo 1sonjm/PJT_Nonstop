@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TechUseMapper">
+ 	
+	<resultMap id="techUseSelectMap" type="techUse">
+		<result property="tuNo" 			column="tu_no" 				jdbcType="INTEGER"/>
+		<result property="tuPortNo" 		column="tu_port_no" 		jdbcType="INTEGER" />
+		<result property="tuProjNo" 		column="tu_proj_no" 		jdbcType="INTEGER" />
+		<result property="tuTechNo" 		column="tu_tech_no" 		jdbcType="INTEGER" />
+		<result property="tuTechName" 		column="tech_name" 			jdbcType="VARCHAR" />
+		<result property="tuTechClass" 		column="tech_class" 		jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap id="techSelectMap" type="tech">
+		<result property="techNo" 			column="tech_no" 			jdbcType="INTEGER"/>
+		<result property="techName" 		column="tech_name" 		    jdbcType="INTEGER" />
+		<result property="techClass" 		column="tech_class" 		jdbcType="INTEGER" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addTechUse"	 parameterType="map" >
+	 	INSERT INTO techuse ( 
+			tu_no, 
+			tu_port_no, 
+			tu_proj_no, 
+			tu_tech_no) 
+		VALUES ( 
+			seq_techuse_tu_no.nextval, 
+			#{tuPortNo:NUMERIC}, 
+			#{tuProjNo:NUMERIC},
+			#{tuTechNo:NUMERIC}
+		)
+	 </insert>
+		
+	 <select  id="getTechUseList"  parameterType="int"	resultMap="techUseSelectMap">
+
+		SELECT t.tech_name
+		FROM techuse tu, tech t
+		WHERE tu.tu_tech_no = t.tech_no
+		AND tu_proj_no = #{tuProjNo} 
+		ORDER BY tu_no DESC
+	</select>
+	 
+	 <select  id="listTechUse"  parameterType="list"	resultMap="techUseSelectMap">
+
+		SELECT tu.tu_proj_no, tu.tu_tech_no, t.tech_name, t.tech_class
+		FROM techuse tu, tech t
+		WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no IN
+		<foreach item="item" collection="list" open="(" separator="," close=")">
+			#{item}
+		</foreach>
+		ORDER BY tu_no ASC
+	</select>
+	 
+	  	
+	<delete id="deleteTechUse" parameterType="int">
+		DELETE from techuse
+		where tu_proj_no=#{tuProjNo:NUMERIC}
+	</delete>
+	 
+</mapper>

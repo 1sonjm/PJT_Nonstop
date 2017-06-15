@@ -7,7 +7,6 @@ import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
 
 public interface ProfileService {
-	
 
 	public void addCareer(Career career) throws Exception;
 	
@@ -15,17 +14,15 @@ public interface ProfileService {
 	
 	public Map<String , Object> getCareerList2(String userId) throws Exception;
 	
-	public Career getCareer(int careerNo) throws Exception;
-	
-	public void updateCareer(Career career) throws Exception;
-	
+	public Career getCareer(int careerNo, int techClass) throws Exception;
+
 	public void deleteCareer(int careerNo) throws Exception;
 	
 	public void addFollow(String reqUserId,String targetUserId) throws Exception;
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception;
 	
-	public Follow getFollow(String reqUserId) throws Exception;
+	public Follow getFollow(String reqUserId ,String targetUserId) throws Exception;
 	
 	public void deleteFollow(String reqUserId,String targetUserId) throws Exception;
 	

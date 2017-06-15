@@ -14,6 +14,7 @@
 		<result property="userRate" 		column="stat_user_rate" 	jdbcType="NUMERIC" />
 		<result property="techClass" 		column="tech_class" 			jdbcType="NUMERIC" />
 		<result property="regdate" 			column="stat_date" 				jdbcType="DATE" />
+		<result property="careerUseTerm" 	column="career_use_month" 		jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- 기술 분류 목록 조회 -->
@@ -92,16 +93,16 @@
 	</select>
 	
 	<!-- 과반수 조회 -->
-	<select id="getListMajorStatistics" parameterType="int" resultMap="statisticsSet">
+	<select id="getListMajorStatistics" parameterType="map" resultMap="statisticsSet">
 		SELECT DISTINCT stat_tech_no,tech_name,tech_class
 			<choose>
-				<when test="value == 1">,SUM(stat_demand) AS stat_demand</when>
-				<when test="value == 2">,SUM(stat_supply) AS stat_supply</when>
-				<when test="value == 3">,ROUND(AVG(stat_user_rate),3) AS stat_user_rate</when>
+				<when test="division == 1">,SUM(stat_demand) AS stat_demand</when>
+				<when test="division == 2">,SUM(stat_supply) AS stat_supply</when>
+				<when test="division == 3">,ROUND(AVG(stat_user_rate),3) AS stat_user_rate</when>
 			</choose>
 		FROM statistics s, tech t
 		WHERE s.stat_tech_no = t.tech_no 
-		AND t.tech_class = #{value}
+		AND t.tech_class = #{techClass}
 		AND rownum &lt;= 5
 		GROUP BY stat_tech_no,tech_name,tech_class
 		ORDER BY stat_tech_no
@@ -112,9 +113,10 @@
 		SELECT DISTINCT stat_tech_no,tech_name,tech_class
 			 ,SUM(stat_demand) AS stat_demand
 			 ,SUM(stat_supply) AS stat_supply
-			 ,TO_CHAR(stat_date,'yyyy/mm') AS stat_date
+			 ,TO_CHAR(stat_date,'yyyy/mm/dd') AS stat_date
 		FROM statistics s, tech t
-		WHERE s.stat_tech_no = t.tech_no AND t.tech_no = #{techNo} AND s.stat_date BETWEEN #{searchStartDate} AND #{searchEndDate}
+		WHERE s.stat_tech_no = t.tech_no AND t.tech_no = #{techNo}
+		AND s.stat_date BETWEEN #{searchStartDate} AND #{searchEndDate}
 		GROUP BY stat_tech_no,tech_name,tech_class,stat_date
 		ORDER BY stat_tech_no
 	 </select>
@@ -132,9 +134,17 @@
 				,(SELECT COUNT(proj_no) project FROM project) pt
 	</select>
 	
-	 <!-- 개인 기술 통계 -->
-	<select	id="getListUserStatistics" parameterType="String" resultMap="statisticsSet">
-		SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
-		WHERE t.tech_no = c.career_tech_no AND career_user_id = 'user01'
+	 <!-- 개인/기업 기술 통계 -->
+	<select	id="getListUserStatistics" parameterType="user" resultMap="statisticsSet">
+		<if test="role == 2">
+			SELECT t.tech_no,t.tech_name,t.tech_class,c.career_use_month FROM tech t,career c
+			WHERE t.tech_no = c.career_tech_no AND c.career_user_id = #{userId}
+		</if>
+		<if test="role == 3">
+			SELECT COUNT(*)OVER(PARTITION BY tu_tech_no) AS career_use_month,tu_proj_no,tu.tu_tech_no AS stat_tech_no,
+					t.tech_name,t.tech_class from techuse tu, project pj, tech t
+			WHERE tu.tu_proj_no IS NOT NULL AND pj.proj_no = tu.tu_proj_no AND t.tech_no = tu.tu_tech_no
+			AND pj.proj_user_id = #{userId}
+		</if>
 	</select>
 </mapper>

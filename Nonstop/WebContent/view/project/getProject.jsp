@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-	pageEncoding="utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko">
 
@@ -10,30 +10,21 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-<script src="../../resources/javascript/jquery.js"></script>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<script src="/resources/javascript/jquery.js"></script>
 
-<script src="../../resources/javascript/bootstrap.min.js"></script>
+<!-- <script src="/resources/javascript/bootstrap.min.js"></script> -->
 
-
+<script
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+   crossorigin="anonymous"></script>
 <!-- Bootstrap Core CSS -->
-<link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="/resources/css/nonstop.css" rel="stylesheet">
 
 <!-- Custom CSS -->
-<link href="../../resources/css/full.css" rel="stylesheet">
+<link href="/resources/css/full.css" rel="stylesheet">
 
 <style>
 .preloader {
@@ -69,12 +60,15 @@
 /* 미니프로필 */
 .about-fixed {
 	position: fixed;
-	/* width: 20.8%; */
+	width: 18%;
 }
 
 .my-pic {
-	width: 100%;
-	box-shadow: -2px -1px 88px 0px rgba(0, 0, 0, 0.17);
+	 width: 100%;
+     height: 0;
+     padding-bottom: 100%;
+     box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
+     overflow: hidden;
 }
 
 .my-pic img {
@@ -82,28 +76,16 @@
 }
 
 .my-detail {
-	text-align: center;
 	margin-bottom: 30px;
 	background: #ffffff;
 	box-shadow: -2px -1px 88px 0px rgba(0, 0, 0, 0.17);
 }
 
-.my-detail .white-spacing {
-	padding: 23px 0;
+.white-spacing {
+	padding-left: 10px;
 	border-bottom: 1px dashed #cccccc;
 }
 
-.my-detail h1 {
-	font-size: 20px;
-	font-weight: 700;
-}
-
-.my-detail span {
-	color: #c1c1c1;
-	font-weight: 400;
-	line-height: 30px;
-	font-size: 16px;
-}
 
 /* 포트폴리오 상세페이지 메인 */
 #main {
@@ -179,6 +161,35 @@ div.blog-post {
 	letter-spacing: 0.5px;
 }
 
+.comment-div{    	
+   	height: 40px; width: 100%;
+}
+.comment-div h6{
+	margin-top:5px;
+	font-weight: 400;
+	font-size: 12px;
+	color: #656c7e;
+}
+.comment-div span{
+	margin-top:5px;
+	font-weight: 400;
+	font-size: 12px;
+	color: #a8a8a8;
+}
+.comment-div p{
+	line-height: 15px !important;
+}
+.comment-input{
+	 border:2px solid #dbdfe4;
+	 border-radius: 4px;
+	 height: 50px; width: 100%;
+	 padding: 5px 10px;
+	 color: #7f919e;
+}
+.comment-input h5{
+ 	font-weight: 500;
+}
+
 .blog-post .post-info {
 	font-size: 14px;
 	line-height: 30px;
@@ -230,6 +241,8 @@ div.blog-post {
 	width: 100px;
 	heigth: 60px;
 	float: right;
+	text-align: center;
+	font-size: 20px;
 }
 
 #shape2 {
@@ -245,16 +258,15 @@ div.blog-post {
 
 th, tr {
 	padding: 7px;
+	
 	text-overflow: ellipsis
 }
+
 
 #gab {
 	margin: 20px;
 }
 
-#commentButton {
-	float: right;
-}
 
 .btn.btn-default.btn-sm {
 	float: right;
@@ -266,40 +278,6 @@ th, tr {
 	padding-left: 5px;
 }
 
-.comment-div {
-	height: 40px;
-	width: 100%;
-}
-
-.comment-div h6 {
-	margin-top: 5px;
-	font-size: 12px;
-	color: #656c7e;
-}
-
-.comment-div span {
-	margin-top: 0;
-	font-weight: 400;
-	font-size: 12px;
-	color: #a8a8a8;
-}
-
-.comment-div p {
-	line-height: 15px !important;
-}
-
-.comment-input {
-	border: 2px solid #dbdfe4;
-	border-radius: 4px;
-	height: 50px;
-	width: 100%;
-	padding: 5px 10px;
-	color: #7f919e;
-}
-
-.comment-input h5 {
-	font-weight: 500;
-}
 
 hr.thick-line {
 	border-color: #e7e9ee;
@@ -308,24 +286,6 @@ hr.thick-line {
 	margin-bottom: 20px;
 }
 
-#profileImage {
-	font-size: 120px;
-	height: 180px;
-	width: 180px;
-	border: 0;
-	border-radius: 50%;
-	margin-top: 10%;
-	margin-bottom: 10%;
-}
-
-.img-circle {
-	height: 200px;
-	width: 200px;
-	border: 0;
-	border-radius: 50%;
-	margin-top: 10%;
-	margin-bottom: 10%;
-}
 
 .glyphicon-time, .glyphicon-home, .glyphicon-list-alt,
 	.glyphicon-map-marker {
@@ -334,178 +294,343 @@ hr.thick-line {
 	margin-right: 10%;
 }
 
-.btn-lg {
+
+#backButton, #applButton, #viewButton, #applCancleButton, #xApplButton {
 	float: right;
 	margin-left: 5px;
-	padding: 10px, 14px;
 	font-size: 16px;
 	font-weight: 500;
 	background-color: #ececec;
 	border: 0;
 	border-radius: 0;
 	width: 120px;
+	text-align : center;
 }
+
+#updateButton, #deleteButton {
+	float: left;
+	margin-left: 5px;
+	font-size: 16px;
+	font-weight: 500;
+	background-color: #ececec;
+	border: 0;
+	border-radius: 0;
+	width: 120px;
+	text-align : center;
+}
+
+#follow1, #follow2, #messageQuestion{
+	margin-left:0%;
+	margin-right:0%;
+	font-size: 16px;
+	font-weight: 500;
+	background-color: #ececec;
+	border: 0;
+	border-radius: 0;
+	width: 120px;
+	float : center;
+	text-align : center;
+}
+
 
 xmp{
 	font-weight: bold;
 }
+
+#techNameButton{
+			padding : 3px;
+			heigth : 10px;
+			border : 0;
+			text-decoration:none;
+		}
+
+.fa-star.inbox-started, .fa-star:hover {
+	color: #f78a09;
+    }
+      
+.fa-star {
+	color: #d5d5d5;
+    }
+    
+.modal-header h4.modal-title {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 300;
+}
+
+.modal-body label {
+	font-family: "Open Sans", sans-serif;
+	font-weight: 400;
+}
+
+.modal-dialog {
+	width : 300px;
+}
+    
 </style>
 
 <script type="text/javascript">
 	
-	function fncAddComment() {
-		var comment = $("textarea[name='comContent']").val();
+	
+	function fncDeleteProject() {
 		
-			if(comment == null || comment.length<20){
-			alert("최소 20자 이상 입력해 주세요.")
-			return;
+		if(confirm("정말 삭제하시겠습니까?") !=0){
+		
+			$("form").attr("method", "POST").attr("action", "/project/deleteProject").submit();
+			
+		}else{
 		}
-		
-		$("form").attr("method", "POST").attr("action", "/project/addComment").submit();
 	
 	}
 	
-	function fncDeleteComment() {
-		
-		alert("정말 삭제하시겠습니까?")
-		
-		$("form").attr("method", "POST").attr("action", "/project/deleteComment").submit();
-	
-	}
 	
 	$(function (){
-		$( ".glyphicon.glyphicon-trash" ).on("click" , function() {
-			
-			fncDeleteComment(1);
-		});
-		
-		$( "#commentButton" ).on("click" , function() {
-			fncAddComment(1);
-		});
 		
 		$("#projDetail").val().replace('/\n/g', '<br>');
 	
 	});
 	
 	
-	 $(function() {
-	      /* 댓글 박스 클릭시 comment창 보이게 */ 
+	 
+	$(function() {
+		//프로젝트 삭제
+		$("#deleteButton").on("click", function(){
+				fncDeleteProject(1);
+		});
+		//프로젝트 수정
+		$("#updateButton").on("click", function(){
+			self.location ="/project/updateProjectView?projNo="+$(".projNo").attr("value");
+		});
+		// 목록으로 가기
+		$("#backButton").on("click", function(){
+			history.go(-1);
+		});
+		//프로젝트 지원하기
+		$("#applButton").on("click", function(){
+			if(confirm("정말 지원하시겠습니까?") !=0){
+				$("form").attr("method", "POST").attr("action", "/project/addApplicant").submit();
+			}else{
+			}
+		});
+		//프로젝트 지원 취소하기
+		$("#applCancleButton").on("click", function(){
+			if(confirm("정말 지원을 취소하시겠습니까?") !=0){
+				$("form").attr("method", "POST").attr("action", "/project/deleteApplicant").submit();
+			}else{
+			}
+		});
+		//프로젝트 초대하기
+	 	$("#invite").on("click", function(){
+	 		
+	 		var items = [];
+			$("input:checkbox[name=recNo]:checked").each(function(){
+				items.push($(this).val());
+			});
+			
+			$("input:hidden[name='checkBoxes']").val( items );
+	 		
+			if(confirm("프로젝트에 한번 초대된 인원은 수정이 불가능합니다.\n정말 프로젝트에 초대하시겠습니까? ") !=0){
+				$("form").attr("method", "POST").attr("action", "/project/inviteApplicant").submit();
+			}else{
+			}
+		});
+		
+	});
+	
+	
+	
+	$(function() {
+
+        $("i.fa").on("click" , function() {
+
+              var flag = $(this).attr('scrap');
+              var requestTarget;
+              alert(flag);
+
+              if(flag==0){
+                 requestTarget = "addJsonProjScrap";
+              }else{
+                 requestTarget = "deleteJsonProjScrap";
+              }
+               var projNo=$(this).attr('projNo');
+               $.ajax(
+                  {
+                     url : "/profile/"+requestTarget+"/"+projNo,
+                     method : "GET",
+                     dateType : "json",
+                     headers : {
+                        "Accept" : "application/json",
+                       "Content-Type" : "application/json"   
+                   },
+                     context : this,
+                     success : function(JSONData , status){
+                      
+                        if(flag==0){
+                           $(this).removeClass('fa fa-star').addClass('fa fa-star inbox-started');
+                           $(this).attr('scrap','1');
+                        }else{
+                           $(this).removeClass('fa fa-star inbox-started').addClass('fa fa-star');
+                       $(this).attr('save','0');
+                        }
+                     }
+                  });
+               });
+        });
+	
+	   function fnMove(comment){
+	        var position = $("#comment").offset();
+	        $('html, body').animate({scrollTop : position.top}, 800);
+	   }
+	   
+	   $(function() {
+		      /* 댓글 박스 클릭시 comment창 보이게 */ 
+		   var maxLength = 200;
+	       $('textarea').keyup(function() {
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+	       /* 댓글 박스 클릭시 comment창 보이게 */ 
 	       $(".comment-input").on("click" , function() {
-	          $( ".comment-input" ).css("display" , "none"); 
-	          $(".comment-btn").css("display" , "block");
+		          $( ".comment-input" ).css("display" , "none"); 
+		          $(".comment-btn").css("display" , "block");
 	       }); 
-	      
-	      $("#addComment").on("click" , function() {
-	         alert($("#com-content").val());
-	         alert($(this).next().val());
-	         alert($(this).next().next().val());
-	      });
-	   }); 
-	 
-	 
-	
-	
-	
-/* 	$(function() {
-		$("#rmsid").on("click", function(){
-			self.location ="/project/getProject?projNo=17"
-		});
-		
-	});
-	
-	$(function() {
-		$("#rmsid1").on("click", function(){
-			self.location ="/view/project/addProjectView.jsp"
-		});
-		
-	});
-	
-	$(function() {
-		$("#rmsid2").on("click", function(){
-			self.location ="/project/updateProjectView?projNo=17"
-		});
-		
-	}); */
-	
-	$(function() {
-		$(".glyphicon.glyphicon-plus-sign").on("click", function(){
-			self.location ="/view/project/addProjectView.jsp"
-		});
-		
-		$(".detailButton").on("click", function(){
-			self.location ="/project/getProject?projNo="+$(this).attr("value");
-		});
-		
-		
-
-	});
-	
-	$(function() {
-	      /* 스크랩추가 */
-	      $(".glyphicon.glyphicon-star").on("click" , function() {
-
-	            var flag = $(this).attr('value');
-	            var requestTarget;
-	            var asdf;
-	            var qwer;
-	            alert(flag);
-	            
-	            
-	            if(flag=="addScrap"){
-	               requestTarget = "addJsonProjScrap";
-				   asdf = "스크랩 해제";
-				   qwer = "deleteScrap";
-	            }else{
-	               requestTarget = "deleteJsonProjScrap";
-	               asdf = "스크랩 추가";
-	               qwer = "addScrap";
-	            }
-	            alert(requestTarget+"컨트롤러 어디로가니");
-
-	             var projNo=$(this).attr('projNo');
-	             alert(projNo);
-	             $.ajax(
-	                {
-	                   url : "/profile/"+requestTarget+"/"+projNo,
-	                   method : "GET",
-	                   dateType : "json",
-	                   headers : {
-	                      "Accept" : "application/json",
-	                     "Content-Type" : "application/json"   
-	                 },
-	                   success : function(JSONData , status){
-	                      var displatValue = 
-	                     "<button type='button' title='"+asdf+"' class='glyphicon glyphicon-star' style='font-size: 25px' id='deleteScrap' projNo='${project.projNo}' value='"+qwer+"'></button>"
-	                      $(".glyphicon.glyphicon-star").html(displayValue);
-	                   }
-	                });
-	             });
-	      });
-	
-
-	
+	       
+	       /* 댓글 등록 */
+	       $("#addComment").on("click" , function() {
+	 		  
+	 	    	  $.ajax( 
+	 						{
+	 							url : "/project/addJsonComment",
+	 							method : "POST" ,
+	 							dataType : "json" ,
+	 							context : this,
+	 							data : {
+	 									comContent:$("#comContent").val(),
+	 									comProjNo:$(this).next().val(),
+	 									comUserId:$(this).next().next().val(),
+	 									} , 
+	 							success : function(serverData , status) {
+	 									  location.reload();
+	 							}
+	 					});
+	 	      });
+	 	      
+	 	      /*댓글 삭제*/
+	 	  $(".glyphicon-trash").on("click" , function() {
+	           $.ajax( 
+	 					{
+	 						url : "/project/deleteComment/"+$(this).next().val()+"/"+$("#projNo").val(),
+	 						method : "GET" ,
+	 						dataType : "json" ,
+	 						context : this,
+	 						headers : {
+	 	                        "Accept" : "application/json",
+	 	                        "Content-Type" : "application/json"   
+	 	                    },
+	 						success : function(data) {
+	 								  location.reload();
+	 						}
+	 	     	 });          
+	        }); 
+		      
+	  });
+	   
+	   $(function() {
+		   /*팔로우*/
+		   $("#follow1").on("click" , function() {       	
+			   var targetUserId = $("#projUserId").val();
+			   /*팔로우하기*/
+				   alert($("#projUserId").val()+"에게 팔로우를 신청합니다.");
+				   $.ajax( 
+							{
+								url : "/profile/addJsonFollow/"+targetUserId,
+								method : "GET" ,
+								dataType : "json" ,
+								context : this,					
+								headers : {
+					                        "Accept" : "application/json",
+					                        "Content-Type" : "application/json"   
+					                      },
+								success : function(data) {
+										  location.reload();
+								}
+					});
+			});
+		   
+			   
+		   $("#follow2").on("click" , function() {       	
+			   var targetUserId = $("#projUserId").val();
+			   /*팔로우취소*/
+				   alert($("#projUserId").val()+" 팔로우를 취소합니다.");
+				   $.ajax( 
+							{
+								url : "/profile/deleteJsonFollow/"+targetUserId,
+								method : "GET" ,
+								dataType : "json" ,
+								context : this,					
+								headers : {
+					                        "Accept" : "application/json",
+					                        "Content-Type" : "application/json"   
+					                      },
+								success : function(data) {
+										  location.reload();
+								}
+					});
+	       });
+	   });
+	   
+	   $(function() {
+		   $("#messageQuestion").on("click" , function() {       	
+		    	  self.location="/letter/addLetter";
+		      });
+	   });
     
 	</script>
 </head>
 
 <body>
 	<jsp:include page="/view/common/toolbar.jsp" />
-
+	
+	<form class="form-group" name="detailForm">
 	<div id="main">
 		<div class="container">
 
 			<div class="row">
-				<input type="hidden" class="projNo" name="projNo" id="projNo"
-					value="${project.projNo}" />
+				<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+				<input type="hidden" class="userId" name="userId" id="userId" value="${user.userId}" />
+				<input type="hidden" class="recNo" name="recNo" id="recNo" value="${recordApplicant.recNo}" />
 				<!-- Blog Post (Left Body) Start -->
 				<div class="col-md-9">
 					<div class="col-md-12 page-body">
 						<div class="row">
-
 							<div class="sub-title">
-								<button type="button" class="btn btn-default btn-lg">목록으로
-									가기</button>
-								<button type="button" class="btn btn-default btn-lg">지원하기</button>
+								<c:if test="${sessionScope.user.role == '1'}">
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+									<button type="button" class="btn btn-info btn-lg" id="deleteButton">삭제</button>
+								</c:if>
+								<c:if test="${sessionScope.user.role == '2'}">
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+								 	 <c:choose>
+										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId}">
+											<button type="button" class="btn btn-info btn-lg" id="applCancleButton">지원취소</button>
+										</c:when>
+										<c:when test="${project.projDday<=0}">
+											<button type="button" class="btn btn-info btn-lg" id="xApplButton">지원불가</button>
+										</c:when>
+										<c:otherwise>
+											<button type="button" class="btn btn-info btn-lg" id="applButton">지원하기</button>
+										</c:otherwise>
+									</c:choose> 
+								</c:if>
+								<c:if test="${sessionScope.user.role == '3' && sessionScope.user.userId == project.projUserId}">
+									<button type="button" class="btn btn-info btn-lg" id="updateButton">수정</button>
+									<button type="button" class="btn btn-info btn-lg" id="deleteButton">삭제</button>
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+									<button type="button" data-target="#myModal" data-toggle="modal" class="btn btn-info btn-lg" id="viewButton">지원자 보기</button>
+								</c:if>
+								<c:if test="${sessionScope.user.role == '3' && sessionScope.user.userId != project.projUserId}">
+									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
+								</c:if>
 							</div>
 
 							<div class="col-md-12 content-page">
@@ -514,15 +639,14 @@ xmp{
 									<div class="post-title" style="padding-bottom: 10px;">
 
 										<c:if test="${project.scrapNo==0}">
-											<button type="button" title="스크랩 추가"
-												class="glyphicon glyphicon-star" style="font-size: 25px"
-												id="addScrap" projNo="${project.projNo}" value="addScrap"></button>
+											<i title="스크랩 추가"
+												class="fa fa-star" style="font-size: 25px"
+												id="addScrap" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
 										</c:if>
 										<c:if test="${project.scrapNo!=0}">
-											<button type="button" title="스크랩 해제"
-												class="glyphicon glyphicon-star" style="font-size: 25px"
-												id="deleteScrap" projNo="${project.projNo}"
-												value="deleteScrap"></button>
+											<i  title="스크랩 해제"
+												class="fa fa-star inbox-started" style="font-size: 25px"
+												id="deleteScrap" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
 										</c:if>
 
 										<strong style="font-size: 25px;">${project.projTitle}</strong>
@@ -542,8 +666,7 @@ xmp{
 
 									<div class="post-title">
 										<table style="width: 100%">
-											<tr
-												style="text-align: center; border-top: 2px solid rgb(147, 144, 144); margin-top: 10px; font-size: 14px">
+											<tr style="text-align: center; border-top: 2px solid rgb(147, 144, 144); margin-top: 10px; font-size: 14px">
 												<td colspan="3">공고기간</td>
 												<td colspan="3">예상기간</td>
 												<td colspan="3">지원자수</td>
@@ -552,9 +675,8 @@ xmp{
 
 											<tr style="font-size: 15px">
 
-												<th colspan="3"
-													style="border-right: 1px solid #ddd; text-align: center;"
-													id="thatDay" value=""><c:choose>
+												<th colspan="3" style="border-right: 1px solid #ddd; text-align: center;" id="thatDay" value="">
+													<c:choose>
 														<c:when test="${project.projDday<=0}">
 															<font color=#ff607f>마감</font>
 														</c:when>
@@ -563,13 +685,11 @@ xmp{
 														</c:when>
 														<c:when test="${project.projDday>1}">
 															<font color=#ff607f>${project.projDday}</font>일 남음
-												</c:when>
-													</c:choose></th>
-												<th colspan="3"
-													style="border-right: 1px solid #ddd; text-align: center"
-													id="expectDay" value="">${project.projExpectDate}일</th>
-												<th colspan="3"
-													style="border-right: 1px solid #ddd; text-align: center">sdsdfsdf</th>
+														</c:when>
+													</c:choose>
+												</th>
+												<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value="">${project.projExpectDate}일</th>
+												<th colspan="3" style="border-right: 1px solid #ddd; text-align: center">${project.recCount}명</th>
 												<th colspan="3" style="text-align: center">${project.projLocation}</th>
 											</tr>
 
@@ -601,9 +721,14 @@ xmp{
 											</tr>
 
 											<tr>
-												<th colspan="12"
-													style="background-color: rgb(236, 231, 231)">개발 기술 :
-													java</th>
+												<th colspan="12" style="background-color: rgb(236, 231, 231)">
+												개발 기술 :
+													<c:set var="i" value="0"/>
+														<c:forEach var="listTechUse" items="${listTechUse}" >
+														<c:set var="i" value="${i+1}"/>
+														<span class="label label-info" style="color : #000;">${listTechUse.tuTechName}</span>
+													</c:forEach>
+												</th>
 											</tr>
 
 
@@ -627,87 +752,76 @@ xmp{
 
 									<!--  <div class="margin-top-50"></div> -->
 									<!-- Post Comment (Disqus) Start -->
-									<form class="form-group" name="detailForm">
-										<input type="hidden" id="comUserId" name="comUserId"
-											value="${user.userId}" /> <input type="hidden"
-											id="comProjNo" name="comProjNo" value="${project.projNo}" />
-										<input type="hidden" id="comNo" name="comNo"
-											value="${comment.comNo}" />
-										<div id="comment" class="comment">
-											<h3>Discuss About Post</h3>
-											<div class="margin-top-20"></div>
-											<h6>22 Comments</h6>
-											<hr class="thick-line">
-											<div class="media">
-												<div class="media-left">
-													<a href="#"> <img src="http://placehold.it/50x50"
-														alt="">
-													</a>
-												</div>
-
-												<div class="media-body">
-													<input type="text" class="comment-input"
-														placeholder="댓글을 달아 보세염...">
-													<div class="comment-btn" style="display: none;">
-														<div class="well">
-															<h4>
-																<i class="fa fa-paper-plane-o"></i> Leave a Comment:
-															</h4>
-															<form role="form">
-																<div class="form-group">
-																	<textarea class="form-control" rows="3"
-																		id="com-content"></textarea>
-																</div>
-																<button type="button" name="comPortContent" value=""
-																	class="btn btn-primary" id="addComment">Submit</button>
-																<input type="hidden" value="${portfolio.portNo}">
-																<input type="hidden" value="${sessionScope.user.userId}">
-															</form>
-														</div>
-													</div>
-												</div>
-
-												<div class="margin-top-30"></div>
-
-												<div class="media">
-													<div class="media-left">
-														<a href="#"> <img class="comment-img"
-															src="http://placehold.it/45x45" alt="">
-														</a>
-													</div>
-													<div class="media-body">
-														<div class="comment-div">
-															<h6>
-																user012 <span>ㅣ 2017년 07월 21일</span>
-															</h6>
-															<p>행복하자 아프지말고 워</p>
-														</div>
-													</div>
-												</div>
-
-												<div class="media">
-													<div class="media-left">
-														<a href="#"> <img class="comment-img"
-															src="http://placehold.it/45x45" alt="">
-														</a>
-													</div>
-													<div class="media-body">
-														<div class="comment-div">
-															<h6>
-																user012 <span>ㅣ 2017년 07월 21일</span>
-															</h6>
-															<p>행복하자 아프지말고 워</p>
-														</div>
-													</div>
-												</div>
-											</div>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
+									<div class="margin-top-50"></div>
+                               		
+                               		<div id="comment" class="comment">
+                                	<h3>Discuss About Post</h3>
+                                	<div class="margin-top-20"></div>
+                                  	<h6>22 Comments</h6>
+                                  	<hr class="thick-line">
+                                   
+                                    <div class="media">
+									  <div class="media-left">
+									    <a href="#">
+									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+									    </a>
+									  </div>
+									  
+							  	    <div class="media-body">
+							  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
+								  	  <div class="comment-btn" style="display:none;">
+								  		<div class="well">
+							            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+						                    <form role="form">
+						                    <div class="form-group">
+						                       <textarea id="comContent" maxlength="200" style="resize: none; wrap:hard; width:700px; height:120px;"></textarea><br/>
+                            					200 / <span id="chars">200</span> 글자 남았습니다.
+						                    </div>
+						                      <button type="button" name="comProjContent" value="" class="btn btn-primary" id="addComment">Submit</button>
+						                      <input type="hidden" id="projNo" value="${project.projNo}">
+						                      <input type="hidden" id="sessionUserId" value="${sessionScope.user.userId}">
+						                    </form>
+						                 </div>						  	
+								  	  </div>
+								    </div>
+								
+								    <div class="margin-top-30"></div>								
+								
+									<!-- ajax로 받은 데이터 들어올 곳 -->						
+									<div id="ajaxTarget"></div> 																    
+								
+									<c:set var="i" value="0"/>
+									<c:forEach var="projCommentList" items="${projCommentList}" >
+									<c:set var="i" value="${i+1}"/>
+									
+									<div class="media">
+									  <div class="media-left">
+									    <a href="#">									    
+									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="">
+									    </a>
+									  </div>
+									  <div class="media-body">
+									  	<div class="comment-div">
+									  		<h6><strong>${projCommentList.comUserId}</strong>
+									  			&nbsp;&nbsp;•&nbsp;&nbsp;${projCommentList.comRegDate}
+									  			<c:set var="sessionUserId" value="${sessionScope.user.userId}"/>
+									  			<c:if test="${projCommentList.comUserId eq sessionUserId}">
+									  				&nbsp;&nbsp;<span class="glyphicon glyphicon-trash" id="deleteComment" aria-hidden="true"></span>
+									  				<input type="hidden" value="${projCommentList.comNo}"/>
+									  			</c:if>
+									  		</h6>
+									  		<p>${projCommentList.comContent}</p>							  		
+									  	</div>										  
+									  </div>
+									</div>
+								</c:forEach>
+                            </div>                                     
+                        </div>
 					</div>
 				</div>
+			</div>
+		</div>
+	</div>
 
 
 
@@ -719,68 +833,64 @@ xmp{
 				<div class="col-md-3">
 					<div class="about-fixed">
 
-						<div class="my-pic" style="height: 415px; width: 270px">
-							<%--    <center>
-                 	<img class="img-circle" src="http://placehold.it/" alt="" style="height : 150px; width: 150px">
-                 </center>--%>
-							<center>
-								<button type="button" class="glyphicon glyphicon-user"
-									id="profileImage"></button>
-							</center>
-
-							<p class="glyphicon glyphicon-time"></p>
+						<div class="my-pic">
+						    <img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
+              			</div>
+              			
+              			<div class="my-detail">
+              			<div class="white-spacing">
+              			 	<br/>
+	                        <p class="glyphicon glyphicon-time"></p>
 							${project.projAnnoStart} <br />
 							<p class="glyphicon glyphicon-home"></p>
 							${user.userName} <br />
 							<p class="glyphicon glyphicon-list-alt"></p>
-							<c:choose>
-								<c:when test="${project.projDivision==11}">
-					  		개발 > WEB
-					  	</c:when>
-								<c:when test="${project.projDivision==12}">
-					  		개발 > APP
-					  	</c:when>
-								<c:when test="${project.projDivision==21}">
-					  		디자이너 > WEB
-					  	</c:when>
-								<c:when test="${project.projDivision==22}">
-					  		디자이너 > APP
-					  	</c:when>
-							</c:choose>
+								<c:choose>
+									<c:when test="${project.projDivision==11}">
+								  		개발 > WEB
+								  	</c:when>
+									<c:when test="${project.projDivision==12}">
+								  		개발 > APP
+								  	</c:when>
+									<c:when test="${project.projDivision==21}">
+								  		디자이너 > WEB
+								  	</c:when>
+									<c:when test="${project.projDivision==22}">
+								  		디자이너 > APP
+								  	</c:when>
+								</c:choose>
 							<br />
 							<p class="glyphicon glyphicon-map-marker"></p>
 							${project.projLocation} <br />
-							<center>
-								<p style="margin-top: 3%">
-									<button type="button" class="btn btn-danger"
-										style="width: 80px">쪽지 문의</button>
-									<button type="button" class="btn btn-primary"
-										style="width: 80px">팔 로 우</button>
-								</p>
+		                 </div> 
+						 
+						 <div class="margin-top-20">
+						 	<input type="hidden" name="projUserId" id="projUserId" value="${project.projUserId}"/>
+						 	<center>
+						 	<c:if test="${sessionScope.user.userId != project.projUserId}">
+								<button type="button" class="btn btn-info btn-lg" id="messageQuestion">쪽지 문의</button>
+							</c:if>
+								<c:if test="${sessionScope.user.role == 2}">
+								<%-- 	<c:if test="${project.projFollowFlag == true}"> --%>
+										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
+										<button type="button" class="btn btn-info btn-lg" id="follow2">팔로우 취소</button>
+									<%-- </c:if>
+									<c:if test="${project.projFollowFlag == false}">
+										
+									</c:if> --%>
+								</c:if>
 							</center>
+		                 </div>
+		                 
+		                 <div class="margin-bottom-20">&nbsp;</div>
 						</div>
-
-						<!-- <div class="my-detail">
-                
-                  <div class="white-spacing">
-                      <p></p>
-                      <p></p>
-                      <p></p>
-                  </div> 
-                
-                  <div class="row">
-                     <input class="btn btn-default" type="button" value="쪽지문의">
-                     <input class="btn btn-default" type="button" value="팔로우">
-                  </div>
-              </div> -->
 					</div>
 				</div>
-				<!-- About Me (Right Sidebar) End -->
-
 			</div>
 		</div>
-		<!-- Post Comment (Disqus) Start -->
 	</div>
+	
+	
 
 
 
@@ -791,97 +901,75 @@ xmp{
 	<!-- Back to Top End -->
 
 	<!-- jQuery -->
-
+</form>
+	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" 	style="display: none;">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+					<h4 class="modal-title">지원자 목록</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="addMail" class="form-horizontal">
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+						<div class="form-group" style="height : 250; overflow-y: scroll; overflow-x:hidden; layout:fixed;">
+							<c:if test="${project.projDday<=0}">
+							<c:set var="i" value="0" />
+							<c:set var="isChk" value="false"/>
+							<c:forEach var="recordApplicant" items="${listApplicant}">
+								<c:set var="i" value="${ i+1 }" />
+								<div class="form-group">
+									  <div class="col-md-12">
+									  	<div class="checkbox">
+											<label for="checkboxes-0" style="font-size : 20px">
+										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox">
+										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
+										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										      </button>
+										      ${recordApplicant.recUserId}
+										      <c:if test="${recordApplicant.recStatus==1}">
+										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
+										      <c:set var="isChk" value="true"/>
+										      </c:if>
+									    	</label>
+										</div>		
+									  </div>
+								</div>
+							</c:forEach>
+							</c:if>
+							<c:if test="${project.projDday>0}">
+							<c:set var="i" value="0" />
+							<c:forEach var="recordApplicant" items="${listApplicant}">
+								<c:set var="i" value="${ i+1 }" />
+								<div class="form-group">
+									<div class="col-md-12">
+										<label style="font-size : 20px; margin-left:35px">
+										    <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
+										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										    </button>
+										      ${recordApplicant.recUserId}
+										      <c:if test="${recordApplicant.recStatus==1}">
+										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
+										      </c:if>
+										</label>
+									</div>
+								</div>
+							</c:forEach>
+							</c:if>
+							<input type="hidden" name="checkBoxes"/>
+						</div>
+					</form>
+				</div>
+				
+				<div class="modal-footer" style="background-color : white;">
+					<c:if test="${project.projDday<=0 && isChk eq false}">
+					<center><button class="btn btn-send" type="submit" id="invite">프로젝트 초대</button></center>
+					</c:if>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+</div>
 </body>
 </html>
-
-
-
-
-
-<!-- <div class="col-md-9" id="gab">
-	        	<div class="col-md-12">
-	        		<div class="row">
-	        			<p></p>
-	        		</div>
-        		</div>
-       		</div>
-       		
-       		<div class="col-md-9">
-	        	<div class="col-md-12 page-body">
-	        		<div class="row">
-	        		asdfsdafdsafdsf
-	        		</div>
-        		</div>
-       		</div> -->
-
-
-
-
-
-<!--  <div class="container">
-	   		
-	   	 	<div class="row">
-		        <div class="col-md-9" id="gab">
-		        	<div class="col-md-12">
-		        		<div class="row">
-		        			<p></p>
-		        		</div>
-		       		</div>
-		      	</div>
-		      	
-		        <div class="col-md-9">
-		        	<div class="col-md-12 page-body">
-		        		<div class="row">
-		        		<h4>댓글</h4>
-				 		<hr/>
-				 		<div class="bs-example" name="comUserId" ><h4>${comment.comUserId}</h4>
-							<textarea class="form-control" rows="5" name="comContent" placeholder="최소 20자 이상 입력해 주세요"></textarea>
-							<button type="button" class="btn btn-primary" id="commentButton">등록</button>	
-						</div>
-						<br/>
-						<hr/>
-		        		</div>
-		       		</div>
-	      		</div>
-	      		
-	      		<div class="col-md-9">
-		        	<div class="col-md-12 page-body">
-		        		<div class="row">
-		        			<div class="col-sm-4">${comment.comUserId}</div>
-							<div class="col-sm-8">
-								<c:if test="${user.userId==comment.comUserId}">
-									<button type="button" class="btn btn-default btn-sm">
-									  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									</button>
-								</c:if>
-							</div>
-						</div>
-						
-						<div class="row">
-					  		<div class="col-sm-12">${comment.comContent} </div>
-						</div>
-						
-						<div class="row">
-					  		<div class="col-sm-12">${comment.comRegdate}</div>
-					  		<hr/>
-						</div>
-						
-					
-		        		</div>
-		       		</div>
-	      		</div>
-   		  	</div>
-	    </div>
-	      		
-	      		-->
-
-
-
-
-
-
-
-
-
-

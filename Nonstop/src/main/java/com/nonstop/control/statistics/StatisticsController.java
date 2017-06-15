@@ -1,15 +1,19 @@
 package com.nonstop.control.statistics;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsService;
 
 @Controller
@@ -32,13 +36,18 @@ public class StatisticsController {
 		return "redirect:/index.jsp";
 	}
 	
-	@RequestMapping(value="getJSONListTechData", method=RequestMethod.POST)
+	@RequestMapping(value="getJSONListTechClass", method=RequestMethod.GET)
+	public void getJSONListTechClass(Model model){
+		System.out.println("/statstics/getJSONListTechClass");
+		model.addAttribute("techClassList",statisticsService.getTechClassList());
+	}
+	@RequestMapping(value="getJSONListTechData", method=RequestMethod.GET)
 	public void getJSONListTechData(Model model,@ModelAttribute("statistics") Statistics statistics){
 		System.out.println("/statstics/getJSONListTechData");
 		model.addAttribute("techDataList", statisticsService.getTechDataList(statistics.getTechClass()));
 	}
 	
-	@RequestMapping(value="getListTotalStatistics", method=RequestMethod.GET)
+	@RequestMapping(value="getListStatistics", method=RequestMethod.GET)
 	public String getListTotalStatistics(Model model){
 		System.out.println("/statstics/getListTotalStatistics");
 
@@ -48,42 +57,44 @@ public class StatisticsController {
 		return "forward:/view/statistics/getStatistics.jsp";
 	}
 	
-	@RequestMapping(value="getJSONListTotalStatistics", method=RequestMethod.POST)
+	@RequestMapping(value="getJSONListTotalStatistics", method=RequestMethod.GET)
 	public void getJSONListTotalStatistics(Model model){
 		System.out.println("/statstics/getJSONListTotalStatistics");
 		model.addAttribute("dataList", statisticsService.getTotalStatisticsList());
 	}
 	
-	@RequestMapping(value="getJSONMajorStatisticsList", method=RequestMethod.POST)
-	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics){
+	@RequestMapping(value="getJSONMajorStatisticsList", method=RequestMethod.GET)
+	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics, @RequestParam("aa") int division){
 		System.out.println("/statstics/getJSONMajorStatisticsList");
-		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass()));
+		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass(),division));
 	}
 	
-	@RequestMapping(value="getJSONPeriodStatisticsList", method=RequestMethod.POST)
+	@RequestMapping(value="getJSONPeriodStatisticsList", method=RequestMethod.GET)
 	public void getJSONPeriodStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics){
 		System.out.println("/statstics/getJSONPeriodStatisticsList");
 		model.addAttribute("dataList", statisticsService.getPeriodStatisticsList(statistics));
 	}
 	
-	@RequestMapping(value="getJSONRegionStatisticsList", method=RequestMethod.POST)
+	@RequestMapping(value="getJSONRegionStatisticsList", method=RequestMethod.GET)
 	public void getJSONRegionStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics){
 		System.out.println("/statstics/getJSONRegionStatisticsList");
 		model.addAttribute("dataList", statisticsService.getRegionStatisticsList(statistics));
 	}
 	
-	@RequestMapping(value="getJSONPostCountList", method=RequestMethod.POST)
-	public void getJSONPostCountList(Model model){
+	@RequestMapping(value="getJSONPostCountList", method=RequestMethod.GET)
+	public String getJSONPostCountList(Model model){
 		System.out.println("/statstics/getJSONPostCountList");
 		model.addAttribute("dataList", statisticsService.getPostCountList());
+		return "/index.jsp";
 	}
 	
-	//include로 화면 구성된다고 한다.
-	@RequestMapping(value="getUserStatisticsList", method=RequestMethod.GET)
-	public String getUserStatisticsList(Model model){
+	@RequestMapping(value="getUserStatisticsList/{userId}/{role}", method=RequestMethod.GET)
+	public void getJSONUserStatisticsList(Model model,@PathVariable("userId")String userId, @PathVariable("role")String role){
 		System.out.println("/statstics/getUserStatisticsList");
-		model.addAttribute("dataList", statisticsService.getPostCountList());
-		return ".jsp";
+		User user = new User();
+		user.setUserId(userId);
+		user.setRole(role);
+		model.addAttribute("dataList", statisticsService.getUserStatisticsList(user));
 	}
 	
 }

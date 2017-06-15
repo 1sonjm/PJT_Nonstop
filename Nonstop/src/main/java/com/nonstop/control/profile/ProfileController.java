@@ -18,9 +18,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.Portfolio;
+import com.nonstop.domain.Project;
+import com.nonstop.domain.Search;
+import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.project.ProjectService;
+import com.nonstop.service.statistics.StatisticsService;
 import com.nonstop.service.user.UserService;
 
 @Controller
@@ -32,12 +38,20 @@ public class ProfileController {
 	private ProfileService profileService;
 	
 	@Autowired
+	@Qualifier("projectServiceImpl")
+	private ProjectService projectService;
+	
+	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
 	@Autowired
 	@Qualifier("portfolioServiceImpl")
 	private PortfolioService portfolioService;
+	
+	@Autowired
+	@Qualifier("statisticsServiceImpl")
+	private StatisticsService statisticsService;
 	
 	public ProfileController(){
 		System.out.println(this.getClass());
@@ -56,21 +70,43 @@ public class ProfileController {
 		
 		System.out.println("/profile/getMineProfile");
 		
-		String careerUserId = ((User)session.getAttribute("user")).getUserId();
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
-		User user = userService.getProfileMine(careerUserId);
+		User user = userService.getProfileMine(sessionId);
 		
-		System.out.println("/profile/getMineProfile in getCareerList");
+		Map<String , Object> map = profileService.getCareerList(sessionId);
 		
-		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		Map<String , Object> map2 = profileService.getRecordProjectList(sessionId);
+
+		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, sessionId);
+
+		int projDivision = 1;
+		int sortFlag=0;
+		Search search2 = new Search();
+		List<Project> project = projectService.listProject(projDivision, sessionId, search2, sortFlag);
+		projDivision = 2;
+		List<Project> project2 = projectService.listProject(projDivision, sessionId, search2, sortFlag);
 		
-		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		List<Follow> follow = profileService.getFollowList(sessionId);
 		
-		//Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		List<Portfolio> scrapPort = portfolioService.getProfilePortScrapList(sessionId, sessionId);
 		
+		List<Statistics> techClassList = statisticsService.getTechClassList();
+		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
 		model.addAttribute("list" , map.get("list"));
-		//model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list3" , portfolio);
+		model.addAttribute("scrap" , scrapPort);
+		model.addAttribute("list4" , project);
+		model.addAttribute("list6" , project2);
 		model.addAttribute("user", user);
+		model.addAttribute("follow", follow);
 		
 		return "forward:/view/profile/profile.jsp";
 	}
@@ -86,27 +122,37 @@ public class ProfileController {
 		
 		Map<String , Object> map = profileService.getCareerList(userId);
 		
-		String reqUserId = ((User)session.getAttribute("user")).getUserId();
+		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		
 		System.out.println("/profile/getOtherProfile in getFollow");
 		
-		Follow follow = profileService.getFollow(reqUserId);
+		String targetUserId = userId;
 		
+		Follow follow = profileService.getFollow(sessionId , targetUserId);
+		
+		List<Portfolio> portfolio = portfolioService.getProfilePortList(sessionId, userId);
+
+		Search search2 = new Search();
+			
+		int projDivision = 1;
+		int sortFlag=0;
+		
+		List<Project> project = projectService.listProject(projDivision, sessionId, search2, sortFlag);
+			
+		projDivision = 2;
+			
+		List<Project> project2 = projectService.listProject(projDivision, sessionId, search2, sortFlag);
+		model.addAttribute("list4", project);
+		model.addAttribute("list6", project2);
 		model.addAttribute("list" , map.get("list"));
 		model.addAttribute("user", user);
 		model.addAttribute("follow", follow);
+		model.addAttribute("list3", portfolio);
+		
 		
 		return "forward:/view/profile/profile.jsp";
 	}
-	
-	@RequestMapping(value="addCareerView",method=RequestMethod.GET)
-	public String addCareer() throws Exception{
-		
-		System.out.println("/profile/addCareerView : GET");
-		
-		return "forward:/view/profile/addCareerView.jsp";
-	}
-	
+
 	@RequestMapping(value="addCareer",method=RequestMethod.POST)
 	public String addCareer(@ModelAttribute("career") Career career , HttpSession session, Model model) throws Exception{
 		
@@ -119,7 +165,19 @@ public class ProfileController {
 		profileService.addCareer(career);
 		
 		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		List<Statistics> techClassList = statisticsService.getTechClassList();
 		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		String reqUserId = careerUserId;
+		
+		List<Follow> follow = profileService.getFollowList(reqUserId);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
+		model.addAttribute("follow", follow);
 		model.addAttribute("list" , map.get("list"));
 		
 		return "forward:/view/profile/profile.jsp";
@@ -139,62 +197,56 @@ public class ProfileController {
 		
 	}
 	
-	@RequestMapping(value="updateCareer",method=RequestMethod.GET)
-	public String updateCareer(@RequestParam("careerNo")int careerNo , Model model) throws Exception{
-		
-		System.out.println("/profile/updateCareer : GET");
-		
-		Career career = profileService.getCareer(careerNo);
-		
-		model.addAttribute("career", career);
-		
-		return "forward:/view/profile/updateCareerView.jsp";
-	}
-	
-	@RequestMapping(value="updateCareer",method=RequestMethod.POST)
-	public String updateCareer(@ModelAttribute("career") Career career , Model model, HttpSession session) throws Exception{
-		
-		System.out.println("/profile/updateCareer : POST");
-		
-		String careerUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		career.setCareerUserId(careerUserId);
-		
-		profileService.updateCareer(career);
-		
-		Map<String , Object> career2 = profileService.getCareerList(careerUserId);
-		
-		model.addAttribute("list", career2.get("list"));
-		
-		return "forward:/view/profile/profile.jsp";
-	}
-	
 	@RequestMapping(value="deleteCareer",method=RequestMethod.GET)
-	public String deleteCareer(@RequestParam("careerNo") int careerNo , Model model) throws Exception{
+	public String deleteCareer(@RequestParam("careerNo") int careerNo , HttpSession session, Model model) throws Exception{
 		
 		System.out.println("/profile/deleteCareer : GET");
 		
 		profileService.deleteCareer(careerNo);
 		
-		Map<String , Object> map = profileService.getCareerList("user05");
+		String careerUserId = ((User)session.getAttribute("user")).getUserId();
 		
-		model.addAttribute("list", map.get("list"));
+		User user = userService.getProfileMine(careerUserId);
+		
+		Map<String , Object> map = profileService.getCareerList(careerUserId);
+		
+		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		Map<String , Object> map2 = profileService.getRecordProjectList(recUserId);
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		Search search = new Search();
+		
+		search.setPostDivision(1);
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+		
+		Search search2 = new Search();
+		
+		int projDivision = 1;
+		int sortFlag=0;
+		
+		List<Project> project = projectService.listProject(projDivision, scrapUserId, search2, sortFlag);
+		List<Statistics> techClassList = statisticsService.getTechClassList();
+		
+		int classNo = 1;
+		
+		List<Statistics> techDataList = statisticsService.getTechDataList(classNo);
+		
+		model.addAttribute("techClassList" , techClassList);
+		model.addAttribute("techDataList" , techDataList);
+		
+		model.addAttribute("list" , map.get("list"));
+		model.addAttribute("list2"  ,map2.get("list2"));
+		model.addAttribute("list3" , portfolio);
+		model.addAttribute("list4" , project);
+		model.addAttribute("user", user);
 		
 		return "forward:/view/profile/profile.jsp";
 	}
 	
-	@RequestMapping(value="addFollow",method=RequestMethod.GET)
-	public void addFollow(@RequestParam("targetUserId") String targetUserId ,HttpSession session) throws Exception{
-		
-		System.out.println("/profile/addFollow : GET");
-		
-		String reqUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		
-		System.out.println(reqUserId+targetUserId);
-		profileService.addFollow(reqUserId, targetUserId);
-	}
-	
+
 	@RequestMapping(value="addJsonFollow/{targetUserId}",method=RequestMethod.GET)
 	public void addJsonFollow(@PathVariable String targetUserId ,HttpSession session) throws Exception{
 		
@@ -232,16 +284,6 @@ public class ProfileController {
 		profileService.deleteFollow(reqUserId, targetUserId);
 	}
 	
-	@RequestMapping(value="deleteFollow/{teargetUserId}",method=RequestMethod.GET)
-	public void deleteFollow(@RequestParam("targetUserId") String targetUserId , HttpSession session) throws Exception{
-		
-		System.out.println("/profile/deleteFollow : POST");
-		
-		String reqUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		profileService.deleteFollow(reqUserId, targetUserId);
-	}
-	
 	@RequestMapping(value="addJsonPortScrap/{portNo}" , method=RequestMethod.GET)
 	public void addJsonPortScrap(@PathVariable int portNo, HttpSession session ) throws Exception{
 		
@@ -260,6 +302,23 @@ public class ProfileController {
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
 		profileService.addProjScrap(projNo,scrapUserId);
+	}
+	
+	@RequestMapping(value="getPortScrapList" , method=RequestMethod.GET)
+	public String getPortScrapList(HttpSession session, Model model) throws Exception{
+		System.out.println("getPortScrapList : GET");
+		
+		String scrapUserId=((User)session.getAttribute("user")).getUserId();
+		
+		Search search = new Search();
+		
+		search.setPostDivision(1);
+		
+		List<Portfolio> portfolio = portfolioService.getPortfolioList(search, scrapUserId);
+		
+		model.addAttribute("list" , portfolio);
+		
+		return "forward:/view/profile/listPortScrap";
 	}
 
 	@RequestMapping(value="deleteJsonPortScrap/{portNo}",method=RequestMethod.GET)

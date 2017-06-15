@@ -11,6 +11,7 @@ public class Statistics {
 	private String techName;
 	private int techClass;
 	private String location;
+	private int careerUseTerm;
 	
 	public int getDemand() {
 		return demand;
@@ -72,6 +73,12 @@ public class Statistics {
 	public void setLocation(String location) {
 		this.location = location;
 	}
+	public int getCareerUseTerm() {
+		return careerUseTerm;
+	}
+	public void setCareerUseTerm(int careerUseTerm) {
+		this.careerUseTerm = careerUseTerm;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -95,8 +102,11 @@ public class Statistics {
 		builder.append(techClass);
 		builder.append(", location=");
 		builder.append(location);
+		builder.append(", careerUseTerm=");
+		builder.append(careerUseTerm);
 		builder.append("]");
 		return builder.toString();
 	}
+	
 	
 }

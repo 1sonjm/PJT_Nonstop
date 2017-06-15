@@ -39,13 +39,8 @@ public class ProfileServiceImpl implements ProfileService {
 		return profileDAO.getCareerList(userId);
 	}
 
-	public Career getCareer(int careerNo) throws Exception {
-		return profileDAO.getCareer(careerNo);
-	}
-
-	public void updateCareer(Career career) throws Exception {
-		profileDAO.updateCareer(career);
-		
+	public Career getCareer(int careerNo , int techClass) throws Exception {
+		return profileDAO.getCareer(careerNo,techClass);
 	}
 
 	public void deleteCareer(int careerNo) throws Exception {
@@ -57,12 +52,11 @@ public class ProfileServiceImpl implements ProfileService {
 	}
 	
 	public List<Follow> getFollowList(String reqUserId) throws Exception {
-	
 		return profileDAO.getFollowList(reqUserId);
 	}
 
-	public Follow getFollow(String reqUserId) throws Exception {
-		return profileDAO.getFollow(reqUserId);
+	public Follow getFollow(String reqUserId , String targetUserId) throws Exception {
+		return profileDAO.getFollow(reqUserId , targetUserId);
 	}
 	
 	public void deleteFollow(String reqUserId, String targetUserId) throws Exception {
@@ -94,6 +88,8 @@ public class ProfileServiceImpl implements ProfileService {
 		
 		return profileDAO.getRecordProjectList(recUserId);
 	}
+	
+	
 	
 	
 }

@@ -216,7 +216,7 @@ function statisticsByPeriod(jsonData){
 				+"/"+jsonData.dataList[i].demand
 				+"/"+jsonData.dataList[i].supply
 		+"/"+jsonData.dataList[i].userRate
-		+"/"+jsonData.dataList[i].date);
+		+"/"+jsonData.dataList[i].regdate);
 		
 		dataSet.push({
 			date: jsonData.dataList[i].regdate,
@@ -279,12 +279,14 @@ function statisticsByPeriod(jsonData){
 						"position": "right",
 						"gridAlpha": 0,
 						"title": "수요",
-						"titleBold": false
+						"titleBold": false,
+						"integersOnly": true
 					},
 					{
 						"id": "ValueAxis-2",
 						"title": "공급",
-						"titleBold": false
+						"titleBold": false,
+						"integersOnly": true
 					}
 				],
 				"balloon": {

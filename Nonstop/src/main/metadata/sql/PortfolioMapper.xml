@@ -10,6 +10,7 @@
 	<resultMap id="portfolioSelectMap" type="portfolio">
 		<result property="portNo" 			column="port_no" 				jdbcType="NUMERIC"/>
 		<result property="portUserId"		column="port_user_id" 			jdbcType="VARCHAR" />
+		<result property="portUserImg"		column="user_img" 				jdbcType="VARCHAR" />
 		<result property="portDivision" 	column="port_division" 			jdbcType="NUMERIC" />
 		<result property="portTitle" 		column="port_title" 			jdbcType="VARCHAR" />
 		<result property="portRegdate" 		column="port_regdate" 			jdbcType="DATE" />
@@ -17,9 +18,12 @@
 		<result property="portFile" 		column="port_file" 				jdbcType="VARCHAR" />
 		<result property="portDetail" 		column="port_detail" 			jdbcType="VARCHAR"  />
 		<result property="totalPortView" 	column="port_viewcount" 		jdbcType="NUMERIC" />
+		<result property="totalPortLike" 	column="port_like_count" 		jdbcType="NUMERIC" />
+		<result property="totalPortComment" column="port_com_count" 		jdbcType="NUMERIC" />
+		<result property="portLikeNo" 		column="port_like_no" 			jdbcType="NUMERIC" />
 		<result property="scrapUserId"		column="user_id"				jdbcType="VARCHAR"/>
 		<result property="scrapNo"			column="scrap_no"				jdbcType="NUMERIC"/>
-
+		<result property="endRowNum"		column="row_seq"				jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	 <resultMap id="commentSelectMap" type="portComment">
@@ -29,6 +33,13 @@
 		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
 		<result property="comRegDate" 		column="com_port_regdate" 		jdbcType="DATE" />
 		<result property="comContent" 		column="com_port_content" 		jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+	<resultMap id="portLikeMap" type="portLike">
+		<result property="portLikeNo" 		column="port_like-no" 			jdbcType="INTEGER"/>
+		<result property="portNo" 			column="port_no" 				jdbcType="INTEGER" />
+		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
 		
 	</resultMap>
 	
@@ -46,60 +57,77 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getPortfolio"	parameterType="int"	resultMap="portfolioSelectMap">
+	 <select 	id="getPortfolio"	parameterType="map"	resultMap="portfolioSelectMap">
 		<!-- SELECT
 		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_viewcount	
 		FROM portfolio
 		WHERE port_no = #{portNo} -->
 		
 		
-		SELECT P.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount,a.scrap_no
-		FROM portfolio p,(SELECT scrap_no,port_no
-     		  			  FROM scrap
-     		  		 	  WHERE user_id=#{scrapUserId}) a
-		WHERE p.port_no=a.port_no(+) AND p.port_no=#{portNo}
+		SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount, p.port_like_count, p.port_com_count, s.scrap_no, l.port_like_no, l.port_no
+		FROM portfolio p,
+			(SELECT port_like_no, port_no, user_id FROM port_like WHERE user_id=#{sessionUserId}) l, 
+			(SELECT scrap_no, port_no FROM scrap WHERE user_id=#{sessionUserId}) s
+		WHERE p.port_no=s.port_no(+) AND p.port_no=l.port_no(+) AND p.port_no=#{portNo} 
 	 </select>
 
 	 <select  id="getPortfolioList" parameterType="map" resultMap="portfolioSelectMap">
-	  	SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount ,a.scrap_no
-     	FROM portfolio p, (select * from scrap where user_id=#{scrapUserId}) a
-     <where>
-        p.port_no=a.port_no(+) AND
-        <if test="portDivision == 1">
-         p.port_division IN (10,11,12)   
-      </if>   
-      <if test="portDivision == 2">
-         p.port_division IN (20,21,22)   
-      </if>
-      <if test="portDivision != 1 and portDivision != 2">
-         p.port_division = #{portDivision}
-      </if>   
-     </where>
-	  	ORDER BY port_viewcount
-	  	
-	  	<!-- SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT p.prod_no , p.prod_name , p.prod_detail , p.manufacture_day , p.price , p.image_file , p.reg_date , NVL(t.tran_status_code,'0') tran_status_code
-											FROM product p, transaction t
-											<where>
-											p.prod_no = t.prod_no(+)
-												<if test="searchCondition != null">			
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				AND p.prod_no = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				AND p.prod_name = #{searchKeyword}LIKE %#{SearchKeyword}%
-													</if>
-													<if test="searchCondition == 2 and searchKeyword !='' ">
-										 				AND p.price = #{searchKeyword}
-													</if>
-												</if>
-											</where>
-											
-											ORDER BY prod_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} -->
+
+		SELECT*
+		FROM
+		(SELECT inner_table.*, users.user_img, users.user_id, ROWNUM AS row_seq
+			FROM 
+			(SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no
+			     	FROM portfolio p, (select * from scrap where user_id=#{sessionUserId}) a
+				    <where>
+				        p.port_no=a.port_no(+) AND
+				        
+				        <if test="search.postDivision == 1">
+					       p.port_division IN (10,11,12)   
+					    </if>   
+					    <if test="search.postDivision == 2">
+					       p.port_division IN (20,21,22)   
+					    </if>
+					    <if test="search.postDivision != 1 and search.postDivision != 2">
+					       p.port_division = #{search.postDivision}
+					    </if>   
+			
+					</where>
+				  	
+				  	<if test="search.postSorting == 1 or search.postSorting == 0">
+				  	ORDER BY p.port_viewcount DESC NULLS LAST
+				  	</if>
+				  	
+				  	<if test="search.postSorting == 2">
+				  	ORDER BY p.port_regdate DESC NULLS LAST
+				  	</if>
+				  	
+				  	<if test="search.postSorting == 3">
+				  	ORDER BY p.port_like_count DESC NULLS LAST
+				  	</if>
+				  	
+				  	) inner_table, users
+			WHERE users.user_id=inner_table.port_user_id)
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+
 	 </select>
+	 
+	 
+	<select  id="getProfilePortList" parameterType="map" resultMap="portfolioSelectMap">
+		
+		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no,users.user_img, users.user_id
+		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a , users
+		WHERE   p.port_user_id =#{profileUserId} AND p.port_no = a.port_no(+) AND users.user_id=#{profileUserId}
+		
+	</select>
+	
+	<select  id="getProfilePortScrapList" parameterType="map" resultMap="portfolioSelectMap">
+		
+		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no,users.user_img, users.user_id
+		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a , users
+		WHERE   p.port_no = a.port_no(+)AND users.user_id=p.port_user_id AND a.user_id=#{profileUserId}
+		
+	</select>
 	 
 	<!-- SQL : INSERT -->
 	<update 	id="updatePortfolio"		parameterType="portfolio" >
@@ -107,17 +135,33 @@
 		<set>
 		port_division=#{portDivision}, 
 		port_title=#{portTitle},
-		<if test="portViewFlag == true">
-			port_viewcount=#{totalPortView},	
-		</if>	
-		<if test="portViewFlag == false">	 
-			port_update=SYSDATE,
-		</if> 
+		port_update=SYSDATE,
 		port_file=#{portFile}, 
 		port_detail=#{portDetail}
 		</set>
 		WHERE port_no=#{portNo}
 	</update>
+	
+	<update 	id="updatePortCount"		parameterType="portfolio" >
+	 	UPDATE portfolio
+		<set>
+		<if test="portViewFlag == true">
+			port_viewcount=#{totalPortView},	
+		</if>	
+		<if test="portLikeFlag == true">	 
+			port_like_count=#{totalPortLike},
+		</if> 
+		<if test="totalPortComment != 0">
+			port_com_count=#{totalPortComment},	
+		</if>	
+		</set>
+		WHERE port_no=#{portNo}
+	</update>
+	
+	<delete id="deletePortfolio" parameterType="int">
+		DELETE from portfolio
+		WHERE port_no = #{value}
+	</delete>
 	
 	<insert 	id="addComment"		parameterType="portComment" >
 	 	INSERT INTO 
@@ -157,6 +201,21 @@
 		
 	</select>
 	
-	
+	<insert 	id="addPortLike"		parameterType="portLike" >
+	 	INSERT INTO 
+	 	port_like(port_like_no , port_no , user_id) 
+		VALUES	 (seq_port_like_port_like_no.nextVal, 
+		#{portNo}, 
+		#{userId})
+		
+		<!--<selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
+        SELECT seq_port_comment_com_no.currval FROM dual
+    	</selectKey> -->
+	 </insert>
+	 
+	 <delete id="deletePortLike" parameterType="int">
+		DELETE from port_like
+		where port_like_no = #{value}
+	 </delete>
 	 
 </mapper>

@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=utf-8" pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <html lang="ko">
 
 <head>
@@ -14,17 +15,27 @@
 
 
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
     
     <!-- jQuery -->
-	<script src="../../resources/javascript/jquery.js"></script>
+	<script src="/resources/javascript/jquery.js"></script>
 	
 	<!-- Bootstrap Core JavaScript -->
-	<script src="../../resources/javascript/bootstrap.min.js"></script>
+	<script src="/resources/javascript/bootstrap.min.js"></script>
     <style>
+    .my-pic img { 
+      width:100%;	
+      /* position: relative; 
+      padding-top: 100%;*/
+      /* 1:1 : padding-top: 100%; */
+      /* 2:1 : padding-top: 50% */
+      /* 1:2 : padding-top: 200% */
+      /* 4:3 : padding-top: 75% */
+      /* 16:9 : padding-top: 56.25% */
+   } 
     .media-left .comment-img{
     	margin-top: 2px;
     	margin-bottom: 2px;
@@ -36,6 +47,7 @@
     }
     .comment-div h6{
     	margin-top:5px;
+    	margin-bottom: 3px;
     	font-weight: 400;
     	font-size: 12px;
     	color: #656c7e;
@@ -107,15 +119,14 @@
    /* 미니프로필 */
    .about-fixed {
        position: fixed;
-       /* width: 20.8%; */
+       width: 17%;
    }   
    .my-pic {
        width: 100%;
+       height: 0;
+	   padding-bottom: 100%;
        box-shadow: -2px -1px 88px 0px rgba(0,0,0,0.17);
-   }
-   
-   .my-pic img {
-       width: 100%;
+       overflow: hidden;
    }
    
    .my-detail {
@@ -234,15 +245,23 @@
        letter-spacing: 0.8px;
        font-family: "Poppins", sans-serif;
    }
+   .back {
+       font-size: 35px;
+       color: #d6d6d6;
+       position: fixed;
+       right: 40px;
+       top: 40px;
+       z-index: 999;
+       transition: all 0.3s ease-in-out;
+   }
    
    /* Scroll To Top */
    
    .scroll-to-top {
-       /* display: none; */
-       font-size: 40px;
-       color: #1abc9c;
+       display: none;
+       font-size: 35px;
        position: fixed;
-       right: 20px;
+       right: 40px;
        bottom: 50px;
        z-index: 999;
        transition: all 0.3s ease-in-out;
@@ -263,16 +282,29 @@
 
    <script type="text/javascript">
    
-   /* 댓글 */
+   /* 댓글 버튼 */
+   function fnMove(comment){
+        var position = $("#comment").offset();
+        $('html, body').animate({scrollTop : position.top}, 800);
+   }
+    
+	/* 댓글 */
    $(function() {
+	   /* 댓글 길이 알림 */
+	   var maxLength = 200;
+       $('textarea').keyup(function() {
+         var length = $(this).val().length;
+         var length = maxLength-length;
+         $('#chars').text(length);
+       });
+	   
       /* 댓글 박스 클릭시 comment창 보이게 */ 
        $(".comment-input").on("click" , function() {
-          $( ".comment-input" ).css("display" , "none"); 
+          $(".comment-input").css("display" , "none"); 
           $(".comment-btn").css("display" , "block");
        }); 
-      
-      $("#addComment").on("click" , function() {
-    	  
+       /*댓글 등록*/
+      $("#addComment").on("click" , function() {    	  
     	  $.ajax( 
 					{
 						url : "/portfolio/addJsonComment",
@@ -280,145 +312,320 @@
 						dataType : "json" ,
 						context : this,
 						data : {
-								comContent:$("#com-content").val(),
+								comContent:$("#comContent").val(),
 								comPortNo:$(this).next().val(),
 								comUserId:$(this).next().next().val(),
 								} , 
 						success : function(serverData , status) {
-								
-								 	
-									displayValue='<div class="media">'												   
-													+'<div class="media-left">'
-													  +'<a href="#">'
-													    +'<img class="comment-img" src="http://placehold.it/45x45" alt="">'
-													  +'</a>'
-													+'</div>'
-													+'<div class="media-body">'
-													  +'<div class="comment-div">'
-													  	+'<h6>'+serverData.portComment.comUserId+'<span>ㅣ   '+serverData.portComment.comRegDate+'</span></h6>'
-													  	+'<p>'+serverData.portComment.comContent+'</p>'									  		
-													  +'</div>'										  
-													+'</div>'
-												  +'</div>';
-								 										
-									/* $("#ajaxTarget").html(displayValue); */
-									$("#ajaxTarget").after(displayValue);
+								  location.reload();
 						}
 				});
       });
       
       /*댓글 삭제*/
-      $("#deleteComment").on("click" , function() {
+      $(".glyphicon-trash").on("click" , function() {
           alert($(this).next().val());
-          alert($("#comPortNo").val());
-          self.location="/portfolio/deleteComment?comNo="+$(this).next().val()+"&comPortNo="+$("#comPortNo").val();
+          alert($("#portNo").val());
+          $.ajax( 
+					{
+						url : "/portfolio/deleteComment/"+$(this).next().val()+"/"+$("#portNo").val(),
+						method : "GET" ,
+						dataType : "json" ,
+						context : this,
+						headers : {
+	                        "Accept" : "application/json",
+	                        "Content-Type" : "application/json"   
+	                    },
+						success : function(data) {
+								  location.reload();
+						}
+	      });          
        }); 
    }); 
 	
-
+   /* 스크랩 */
    $(function() {
-         /* 스크랩추가 */
+         /* 스크랩추가+삭제 */
          $("#scrap").on("click" , function() {
 
-               var flag = $(this).text().trim();
+        	   var flag = $(this).text().trim();
                var requestTarget;
                var asdf;
                
-               alert(flag);
-               
-               
-               if(flag=="add to scrap"){
+               if(flag=="스크랩"){
+            	  var flag = "addtoscrap";
                   requestTarget = "addJsonPortScrap";
-                  asdf = "delete to scrap";  
-                  alert(1);
-               }else if(flag=="delete to scrap"){
+                  asdf = "스크랩 삭제";  
+               }else if(flag=="스크랩 삭제"){
+            	  var flag = "deletetoscrap";
                   requestTarget = "deleteJsonPortScrap";
-                  asdf ="add to scrap"
-                     alert(2);
+                  asdf ="스크랩"
                }else{
                   requestTarget == "deleteJsonPortScrap";
                    asdf ="add to scrap"
-                      alert(3);
                }
-               alert(requestTarget+"컨트롤러 어디로가니");
-               alert(asdf);
                
-                var portNo=$(this).attr('portNo');
+                var portNo=$("#portNo").val();
                 $.ajax(
                    {
                       url : "/profile/"+requestTarget+"/"+portNo,
                       method : "GET",
                       dateType : "json",
                       headers : {
-                         "Accept" : "application/json",
+                        "Accept" : "application/json",
                         "Content-Type" : "application/json"   
                     },
-                      success : function(JSONData , status){
-                         var displatValue = 
-                         "<button type='button' id='Scrap' portNo='${portfolio.portNo}'>"+asdf+"</button>";
-                         
-                         $(".Scrap").html(displayValue);
+                      success : function(data){
+                    	  		location.reload();
                       }
                    });
                 });
          });
-    
+   
+   /* 좋아요*/
+   $(function() {
+	   /* 좋아요 추가 */
+       $("#portLike").on("click" , function() {       		
+    	   alert("이 게시물을 좋아합니다.");
+       		$.ajax( 
+					{
+						url : "/portfolio/addJsonPortLike",
+						method : "POST" ,
+						dataType : "json" ,
+						context : this,					
+						data : {								
+								PortNo : $("#portNo").val(),
+								UserId : $("#sessionUserId").val(),
+								}, 
+						success : function(data) {
+								  location.reload();
+						}
+			});     		
+       });
+       /* 좋아요 삭제*/
+       $("#delPortLike").on("click" , function() {
+    	   alert("좋아요를 취소합니다.");
+      		$.ajax( 
+					{
+						url : "/portfolio/delJsonPortLike",
+						method : "POST" ,
+						dataType : "json" ,
+						context : this,										 
+						data : {								
+								PortNo : $("#portNo").val(),
+								UserId : $("#sessionUserId").val(),
+								portLikeNo : $(this).next().val(),
+								}, 								
+						success : function(data) {
+								  location.reload(); 
+						}
+			});
+       });
+   });
+   
+   /* 팔로우하기, 쪽지보내기, 프로젝트 초대, 채팅하기, 수정, 삭제, 내 프로필 이동 */
+   $(function() {
+	   /*팔로우*/
+	   $("#follow").on("click" , function() {       	
+		   
+		   var targetUserId = $(".white-spacing h1").text();
+		   /*팔로우하기*/
+		   if($("#follow").text() == "팔로우하기") {
+			   alert($(".white-spacing h1").text()+"에게 팔로우를 신청합니다.");
+			   $.ajax( 
+						{
+							url : "/profile/addJsonFollow/"+targetUserId,
+							method : "GET" ,
+							dataType : "json" ,
+							context : this,					
+							headers : {
+				                        "Accept" : "application/json",
+				                        "Content-Type" : "application/json"   
+				                      },
+							success : function(data) {
+									  location.reload();
+							}
+				});
+		   }
+		   /*팔로우취소*/
+		   if($("#follow").text() == "팔로우 취소") {
+			   alert($(".white-spacing h1").text()+" 팔로우를 취소합니다.");
+			   $.ajax( 
+						{
+							url : "/profile/deleteJsonFollow/"+targetUserId,
+							method : "GET" ,
+							dataType : "json" ,
+							context : this,					
+							headers : {
+				                        "Accept" : "application/json",
+				                        "Content-Type" : "application/json"   
+				                      },
+							success : function(data) {
+									  location.reload();
+							}
+				});
+		   }
+       });
+	   
+      /* 쪽지보내기 */ 
+      $("#sendLetter").on("click" , function() {       	
+    	  self.location="/letter/addLetter";
+      });
+      
+      /*프로젝트 초대*/
+      $("#toProject").on("click" , function() {
+ 
+      });
+      
+      /*채팅하기*/
+      $("#toProject").on("click" , function() {
+ 
+      });
+      /* 수정 */
+      $("#updatePortfolio").on("click", function (e) {
+		   alert($("#portNo").val());
+		   self.location="/portfolio/updatePortfolio?portNo="+$("#portNo").val(); 
+	   });
+	  /* 삭제 */ 
+	   $("#deletePortfolio").on("click", function (e) {
+		   alert($("#portNo").val());
+		   self.location="/portfolio/deletePortfolio?portNo="+$("#portNo").val(); 
+	   });
+	  /* 내 프로필 이동 */
+	  $("#getProfile").on("click", function (e) {
+		   alert($("#portNo").val());
+		   self.location="/profile/getMineProfile"; 
+	   });
+   });
+   
+   
+   $(function () {
+	    'use strict';
+	    /* 스크롤 버튼 */
+		//DOM(Document Object Model)이 로드되었을 때 실행되어야 하는 코드
+	    jQuery(document).ready(function () {
+	
+	    	/* Smooth Scroll */		
+		    $('a.smoth-scroll').on("click", function (e) {
+		        var anchor = $(this);
+		        $('html, body').stop().animate({
+		            scrollTop: $(anchor.attr('href')).offset().top - 50
+		        }, 1000);
+		        e.preventDefault();
+		    });
+			
+			/* Scroll To Top */			
+		    $(window).scroll(function(){
+		    if ($(this).scrollTop() >= 500) {
+		        $('.scroll-to-top').fadeIn();
+		     } else {
+		        $('.scroll-to-top').fadeOut();
+		     }
+		     });
+		
+		    $('.scroll-to-top').click(function(){
+		      $('html, body').animate({scrollTop : 0},800);
+		      return false;
+		      });
+	    });
+	    /* 뒤로가기 */
+	    $(document).ready(function(){
+	    	$(".back").on("click" , function() { 
+	    		window.history.back();
+	    	});
+	    });
+	});
+   
    </script>
 </head>
 
 <body>
 
 <div id="main">
-    <div class="container">
-        <div class="row">
+	<div class="container">
+		<div class="row">
         
            <!-- Blog Post (Left Body) Start -->
            <div class="col-md-9">
               <div class="col-md-12 page-body">
                  <div class="row">
                      
-                     <div class="sub-title">
-                            <!-- <a href="index.html" title="Go to Home Page"><h2>Back Home</h2></a>
-                           <a href="#comment" class="smoth-scroll"><i class="icon-bubbles"></i></a> -->         
-                           <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
-                           <button type="button" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
-                           <c:if test="${portfolio.scrapNo == 0}">
-                           <button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;add to scrap</button>
-                           </c:if>
-                           
-                           <c:if test="${portfolio.scrapNo != 0}">
-                           <button type="button" id="scrap" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;delete to scrap</button>
-                           </c:if>
-                        </div>
+                 	<div class="sub-title">
+                            
+                    		<c:if test="${!empty sessionScope.user}">
+                           		<c:if test="${sessionScope.user.userId == portfolio.portUserId}">
+                           		<button type="button" class="btn btn-info btn-lg" id="updatePortfolio"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>&ensp;게시물 수정</button>
+                           		<button type="button" class="btn btn-info btn-lg" id="deletePortfolio"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span>&ensp;게시물 삭제</button>
+                           		</c:if>
+                           	   
+                           		<c:if test="${sessionScope.user.userId != portfolio.portUserId}">
+	                           	   <!-- 좋아요버튼 -->
+		                           <c:if test="${portfolio.portLikeFlag == false}">
+		                           <button type="button" class="btn btn-info btn-lg" id="portLike"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요</button>
+		                           </c:if>
+		                           
+		                           <c:if test="${portfolio.portLikeFlag == true}">
+		                           <button type="button" class="btn btn-info btn-lg" id="delPortLike"><span class="glyphicon glyphicon-heart" aria-hidden="true"></span>&ensp;좋아요 취소</button>
+		                           <input type="hidden" value="${portfolio.portLikeNo}">
+		                           </c:if>
+		                           <!-- 댓글버튼 -->
+		                           <button type="button" class="btn btn-info btn-lg" onclick="fnMove(comment)"><span class="glyphicon glyphicon-edit" aria-hidden="true"></span>&ensp;댓글 남기기</button>
+		                           
+		                           <!-- 스크랩버튼 -->
+		                           <c:if test="${portfolio.scrapNo == 0}">
+		                           <button type="button" id="scrap" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩</button>
+		                           </c:if>
+		                           
+		                           <c:if test="${portfolio.scrapNo != 0}">
+		                           <button type="button" id="scrap" class="btn btn-info btn-lg"><span class="glyphicon glyphicon-star" aria-hidden="true"></span>&ensp;스크랩 삭제</button>
+		                           </c:if>
+								</c:if>
+							</c:if>       
+                        <!-- sub-title End -->   
+						</div>
                         
                         <div class="col-md-12 content-page">
-                            <div class="col-md-12 blog-post">
+                        	<div class="col-md-12 blog-post">
                               
-                              <!-- 왜 안나오는거야아아아ㅏ워ㅠㅜㅠㅜㅠㅜ -->
-                               <!-- Post Headline Start -->
-                               <div class="post-title">
+                        		<!-- Post Headline Start -->
+                        		<div class="post-title">
                                   <h1>${portfolio.portTitle}</h1> 
-                               </div>
-                               <!-- Post Headline End -->
+                        		</div>
+                        		<!-- Post Headline End -->
                                        
                                        
-                               <!-- Post Detail Start -->
-                               <div class="post-info">
-                                  <span>${portfolio.portMonth} ${portfolio.portDay}, ${portfolio.portYear} / by <a href="#" target="_blank">${portfolio.portUserId}</a></span>
-                               </div>
-                               <!-- Post Detail End -->
+								<!-- Post Detail Start -->
+								<div class="post-info">
+                                	<span>${portfolio.portMonth} ${portfolio.portDay}, ${portfolio.portYear} / by <a href="#" target="_blank">${portfolio.portUserId}</a></span>
+                              	</div>
+                              	<!-- Post Detail End -->
                                
-                               <!-- Post Image Start -->
+                              	<!-- Post Image Start -->
+                              	<c:set var="portFile" value="${portfolio.portFile}" />
+                              	<c:set var="portFileArray" value="${fn:split(portFile, '.')}" />
+
                                 <div class="post-image margin-top-40 margin-bottom-40">
-                                   <img src="../../resources/images/upload/${portfolio.portFile}" alt="">
-                                   <!-- <p>Image source from <a href="#" target="_blank">Link</a></p> -->                                      
+                                
+                                <c:choose>
+								<c:when test="${portFileArray[fn:length(portFileArray)-1]=='pdf' || portFileArray[fn:length(portFileArray)-1] == 'odp' || portFileArray[fn:length(portFileArray)-1] == 'odt' || portFileArray[fn:length(portFileArray)-1] == 'ods'}">
+									<iframe src = "/resources/ViewerJS/#../../resources/images/upload/${portfolio.portFile}" width="100%" height="100%" allowfullscreen webkitallowfullscreen></iframe>
+								</c:when>
+<%-- 							<c:when test="${portFileArray[fn:length(portFileArray)-1] == 'odp'}">
+									<iframe src = "/resources/ViewerJS/#../../resources/images/upload/${portfolio.portFile}" width="100%" height="100%" allowfullscreen webkitallowfullscreen></iframe>
+								</c:when> --%>
+								<c:otherwise>
+									<img src="../../resources/images/upload/${portfolio.portFile}" alt="">
+								</c:otherwise>
+								</c:choose>	
+                                
                                 </div>
+                                
                                 <!-- Post Image End -->
                                
-                               <!-- 상세설명 -->
-                               <p>${portfolio.portDetail}</p>
+                              	<!-- 상세설명 -->
+                              	<p>${portfolio.portDetail}</p>
                                
-                               <div class="margin-top-50"></div>
+                              	<div class="margin-top-50"></div>
                                
                                	<!-- Post Comment (Disqus) Start -->
                                 <div id="comment" class="comment">
@@ -427,30 +634,33 @@
                                   	<h6>22 Comments</h6>
                                   	<hr class="thick-line">
                                    
-                                    <div class="media">
-									  <div class="media-left">
-									    <a href="#">
-									      <img src="http://placehold.it/50x50" alt="">									      
-									    </a>
-									  </div>
-									  
-							  	    <div class="media-body">
-							  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
-								  	  <div class="comment-btn" style="display:none;">
-								  		<div class="well">
-							            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
-						                    <form role="form">
-						                    <div class="form-group">
-						                      <textarea class="form-control" rows="3" id="com-content"></textarea>
-						                    </div>
-						                      <button type="button" name="comPortContent" value="" class="btn btn-primary" id="addComment">Submit</button>
-						                      <input type="hidden" id="comPortNo" value="${portfolio.portNo}">
-						                      <input type="hidden" value="${sessionScope.user.userId}">
-						                    </form>
-						                 </div>						  	
-								  	  </div>
-								    </div>
-								
+                                    <c:if test="${!empty sessionScope.user}">
+	                                    <div class="media">
+										  <div class="media-left">
+										    <a href="#">
+										      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+										    </a>
+										  </div>
+									
+								  	      <div class="media-body">
+									  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
+										  	  <div class="comment-btn" style="display:none;">
+										  		<div class="well">
+									            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
+								                    <form role="form">
+								                    <div class="form-group">
+								                       <textarea id="comContent" maxlength="200" style="resize: none; wrap:hard; width:700px; height:120px;"></textarea><br/>
+		                            					200 / <span id="chars">200</span> 글자 남았습니다.
+								                    </div>
+								                      <button type="button" name="comPortContent" value="" class="btn btn-primary" id="addComment">Submit</button>
+								                      <input type="hidden" id="portNo" value="${portfolio.portNo}">
+								                      <input type="hidden" id="sessionUserId" value="${sessionScope.user.userId}">
+								                    </form>
+								                 </div>						  	
+										  	  </div>
+									      </div>
+									    </div>
+									</c:if>
 								    <div class="margin-top-30"></div>								
 								
 									<!-- ajax로 받은 데이터 들어올 곳 -->						
@@ -483,55 +693,78 @@
 																	
 								</c:forEach>
 								
-                            </div>                                     
-                        </div>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-       	 <!-- Blog Post (Right Sidebar) End -->
-               
-               
-         <!-- About Me (Right Sidebar) Start -->
-         <div class="col-md-3">
-            <div class="about-fixed">
-             
-              <div class="my-pic">
-                 <img src="http://placehold.it/270x230" alt="">
-              </div>
-          
-               <div class="my-detail">
-                
-                  <div class="white-spacing">
-                      <h1>Alex Parker</h1>
-                      <span>Web Developer</span>
-                  </div> 
-                
-                  <div class="row">
-                     <input class="btn btn-default" type="button" value="Input">
-                  </div>
-                  <div class="row">
-                     <input class="btn btn-default" type="button" value="Input">
-                  </div>
+                            	</div>
+                            	<!-- comment End -->                                     
+                       		</div>
+               			</div>
+               		</div>
+           		</div>
+           	</div>
+            <!-- Blog Post (Right Sidebar) End -->
          
-              </div>
-           </div>
-         </div>
-         <!-- About Me (Right Sidebar) End -->
-      
-      </div>
-   </div>
+         	<!-- About Me (Right Sidebar) Start -->
+         	<div class="col-md-3">
+            	<div class="about-fixed">
+              
+	            	<div class="my-pic">
+	              		<img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
+	           		</div>
+          
+	              	<div class="my-detail">
+	                
+	                	<div class="white-spacing">
+	                    	<h1>${user.userId}</h1>
+	                    	<span>${user.email}</span><br/>
+	                    	<%-- <span>${sessionScope.user.addr}</span> --%>
+	                 	</div> 
+	                
+	                 	<div class="margin-top-20">
+	                  	<c:if test="${!empty sessionScope.user}">
+		                    <c:if test="${sessionScope.user.userId == portfolio.portUserId}">
+		                    	<button type="button" class="btn btn-info btn-lg" id="getProfile">내 프로필 보기</button>
+		                    </c:if>
+		                  	<c:if test="${sessionScope.user.userId != portfolio.portUserId}">
+		                  	
+		                  		<c:set var="userRole" value="${user.role}"/>
+								<c:if test="${userRole eq '2'}">
+									<c:if test="${portfolio.portFollowFlag == true}">
+										<button type="button" class="btn btn-info btn-lg" id="follow">팔로우 취소</button>
+									</c:if>
+									<c:if test="${portfolio.portFollowFlag == false}">
+										<button type="button" class="btn btn-info btn-lg" id="follow">팔로우하기</button>
+									</c:if>
+			                    </c:if>
+			                    <c:if test="${userRole eq '3'}">
+			                     	<button type="button" class="btn btn-info btn-lg" id="toProject">프로젝트 초대</button>
+			                    </c:if>
+			                  </div>
+			                  <div class="margin-top-10">
+								<c:if test="${userRole eq '2'}">
+			                     	<button type="button" class="btn btn-info btn-lg" id="sendLetter">쪽지 보내기</button>
+			                    </c:if>
+			                    <c:if test="${userRole eq '3'}">
+			                     	<button type="button" class="btn btn-info btn-lg" id="chatting">채팅 문의</button>
+			                    </c:if>
+			                    
+		                  	</c:if>
+	                  	</c:if>
+	                 	</div>
+	                  	<div class="margin-bottom-20">&nbsp;</div>
+					</div>
+				</div>
+			</div>
+	       	<!-- About Me (Right Sidebar) End -->
+         
+		</div>
+	</div>
 </div>
-
 
 
 <!-- Back to Top Start -->
 <!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->
-<a href="#" class="scroll-to-top"><span class="glyphicon glyphicon-arrow-up" aria-hidden="true"></span></a>
+<a href="#" class="scroll-to-top"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span></a>
 <!-- Back to Top End -->
-    
-
+<a href="#" class="back"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>    
 
 </body>
 </html>

@@ -14,16 +14,16 @@
     
     
     <!-- Bootstrap Core CSS -->
-    <link href="../../resources/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/resources/css/nonstop.css" rel="stylesheet">
 
     <!-- Custom CSS -->
-    <link href="../../resources/css/full.css" rel="stylesheet">
+    <link href="/resources/css/full.css" rel="stylesheet">
     
     <!-- jQuery -->
-	<script src="../../resources/javascript/jquery.js"></script>
+	<script src="/resources/javascript/jquery.js"></script>
 
 	<!-- Bootstrap Core JavaScript -->
-	<script src="../../resources/javascript/bootstrap.min.js"></script>
+	<script src="/resources/javascript/bootstrap.min.js"></script>
 	
     <style>	
     legend {
@@ -50,6 +50,16 @@
 	}
 	.image-preview-input-title {
 	    margin-left:2px;
+	}
+	/* 체크박스 내부 라벨(사용기술) */
+	.checkbox label {
+		font-weight: 400;
+		font-color: #000;
+	}
+	
+	label {
+		font-weight: 500;
+		color: #666666;
 	}
     </style>
 
@@ -169,13 +179,13 @@
 <jsp:include page="/view/common/toolbar.jsp" />
 <!-- ToolBar End   /////////////////////////////////////-->
 
-<div class="margin-top-120">
+<div class="margin-top-100">
 	<div class="container">
 		<div class="row">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data">
 	    		<fieldset>			
 				<!-- Form Name -->
-				<legend align="center">Add Portfolio</legend>
+				<legend align="center"><strong>포트폴리오 등록</strong></legend>
 				
 				<!-- Text input-->
 				<div class="margin-top-30">
@@ -344,20 +354,21 @@
 					</div>	
 					<br/>
 					<br/>
-
-					<div class="row">
-						<div class="col-md-2 col-md-offset-4">
-							<input type="submit" value="등록" class="btn btn-primary btn-block btn-lg" tabindex="7">
-						</div>
-						<div class="col-md-2">
-							<a href="#" class="btn btn-success btn-block btn-lg">취소</a>
-						</div>
+					<div class="margin-bottom-50">	
+						<div class="row">
+							<div class="col-md-2 col-md-offset-4">
+								<input type="submit" value="등록" class="btn btn-primary btn-block" tabindex="7">
+							</div>
+							<div class="col-md-2">
+								<a href="#" class="btn btn-default btn-block">취소</a>
+							</div>
+						</div>	
 					</div>	
-		
 				</fieldset>
 			</form>
 		</div>
 	</div>
 </div>
+
 </body>
 </html>

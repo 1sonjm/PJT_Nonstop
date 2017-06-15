@@ -28,7 +28,7 @@ public class ProfileDAOImpl implements ProfileDAO{
 	public ProfileDAOImpl(){
 		System.out.println(this.getClass());
 	}
-
+	
 	public void addCareer(Career career) throws Exception {
 		sqlSession.insert("CareerMapper.addCareer",career);
 	}
@@ -53,15 +53,15 @@ public class ProfileDAOImpl implements ProfileDAO{
 		return map;
 	}
 
-	public Career getCareer(int careerNo) throws Exception {
-		return sqlSession.selectOne("CareerMapper.getCareer", careerNo);
-	}
-	
-	public void updateCareer(Career career) throws Exception {
+	public Career getCareer(int careerNo, int techClass) throws Exception {
 		
-		sqlSession.update("CareerMapper.updateCareer",career);
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("careerNo", careerNo);
+		map.put("techClass", techClass);
+		return sqlSession.selectOne("CareerMapper.getCareer", map);
 	}
-	
+
 	public void deleteCareer(int careerNo) throws Exception {
 		sqlSession.delete("CareerMapper.deleteCareer",careerNo);
 	}
@@ -85,8 +85,13 @@ public class ProfileDAOImpl implements ProfileDAO{
 		return sqlSession.selectList("FollowMapper.getListFollow",map);
 	}
 
-	public Follow getFollow(String reqUserId) throws Exception {
-		return sqlSession.selectOne("FollowMapper.getFollow", reqUserId);
+	public Follow getFollow(String reqUserId , String targetUserId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("reqUserId", reqUserId);
+		map.put("targetUserId", targetUserId);
+		return sqlSession.selectOne("FollowMapper.getFollow", map);
 	}
 
 	
@@ -160,10 +165,14 @@ public class ProfileDAOImpl implements ProfileDAO{
 		
 		List<RecordApplicant> list = sqlSession.selectList("RecordProjectMapper.getListRecordProject", recUserId);
 		
-		map.put("list", list);
+		map.put("list2", list);
 		
 		return map;
 	}
+
+	
+
+	
 
 }
 

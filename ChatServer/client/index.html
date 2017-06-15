@@ -1,0 +1,58 @@
+<!--
+> Muaz Khan     - wwww.MuazKhan.com
+> MIT License   - www.WebRTC-Experiment.com/licence
+> Documentation - https://github.com/muaz-khan/FileBufferReader
+-->
+
+<!DOCTYPE html>
+<html id="home" lang="en">
+
+<head>
+
+    <script>
+        if(!location.hash.replace('#', '').length) {
+            location.href = location.href.split('#')[0] + '#' + (Math.random() * 100).toString().replace('.', '');
+            location.reload();
+        }
+    </script>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta charset="utf-8">
+    <script src="https://www.webrtc-experiment.com/FileBufferReader/FileBufferReader.js"></script>
+    <script src="https://www.webrtc-experiment.com/FileBufferReader/demo/PeerConnection.js"> </script>
+    <script src="https://www.webrtc-experiment.com/FileBufferReader/demo/PeerUI.js"></script>
+
+</head>
+
+<body>
+    <article>
+
+        <blockquote>
+            <a href="https://www.youtube.com/watch?v=gv8xpdGdS4o" target="_blank">Watch a YouTube video</a> to understand how it works.
+        </blockquote>
+
+        <section id="main-container" class="experiment">
+          <h2 class="specific-h2"><a id="demo" href="#demo">FileBufferReader Demo</a></h2>
+
+          <div style="text-align:center;">
+            <br>
+            <button id="setup-offer" disabled="">
+                <span>Connecting</span> <span>Signaling Socket..</span>
+            </button>
+
+            <br>
+            <span id="share-this-link"></span>
+            <br><br>
+
+            <button id="select-file" disabled style="font-size: 2em;">Select & Share A File</button>
+          </div>
+
+          <ol class="output-panel"></ol>
+
+          <blockquote id="info" style="display:none;"></blockquote>
+        </section>
+    </article>
+
+</body>
+
+</html>

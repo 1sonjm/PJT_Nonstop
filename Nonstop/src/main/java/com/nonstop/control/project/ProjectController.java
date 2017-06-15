@@ -1,6 +1,7 @@
 package com.nonstop.control.project;
 
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -11,20 +12,22 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.nonstop.domain.Comment;
-import com.nonstop.domain.Page;
+import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
+import com.nonstop.domain.RecordApplicant;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.Tech;
+import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
-import com.nonstop.service.comment.CommentService;
+import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.project.ProjectService;
+import com.nonstop.service.techuse.TechUseService;
 import com.nonstop.service.user.UserService;
-
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 
 //==> ȸ������ Controller
 @Controller
@@ -37,14 +40,17 @@ public class ProjectController {
 	private ProjectService projectService;
 	
 	@Autowired
-	@Qualifier("commentServiceImpl")
-	private CommentService commentService;
+	@Qualifier("profileServiceImpl")
+	private ProfileService profileService;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	//setter Method
 	
+	@Autowired
+	@Qualifier("techUseServiceImpl")
+	private TechUseService techUseService;
+	//setter Method
 	
 	public ProjectController(){
 		System.out.println(this.getClass());
@@ -57,7 +63,7 @@ public class ProjectController {
 	
 	@Value("#{commonProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
-	int pageSize;
+	int projPageSize;
 	
 	
 	@RequestMapping(value="addProjectView", method=RequestMethod.GET)
@@ -69,48 +75,59 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="addProject", method=RequestMethod.POST)
-	public String addProject( @ModelAttribute("project") Project project,  Model model, HttpSession session) throws Exception {
+	public String addProject( @ModelAttribute("project") Project project,  
+							  @ModelAttribute("techUse") TechUse techUse, 
+							  @RequestParam("checkBoxes") int [] items,
+							  Model model, HttpSession session) throws Exception {
 		
-		System.out.println("여기는 addProject : "+project);
+		int [] tuTechNo = items;
 		
-//		projDetail.replaceAll("\r\n", "<br>");
-//		session.setAttribute("projDetail", projDetail);
 		projectService.addProject(project);
+//		
+		int tuProjNo = project.getProjNo();
 		
+		if(tuTechNo.length > 0){
+			for(int i=0; i<tuTechNo.length;i++){
+				techUseService.addTechUse(tuTechNo[i], tuProjNo);
+			}
+		}
 		model.addAttribute("project", project);
+		model.addAttribute("techUse", techUse);
 		
-		return "forward:/project/listProject";
+		return "forward:/index.jsp";
 	}
 	
 	
 	@RequestMapping(value="getProject", method=RequestMethod.GET)
-	public String getProject( @RequestParam("projNo") int projNo ,
+	public String getProject( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+			     			  @RequestParam("projNo") int projNo ,
 							  Model model, HttpSession session ) throws Exception {
 		
 		System.out.println("/project/getProject : GET");
 		
+		
 		Project project = new Project();
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
-//		String projDetail = project.getProjDetail();
-		
-//		Project project = projectService.getProject(projNo);
-		project = projectService.getProject(projNo ,scrapUserId);
-		Comment comment = commentService.getComment(project.getProjNo());
-		User user = userService.getUser(project.getProjUserId());
-		
-//		project.getProjDetail().replaceAll("\r\n", "<br>");
-		
-		System.out.println(scrapUserId);
-		
-		
-//		session.setAttribute("comProdNo", comProdNo);
-		session.setAttribute("projNo", projNo);
-//		model.addAttribute("comProdNo", comProdNo);
-		model.addAttribute("project", project);
-		model.addAttribute("comment", comment);
-		model.addAttribute("user", user);
-		
 	
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		project = projectService.getProject(projNo ,scrapUserId);
+		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
+		List<TechUse> listTechUse = techUseService.getTechUseList(projNo);
+		User user = userService.getUser(project.getProjUserId());
+		recordApplicant = projectService.getApplicant(projNo, scrapUserId);
+		projectService.updateViewCount(project);
+		List<RecordApplicant> listApplicant = projectService.getApplicantList(projNo);
+		
+		System.out.println("listApplicant="+listApplicant);
+		
+		
+		session.setAttribute("projNo", projNo);
+		model.addAttribute("projCommentList", projCommentList);
+		model.addAttribute("listTechUse", listTechUse);
+		model.addAttribute("project", project);
+		model.addAttribute("user", user);
+		model.addAttribute("recordApplicant", recordApplicant);
+		model.addAttribute("listApplicant", listApplicant);
+		
 		return "forward:/view/project/getProject.jsp";
 	}
 	
@@ -145,84 +162,182 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="updateProject", method=RequestMethod.POST)
-	public String updateProject( @ModelAttribute("project") Project project , Model model , HttpSession session) throws Exception{
+	public String updateProject( @ModelAttribute("project") Project project , 
+								 @ModelAttribute("techUse") TechUse techUse , 
+								 @RequestParam("checkBoxes") int [] items,
+								 Model model , HttpSession session) throws Exception{
 
 		System.out.println("/view/project/updateProject: POST");
-		//Business Logic
-			
+		
+		int tuProjNo = project.getProjNo();
+		techUseService.deleteTechUse(tuProjNo);
+		
+		int [] tuTechNo = items;
+		
+		if(tuTechNo.length > 0){
+			for(int i=0; i<tuTechNo.length;i++){
+				techUseService.addTechUse(tuTechNo[i], tuProjNo);
+				System.out.println(tuTechNo[i]);
+			}
+		}
+		
 		projectService.updateProject(project);
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/index.jsp";
 	}
 	
 	@RequestMapping(value="deleteProject", method=RequestMethod.POST)
 	public String deleteProject( @ModelAttribute("project") Project project, Model model ) throws Exception {
-
+		
+		int projNo = project.getProjNo();
+		techUseService.deleteTechUse(projNo);
+		
+		projectService.deleteCommentTotal(projNo);
+		
+		projectService.deleteApplicantTotal(projNo);
+		
 		projectService.deleteProject(project);
 		
 		model.addAttribute("project", project);
 		
-		return "forward:/view/project/listProject.jsp";
+		return "forward:/index.jsp";
 	}
 	
 	
 	@RequestMapping(value="listProject")
-	public String listProject( @ModelAttribute("search") Search search , Model model ,HttpSession session , HttpServletRequest request) throws Exception{
-		
+	public String listProject( @ModelAttribute("search") Search search,
+							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
 		System.out.println("/project/listProject");
-		Project project = new Project();
+		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(pageSize);
+		search.setPageSize(projPageSize);
+		String scrapUserId = "testUser";
 		
-		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
-		// Business logic ����
-		Map<String , Object> map=projectService.listProject(search,scrapUserId);
 		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		System.out.println(resultPage);
+		if((User)session.getAttribute("user") != null) {
+			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
 		
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
+		List<Project> list = projectService.getProjectList(search, scrapUserId);
+        
+        //search.postDivision의 맨 앞글자가 1이면 개발 전체, 2이면 디자인 전체로 세팅
+        String postDivision = String.valueOf(search.getPostDivision());
+		
+		if(postDivision.startsWith("1")){
+			search.setPostDivision(1);
+		}else{
+			search.setPostDivision(2);
+		}
+		//추천순으로 나열
+		search.setPostSorting(3);
+		
+		List<Integer> projNoList = new ArrayList<Integer>();
+		for(int i=0; i<list.size(); i++){
+			projNoList.add(list.get(i).getProjNo());
+	    }
+		List<TechUse> listTechUse = new ArrayList<TechUse>();
+		if(projNoList.size() != 0 ){
+			listTechUse = techUseService.listTechUse(projNoList);
+		}
+        
+		model.addAttribute("list", list);
 		model.addAttribute("search", search);
+		model.addAttribute("listTechUse", listTechUse);
 		
 		return "forward:/view/project/listProject.jsp";
 	}
 	
-	@RequestMapping(value="addComment", method=RequestMethod.POST)
-	public String addComment( @ModelAttribute("comment") Comment comment, Model model) throws Exception {
+	
+	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
+	public void addJsonComment( @ModelAttribute("projComment") ProjComment projComment, HttpSession session, Model model ) throws Exception {
 		
-		System.out.println("여기는 addComment : "+comment);
+		System.out.println("/addJsonComment");
 		
-		commentService.addComment(comment);
-		model.addAttribute("comment", comment);
+		System.out.println("projComment : "+projComment);
 		
-		return "redirect:/project/listProject";
-	}
-	@RequestMapping(value="getComment", method=RequestMethod.GET)
-	public String getComment( @RequestParam("comNo") int comNo, Model model, HttpSession session ) throws Exception {
+		projectService.addComment(projComment);
 		
-		System.out.println("/comment/getComment : GET");
-		Comment comment = commentService.getComment(comNo);
-		session.setAttribute("comNo", comNo);
-		model.addAttribute("comNo", comNo);
+		projComment = projectService.getComment(projComment.getComNo());
 		
-		System.out.println("GetProductAction끝2");
-		return "redirect:/view/project/listProject.jsp";
+		model.addAttribute("projComment", projComment);
 	}
 	
-	@RequestMapping(value="deleteComment", method=RequestMethod.POST)
-	public String deleteComment( @ModelAttribute("comment") Comment comment, Model model ) throws Exception {
-
-		commentService.deleteComment(comment);
-		model.addAttribute("comment", comment);
+	@RequestMapping(value="deleteComment/{comNo}/{comProjNo}" , method=RequestMethod.GET)
+	public void deleteComment(@PathVariable("comNo") int comNo, @PathVariable("comProjNo") int comProjNo, Model model) throws Exception{
 		
-		return "redirect:/project/listProject";
+		projectService.deleteComment(comNo);
+		
 	}
+	
+	@RequestMapping(value="addApplicant" , method=RequestMethod.POST)
+	public String addApplicant(@ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+							   @RequestParam("projNo") int projNo,
+							   HttpSession session, Model model) throws Exception{
+		
+		int recProjNo = projNo;
+		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		
+		System.out.println("recProjNo="+recProjNo);
+		System.out.println("recUserId="+recUserId);
+		
+		projectService.addApplicant(recProjNo, recUserId);
+		
+		model.addAttribute("recordApplicant", recordApplicant);
+		
+		return "forward:/index.jsp";
+		
+	}
+	
+	@RequestMapping(value="listApplicant")
+	public String listProject( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+							   @RequestParam("projNo") int recProjNo,
+							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
+		System.out.println("/project/listApplicant");
+		
+		List<RecordApplicant> listApplicant = projectService.getApplicantList(recProjNo);
+        
+		model.addAttribute("listApplicant", listApplicant);
+		
+		return "forward:/view/project/getProject.jsp";
+	}
+	
+	@RequestMapping(value="inviteApplicant", method=RequestMethod.POST)
+	public String inviteApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+								   @RequestParam("checkBoxes") int [] items,
+								   Model model , HttpSession session) throws Exception{
 
+		System.out.println("/view/project/inviteProject: POST");
+		
+		int [] recNo = items;
+		
+		if(recNo.length > 0){
+			for(int i=0; i<recNo.length;i++){
+				projectService.inviteApplicant(recNo[i]);
+			}
+		}
+		
+		model.addAttribute("recordApplicant", recordApplicant);
+		
+		return "forward:/index.jsp";
+	}
+	
+	@RequestMapping(value="deleteApplicant", method=RequestMethod.POST)
+	public String deleteApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+								   @ModelAttribute("project") Project project, 
+								   HttpSession session, Model model ) throws Exception {
+		int recProjNo = project.getProjNo();	
+		String recUserId = ((User)session.getAttribute("user")).getUserId();
+		projectService.deleteApplicant(recProjNo, recUserId);
+		
+		model.addAttribute("recordApplicant", recordApplicant);
+		model.addAttribute("project", project);
+		
+		return "forward:/index.jsp";
+	}
 	
 	
 }

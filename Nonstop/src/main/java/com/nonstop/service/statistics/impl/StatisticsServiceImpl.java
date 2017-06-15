@@ -2,6 +2,7 @@ package com.nonstop.service.statistics.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import com.nonstop.domain.Statistics;
+import com.nonstop.domain.User;
 import com.nonstop.service.statistics.StatisticsDAO;
 import com.nonstop.service.statistics.StatisticsService;
 
@@ -69,8 +71,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public List<Statistics> getMajorStatisticsList(int techClass) {
-		return statisticsDAO.getMajorStatisticsList(techClass);
+	public List<Statistics> getMajorStatisticsList(int techClass, int division) {
+		Map<String, Object> valueSet = new HashMap<>();
+		valueSet.put("techClass", techClass);
+		valueSet.put("division", division);
+		return statisticsDAO.getMajorStatisticsList(valueSet);
 	}
 
 	@Override
@@ -89,8 +94,8 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public List<Statistics> getUserStatisticsList(String userId) {
-		return statisticsDAO.getUserStatisticsList(userId);
+	public List<Statistics> getUserStatisticsList(User user) {
+		return statisticsDAO.getUserStatisticsList(user);
 	}
 
 	@Override
