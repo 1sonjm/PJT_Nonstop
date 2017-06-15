@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
-import com.nonstop.domain.RecordApplicant;
+import com.nonstop.domain.RecordProject;
 import com.nonstop.domain.Scrap;
 import com.nonstop.service.profile.ProfileDAO;
 
@@ -159,15 +159,14 @@ public class ProfileDAOImpl implements ProfileDAO{
 		sqlSession.delete("ScrapMapper.deleteProjScrap", map);	
 	}
 
-	public Map<String, Object> getRecordProjectList(String recUserId) throws Exception {
+	public List<RecordProject> getRecordProjectList(String recUserId) throws Exception {
 		
-		Map<String , Object> map = new HashMap<String , Object>();
+		return sqlSession.selectList("RecordProjectMapper.getListRecordProject", recUserId);
+	}
+	
+	public List<RecordProject> getRecordProjectList2(String comId) throws Exception {
 		
-		List<RecordApplicant> list = sqlSession.selectList("RecordProjectMapper.getListRecordProject", recUserId);
-		
-		map.put("list2", list);
-		
-		return map;
+		return sqlSession.selectList("RecordProjectMapper.getRecordProjectList2", comId);
 	}
 
 	

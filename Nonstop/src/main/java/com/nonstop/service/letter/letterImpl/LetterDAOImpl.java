@@ -85,6 +85,12 @@ public class LetterDAOImpl implements LetterDAO{
 	public List<Letter> getSaveLetterList(String userId) throws Exception {
 		return sqlSession.selectList("LetterMapper.getSaveLetterList", userId);
 	}
+
+	public List<Letter> getUnreadLetterList(String userId) throws Exception {
+		return sqlSession.selectList("LetterMapper.getUnreadLetterList", userId);
+	}
+	
+	
 }
 
 

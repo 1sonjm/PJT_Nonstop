@@ -74,7 +74,8 @@ body {
 	//============= 프로필 이동 Event 처리 =============	
 	$(function() {
 		$("#profile").on("click", function() {
-			self.location = "/profile/getMineProfile"
+			var role=$(this).attr('role');
+			self.location = "/profile/getMineProfile?role="+role;
 		});
 	});
 
@@ -122,14 +123,14 @@ body {
 	//============= toolbar project 이동 Event 처리 =============	
 	$(function() {
 		$("#projDesigner").on("click", function() {
-			self.location = "/project/listProject?projDivision=2&sortFlag=0"
+			self.location = "/project/listProject?postDivision=2"
 		});
 	});
 
 	//============= toolbar project 이동 Event 처리 =============
 	$(function() {
 		$("#projDeveloper").on("click", function() {
-			self.location = "/project/listProject?projDivision=1&sortFlag=0"
+			self.location = "/project/listProject?postDivision=1"
 		});
 	});
 
@@ -159,6 +160,7 @@ body {
 <c:if test="${dataList==null}">
 	<c:redirect url="/statistics/getJSONPostCountList" />
 </c:if>
+
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 	<!-- Navigation -->
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -197,16 +199,23 @@ body {
 						<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 						<li>
 							<a href="#" id="listLetter">
-								<!-- 쪽지 -->
-								<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-								<!-- 알림 -->
-								<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+								<c:if test="${flag eq true}">
+									<!-- 쪽지 -->
+									<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+									<!-- 알림 -->
+									<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+								</c:if>
+								
+								<c:if test="${flag eq false}">
+									<!-- 쪽지 -->
+									<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+								</c:if>
 							</a>
 						</li>
 						<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
 							<ul class="dropdown-menu">
 								<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-								<li><a href="#" id="profile">프로필</a></li>
+								<li><a href="#" id="profile" role="${user.role}">프로필</a></li>
 								<li><a href="#" id="getUser">내정보보기</a></li>
 								<li><a href="#" id="updateUser">내정보수정</a></li>
 								<li><a href="#" id="listFollow">팔로우 목록보기</a></li>

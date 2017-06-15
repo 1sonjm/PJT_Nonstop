@@ -14,7 +14,7 @@ public interface ProjectDAO {
 
 	public Project getProject(int projNo , String scrapUserId) throws Exception;
 
-	public List<Project> listProject(int projDivision, String scrapUserId, Search search, int sortFlag) throws Exception;
+	public List<Project> getProjectList(Search search , String scrapUserId) throws Exception;
 //
 	public void updateProject(Project project) throws Exception;
 	
@@ -22,8 +22,6 @@ public interface ProjectDAO {
 	
 	public void deleteProject(Project project) throws Exception;
 //	
-	public int getTotalCount(Search search) throws Exception ;
-	
 	public int addComment(ProjComment projComment) throws Exception;
 
 	public List<ProjComment> getCommentList(int comProjNo) throws Exception ;
@@ -38,12 +36,16 @@ public interface ProjectDAO {
 	
 	public RecordApplicant getApplicant(int recProjNo, String recUserId) throws Exception ;
 	
-	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception;
+	public List<RecordApplicant> getApplicantList(int recProjNo) throws Exception;
 	
 	public void inviteApplicant(int recNo) throws Exception;
 	
 	public void deleteApplicant(int recProjNo, String recUserId) throws Exception;
 	
 	public void deleteApplicantTotal(int recProjNo) throws Exception;
+	
+	public List<Project> getProfileProjList(String sessionId , String profileId) throws Exception;
+	
+	public List<Project> getProfileScrapProjList(String sessionId , String profileId) throws Exception;
 	
 }

@@ -4,7 +4,7 @@ public class Career {
 	
 	private int careerNo;
 	private String careerUserId;
-	private String techNo;
+	private int techNo;
 	private String techName;
 	private int careerUseTerm;
 	private int techClass;
@@ -21,10 +21,10 @@ public class Career {
 	public void setCareerUserId(String careerUserId) {
 		this.careerUserId = careerUserId;
 	}
-	public String getTechNo() {
+	public int getTechNo() {
 		return techNo;
 	}
-	public void setTechNo(String techNo) {
+	public void setTechNo(int techNo) {
 		this.techNo = techNo;
 	}
 	public String getTechName() {

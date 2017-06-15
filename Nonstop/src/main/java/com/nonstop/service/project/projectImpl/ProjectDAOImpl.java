@@ -69,23 +69,14 @@ public class ProjectDAOImpl implements ProjectDAO{
 	}
 
 	
-	public List<Project> listProject(int projDivision , String scrapUserId, Search search, int sortFlag) throws Exception {
-		
-		
+	public List<Project> getProjectList(Search search , String scrapUserId) throws Exception {
 		
 		Map<String , Object> map = new HashMap<String , Object>();
-		map.put("scrapUserId", scrapUserId);
-		map.put("projDivision", projDivision);
 		map.put("search", search);
-		map.put("sortFlag", sortFlag);
-		
+		map.put("scrapUserId", scrapUserId);
 		
 		System.out.println("Asfsdfdsf"+map);
-		return sqlSession.selectList("ProjectMapper.listProject", map);
-	}
-	
-	public int getTotalCount(Search search) throws Exception {
-		return sqlSession.selectOne("ProjectMapper.getTotalCount", search);
+		return sqlSession.selectList("ProjectMapper.getProjectList", map);
 	}
 	
 	@Override
@@ -132,9 +123,9 @@ public class ProjectDAOImpl implements ProjectDAO{
 		return sqlSession.selectOne("ProjectMapper.getApplicant", map);
 	}
 	
-	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception{
+	public List<RecordApplicant> getApplicantList(int recProjNo) throws Exception{
 		
-		return sqlSession.selectList("ProjectMapper.listApplicant", recProjNo);
+		return sqlSession.selectList("ProjectMapper.getApplicantList", recProjNo);
 	}
 	
 	public void deleteApplicant(int recProjNo, String recUserId) throws Exception{
@@ -155,6 +146,25 @@ public class ProjectDAOImpl implements ProjectDAO{
 	
 	public void deleteApplicantTotal(int recProjNo) throws Exception{
 		sqlSession.delete("ProjectMapper.deleteApplicantTotal", recProjNo);
+	}
+	
+	public List<Project> getProfileProjList(String sessionId, String profileId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sessionId", sessionId);
+		map.put("profileId", profileId);
+		
+		return sqlSession.selectList("ProjectMapper.getProfileProjList", map);
+	}
+
+	public List<Project> getProfileScrapProjList(String sessionId, String profileId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sessionId", sessionId);
+		map.put("profileId", profileId);
+		return sqlSession.selectList("ProjectMapper.getProfileScrapProjList", map);
 	}
 }
 	

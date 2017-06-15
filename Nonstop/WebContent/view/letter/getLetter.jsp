@@ -570,7 +570,9 @@ ul {
 </head>
 
 <body>
-	<jsp:include page="/view/common/toolbar.jsp" />
+	<header>
+			<jsp:include page="/view/common/toolbar.jsp"/>
+		</header>
 	<div class="container">
 
 		<div class="mail-box">

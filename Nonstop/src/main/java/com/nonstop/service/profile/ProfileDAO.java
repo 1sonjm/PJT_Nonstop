@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.nonstop.domain.Career;
 import com.nonstop.domain.Follow;
+import com.nonstop.domain.RecordProject;
 
 public interface ProfileDAO {
 	
@@ -36,5 +37,7 @@ public interface ProfileDAO {
 	
 	public void deleteJsonProjScrap(int projNo , String scrapUserId) throws Exception;
 	
-	public Map<String , Object> getRecordProjectList(String recUserId) throws Exception;
+	public List<RecordProject> getRecordProjectList(String recUserId) throws Exception;
+	
+	public List<RecordProject> getRecordProjectList2(String comId) throws Exception;
 }

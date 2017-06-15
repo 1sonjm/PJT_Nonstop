@@ -207,9 +207,9 @@ $(function(){
 
 </head>
 <body>
-
-<jsp:include page="/view/common/toolbar.jsp" />
-
+<header>
+			<jsp:include page="/view/common/toolbar.jsp"/>
+		</header>
 <div class="container" style="margin-top: 20px">
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
