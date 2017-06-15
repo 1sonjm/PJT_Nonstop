@@ -45,4 +45,8 @@ public interface ProjectService {
 	
 	public void deleteApplicantTotal(int recProjNo) throws Exception;
 	
+	public List<Project> getProfileProjList(String sessionId , String profileId) throws Exception;
+	
+	public List<Project> getProfileScrapProjList(String sessionId , String profileId) throws Exception;
+	
 }

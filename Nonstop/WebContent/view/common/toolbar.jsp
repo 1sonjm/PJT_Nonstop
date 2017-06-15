@@ -4,6 +4,25 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script type="text/javascript">
+$(document).ready(function(){
+		$.ajax(
+		{
+			url:"/letter/toolbarMailCheck",
+			method: "GET",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"	
+			},
+			success : function(a , status) {
+				if(a.flag == true){
+					var displayValue = "<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
+					$('#mail').html($('#listLetter').html()+displayValue);
+				}
+			}
+		})
+	})
+	</script>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	  <div class="container">
 	    <div class="navbar-header">
@@ -53,9 +72,10 @@
                <c:if test="${!empty sessionScope.user.userId }">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
                     <li>
-	                    <a href="#" id="listLetter">
-	                    	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-	                    	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;">NEW</span>
+	                    <a href="#" id="mail">
+	                    	
+	                    		<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+	                    		
 	                    </a>
                     </li>
                   	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>

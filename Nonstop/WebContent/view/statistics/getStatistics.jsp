@@ -211,9 +211,9 @@ $(function(){
 
 </head>
 <body>
-
-<jsp:include page="/view/common/toolbar.jsp" />
-
+<header>
+			<jsp:include page="/view/common/toolbar.jsp"/>
+		</header>
 <div class="container" style="margin-top: 20px">
 	<img alt="" src="https://chart.googleapis.com/chart?cht=qr&chs=210x210&chl=http://www.naver.com&chld=M
 https://developers.google.com/chart/infographics/docs/qr_codes"/>

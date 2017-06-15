@@ -139,6 +139,27 @@
 		 </if>
 	 </select>
 	 
+	 <select  id="getProfileProjList"  parameterType="map"	resultMap="projectSelectMap">
+		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
+			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, 
+			   (select count(rec_user_id) from record_applicant where rec_proj_no=p.proj_no) as rec_count,a.scrap_no
+	    FROM project p,(SELECT * FROM scrap WHERE user_id=#{sessionId}) a
+		WHERE proj_user_id=#{profileId} AND p.proj_no=a.proj_no(+)
+		
+	 </select>	 
+	 
+	 <select  id="getProfileScrapProjList"  parameterType="map"	resultMap="projectSelectMap">
+		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
+			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday,
+			   (SELECT count(rec_user_id) from record_applicant where rec_proj_no=p.proj_no) as rec_count,a.scrap_no
+	    FROM project p , (SELECT * FROM scrap WHERE user_id=#{sessionId} AND port_no is null) a
+		WHERE a.proj_no = p.proj_no AND a.user_id=#{profileId}
+
+		
+	 </select>	 
+	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount
