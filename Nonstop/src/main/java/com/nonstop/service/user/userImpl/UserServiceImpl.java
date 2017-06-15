@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public User getUser(String userId) throws Exception {
+		System.out.println(userDAO.getUser(userId));
 		return userDAO.getUser(userId);
 	}
 
@@ -69,16 +70,11 @@ public class UserServiceImpl implements UserService{
 		userDAO.updateUser(user);
 	}
 	
-	public boolean checkUserId(String userId) throws Exception{
-	      
-	      boolean result = true;
+	public User checkUserId(String userId) throws Exception{
 	      
 	      User user = userDAO.getUser(userId);
 	      
-	      if(user != null ) {
-	         result = false;
-	      }
-	      return result;
+	      return user;
 	   }
 
 	public User getCompany(String userId) throws Exception {

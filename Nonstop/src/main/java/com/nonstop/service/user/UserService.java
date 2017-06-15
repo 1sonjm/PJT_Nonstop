@@ -41,7 +41,7 @@ public interface UserService {
 	
 	public void updateCompany(User user) throws Exception;
 	
-	public boolean checkUserId(String userId) throws Exception;
+	public User checkUserId(String userId) throws Exception;
 
 	public void deleteUser(User user) throws Exception;
 

@@ -16,8 +16,11 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
@@ -41,16 +44,7 @@
 
 		//============= "로그인"  Event 연결 =============
 			
-			function fncDeleteUser() {
-			var name=$("input[name='userName']").val();
-			
-			
-			}
-			
-			
-			
-			
-		function fncDeleteUser() {
+				$( function() {
 			
 			$("#userId").focus();
 			
@@ -73,15 +67,17 @@
 				
 				
 				$("form").attr("method","POST").attr("action","/user/deleteUser").attr("target","_parent").submit();
+				
 			});
-		}
+		});	
 		
-		$( function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#index").on("click" , function() {
-				self.location = "../index.jsp"
-			});
-		});
+				$( function() {
+					//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+					$("#index").on("click" , function() {
+						self.location = "../index.jsp"
+					});
+				});	
+		
 	
 		
 		
@@ -93,18 +89,15 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/view/common/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->	
 	
-	<!--  화면구성 div Start /////////////////////////////////////-->
+	<%-- <jsp:include page="/view/common/toolbar.jsp" /> --%>
+   	<<jsp:include page="/view/common/toolbar.jsp" />
+	
 	<div class="container">
-		<!--  row Start /////////////////////////////////////-->
+		
 		<div class="row">
 		
-			<!-- <div class="col-md-6">
-					<img src="/images/logo-spring.png" class="img-rounded" width="100%" />
-			</div> -->
+			
 	   	 	
 	 	 	<div class="col-md-6">
 	 	 	
@@ -143,59 +136,7 @@
 					  
 					  
 					  
-					<!-- <a id="kakao-login-btn"></a>
-<a href="http://developers.kakao.com/logout"></a>
-<script type='text/javascript'>
-  //<![CDATA[
-     
-    Kakao.init('a737d1ef221baf3997733f87c845ae98');
-     
-    Kakao.Auth.createLoginButton({
-      container: '#kakao-login-btn',
-      success: function(authObj) {
-    	   var accessToken = Kakao.Auth.getAccessToken(); 
-    	  Kakao.Auth.setAccessToken(accessToken); 
-      },
-      fail: function(err) {
-         alert(JSON.stringify(err));
-      }
-    });
-    function ktout() {
-    kakao.Auth.logout(function () {
-    	setTimeout(function() {
-    		location.href="http://localhost:8080"
-    	},1000);
-    	});
-    
-    
-    } 
-        
-  //]]>
-</script>
-	 <div id="naver_id_login"></div>
-	<script type="text/javascript">
-  	var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N", "http://localhost:8080");
-  	var state = naver_id_login.getUniqState();
-  	naver_id_login.setButton("white", 2,40);
-  	naver_id_login.setDomain("http://localhost:8080");
-  	naver_id_login.setState(state);
-  	naver_id_login.setPopup();
-  	naver_id_login.init_naver_id_login();
-  </script>				
-  
-  <script type="text/javascript">
-  var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N", "http://localhost:8080");
-
-  alert(naver_id_login.oauthParams.access_token);
- 
-  naver_id_login.get_naver_userprofile("naverSignInCallback()");
-
-  function naverSignInCallback() {
-    alert(naver_id_login.getProfileData('email'));
-    alert(naver_id_login.getProfileData('nickname'));
-    alert(naver_id_login.getProfileData('age'));
-  }
-  -->
+	
 </script>
   
   
@@ -207,10 +148,9 @@
 			</div>
 			
   	 	</div>
-  	 	<!--  row Start /////////////////////////////////////-->
   	 	
  	</div>
- 	<!--  화면구성 div end /////////////////////////////////////-->
+ 	
 
 </body>
 

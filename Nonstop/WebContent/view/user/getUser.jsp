@@ -15,9 +15,17 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	
+	<link href="/resources/css/nonstop.css" rel="stylesheet">
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
+	
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
@@ -30,6 +38,11 @@
  		body {
             padding-top : 50px;
         }
+        
+        .text-info{
+         color: black;
+         padding-left: 10px;
+        }
      </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -40,7 +53,7 @@
 			 
 			 
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "#updateUser" ).on("click" , function() {
+			 $( "#updateUserV" ).on("click" , function() {
 				 alert(1);
 				 var userId = $(this).attr('userId');
 					self.location = "/user/updateUser?userId=${user.userId}"
@@ -49,7 +62,7 @@
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "#listUser" ).on("click" , function() {
+				 $( "#listUserV" ).on("click" , function() {
 						self.location = "/user/listUser"
 					});
 			});
@@ -70,7 +83,7 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/view/common/toolbar.jsp" /> --%>
+	<jsp:include page="/view/common/toolbar.jsp" />
    	 <!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -129,14 +142,14 @@
 	  		<div class="col-md-12 text-center ">
 	  			
 				<!-- <a class="btn btn-primary btn" href="#" role="button" id = "updateUser">회원정보수정</a> -->
-				<button type="button" class="btn btn-primary" id="updateUser"  userId="">회원정보수정</button>	
+				<button type="button" class="btn btn-primary" id="updateUserV"  userId="">회원정보수정</button>	
 	  		</div>
 		</div>
 		<br/>
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
-				<a class="btn btn-primary btn" href="#" role="button" id = "listUser">돌아가기</a>
+				<a class="btn btn-primary btn" href="#" role="button" id = "listUserV">돌아가기</a>
 	  		</div>
 		</div>
 		<br/>
