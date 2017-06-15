@@ -2,6 +2,7 @@ package com.nonstop.control.portfolio;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,9 +19,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.PortComment;
+import com.nonstop.domain.PortImages;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Search;
@@ -62,39 +65,91 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="addPortfolio", method=RequestMethod.POST)
-	public String addPortfolio(@ModelAttribute("portfolio") Portfolio portfolio, @RequestParam("portFileName") MultipartFile file, Model model) throws Exception {
+	public String addPortfolio(@ModelAttribute("portfolio") Portfolio portfolio, MultipartHttpServletRequest file, Model model) throws Exception {
 				
-		String portFile=file.getOriginalFilename();
+		//@RequestParam("portFileName") MultipartFile file : 하나의 파일을 받을 때 사용. portFileName 한개를 MultipartFile을 데이터타입으로 하는 file에 담아온다.
+		//MultipartHttpServletRequest file :  여러개의 파일을 받기위해 사용. getFiles 메소드를 통해 파일을 List 형태로 받을 수 있다.
 		
-		System.out.println("portFile : "+portFile);
+		//JSP에서 넘어온 <input> 태그의 name을 알고있다면 getFile(), 모른다면 getFileNames()사용
+		List<MultipartFile> uploadFiles = file.getFiles("portFileName[]");
 		
-		portfolio.setPortFile(portFile);
+		List<PortImages> images = new ArrayList(); 
 		
-		//user를 세션을 통해 받아와야 하는데 아직 로그인을 할 수 없으니 임시로 넣는다
-		//나중에 수정할 부분이다!!
-		portfolio.setPortUserId("user01");
+		System.out.println(uploadFiles);
 		
-		System.out.println("addPortfolio : "+portfolio);
+		if(uploadFiles.size() == 1) {
+			//확장자 구하기
+			String portFile = uploadFiles.get(0).getOriginalFilename();
+			int index = portFile.lastIndexOf(".");
+			String ext = portFile.substring(index+1);
+			
+			System.out.println("ext : "+ext+" / portFile : "+portFile);
+			//pdf 파일이면 thumbnail 추출
+			if(ext == "pdf") {
+				
+			}
+			portfolio.setPortFile(portFile);
+			
+		}else {
+			
+			for(int i=0 ; i<uploadFiles.size() ; i++) {
+				//portImages를 밖에서 생성하면 마지막 값이 덮어쓰기 된다. 참조형 자료형이라서? 아무튼 안에서 생성해야 정상적으로 작동
+				//아마도 add하는 값이 들어가는게 아니라 주소값이 list에 들어가기 때문인듯 하다.
+				PortImages portImages = new PortImages();
+				
+				String portFile = uploadFiles.get(i).getOriginalFilename();
+				int index = portFile.lastIndexOf(".");
+				String ext = portFile.substring(index+1);
+				
+				//pdf 파일이면 thumbnail 추출
+				if(ext == "pdf") {
+					
+				}
+				
+				if(i == 0){
+					//썸네일 이미지 등록
+					portfolio.setPortFile(portFile);
+				}
+				
+				portImages.setImgName(portFile);
+				portImages.setImgOrder(i);
+				
+				images.add(portImages);
 		
-        try {
-            // 1. FileOutputStream 사용
-            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
-             
-            // 2. File 사용
-            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile);
-            file.transferTo(uploadFile);
-            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
-            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
-            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+			}//end for문
+		}//end if-else문
+		
+		System.out.println(images);
+		
+		for(int i=0 ; i<uploadFiles.size() ; i++) {
+		
+			try {
+	            // 1. FileOutputStream 사용
+	            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
+	             
+	            // 2. File 사용
+				System.out.println(images.get(i).getImgName());
+				System.out.println(uploadFiles.get(i));
+	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + images.get(i).getImgName());
+	            uploadFiles.get(i).transferTo(uploadFile);
+	            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
+	            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
+	            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+			
+		}
+		
+		System.out.println(portfolio);
+		
+		portfolio.setImages(images);
 	
 		portfolioService.addPortfolio(portfolio);
 		
 		model.addAttribute("portfolio",portfolio);
 		
-		return "forward:/view/portfolio/getPortfolio.jsp";
+		return "redirect:/view/portfolio/addPortfolioView.jsp";
 	}
 	
 	@RequestMapping(value="listPortfolio")

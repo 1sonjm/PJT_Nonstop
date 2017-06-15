@@ -33,14 +33,19 @@
 		<result property="comUserImg" 		column="user_img" 				jdbcType="VARCHAR" />
 		<result property="comRegDate" 		column="com_port_regdate" 		jdbcType="DATE" />
 		<result property="comContent" 		column="com_port_content" 		jdbcType="VARCHAR" />
-		
 	</resultMap>
 	
 	<resultMap id="portLikeMap" type="portLike">
 		<result property="portLikeNo" 		column="port_like-no" 			jdbcType="INTEGER"/>
 		<result property="portNo" 			column="port_no" 				jdbcType="INTEGER" />
 		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
-		
+	</resultMap>
+	
+	<resultMap id="portImagesMap" type="portImages">
+		<result property="imgPortNo" 		column="img_port_no" 			jdbcType="INTEGER"/>
+		<result property="imgNo" 			column="img_no" 				jdbcType="INTEGER" />
+		<result property="imgName" 			column="img_name" 				jdbcType="VARCHAR" />
+		<result property="imgOrder" 		column="img_order" 				jdbcType="INTEGER" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -54,6 +59,22 @@
 		SYSDATE, 
 		#{portFile}, 
 		#{portDetail})
+		
+		<selectKey keyProperty="portNo" resultType="Integer" order="AFTER">
+        SELECT seq_portfolio_port_no.currval FROM dual
+    	</selectKey>
+	 </insert>
+	 
+	<!-- SQL : INSERT -->
+	<insert 	id="addPortImages"		parameterType="list" >
+		INSERT INTO port_images(img_no, img_port_no, img_name, img_order)
+			SELECT seq_port_images_img_no.nextval, (select MAX(port_no) from portfolio), inner_view.*
+			FROM (
+				<foreach collection="list" item="portImages" separator="UNION ALL">
+				SELECT #{portImages.imgName},#{portImages.imgOrder}
+				FROM DUAL
+				</foreach>
+			) inner_view
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->

@@ -29,10 +29,33 @@
     legend {
     	border-bottom:0;
     }
-    .image-preview-input {
+    
+	/* layout.css Style */
+	.upload-drop-zone {
+	  height: 200px;
+	  border-width: 2px;
+	  margin-bottom: 20px;
+	}
+	
+	/* skin.css Style*/
+	.upload-drop-zone {
+	  color: #ccc;
+	  border-style: dashed;
+	  border-color: #ccc;
+	  line-height: 200px;
+	  text-align: center
+	}
+	.upload-drop-zone.drop {
+	  color: #222;
+	  border-color: #222;
+	}
+	
+	
+	
+	.image-preview-input {
 	    position: relative;
-		overflow: hidden;
-		margin: 0px;    
+	    overflow: hidden;
+	    margin: 0px;    
 	    color: #333;
 	    background-color: #fff;
 	    border-color: #ccc;    
@@ -51,6 +74,8 @@
 	.image-preview-input-title {
 	    margin-left:2px;
 	}
+
+
 	/* 체크박스 내부 라벨(사용기술) */
 	.checkbox label {
 		font-weight: 400;
@@ -64,94 +89,75 @@
     </style>
 
     <script type="text/javascript">
-    $(document).on('click', '#close-preview', function(){ 
-        $('.image-preview').popover('hide');
-        // Hover befor close the preview
-        $('.image-preview').hover(
-            function () {
-               $('.image-preview').popover('show');
-            }, 
-             function () {
-               $('.image-preview').popover('hide');
-            }
-        );    
-    });
-
 
     $(function() {
-        // Create the close button
-        var closebtn = $('<button/>', {
-            type:"button",
-            text: 'x',
-            id: 'close-preview',
-            style: 'font-size: initial;',
-        });
-        closebtn.attr("class","close pull-right");
-        // Set the popover default content
-        $('.image-preview').popover({
-            trigger:'manual',
-            html:true,
-            title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-            content: "There's no image",
-            placement:'bottom'
-        });
-        // Clear event
-        $('.image-preview-clear').click(function(){
-            $('.image-preview').attr("data-content","").popover('hide');
-            $('.image-preview-filename').val("");
-            $('.image-preview-clear').hide();
-            $('.image-preview-input input:file').val("");
-            $(".image-preview-input-title").text("Browse"); 
-        }); 
-        // Create the preview image
-        $(".image-preview-input input:file").change(function (){     
-            var img = $('<img/>', {
-                id: 'dynamic',
-                width:250,
-                height:200
-            });      
-            var file = this.files[0];
-            var reader = new FileReader();
-            // Set preview image into the popover data-content
-            reader.onload = function (e) {
-                $(".image-preview-input-title").text("Change");
-                $(".image-preview-clear").show();
-                $(".image-preview-filename").val(file.name);            
-                img.attr('src', e.target.result);
-                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
-            }        
-            reader.readAsDataURL(file);
-        });  
-    });
-    
+
+   	    'use strict';
+
+   	    // UPLOAD CLASS DEFINITION
+   	    // ======================
+
+   	    var dropZone = document.getElementById$("#drop-zone");
+   	    var uploadForm = document.getElementById('js-upload-form');
+
+   	    var startUpload = function(files) {
+   	        console.log(files)
+   	    }
+
+   	    uploadForm.addEventListener('submit', function(e) {
+   	        var uploadFiles = document.getElementById('js-upload-files').files;
+   	        e.preventDefault()
+
+   	        startUpload(uploadFiles)
+   	    })
+
+   	    dropZone.ondrop = function(e) {
+   	        e.preventDefault();
+   	        this.className = 'upload-drop-zone';
+
+   	        startUpload(e.dataTransfer.files)
+   	    }
+
+   	    dropZone.ondragover = function() {
+   	        this.className = 'upload-drop-zone drop';
+   	        return false;
+   	    }
+
+   	    dropZone.ondragleave = function() {
+   	        this.className = 'upload-drop-zone';
+   	        return false;
+   	    }
+
+   	});
+
     /* Validation Check */
     function fncAddPortfolio() {
+    	
+    	alert("#portUserId").val();
     	
     	var portTitle=$("input[name='portTitle']").val();
     	var	portDetail=$("input[name='portDetail']").val();
     	var portFile=$("input[name='portFile']").val();
+    	var portUserId=$("#portUserId").val();
     	
-    	if(portTitle == null || portTitle.length < 1){
+    	if(portTitle == ""){
     		alert("제목을 입력해 주세요.");
     		return;
     	}
     	
-    	if(portDetail == null || portDetail.length < 1){
+    	if(portDetail == ""){
     		alert("포트폴리오에 대한 상세 설명을 기입해주세요.");
     		return;
     	}
     	
-    	if(portFile == null || portFile.length < 1){
+    	if(portFile == ""){
     		alert("이미지를 등록해주세요.");
     		return;
     	}
+
+    	alert(portUserId);
     	
-    	alert("portTitle");
-    	alert("portDetail");
-    	alert("portFile");
-    	alert($("#portDivision").val());
-    	
-    	/* $("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit(); */
+    	$("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit();
     }
 
 
@@ -183,6 +189,7 @@
 	<div class="container">
 		<div class="row">
 			<form class="form-horizontal" method="post" enctype="multipart/form-data">
+			<input type="hidden" name="portUserId" id="portUserId" value="${sessionScope.user.userId}"/> 
 	    		<fieldset>			
 				<!-- Form Name -->
 				<legend align="center"><strong>포트폴리오 등록</strong></legend>
@@ -229,24 +236,45 @@
 					<div class="form-group">
 						<label class="col-md-4 control-label">파일</label>  
 					 	<div class="col-md-5">
+					 		<input type="file" accept="image/png, image/jpeg, image/gif" name="portFileName[]" id="portFileName" multiple/>
 						   <!-- image-preview-filename input [CUT FROM HERE]-->
-				           <div class="input-group image-preview">
-				              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-				                <span class="input-group-btn">
-				                    <!-- image-preview-clear button -->
-				                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-				                        <span class="glyphicon glyphicon-remove"></span> Clear
-				                    </button>
-				                    <!-- image-preview-input -->
-				                    <div class="btn btn-default image-preview-input">
-				                        <span class="glyphicon glyphicon-folder-open"></span>
-				                        <span class="image-preview-input-title">찾아보기</span>
-				                        <input type="file" accept="image/png, image/jpeg, image/gif" name="portFileName" id="portFileName"/> <!-- rename it -->
-				                    </div>
-				                </span>
-				            </div><!-- /input-group image-preview [TO HERE]--> 
+				           <!-- <div class="input-group image-preview">
+				              
+								<input placeholder="" type="text" class="form-control image-preview-filename" disabled="disabled">
+								don't give a name === doesn't send on POST/GET 
+								<span class="input-group-btn"> 
+									image-preview-clear button
+									<button type="button" class="btn btn-default image-preview-clear" style="display:none;"> <span class="glyphicon glyphicon-remove"></span> Clear </button>
+									image-preview-input
+									<div class="btn btn-default image-preview-input"> 
+										<span class="glyphicon glyphicon-folder-open"></span> 
+										<span class="image-preview-input-title">Browse</span>
+										<input type="file" accept="image/png, image/jpeg, image/gif" name="portFileName[]" id="portFileName" multiple/>
+										rename it 
+									</div>
+									<button type="button" class="btn btn-labeled btn-default"> 
+										<span class="btn-label">
+											<i class="glyphicon glyphicon-upload"></i> 
+										</span>Upload
+									</button>
+								</span> 
+
+				            </div>/input-group image-preview [TO HERE] 
+				            
+				            <br />
+					
+							Drop Zone
+							<div class="upload-drop-zone" id="drop-zone"> Or drag and drop files here </div>
+							<br />
+							Upload Finished
+							<div class="js-upload-finished">
+								<h4>Upload history</h4>
+								<div class="list-group"> <a href="#" class="list-group-item list-group-item-danger"><span class="badge alert-danger pull-right">23-11-2014</span>amended-catalogue-01.xls</a> <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">23-11-2014</span>amended-catalogue-01.xls</a> <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">23-11-2014</span>amended-catalogue-01.xls</a> <a href="#" class="list-group-item list-group-item-success"><span class="badge alert-success pull-right">23-11-2014</span>amended-catalogue.xls</a> </div>
+							</div> -->
+				            
 						</div>
 					</div>						
+				
 				
 					<!-- Textarea -->
                		<div class="form-group">

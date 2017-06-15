@@ -1,5 +1,6 @@
 package com.nonstop.service.portfolio.portfolioImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.PortComment;
+import com.nonstop.domain.PortImages;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.service.portfolio.PortfolioDAO;
@@ -32,7 +34,12 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 
 	@Override
 	public void addPortfolio(Portfolio portfolio) throws Exception {		
-		sqlSession.insert("PortfolioMapper.addPortfolio", portfolio);		
+		
+		sqlSession.insert("PortfolioMapper.addPortfolio", portfolio);
+		
+		List<PortImages> list = new ArrayList<PortImages>(portfolio.getImages());
+		
+		sqlSession.insert("PortfolioMapper.addPortImages", list);
 	}
 	
 	@Override
