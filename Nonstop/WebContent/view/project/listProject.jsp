@@ -310,6 +310,7 @@
 <body>
 
 <jsp:include page="/view/common/toolbar.jsp" />
+<%-- <c:import url="/user/toolbarMailCheck"/> --%>
 
 <nav class="navbar navbar-default navbar-static-top" role="navigation">
 	<div class="container"> 
@@ -394,7 +395,7 @@
 			<div class="input-group-btn">
 				<input type="hidden" id="searchCondition" name="searchCondition" value="${search.searchCondition}"/>
 				<button type="button" class="btn btn-success dropdown-toggle" id="searchButton" name="searchButton" 
-						data-toggle="dropdown" aria-expanded="false" style="background: #fff" >
+						data-toggle="dropdown" aria-expanded="false" style="background: #fff; border-color : #bdbdbd" >
 	        		검색조건&nbsp;&nbsp;&nbsp;
 	        	
 	        	<span class="caret"></span></button>
