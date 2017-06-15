@@ -57,8 +57,9 @@ public class StatisticsDAOImpl implements StatisticsDAO {
 	}
 
 	@Override
-	public List<Statistics> getMajorStatisticsList(int techClass) {
-		return sqlSession.selectList("StatisticsMapper.getListMajorStatistics", techClass);
+	public List<Statistics> getMajorStatisticsList(Map<String, Object> valueSet)
+	{
+		return sqlSession.selectList("StatisticsMapper.getListMajorStatistics", valueSet);
 	}
 
 	@Override

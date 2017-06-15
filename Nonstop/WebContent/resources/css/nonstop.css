@@ -2504,7 +2504,7 @@ label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: 600;
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;
@@ -9318,7 +9318,7 @@ label {
   display: inline-block;
   max-width: 100%;
   margin-bottom: 5px;
-  font-weight: bold;
+  font-weight: 600;
 }
 input[type="search"] {
   -webkit-box-sizing: border-box;
@@ -11651,7 +11651,7 @@ fieldset[disabled] .navbar-inverse .btn-link:focus {
   font-size: 75%;
   font-weight: bold;
   line-height: 1;
-  color: #ffffff;
+  color: #fff;
   text-align: center;
   white-space: nowrap;
   vertical-align: baseline;
@@ -13688,8 +13688,8 @@ label,
 .radio label,
 .checkbox label,
 .help-block {
-  font-size: 12px;
-  font-weight: 300;
+  font-size: 14px;
+  font-weight: 600;
 }
 .input-addon,
 .input-group-addon {

@@ -15,7 +15,7 @@ public interface ProjectService {
 
 	public Project getProject(int projNo , String scrapUserId) throws Exception;
 
-	public List<Project> listProject(int projDivision , String scrapUserId, Search search, int sortFlag) throws Exception;
+	public List<Project> getProjectList(Search search , String scrapUserId) throws Exception;
 
 	public void updateProject(Project project) throws Exception;
 	
@@ -37,7 +37,7 @@ public interface ProjectService {
 
 	public RecordApplicant getApplicant(int recProjNo, String recUserId) throws Exception ;
 	
-	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception;
+	public List<RecordApplicant> getApplicantList(int recProjNo) throws Exception;
 	
 	public void inviteApplicant(int recNo) throws Exception;
 	

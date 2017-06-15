@@ -2,6 +2,7 @@ package com.nonstop.service.statistics.impl;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -70,8 +71,11 @@ public class StatisticsServiceImpl implements StatisticsService {
 	}
 
 	@Override
-	public List<Statistics> getMajorStatisticsList(int techClass) {
-		return statisticsDAO.getMajorStatisticsList(techClass);
+	public List<Statistics> getMajorStatisticsList(int techClass, int division) {
+		Map<String, Object> valueSet = new HashMap<>();
+		valueSet.put("techClass", techClass);
+		valueSet.put("division", division);
+		return statisticsDAO.getMajorStatisticsList(valueSet);
 	}
 
 	@Override

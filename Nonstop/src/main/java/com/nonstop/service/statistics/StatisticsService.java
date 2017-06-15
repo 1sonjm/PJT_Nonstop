@@ -17,7 +17,7 @@ public interface StatisticsService {
 	
 	public List<Statistics> getTotalStatisticsList();
 
-	public List<Statistics> getMajorStatisticsList(int techClass);
+	public List<Statistics> getMajorStatisticsList(int techClass, int division);
 	
 	public List<Statistics> getPeriodStatisticsList(Statistics statistics);
 	

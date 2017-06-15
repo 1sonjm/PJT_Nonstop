@@ -246,7 +246,7 @@
        font-family: "Poppins", sans-serif;
    }
    .back {
-       font-size: 40px;
+       font-size: 35px;
        color: #d6d6d6;
        position: fixed;
        right: 40px;
@@ -259,9 +259,9 @@
    
    .scroll-to-top {
        display: none;
-       font-size: 40px;
+       font-size: 35px;
        position: fixed;
-       right: 20px;
+       right: 40px;
        bottom: 50px;
        z-index: 999;
        transition: all 0.3s ease-in-out;
@@ -760,15 +760,11 @@
 </div>
 
 
-
-
 <!-- Back to Top Start -->
 <!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->
 <a href="#" class="scroll-to-top"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span></a>
 <!-- Back to Top End -->
-
 <a href="#" class="back"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>    
-
 
 </body>
 </html>
