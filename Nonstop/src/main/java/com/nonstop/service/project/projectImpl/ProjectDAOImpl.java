@@ -147,5 +147,24 @@ public class ProjectDAOImpl implements ProjectDAO{
 	public void deleteApplicantTotal(int recProjNo) throws Exception{
 		sqlSession.delete("ProjectMapper.deleteApplicantTotal", recProjNo);
 	}
+	
+	public List<Project> getProfileProjList(String sessionId, String profileId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sessionId", sessionId);
+		map.put("profileId", profileId);
+		
+		return sqlSession.selectList("ProjectMapper.getProfileProjList", map);
+	}
+
+	public List<Project> getProfileScrapProjList(String sessionId, String profileId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sessionId", sessionId);
+		map.put("profileId", profileId);
+		return sqlSession.selectList("ProjectMapper.getProfileScrapProjList", map);
+	}
 }
 	

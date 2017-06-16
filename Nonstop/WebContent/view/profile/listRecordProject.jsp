@@ -56,7 +56,7 @@ body {
 						<tbody>
 
 							<c:set var="i" value="0" />
-							<c:forEach var="recordProject" items="${list2}">
+							<c:forEach var="recordProject" items="${recordProject}">
 								<c:set var="i" value="${ i+1 }" />
 								<tr>
 									<th scope="row">${ i }</th>

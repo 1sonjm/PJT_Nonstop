@@ -26,8 +26,6 @@
 <script type="text/javascript">
 	$(function() {
 		resizeComponent($(window).width(), $(window).height());
-		
-		$('qu')
 	})
 	var changeSizeDelay;
 	$(window).resize(function() {
@@ -37,6 +35,11 @@
 			var browserHeight = $(window).height();
 			console.log(browserWidth + " X " + browserHeight);
 			resizeComponent(browserWidth, browserHeight);
+			if(browserWidth < 650){
+				document.querySelector('#menu_state').checked = false;
+			}else{;
+				document.querySelector('#menu_state').checked = true;
+			}
 		}, 200);
 	});
 	function resizeComponent(browserWidth, browserHeight)

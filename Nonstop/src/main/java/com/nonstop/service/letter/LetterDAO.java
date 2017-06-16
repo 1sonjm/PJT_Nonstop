@@ -30,4 +30,5 @@ public interface LetterDAO {
 	
 	public List<Letter> getSaveLetterList(String userId) throws Exception;
 	
+	public List<Letter> getUnreadLetterList(String userId) throws Exception;
 }
