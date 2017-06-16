@@ -127,4 +127,6 @@ public class ProjectServiceImpl implements ProjectService{
 	public List<Project> getProfileScrapProjList(String sessionId, String profileId) throws Exception {
 		return projectDAO.getProfileScrapProjList(sessionId, profileId);
 	}
+
+	
 }

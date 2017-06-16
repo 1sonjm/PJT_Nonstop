@@ -29,6 +29,15 @@ public class LetterDAOImpl implements LetterDAO{
 	public void addLetter(Letter letter) throws Exception {
 		sqlSession.insert("LetterMapper.addLetter",letter);
 	}
+	
+	public void addApplicantLetter(String sendId, String receiveId) throws Exception {
+		
+		Map<String , Object> map = new HashMap<String , Object>();
+		
+		map.put("sendId", sendId);
+		map.put("receiveId", receiveId);
+		sqlSession.insert("LetterMapper.addApplicantLetter" , map);
+	}
 
 	public List<Letter> getReceiveLetterList(String receiveId) throws Exception {
 		return sqlSession.selectList("LetterMapper.getReceiveLetterList",receiveId);
@@ -89,6 +98,8 @@ public class LetterDAOImpl implements LetterDAO{
 	public List<Letter> getUnreadLetterList(String userId) throws Exception {
 		return sqlSession.selectList("LetterMapper.getUnreadLetterList", userId);
 	}
+
+	
 	
 	
 }

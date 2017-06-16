@@ -2,7 +2,7 @@
 package com.nonstop.domain;
 
 
-//==>����Ʈȭ���� �𵨸�(�߻�ȭ/ĸ��ȭ)�� Bean 
+
 public class Search {
 	
 	///Field
@@ -21,7 +21,11 @@ public class Search {
 	private int postSorting;
 	
 
+
+
+
 	//페이징, 무한스크롤 위한 게시물 번호
+
 	private int endRowNum;
 	private int startRowNum;
 	
@@ -58,11 +62,11 @@ public class Search {
 		this.searchKeyword = searchKeyword;
 	}
 	
-	//==> Select Query �� ROWNUM ������ �� 
+
 	public int getEndRowNum() {
 		return this.endRowNum;
 	}
-	//==> Select Query �� ROWNUM ���� ��
+
 	public int getStartRowNum() {
 		return this.startRowNum;
 	}

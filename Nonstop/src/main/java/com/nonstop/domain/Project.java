@@ -84,6 +84,7 @@ public class Project {
 		return projLocation;
 	}
 	public void setProjLocation(String projLocation) {
+		
 		this.projLocation = projLocation;
 	}
 	public String getProjDetail() {

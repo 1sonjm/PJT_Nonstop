@@ -8,8 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-import com.nonstop.domain.User;
-
 public class LogonCheckInterceptor extends HandlerInterceptorAdapter
 {
 
@@ -41,7 +39,6 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse respons
 	}else
 	// ==> 미 로그인한 화원
 	{
-		
 		if(isLogonProcess)
 		{
 			System.out.println("[LogonCheckInterceptor] : Proceeding Logon\n");

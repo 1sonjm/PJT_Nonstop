@@ -19,7 +19,7 @@ public class LogAspectJ {
 		if(joinPoint.getArgs().length !=0){
 			System.out.println("[Around before]method : "+ joinPoint.getArgs()[0]);
 		}
-		//==> Ÿ�� ��ü�� Method �� ȣ�� �ϴ� �κ� 
+		
 		Object obj = joinPoint.proceed();
 
 		System.out.println("[Around after] return value  : "+obj);
