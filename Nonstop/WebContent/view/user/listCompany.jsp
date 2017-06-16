@@ -10,7 +10,6 @@
  <link href="/resources/css/nonstop.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="/resources/css/full.css" rel="stylesheet">
-
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -22,10 +21,10 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<!-- 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	 --><script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
+ -->	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<!-- 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
 	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
@@ -51,9 +50,9 @@
 	<script type="text/javascript">
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
-		function fncGetUserList(currentPage) {
+		function fncGetCompanyList(currentPage) {
 			$("#currentPage").val(currentPage)
-			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
+			$("form").attr("method" , "POST").attr("action" , "/user/listCompany").submit();
 		}
 		
 		
@@ -61,7 +60,7 @@
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( "button.btn.btn-default" ).on("click" , function() {
-				fncGetUserList(1);
+				fncGetCompanyList(1);
 			});
 		 });
 		
@@ -71,7 +70,7 @@
 		
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
-				 self.location ="/user/getUser?userId="+$(this).text().trim();
+				 self.location ="/user/getCompany?userId="+$(this).text().trim();
 			});
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
@@ -90,7 +89,7 @@
 				
 					$.ajax( 
 							{
-								url : "/user/getJsonUser/"+userId ,
+								url : "/user/getJsonCompany/"+userId ,
 								method : "GET" ,
 								dataType : "json" ,
 								headers : {
@@ -100,12 +99,14 @@
 								success : function(JSONData , status) {
 
 									var displayValue = "<h6>"
-																+"아이디 : "+JSONData.user.userId+"<br/>"
-																+"이  름 : "+JSONData.user.userName+"<br/>"
-																+"이메일 : "+JSONData.user.email+"<br/>"
-																+"주  소 : " +JSONData.user.addr+"<br/>"
-																+"연락처 : " +JSONData.user.tel+"<br/>"
-																+"비밀번호: " +JSONData.user.password+"<br/>"
+										+"아이디 : "+JSONData.user.userId+"<br/>"
+										+"이  름 : "+JSONData.user.userName+"<br/>"
+										+"기업명 : "+JSONData.user.companyName+"<br/>"
+										+"이메일 : "+JSONData.user.email+"<br/>"
+										+"주  소 : " +JSONData.user.addr+"<br/>"
+										+"연락처 : " +JSONData.user.tel+"<br/>"
+										+"비밀번호: " +JSONData.user.password+"<br/>"
+										+"</h6>";
 																+"</h6>";
 									$("h6").remove();
 									$( "#"+userId+"" ).html(displayValue);
@@ -137,7 +138,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>개인회원목록조회</h3>
+	       <h3>기업회원목록조회</h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -185,29 +186,29 @@
             <th align="center">No</th>
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
-            <th align="left">이메일</th>
-            <th align="left">간략정보</th>
+            <th align="left">기업명</th>
+            <th align="left">간략정보</th >
           </tr>
         </thead>
        
 		<tbody>
 		
-	 	<c:set var="i" value="0" />
-		  <c:forEach var="userList" items="${list}">
-			<c:set var="i" value="${ i+1 }" /> 
+		  <c:set var="i" value="0" />
+		  <c:forEach var="user" items="${list}">
+			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${userList.userId}</td>
-			  <td align="left">${userList.userName}</td>
-			  <td align="left">${userList.email}</td>
+			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
+			  <td align="left">${user.userName}</td>
+			  <td align="left">${user.companyName}</td>
 			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${userList.userId}"></i>
-			  	<input type="hidden" value="${userList.userId}">
+			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
+			  	<input type="hidden" value="${user.userId}">
 			  </td>
-
+			  
 			</tr>
-	       </c:forEach> 
+          </c:forEach>
         
         </tbody>
       
@@ -219,8 +220,6 @@
  	
  	
  	<!-- PageNavigation Start... -->
- 	<input type="hidden" id="currentPage" name="currentPage" value="${resultPage.currentPage}"/>
- 	
 	<jsp:include page="../common/pageNavigator_new.jsp"/>
 	<!-- PageNavigation End... -->
 	

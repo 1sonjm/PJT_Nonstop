@@ -1,26 +1,32 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<title>Nonstop</title>
+<!-- Bootstrap Core CSS -->
+ <link href="/resources/css/nonstop.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/resources/css/full.css" rel="stylesheet">
 
 <!DOCTYPE html>
 
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="utf-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" > -->
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	 -->
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/css/animate.min.css" rel="stylesheet">
    <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
@@ -38,24 +44,24 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "¼öÁ¤"  Event ¿¬°á =============
+		//============= "ìˆ˜ì •"  Event ì—°ê²° =============
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				fncUpdateUser();
 			});
 		});	
 		
 		
-		//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
+		//============= "ì·¨ì†Œ"  Event ì²˜ë¦¬ ë°  ì—°ê²° =============
 		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("#cancel").on("click" , function() {
+				self.location = "../index.jsp"
 			});
 		});	
 		
-		//=============ÀÌ¸ŞÀÏ" À¯È¿¼ºCheck  Event Ã³¸® =============
+		//=============ì´ë©”ì¼" ìœ íš¨ì„±Check  Event ì²˜ë¦¬ =============
 		 $(function() {
 			 
 			 $("input[name='email']").on("change" , function() {
@@ -63,35 +69,87 @@
 				 var email=$("input[name='email']").val();
 			    
 				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-			    	alert("ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
+			    	alert("ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
 			     }
 			});
 			 
 		});	
+		
 		
 		///////////////////////////////////////////////////////////////////////
 		function fncUpdateUser() {
 			var name=$("input[name='userName']").val();
 			
 			if(name == null || name.length <1){
-				alert("ÀÌ¸§Àº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("ì´ë¦„ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 				
-			var value = "";	
-			if( $("input[name='phone2']").val() != ""  &&  $("input[name='phone3']").val() != "") {
-				var value = $("option:selected").val() + "-" 
-									+ $("input[name='phone2']").val() + "-" 
-									+ $("input[name='phone3']").val();
-			}
 			
-			//Debug...
-			//alert("phone : "+value);
-			$("input:hidden[name='phone']").val( value );
 				
 			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 		}
-	
+		
+		
+		 $(document).on('click', '#close-preview', function(){ 
+		        $('.image-preview').popover('hide');
+		        // Hover befor close the preview
+		        $('.image-preview').hover(
+		            function () {
+		               $('.image-preview').popover('show');
+		            }, 
+		             function () {
+		               $('.image-preview').popover('hide');
+		            }
+		        );    
+		    });
+
+
+		    $(function() {
+		        // Create the close button
+		        var closebtn = $('<button/>', {
+		            type:"button",
+		            text: 'x',
+		            id: 'close-preview',
+		            style: 'font-size: initial;',
+		        });
+		        closebtn.attr("class","close pull-right");
+		        // Set the popover default content
+		        $('.image-preview').popover({
+		            trigger:'manual',
+		            html:true,
+		            title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+		            content: "There's no image",
+		            placement:'bottom'
+		        });
+		        // Clear event
+		        $('.image-preview-clear').click(function(){
+		            $('.image-preview').attr("data-content","").popover('hide');
+		            $('.image-preview-filename').val("");
+		            $('.image-preview-clear').hide();
+		            $('.image-preview-input input:file').val("");
+		            $(".image-preview-input-title").text("Browse"); 
+		        }); 
+		        // Create the preview image
+		        $(".image-preview-input input:file").change(function (){     
+		            var img = $('<img/>', {
+		                id: 'dynamic',
+		                width:250,
+		                height:200
+		            });      
+		            var file = this.files[0];
+		            var reader = new FileReader();
+		            // Set preview image into the popover data-content
+		            reader.onload = function (e) {
+		                $(".image-preview-input-title").text("Change");
+		                $(".image-preview-clear").show();
+		                $(".image-preview-filename").val(file.name);            
+		                img.attr('src', e.target.result);
+		                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+		            }        
+		            reader.readAsDataURL(file);
+		        });  
+		    });
 	</script>
 	
 </head>
@@ -99,96 +157,107 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" />
-    --%>	<!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/view/common/toolbar.jsp" />
+    	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-center">
-	       <h3 class=" text-info">È¸¿øÁ¤º¸¼öÁ¤</h3>
-	       <h5 class="text-muted">³» Á¤º¸¸¦ <strong class="text-danger">ÃÖ½ÅÁ¤º¸·Î °ü¸®</strong>ÇØ ÁÖ¼¼¿ä.</h5>
+	       <h3 class=" text-info">íšŒì›ì •ë³´ìˆ˜ì •</h3>
+	       <h5 class="text-muted">ë‚´ ì •ë³´ë¥¼ <strong class="text-danger">ìµœì‹ ì •ë³´ë¡œ ê´€ë¦¬</strong>í•´ ì£¼ì„¸ìš”.</h5>
 	    </div>
 	    
 	    <!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+		<form class="form-horizontal" method="post" enctype="multipart/form-data">
 		
 		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">¾Æ ÀÌ µğ</label>
+		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">ì•„ ì´ ë””</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId" value="${user.userId }" placeholder="Áßº¹È®ÀÎÇÏ¼¼¿ä"  readonly>
+		      <input type="text" class="form-control" id="userId" name="userId" value="${user.userId}" placeholder="ì¤‘ë³µí™•ì¸í•˜ì„¸ìš”"  readonly>
 		       <span id="helpBlock" class="help-block">
-		      	<strong class="text-danger">¾ÆÀÌµğ´Â ¼öÁ¤ºÒ°¡</strong>
+		      	<strong class="text-danger">ì•„ì´ë””ëŠ” ìˆ˜ì •ë¶ˆê°€</strong>
 		      </span>
 		    </div>
 		  </div>
 		
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="º¯°æºñ¹Ğ¹øÈ£">
+		      <input type="password" class="form-control" id="password" name="password" placeholder="ë³€ê²½ë¹„ë°€ë²ˆí˜¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="º¯°æºñ¹Ğ¹øÈ£ È®ÀÎ">
+		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ë³€ê²½ë¹„ë°€ë²ˆí˜¸ í™•ì¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" value="${user.userName}" placeholder="º¯°æÈ¸¿øÀÌ¸§">
+		      <input type="text" class="form-control" id="userName" name="userName" value="${user.userName}" placeholder="ë³€ê²½íšŒì›ì´ë¦„">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ÁÖ¼Ò</label>
+		    <label for="tel" class="col-sm-offset-1 col-sm-3 control-label">ì—°ë½ì²˜</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="addr" name="addr"  value="${user.addr}" placeholder="º¯°æÁÖ¼Ò">
+		      <input type="text" class="form-control" id="tel" name="tel" value="${user.tel}" placeholder="ë³€ê²½ì—°ë½ì²˜">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ÈŞ´ëÀüÈ­¹øÈ£</label>
-		     <div class="col-sm-2">
-		      <select class="form-control" name="phone1" id="phone1">
-				  	<option value="010" ${ ! empty user.phone1 && user.phone1 == "010" ? "selected" : ""  } >010</option>
-					<option value="011" ${ ! empty user.phone1 && user.phone1 == "011" ? "selected" : ""  } >011</option>
-					<option value="016" ${ ! empty user.phone1 && user.phone1 == "016" ? "selected" : ""  } >016</option>
-					<option value="018" ${ ! empty user.phone1 && user.phone1 == "018" ? "selected" : ""  } >018</option>
-					<option value="019" ${ ! empty user.phone1 && user.phone1 == "019" ? "selected" : ""  } >019</option>
-				</select>
+		    <label for="addr" class="col-sm-offset-1 col-sm-3 control-label">ì£¼ì†Œ</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="addr" name="addr"  value="${user.addr}" placeholder="ë³€ê²½ì£¼ì†Œ">
 		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone2" name="phone2" value="${ ! empty user.phone2 ? user.phone2 : ''}"  placeholder="º¯°æ¹øÈ£">
-		    </div>
-		    <div class="col-sm-2">
-		      <input type="text" class="form-control" id="phone3" name="phone3" value="${ ! empty user.phone3 ? user.phone3 : ''}"   placeholder="º¯°æ¹øÈ£">
-		    </div>
-		    <input type="hidden" name="phone"  />
 		  </div>
+		  
+		  
 		  
 		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸ŞÀÏ</label>
+		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ì´ë©”ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="º¯°æÀÌ¸ŞÀÏ">
+		      <input type="text" class="form-control" id="email" name="email" value="${user.email}" placeholder="ë³€ê²½ì´ë©”ì¼">
 		    </div>
 		  </div>
+		  
+		  <div class="form-group">
+						<label class="col-md-4 control-label">í”„ë¡œí•„ ì‚¬ì§„</label>  
+					 	<div class="col-md-5">
+						   <!-- image-preview-filename input [CUT FROM HERE]-->
+				           <div class="input-group image-preview">
+				              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+				                <span class="input-group-btn">
+				                    <!-- image-preview-clear button -->
+				                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+				                        <span class="glyphicon glyphicon-remove"></span> Clear
+				                    </button>
+				                    <!-- image-preview-input -->
+				                    <div class="btn btn-default image-preview-input">
+				                        <span class="glyphicon glyphicon-folder-open"></span>
+				                        <span class="image-preview-input-title">ì°¾ì•„ë³´ê¸°</span>
+				                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="updateFile" id="image" value="${user.image}"/> <!-- rename it -->
+				                    </div>
+				                </span>
+				            </div><!-- /input-group image-preview [TO HERE]--> 
+						</div>
+					</div>			
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >¼ö &nbsp;Á¤</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë &nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary"  >ìˆ˜ &nbsp;ì •</button>
+			  <a class="btn btn-primary btn" href="#" role="button" id="cancel">ì·¨ &nbsp;ì†Œ</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 	    
  	</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
  	
 </body>
 

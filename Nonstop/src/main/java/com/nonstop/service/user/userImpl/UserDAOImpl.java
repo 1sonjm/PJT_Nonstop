@@ -1,6 +1,8 @@
 package com.nonstop.service.user.userImpl;
 
+
 import java.util.List;
+
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +56,10 @@ public class UserDAOImpl implements UserDAO{
 	public void updateUser(User user) throws Exception {
 		sqlSession.update("UserMapper.updateUser", user);
 	}
+	
+	public void updateCompany(User user) throws Exception {
+		sqlSession.update("UserMapper.updateCompany", user);
+	}
 
 	public List<User> getUserList(Search search) throws Exception {
 		return sqlSession.selectList("UserMapper.getUserList", search);
@@ -63,4 +69,26 @@ public class UserDAOImpl implements UserDAO{
 	public int getTotalCount(Search search) throws Exception {
 		return sqlSession.selectOne("UserMapper.getTotalCount", search);
 	}
+
+
+	public void deleteUser(User user) throws Exception {
+		sqlSession.delete("UserMapper.deleteUser", user);
+		
+	}
+	
+	public User getCompany(String userId) throws Exception {
+		return sqlSession.selectOne("UserMapper.getCompany", userId);
+	}
+
+
+	@Override
+	public List<User> getCompanyList(Search search) throws Exception {
+		return sqlSession.selectList("UserMapper.getCompanyList", search);
+		
+	}
+
+
+	
+	
+	
 }

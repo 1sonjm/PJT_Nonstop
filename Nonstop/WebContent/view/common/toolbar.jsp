@@ -25,6 +25,7 @@ $(document).ready(function(){
 		})
 	})
 	</script>
+
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	  <div class="container">
 	    <div class="navbar-header">
@@ -68,9 +69,15 @@ $(document).ready(function(){
             
             <ul class="nav navbar-nav navbar-right">
                <c:if test="${empty sessionScope.user.userId }">
-                      <li><a href="#" id="login">로그인</a></li>
+               
+              		 
+                      <li><a href="#myModal" id="login" data-toggle="modal" data-target="#myModal">로그인</a></li>
+                      
                       <li><a href="#" id="addUser">회원가입</a></li>
-                    </c:if>
+                     </c:if>
+                     
+       
+                    
                <c:if test="${!empty sessionScope.user.userId }">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
                     <li>
@@ -90,7 +97,8 @@ $(document).ready(function(){
                       <li><a href="#" id="logout">로그아웃</a></li>
                     </ul>
                   </li>
-                 </c:if>  
+                 </c:if> 
+                  
                   
              </ul>
             </div>
@@ -127,12 +135,12 @@ $(document).ready(function(){
     });
    
     //============= login 이동 Event 처리 =============   
-    $(function() {
+    /* $(function() {
        $("#login").on("click" , function() {
          //$(self.location).attr("href","/user/logout");
          self.location = "/user/login"
       }); 
-    });
+    }); */
     
     //============= 회원가입 이동 Event 처리 =============   
     $(function() {

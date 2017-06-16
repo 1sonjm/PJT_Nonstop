@@ -55,7 +55,7 @@ public boolean preHandle(HttpServletRequest request, HttpServletResponse respons
 	{
 		String uri = request.getRequestURI();
 		
-		if(uri.indexOf("addUser")!=-1||uri.indexOf("login")!=-1||uri.indexOf("checkDuplication")!=-1)
+		if(uri.indexOf("addJsonUser")!=-1||uri.indexOf("addCompany")!=-1||uri.indexOf("login")!=-1||uri.indexOf("checkUserId")!=-1)
 		{
 			System.out.println("[LogonCheckInterceptor] : Proceeding Logon\n");
 			return true;
