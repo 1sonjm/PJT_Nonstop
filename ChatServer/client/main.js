@@ -131,6 +131,39 @@ window.onload = function () {
 				alert('Failed to capture your screen. Please check Chrome console logs for further information.');
 			});
 		});
+        var sessionId = document.getElementById("session_txt").value;
+        signalingChannel = new SignalingChannel(sessionId);
+
+        // show and update share link
+        var link = document.getElementById("share_link");
+        var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
+        link.href = link.textContent = window.location.href + maybeAddHash;
+        shareView.style.visibility = "visible";
+
+        callButton.onclick = function () {
+            start(true);
+        };
+
+        // another peer has joined our session
+        signalingChannel.onpeer = function (evt) {
+			callButton.value = "연결";
+			callButton.disabled = false;
+			shareView.style.visibility = "hidden";
+			shareView.style.display = "none";
+
+            peer = evt.peer;
+            peer.onmessage = handleMessage;
+
+            peer.ondisconnect = function () {
+				callButton.disabled = true;
+				remoteView.style.visibility = "hidden";
+				postChatMessage("[연결이 종료되었습니다]");
+                if (pc)
+                    pc.close();
+                pc = null;
+            };
+        };
+        
 	}
 	
 	// 채팅방 개설
@@ -138,7 +171,7 @@ window.onload = function () {
 		navigator.mediaDevices.enumerateDevices()
 			.then(function(devices) {
 				if(devices.length < 1){
-					document.getElementById("capture-screen").click();
+					//document.getElementById("capture-screen").click();
 				}else{
 					// get a local stream
 					navigator.mediaDevices.getUserMedia({ 
