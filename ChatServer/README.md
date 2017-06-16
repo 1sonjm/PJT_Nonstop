@@ -1,20 +1,20 @@
-## Starting the server
-The server uses [node.js](http://nodejs.org) and is started using:
+## 시그널링 서버 시작
 ```
 node channel_server.js
 ```
-The default port is 8080. The port to use can be changed by setting the environment variable PORT or giving the port as an argument to the node command. If both the environment variable and the argument are given then the argument is used.
 
-Example of how to set port using environment variable and command line argument.
-```
-PORT=9080 node channel_server.js
-node channel_server.js 10080
-```
+## 참고 자료
+* webRTC 기본
 
-## Local testing
-The simple WebRTC app is now running at [http://localhost:8080/](http://localhost:8080/)
+* api 정보
+> https://webrtc.org/web-apis/
 
-![Demo app](https://github.com/EricssonResearch/openwebrtc-browser-extensions/blob/master/imgs/demoapp.png)
+* muaz khan의 데모, library
 
-## Live testing
-We are keeping an up-to-date version of this app available at [http://demo.openwebrtc.org](http://demo.openwebrtc.org)
+> https://www.webrtc-experiment.com/
+
+* servlet으로 구현 예제?
+> https://github.com/GDG-Korea/WebRTCOnGAE
+
+* Signaling(SDP)
+> https://cryingnavi.github.io/WebRTC-SDP/
