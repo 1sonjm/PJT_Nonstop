@@ -441,18 +441,24 @@ xmp{
 		});
 		//프로젝트 초대하기
 	 	$("#invite").on("click", function(){
-	 		
 	 		var items = [];
+	 		var items2 = [];
 			$("input:checkbox[name=recNo]:checked").each(function(){
 				items.push($(this).val());
 			});
 			
+			$(".recUserId").each(function(){
+				items2.push($(this).attr("recUserIdValue"));
+			});
+			
+			$("input:hidden[name='recUserIdItems']").val( items2 );
 			$("input:hidden[name='checkBoxes']").val( items );
-	 		
+			
+			
 			if(confirm("프로젝트에 한번 초대된 인원은 수정이 불가능합니다.\n정말 프로젝트에 초대하시겠습니까? ") !=0){
 				$("form").attr("method", "POST").attr("action", "/project/inviteApplicant").submit();
 			}else{
-			}
+			} 
 		});
 		
 	});
@@ -618,7 +624,25 @@ xmp{
 		 });
 	   });
 	   
-    
+	 
+	   $(function() {
+		   //right side 프로필 사진 클릭시 기업 프로필로 이동
+		   $("#coProfileImg").on("click", function(){
+			   self.location ="/profile/getOtherProfile?userId="+$("#projUserId").val();
+		   });
+		   
+		   //comment 프로필 사진 클릭시 해당 프로필로 이동
+		   $(".comment-img").on("click", function(){
+			   self.location ="/profile/getOtherProfile?userId="+$(this).attr("comUserVal");
+		   });
+		   
+		   //applicant 프로필 사진 클릭시 해당 프로필로 이동
+		   $(".applUserImg").on("click", function(){
+			   self.location ="/profile/getOtherProfile?userId="+$(this).attr("applUserVal");
+		   });
+		   
+	   });
+	   
 	</script>
 </head>
 
@@ -683,7 +707,7 @@ xmp{
 												id="deleteScrap" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
 										</c:if>
 
-										<strong style="font-size: 25px;">${project.projTitle}</strong>
+										<strong style="font-size: 25px;" >${project.projTitle}</strong>
 										<c:choose>
 											<c:when test="${project.projDday<=0}">
 												<div class="w3-panel w3-round-large" id="shape1">
@@ -796,9 +820,7 @@ xmp{
                                    
                                     <div class="media">
 									  <div class="media-left">
-									    <a href="#">
 									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
-									    </a>
 									  </div>
 									  
 							  	    <div class="media-body">
@@ -823,20 +845,21 @@ xmp{
 								
 									<!-- ajax로 받은 데이터 들어올 곳 -->						
 									<div id="ajaxTarget"></div> 																    
-								
+									
 									<c:set var="i" value="0"/>
 									<c:forEach var="projCommentList" items="${projCommentList}" >
 									<c:set var="i" value="${i+1}"/>
+									<input type="hidden" class="comNo" value="${projCommen.comNo}"/>
+									
 									
 									<div class="media">
 									  <div class="media-left">
-									    <a href="#">									    
-									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="">
-									    </a>
+									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									      <input type="hidden" class="comUserId" value="${projCommentList.comUserId}"/>        
 									  </div>
 									  <div class="media-body">
 									  	<div class="comment-div">
-									  		<h6><strong>${projCommentList.comUserId}</strong>
+									  		<h6><strong >${projCommentList.comUserId}</strong>
 									  			&nbsp;&nbsp;•&nbsp;&nbsp;${projCommentList.comRegDate}
 									  			<c:set var="sessionUserId" value="${sessionScope.user.userId}"/>
 									  			<c:if test="${projCommentList.comUserId eq sessionUserId}">
@@ -844,7 +867,7 @@ xmp{
 									  				<input type="hidden" value="${projCommentList.comNo}"/>
 									  			</c:if>
 									  		</h6>
-									  		<p>${projCommentList.comContent}</p>							  		
+									  		<p>${projCommentList.comContent}</p>
 									  	</div>										  
 									  </div>
 									</div>
@@ -868,7 +891,7 @@ xmp{
 					<div class="about-fixed">
 
 						<div class="my-pic">
-						    <img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
+						    <img class="userImg" src="../../resources/images/upload/${user.image}" alt=""  id="coProfileImg">
               			</div>
               			
               			<div class="my-detail">
@@ -923,9 +946,6 @@ xmp{
 		</div>
 	</div>
 	
-	
-
-
 
 	<!-- Back to Top Start -->
 	<!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->
@@ -943,7 +963,7 @@ xmp{
 					<h4 class="modal-title">지원자 목록</h4>
 				</div>
 				<div class="modal-body" id="modal-body1">
-					<form role="form" id="addMail" class="form-horizontal">
+					<form role="form" id="applList" class="form-horizontal">
 						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
 						<div class="form-group" style="height : 250; overflow-y: scroll; overflow-x:hidden; layout:fixed;">
 							<c:if test="${project.projDday<=0}">
@@ -956,10 +976,10 @@ xmp{
 									  	<div class="checkbox">
 											<label for="checkboxes-0" style="font-size : 20px">
 										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox">
-										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
-										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 " >
+										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0; float:left;" applUserVal="${recordApplicant.recUserId}">
 										      </button>
-										      ${recordApplicant.recUserId}
+										      <div class="recUserId" name="recUserId" recUserIdValue="${recordApplicant.recUserId}" style="float:right">${recordApplicant.recUserId}</div>
 										      <c:if test="${recordApplicant.recStatus==1}">
 										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
 										      <c:set var="isChk" value="true"/>
@@ -977,8 +997,8 @@ xmp{
 								<div class="form-group">
 									<div class="col-md-12">
 										<label style="font-size : 20px; margin-left:35px">
-										    <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
-										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										    <button type="button" class="applUserButton" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 " >
+										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0" applUserVal="${recordApplicant.recUserId}">
 										    </button>
 										      ${recordApplicant.recUserId}
 										      <c:if test="${recordApplicant.recStatus==1}">
@@ -989,8 +1009,9 @@ xmp{
 								</div>
 							</c:forEach>
 							</c:if>
-							<input type="hidden" name="checkBoxes"/>
 						</div>
+						<input type="hidden" name="checkBoxes" />
+						<input type="hidden" name="recUserIdItems"/>
 					</form>
 				</div>
 				
@@ -1019,7 +1040,9 @@ xmp{
 				</div>
 				<div class="modal-body" id="modal-body2">
 					<form role="form" id="addMail" class="form-horizontal">
-
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+						<input type="hidden" name="checkBoxes" />
+						<input type="hidden" name="recUserIdItems"/>
 						<div class="form-group">
 							<label class="col-lg-2 control-label">From</label>
 							<div class="col-lg-10">
