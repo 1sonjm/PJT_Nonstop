@@ -264,13 +264,6 @@ public class UserController {
 	       
 	}
 	
-	@RequestMapping( value="login", method=RequestMethod.GET )
-	public String login() throws Exception{
-		
-		System.out.println("/user/logon : GET");
-
-		return "redirect:/view/user/loginView.jsp";
-	}
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	   public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 	      
@@ -378,13 +371,13 @@ public class UserController {
 		return "forward:/view/user/listCompany.jsp";
 	}
 
-	@RequestMapping( value="checkUserId/{userId}", method=RequestMethod.POST)
-	   public String checkUserId(  @PathVariable String userId, Model model , HttpSession session) throws Exception {
+	@RequestMapping( value="checkUserId/{tempId}", method=RequestMethod.POST)
+	   public String checkUserId(  @PathVariable String tempId, Model model , HttpSession session) throws Exception {
 	      
 	      System.out.println("/user/checkUserId : GET");
-	      userId=userId.replace(",", ".");
-	      System.out.println("userId :: " + userId);
-	      User user = userService.checkUserId(userId);
+	      tempId=tempId.replace(",", ".");
+	      System.out.println("userId :: " + tempId);
+	      User user = userService.checkUserId(tempId);
 	      
 	      model.addAttribute("user", user);
 	      
@@ -442,18 +435,7 @@ public class UserController {
 
 	   }
 	
-	@RequestMapping( value="logink", method=RequestMethod.POST )
-	   public String logink(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
-	      
-	      System.out.println("/user/login : POST");
 
-	      String destinate = "forward:/index.jsp";
-	      
-	      User dbUser=userService.getUser(user.getUserId());
-	      System.out.println("user 뭐닝" + dbUser);
-	         session.setAttribute("user", dbUser);
-	         return destinate="forward:/index.jsp";
-	      }
 
 	
 	

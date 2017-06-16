@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
-  
+    
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+<title>Nonstop</title>
+<!-- Bootstrap Core CSS -->
+ <link href="/resources/css/nonstop.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/resources/css/full.css" rel="stylesheet">
   <!DOCTYPE html>
   
 <html>
