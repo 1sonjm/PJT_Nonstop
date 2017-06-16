@@ -50,7 +50,14 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		map.put("portNo", portNo);
 		map.put("sessionUserId", sessionUserId);
 		
-		return sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
+		Portfolio portfolio = new Portfolio();
+		portfolio = sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
+		
+		List<PortImages> portImages = new ArrayList<PortImages>();
+		portImages = sqlSession.selectList("PortfolioMapper.getPortImages", portNo);
+		portfolio.setImages(portImages);
+		
+		return portfolio;
 	}
 
 	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception {

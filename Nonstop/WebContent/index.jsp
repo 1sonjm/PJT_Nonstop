@@ -16,6 +16,8 @@
 <link href="/resources/css/nonstop.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="/resources/css/full.css" rel="stylesheet">
+<!-- Awesome Font -->
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- jQuery -->
 <script src="/resources/javascript/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
@@ -24,6 +26,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <!-- Theme JavaScript -->
 <script src="../../resources/javascript/mainpage.js"></script>
+
 <style>
 body {
 	padding-top: 0;
@@ -219,14 +222,22 @@ body {
 		</div>
 		<!-- /.container -->
 	</nav>
+	
 	<!-- Intro Header -->
 	<header class="intro">
 		<div class="intro-body">
 			<div class="container">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
-						<h1 class="brand-heading">NONSTOP</h1>
+						<h1 class="brand-heading">NONSTOP <br/> PROJECT AND PORTFOLIO</h1>
 						<div class="margin-bottom-20"></div>
+						
+						<p class="intro-text">
+							논스톱에서 웹사이트, 어플리케이션 개발 및 디자인 포트폴리오를 관리하고 관련 프로젝트에 참여해 보세요.<br /> 
+							간편하게 자신의 포트폴리오를 관리할 수 있고 다양한 프로젝트 참여를 통해 커리어를 높일 수 있습니다. 
+						</p>
+						<div class="margin-bottom-50"></div>
+						
 						<div class="intro-main">
 							<ul class="main-ul">
 								<li>
@@ -257,18 +268,21 @@ body {
 								</li>
 							</ul>
 						</div>
-						<div class="margin-bottom-20"></div>
-						<p class="intro-text">
-							웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱<br />포트폴리오 등록과 구인구직을 위한 프로젝트 등록 논스톱에서 한번에 해결하세요.<br /> 웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱포트폴리오 등록과 구인구직을 <br />위한
-							프로젝트 등록 논스톱에서 한번에 해결하세요.
-						</p>
+						
+						
+						<!-- 버튼 주석처리
 						<div class="margin-bottom-50"></div>
 						<button class="sq_button" type="button" style="background-color: #ff6600">회원가입</button>
 						<button class="sq_button" type="button">일단, 둘러볼게요</button>
+						-->
+						
 						<div class="center-block">
-							<a href="#about" class="btn btn-circle page-scroll"> <span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
+							<a href="#about" class="page-scroll" style="position: fixed; margin-top: 6%; margin-left: -2%;"> <!-- class="btn btn-circle page-scroll" -->
+							<span class="fa fa-chevron-down" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"><p>더 알아보기</p></span>
 							</a>
+							
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -278,38 +292,60 @@ body {
 	<section id="about" class="about">
 		<div class="about-section">
 			<div class="container">
-				<div class="col-lg-8 col-lg-offset-2">
-					<h2>About Grayscale</h2>
+				<div class="col-md-12">
+					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<h2 class="brand-heading">Portfolio Service</h2>
 					<p>
-						Grayscale is a free Bootstrap 3 theme created by Start Bootstrap. It can be yours right now, simply download the template on <a
-							href="http://startbootstrap.com/template-overviews/grayscale/">the preview page</a>. The theme is open source, and you can use it for any
-						purpose, personal or commercial.
+					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
 					</p>
-					<p>
-						This theme features stock photos by <a href="http://gratisography.com/">Gratisography</a> along with a custom Google Maps skin courtesy of <a
-							href="http://snazzymaps.com/">Snazzy Maps</a>.
-					</p>
-					<p>Grayscale includes full HTML, CSS, and custom JavaScript files along with LESS files for easy customization.</p>
+					<div class="margin-bottom-30"></div>
+					<hr style="width:20%">
 				</div>
 			</div>
 		</div>
 	</section>
+	
 	<!-- Download Section -->
 	<section id="download" class="download">
 		<div class="download-section">
-			<div class="container"></div>
+			<div class="container">
+			
+				<div class="col-md-12">
+					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<h2 class="brand-heading">Project Service</h2>
+					<p>
+					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
+					</p>
+					<div class="margin-bottom-30"></div>
+					<hr style="width:20%">
+				</div>
+			
+			</div>
 		</div>
 	</section>
+	
 	<!-- Contact Section -->
 	<section id="contact" class="contact">
 		<div class="contact-section">
-			<div class="container"></div>
+			<div class="container">
+			
+				<div class="col-md-12">
+					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<h2 class="brand-heading">Tech Statistic Service</h2>
+					<p>
+					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
+					</p>
+					<div class="margin-bottom-30"></div>
+					<hr style="width:20%">
+				</div>
+				
+			</div>
 		</div>
 	</section>
 	<!-- Footer -->
 	<footer>
 		<div class="container text-center">
-			<p>Copyright &copy; Your Website 2016</p>
+			<p>Copyright &copy; NONSTOP 2017</p>
 		</div>
 	</footer>
 </body>

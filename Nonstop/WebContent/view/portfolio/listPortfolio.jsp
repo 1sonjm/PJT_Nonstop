@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html lang="ko">
 
 <head>
@@ -693,7 +693,19 @@
 		                   <input type="hidden" id="portNo" name="portNo" value="${ranking.portNo}"/>
 		                                      
 		                      <div class="thumbnail-portImage">
-		                          <img src="/resources/images/upload/${ranking.portFile}" width="400px" height="300px" alt="">                       
+		                      	<c:set var="portFile" value="${ranking.portFile}" />
+		                      	<c:set var="portFileArray" value="${fn:split(portFile, '.')}" />
+		                      	<c:choose>
+									<c:when test="${portFileArray[fn:length(portFileArray)-1]=='pdf'}">
+										<img src = "/resources/images/layout/pdf_img.jpg" width="400px" height="300px" alt="">
+									</c:when>
+									<c:when test="${portFileArray[fn:length(portFileArray)-1]=='odp'}">
+										<img src = "/resources/images/layout/ppt_img.jpg" width="400px" height="300px" alt="">
+									</c:when>
+									<c:otherwise>
+										<img src="/resources/images/upload/${ranking.portFile}" width="400px" height="300px" alt="">
+									</c:otherwise>
+								</c:choose>                      
 		                       </div>   
 		                       <div class="caption">
 		                           
@@ -775,7 +787,19 @@
                 	<input type="hidden" id="portNo" name="portNo" value="${portfolio.portNo}"/>
                                       
                     <div class="thumbnail-portImage">
-                    	<img src="/resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">                       
+                    	<c:set var="portFile" value="${portfolio.portFile}" />
+		                <c:set var="portFileArray" value="${fn:split(portFile, '.')}" />
+                    	<c:choose>
+							<c:when test="${portFileArray[fn:length(portFileArray)-1]=='pdf'}">
+								<img src = "/resources/images/layout/pdf_img.jpg" width="400px" height="300px" alt="">
+							</c:when>
+							<c:when test="${portFileArray[fn:length(portFileArray)-1]=='odp'}">
+								<img src = "/resources/images/layout/ppt_img.jpg" width="400px" height="300px" alt="">
+							</c:when>
+							<c:otherwise>
+								<img src="/resources/images/upload/${portfolio.portFile}" width="400px" height="300px" alt="">
+							</c:otherwise>
+						</c:choose>
                     </div>   
                     	<div class="caption">
                            

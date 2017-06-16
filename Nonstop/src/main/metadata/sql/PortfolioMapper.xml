@@ -35,13 +35,13 @@
 		<result property="comContent" 		column="com_port_content" 		jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<resultMap id="portLikeMap" type="portLike">
+	<resultMap id="portLikeSelectMap" type="portLike">
 		<result property="portLikeNo" 		column="port_like-no" 			jdbcType="INTEGER"/>
 		<result property="portNo" 			column="port_no" 				jdbcType="INTEGER" />
 		<result property="userId" 			column="user_id" 				jdbcType="VARCHAR" />
 	</resultMap>
 	
-	<resultMap id="portImagesMap" type="portImages">
+	<resultMap id="portImagesSelectMap" type="portImages">
 		<result property="imgPortNo" 		column="img_port_no" 			jdbcType="INTEGER"/>
 		<result property="imgNo" 			column="img_no" 				jdbcType="INTEGER" />
 		<result property="imgName" 			column="img_name" 				jdbcType="VARCHAR" />
@@ -79,22 +79,23 @@
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getPortfolio"	parameterType="map"	resultMap="portfolioSelectMap">
-		<!-- SELECT
-		port_no, port_user_id, port_division, port_title, port_regdate, port_update, port_file, port_detail, port_viewcount	
-		FROM portfolio
-		WHERE port_no = #{portNo} -->
-		
-		
 		SELECT p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_detail, p.port_viewcount, p.port_like_count, p.port_com_count, s.scrap_no, l.port_like_no, l.port_no
 		FROM portfolio p,
 			(SELECT port_like_no, port_no, user_id FROM port_like WHERE user_id=#{sessionUserId}) l, 
 			(SELECT scrap_no, port_no FROM scrap WHERE user_id=#{sessionUserId}) s
 		WHERE p.port_no=s.port_no(+) AND p.port_no=l.port_no(+) AND p.port_no=#{portNo} 
 	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPortImages"	parameterType="int"	resultMap="portImagesSelectMap">
+		SELECT img_no, img_port_no, img_name, img_order
+		FROM port_images
+		WHERE img_port_no=#{portNo} 
+	 </select>
 
 	 <select  id="getPortfolioList" parameterType="map" resultMap="portfolioSelectMap">
 
-		SELECT*
+		SELECT *
 		FROM
 		(SELECT inner_table.*, users.user_img, users.user_id, ROWNUM AS row_seq
 			FROM 
