@@ -30,5 +30,7 @@ public interface LetterService {
 	public void updateSendView(int letNo , String userId) throws Exception;
 	
 	public Map<String , Object> getSaveLetterList(String userId) throws Exception;
+	
+	public List<Letter> getUnreadLetterList(String userId) throws Exception;
 
 }

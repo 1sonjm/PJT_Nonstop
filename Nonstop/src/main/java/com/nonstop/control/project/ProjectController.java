@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.nonstop.domain.Follow;
 import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.RecordApplicant;
@@ -109,16 +110,24 @@ public class ProjectController {
 		Project project = new Project();
 	
 		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
+		
 		project = projectService.getProject(projNo ,scrapUserId);
+		
 		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
 		List<TechUse> listTechUse = techUseService.getTechUseList(projNo);
 		User user = userService.getUser(project.getProjUserId());
+		
+		Follow follow = profileService.getFollow(scrapUserId, project.getProjUserId());
+		
+		if(follow != null){
+			project.setProjFollowFlag(true);
+		}
+		
 		recordApplicant = projectService.getApplicant(projNo, scrapUserId);
 		projectService.updateViewCount(project);
 		List<RecordApplicant> listApplicant = projectService.getApplicantList(projNo);
 		
 		System.out.println("listApplicant="+listApplicant);
-		
 		
 		session.setAttribute("projNo", projNo);
 		model.addAttribute("projCommentList", projCommentList);

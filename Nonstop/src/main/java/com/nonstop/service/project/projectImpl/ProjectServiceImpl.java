@@ -119,10 +119,14 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		projectDAO.deleteApplicantTotal(recProjNo);
 	}
-
-	@Override
-	public List<Project> listProject(int projDivision, String sessionId, Search search2, int sortFlag) {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public List<Project> getProfileProjList(String sessionId, String profileId) throws Exception {
+		return projectDAO.getProfileProjList(sessionId, profileId);
 	}
+	
+	public List<Project> getProfileScrapProjList(String sessionId, String profileId) throws Exception {
+		return projectDAO.getProfileScrapProjList(sessionId, profileId);
+	}
+
+	
 }

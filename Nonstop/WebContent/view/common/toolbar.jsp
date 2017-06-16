@@ -4,9 +4,28 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<script type="text/javascript">
+$(document).ready(function(){
+		$.ajax(
+		{
+			url:"/letter/toolbarMailCheck",
+			method: "GET",
+			headers : {
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"	
+			},
+			success : function(a , status) {
+				if(a.flag == true){
+					var displayValue = "<span class='glyphicon glyphicon-envelope' style='margin-top:3px; margin-bottom:5px'></span>"
+									  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
+					/* $('#mail').html($('#listLetter').html()+displayValue); */
+					$("#mail").html(displayValue);
+				}
+			}
+		})
+	})
+	</script>
 
-	 
-	
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 	  <div class="container">
 	    <div class="navbar-header">
@@ -62,15 +81,16 @@
                <c:if test="${!empty sessionScope.user.userId }">
                     <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
                     <li>
-	                    <a href="#" id="listLetter">
-	                    	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-	                    	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;">NEW</span>
+	                    <a href="#" id="mail">
+	                    	
+	                    		<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+	                    		
 	                    </a>
                     </li>
                   	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
                     <ul class="dropdown-menu">
                       <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}"/>                     
-                      <li><a href="#" id="profile2">프로필</a></li>
+                      <li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
                       <li><a href="#" id="getUser">내정보보기</a></li>
                       <li><a href="#" id="updateUser">내정보수정</a></li>
                       <li><a href="#" id="listFollow">팔로우 목록보기</a></li>
@@ -141,7 +161,8 @@
     //============= 프로필 이동 Event 처리 =============   
     $(function() {
        $("#profile2").on("click" , function() {
-         self.location = "/profile/getMineProfile"
+    	   var role=$(this).attr('role');
+         self.location = "/profile/getMineProfile?role="+role
       }); 
     });
     

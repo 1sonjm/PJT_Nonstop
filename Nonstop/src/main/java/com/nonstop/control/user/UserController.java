@@ -27,35 +27,30 @@ import com.nonstop.domain.Search;
 import com.nonstop.domain.User;
 import com.nonstop.service.user.UserService;
 
-
-
 @Controller
 @RequestMapping("/user/*")
 public class UserController {
-	
 
+	/// Field
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 
-
-
-		
-	public UserController(){
+	public UserController() {
 		System.out.println(this.getClass());
 	}
-	
+
 	@Value("#{commonProperties['pageUnit']}")
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
 	
-	@RequestMapping( value="addUser", method=RequestMethod.GET )
-	public String addUser( ) throws Exception{
-	
+	@RequestMapping(value = "addUser", method = RequestMethod.GET)
+	public String addUser() throws Exception {
+
 		System.out.println("/user/addUser : GET");
-		
+
 		return "redirect:/view/user/addUserView.jsp";
 	}
 	
@@ -75,39 +70,38 @@ public class UserController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+		// Business Logic
 		userService.addUser(user);
 		
 		return "redirect:/index.jsp";
 	}
 	
-	
-	
    @RequestMapping( value="addUser/{userId}", method=RequestMethod.POST)
    public void addUser( @PathVariable String userId) throws Exception{
    
-      System.out.println("/user/addUser : json");
+      System.out.println("/user/addUser : JSON");
       userId = userId.replace(",", ".");
       
    }
    
-   @RequestMapping( value="addJsonUser/{userId}", method=RequestMethod.GET )
-   public String addJsonUser( @PathVariable String userId , Model model) throws Exception {
+   @RequestMapping( value="addJSONUser/{userId}", method=RequestMethod.GET )
+   public String addJSONUser( @PathVariable String userId , Model model) throws Exception {
 
-      System.out.println("/user/addJsonUser : GET");
+      System.out.println("/user/addJSONUser : GET");
       //Business Logic
-      //userService.addJsonUser(userId);
+      //userService.addJSONUser(userId);
       
       userId=userId.replace(",", ".");
       model.addAttribute("userId",userId);
       
       return "forward:/user/addUserView.jsp";
    }
-   
-   @RequestMapping( value="addCompany", method=RequestMethod.GET )
-	public String addCompany() throws Exception{
-	
+
+	@RequestMapping(value = "addCompany", method = RequestMethod.GET)
+	public String addCompany() throws Exception {
+
 		System.out.println("/user/addCompany : GET");
-		
+
 		return "redirect:/view/user/addCompanyView.jsp";
 	}
    
@@ -132,30 +126,29 @@ public class UserController {
 
 		return "redirect:/index.jsp";
 	}
-	
 
-	@RequestMapping( value="getUser", method=RequestMethod.GET )
-	public String getUser( @RequestParam("userId") String userId , Model model ) throws Exception {
-		
+	@RequestMapping(value = "getUser", method = RequestMethod.GET)
+	public String getUser(@RequestParam("userId") String userId, Model model) throws Exception {
+
 		System.out.println("/user/getUser : GET");
-		
+		// Business Logic
+
 		User user = userService.getUser(userId);
-		
+
 		model.addAttribute("user", user);
-		
+
 		return "forward:/view/user/getUser.jsp";
 	}
+
 	
 
-	@RequestMapping( value="getJsonUser/{userId}", method=RequestMethod.GET )
-	public void getJsonUser(	@PathVariable String userId, 
-									 			Model model) throws Exception{
+	@RequestMapping( value="getJSONUser/{userId}", method=RequestMethod.GET )
+	public void getJSONUser(	@PathVariable String userId, Model model) throws Exception{
+
+		System.out.println("/getJSONUser/getUser : GET");
 		
-		System.out.println("/getJsonUser/getUser : GET");
-		
+		// Business Logic
 		User user = userService.getUser(userId);
-
-	
 
 		model.addAttribute("user", user);
 	}
@@ -172,46 +165,43 @@ public class UserController {
 		return "forward:/view/user/getCompany.jsp";
 	}
 	
-	
-	@RequestMapping( value="getJsonCompany/{userId}", method=RequestMethod.GET )
-	public void getJsonCompany(	@PathVariable String userId, 
-									 			Model model) throws Exception{
+	@RequestMapping( value="getJSONCompany/{userId}", method=RequestMethod.GET )
+	public void getJSONCompany(	@PathVariable String userId, Model model) throws Exception{
 		
-		System.out.println("/getJson/getCompany : GET");
+		System.out.println("/getJSON/getCompany : GET");
 		
 		User user = userService.getCompany(userId);
 		
 		model.addAttribute("user", user);
 	}
 
-	@RequestMapping( value="updateUser", method=RequestMethod.GET )
-	public String updateUser( @RequestParam("userId") String userId , Model model ) throws Exception{
+	@RequestMapping(value = "updateUser", method = RequestMethod.GET)
+	public String updateUser(@RequestParam("userId") String userId, Model model) throws Exception {
 
 		System.out.println("/user/updateUser : GET");
 		
 		User user = userService.getUser(userId);
 
 		model.addAttribute("user", user);
-		
+
 		return "forward:/view/user/updateUser.jsp";
 	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
 	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateFile") MultipartFile file) throws Exception{
-		
-		System.out.println("/user/updateUser : POST");
-		
+
+		System.out.println("/user/updateUser : POST");	
+		// Business Logic
 		userService.updateUser(user);
-		
-		String sessionId=((User)session.getAttribute("user")).getUserId();
-		if(sessionId.equals(user.getUserId())){
+
+		String sessionId = ((User) session.getAttribute("user")).getUserId();
+		if (sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
-		
+
 			String image=file.getOriginalFilename();
 
 			user.setImage(image);
-			
 			
 	        try {
 	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
@@ -221,8 +211,9 @@ public class UserController {
 		}
   
 	        return "forward:/view/user/getUser.jsp";
-		
 	}
+	
+	
 	
 	@RequestMapping( value="updateCompany", method=RequestMethod.GET )
 	public String updateCompany( @RequestParam("userId") String userId , Model model ) throws Exception{
@@ -279,74 +270,58 @@ public class UserController {
 	         destinate="forward:/index.jsp";
 	      }
 	      
-	  
-		      
-	      
-	      
 	      System.out.println(session.getAttribute("user"));
 	      
 	      return destinate;
-
 	   }
-	
-	@RequestMapping( value="jsonLogin", method=RequestMethod.POST )
-	public void jsonLogin(	@RequestBody User user,
-												HttpSession session,
-												Model model) throws Exception{
-	
-		System.out.println("/user/jsonLogin : POST");
-		
-		System.out.println("::"+user);
-		User dbUser=userService.getUser(user.getUserId());
+	@RequestMapping(value = "JSONLogin", method = RequestMethod.POST)
+	public void JSONLogin(@RequestBody User user, HttpSession session, Model model) throws Exception {
 
-		if( dbUser != null && user.getPassword().equals(dbUser.getPassword())){
+		System.out.println("/user/JSONLogin : POST");
+		// Business Logic
+		System.out.println("::" + user);
+		User dbUser = userService.getUser(user.getUserId());
+
+		if (dbUser != null && user.getPassword().equals(dbUser.getPassword())) {
 			session.setAttribute("user", dbUser);
 			model.addAttribute("user", dbUser);
-		}else{
+		} else {
 			model.addAttribute("user", null);
 		}
-	}
-	
-	
-	
-	@RequestMapping( value="logout", method=RequestMethod.GET )
-	public String logout(HttpSession session ) throws Exception{
-		
+	}	
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) throws Exception {
+
 		System.out.println("/user/logout : POST");
-		
+
 		session.invalidate();
-		
+
 		return "redirect:/index.jsp";
 	}
-	
-	
-	
 
-	
-	@RequestMapping( value="listUser" )
-	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
-		
+	@RequestMapping(value = "listUser")
+	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
+			throws Exception {
+
 		System.out.println("/user/listUser : GET / POST");
-		
-		if(search.getCurrentPage() ==0 ){
+
+		if (search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
-		
-		Map<String , Object> map=userService.getUserList(search);
-		
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+
+		Map<String, Object> map = userService.getUserList(search);
+
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
+				pageSize);
 		System.out.println(resultPage);
-		
-		
+
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		
+
 		return "forward:/view/user/listUser.jsp";
 	}
-	
 	@RequestMapping( value="listCompany" )
 	public String listCompany( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
@@ -413,9 +388,7 @@ public class UserController {
 			if(sessionId.equals(user.getUserId())){
 				session.setAttribute("user", user);
 			}
-	      String destinate = "forward:/view/user/deleteUserView.jsp";
-	      
-	     
+	      String destinate = "forward:/view/user/deleteUserView.jsp";     
 	      userService.deleteUser(user);
 			
 			String sessionId1=((User)session.getAttribute("user")).getUserId();
@@ -428,21 +401,7 @@ public class UserController {
 	         userService.deleteUser(user);
 	         session.invalidate();
 	         destinate="forward:/view/user/deleteUser.jsp";
-	      }       
-	     
-	      
+	      }             
 	      return destinate;
-
 	   }
-	
-
-
-	
-	
-	
-	
-	
-	
-	
-	
 }

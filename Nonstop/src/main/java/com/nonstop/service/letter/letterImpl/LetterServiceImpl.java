@@ -93,6 +93,10 @@ public class LetterServiceImpl implements LetterService {
 		
 		return map;
 	}
+	
+	public List<Letter> getUnreadLetterList(String userId) throws Exception {
+		return letterDAO.getUnreadLetterList(userId);
+	}
 
 }
 

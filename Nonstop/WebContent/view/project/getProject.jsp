@@ -37,6 +37,22 @@
 	z-index: 99999;
 }
 
+table {
+   	border-collapse: collapse;
+    border: collapse;
+    width: 100%;
+    padding-left : 20px;
+    table-layout : fixed;
+}
+
+th, tr {
+    padding: 8px;
+    text-align: left;
+    table-layout:fixed;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
 /* 로딩되는 쓸데없어보이는 아이인데 */
 .rounder {
 	width: 60px;
@@ -352,18 +368,23 @@ xmp{
 	color: #d5d5d5;
     }
     
-.modal-header h4.modal-title {
+#modal-header1 h4.modal-title {
 	font-family: "Open Sans", sans-serif;
 	font-weight: 300;
 }
 
-.modal-body label {
+#modal-body1 label {
 	font-family: "Open Sans", sans-serif;
 	font-weight: 400;
 }
 
-.modal-dialog {
+#modal-dialog1 {
 	width : 300px;
+}
+
+
+#modal-dialog2 {
+	width : 500px;
 }
     
 </style>
@@ -578,19 +599,32 @@ xmp{
 					});
 	       });
 	   });
-	   
 	   $(function() {
-		   $("#messageQuestion").on("click" , function() {       	
-		    	  self.location="/letter/addLetter";
-		      });
+	 	 //메일전송
+		 $("#send").on("click", function(){
+			var receiveId=$("input[name='receiveId']").val();
+			var title=$("input[name='letTitle']").val();
+			var letDetail=$("input[name='letDetail']").val();
+			
+			if(receiveId == null || receiveId.length<1 ){
+				alert("수신자는 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			if(title == null || title.length<1){
+				alert("제목은 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+		 });
 	   });
+	   
     
 	</script>
 </head>
 
 <body>
 	<jsp:include page="/view/common/toolbar.jsp" />
-	
+<%-- 	<c:import url="/user/toolbarMailCheck"/> --%>
 	<form class="form-group" name="detailForm">
 	<div id="main">
 		<div class="container">
@@ -611,7 +645,7 @@ xmp{
 								<c:if test="${sessionScope.user.role == '2'}">
 									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
 								 	 <c:choose>
-										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId}">
+										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId && project.projDday>0}">
 											<button type="button" class="btn btn-info btn-lg" id="applCancleButton">지원취소</button>
 										</c:when>
 										<c:when test="${project.projDday<=0}">
@@ -868,16 +902,15 @@ xmp{
 						 	<input type="hidden" name="projUserId" id="projUserId" value="${project.projUserId}"/>
 						 	<center>
 						 	<c:if test="${sessionScope.user.userId != project.projUserId}">
-								<button type="button" class="btn btn-info btn-lg" id="messageQuestion">쪽지 문의</button>
+								<button type="button" class="btn btn-info btn-lg" id="messageQuestion" data-toggle="modal" data-target="#letter">쪽지 문의</button>
 							</c:if>
 								<c:if test="${sessionScope.user.role == 2}">
-								<%-- 	<c:if test="${project.projFollowFlag == true}"> --%>
-										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
+									<c:if test="${project.projFollowFlag == true}">
 										<button type="button" class="btn btn-info btn-lg" id="follow2">팔로우 취소</button>
-									<%-- </c:if>
+									</c:if>
 									<c:if test="${project.projFollowFlag == false}">
-										
-									</c:if> --%>
+										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
+									</c:if>
 								</c:if>
 							</center>
 		                 </div>
@@ -903,13 +936,13 @@ xmp{
 	<!-- jQuery -->
 </form>
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" 	style="display: none;">
-		<div class="modal-dialog">
+		<div class="modal-dialog" id="modal-dialog1">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" id="modal-header1">
 					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
 					<h4 class="modal-title">지원자 목록</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" id="modal-body1">
 					<form role="form" id="addMail" class="form-horizontal">
 						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
 						<div class="form-group" style="height : 250; overflow-y: scroll; overflow-x:hidden; layout:fixed;">
@@ -970,6 +1003,71 @@ xmp{
 			<!-- /.modal-content -->
 		</div>
 		<!-- /.modal-dialog -->
-</div>
+	</div>
+
+<!-- Modal -->
+	<div aria-hidden="true" aria-labelledby="myModalLabel"
+		role="dialog" tabindex="-1" id="letter" class="modal fade"
+		style="display: none;">
+		<div class="modal-dialog" id="modal-dialog2">
+
+			<div class="modal-content">
+				<div class="modal-header" id="modal-header2">
+					<button aria-hidden="true" data-dismiss="modal" class="close"
+						type="button">×</button>
+					<h4 class="modal-title">Send to mail your partner</h4>
+				</div>
+				<div class="modal-body" id="modal-body2">
+					<form role="form" id="addMail" class="form-horizontal">
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">From</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="sendId"
+									value="${sessionScope.user.userId}" readOnly>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">To</label>
+							<div class="col-lg-10">
+								<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
+									id="inputEmail1" class="form-control" value="${project.projUserId}" readOnly>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Title</label>
+							<div class="col-lg-10">
+								<input type="text" name="letTitle"
+									placeholder="메일 제목을 입력하세요" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Mail</label>
+							<div class="col-lg-10">
+								<textarea maxlength="2000" rows="10" cols="30"
+									name="letDetail" placeholder="2000자까지 입력가능"
+									class="form-control"></textarea>
+								<br /> 2000/<span id="chars">2000</span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<span style="float : right">
+									<button class="btn btn-send" type="submit" id="send" receiveId="${sessionScope.user.userId}" >send</button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 </body>
 </html>

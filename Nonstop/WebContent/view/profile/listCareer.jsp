@@ -31,13 +31,15 @@ body {
 			});
 		 
 		 $("#addCareer").on("click" , function() {
+			$("#selectTechClass").val(1);
+			$("#selectTechData").val(1000);
 		 		$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
 			}); 
 		 
 		 $('#selectTechClass').on('change',function(){
 				var a = "?techClass="+document.querySelector('#selectTechClass').value
 				$.ajax("/statistics/getJSONListTechData"+a,{
-					method : "POST" ,
+					method : "GET" ,
 					dataType : "json" ,
 					headers : {
 						"Accept" : "application/json",
@@ -102,8 +104,8 @@ body {
 									<th scope="row">${ i }</th>
 
 									<td><c:if test="${career.techClass == '1'}">Language</c:if>
-										<c:if test="${career.techClass == '2'}">Framework</c:if> <c:if
-											test="${career.techClass == '3'}">DBMS</c:if></td>
+										<c:if test="${career.techClass == '2'}">Framework</c:if> 
+										<c:if test="${career.techClass == '3'}">DBMS</c:if></td>
 
 
 									<td>${career.techName}</td>

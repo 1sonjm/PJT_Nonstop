@@ -392,8 +392,8 @@ AmCharts.makeChart("chartdiv",
     				}
     			});
     		});
-    	
     });
+	
 	
     	
 
@@ -403,7 +403,7 @@ AmCharts.makeChart("chartdiv",
 <body>
 	<div id="main-wrapper">
 		<header>
-			<jsp:include page="/view/common/toolbar.jsp" />
+			<jsp:include page="/view/common/toolbar.jsp"/>
 		</header>
 
 		<aside class="left-sidebar">
@@ -524,10 +524,10 @@ AmCharts.makeChart("chartdiv",
 										<jsp:include page="/view/profile/listRecordProject.jsp" />
 
 									</div>
-									<div class="tab-pane" id="portfolio">
+									<%-- <div class="tab-pane" id="portfolio">
 										<p>이 회원이 게시한 포트폴리오</p>
 										<jsp:include page="/view/profile/listMyPort.jsp" />
-									</div>
+									</div> --%>
 
 									<div class="tab-pane" id="project">
 										<p>이 기업이 게시한 프로젝트 구인공고</p>
