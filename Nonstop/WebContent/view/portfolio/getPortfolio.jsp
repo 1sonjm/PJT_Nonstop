@@ -28,6 +28,7 @@
 	
 	<!-- 이미지 갤러리 CSS, JS -->
 	<link rel="stylesheet" href="/resources/Gallery/css/blueimp-gallery.min.css">
+	<script src="/resources/Gallery/js/blueimp-gallery.min.js"></script>
 	
     <style>
     .my-pic img { 
@@ -287,6 +288,8 @@
    <script type="text/javascript">
   
    $(function() {
+	   
+	   
 	   /* Gallery Script */
 	   document.getElementById('links').onclick = function (event) {
 		    event = event || window.event;
@@ -302,7 +305,7 @@
 		    document.getElementById('links').getElementsByTagName('a'),
 		    {
 		        container: '#blueimp-gallery-carousel',
-		        carousel: true
+		        carousel: true,
 		    }
 		);
    });
@@ -640,7 +643,7 @@
 								
 								<c:when test="${!empty portfolio.images}">
 								
-									<img src="/resources/images/upload/${portfolio.portFile}" alt="">
+									<%-- <img src="/resources/images/upload/${portfolio.portFile}" alt=""> --%>
 								
 									<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
 									<div id="blueimp-gallery" class="blueimp-gallery">
@@ -654,6 +657,9 @@
 									</div>
 	                               
 	                            	<div id="links" class="col-md-12" style="padding-left: 0; padding-right: 0;">
+	                            		<!-- 메인 이미지 -->
+	                            		<img src="/resources/images/upload/${portfolio.portFile}" alt="">
+	                            		<!-- 모든 이미지 -->
 	                            		<ul class="images" style=" list-style: none;margin-left: -40px;margin-top: 20px;">
 											
 											<c:set var="i" value="0"/>
@@ -823,10 +829,6 @@
 <a href="#" class="scroll-to-top"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span></a>
 <!-- Back to Top End -->
 <a href="#" class="back"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></a>    
-
-
-<!-- 이미지 갤러리 CSS, JS -->
-<script src="/resources/Gallery/js/blueimp-gallery.min.js"></script>
 
 </body>
 </html>
