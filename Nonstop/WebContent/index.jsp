@@ -159,9 +159,9 @@ body {
 	});
 </script>
 </head>
-<c:if test="${dataList==null}">
+<%-- <c:if test="${dataList==null}">
 	<c:redirect url="/statistics/getJSONPostCountList" />
-</c:if>
+</c:if> --%>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 	<!-- Navigation -->
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
@@ -170,7 +170,7 @@ body {
 				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 					Menu <i class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand page-scroll" href="#page-top"> NONSTOP </a>
+				<a class="navbar-brand link_paging" href="#page-top"> NONSTOP </a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-main-collapse">
@@ -224,7 +224,7 @@ body {
 	</nav>
 	
 	<!-- Intro Header -->
-	<header class="intro">
+	<header class="intro" id="intro">
 		<div class="intro-body">
 			<div class="container">
 				<div class="row">
@@ -277,7 +277,7 @@ body {
 						-->
 						
 						<div class="center-block">
-							<a href="#about" class="page-scroll" style="position: fixed; margin-top: 6%; margin-left: -2%;"> <!-- class="btn btn-circle page-scroll" -->
+							<a href="#about" class="page-scroll" data-index="0" style="position: fixed; margin-top: 6%; margin-left: -2%;"> <!-- class="btn btn-circle page-scroll" -->
 							<span class="fa fa-chevron-down" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"><p>더 알아보기</p></span>
 							</a>
 							
@@ -287,6 +287,20 @@ body {
 				</div>
 			</div>
 		</div>
+		<ul class="pagination paging_home">
+			<li class="active">
+				<a href="#intro" data-index="1" class="link_paging">1</a>
+			</li>
+			<li class="">
+				<a href="#about" data-index="2" class="link_paging">1</a>
+			</li>
+			<li class="">
+				<a href="#download" data-index="3" class="link_paging">1</a>
+			</li>
+			<li class="">
+				<a href="#contact" data-index="4" class="link_paging">1</a>
+			</li>
+		</ul>
 	</header>
 	<!-- About Section -->
 	<section id="about" class="about">
@@ -299,7 +313,7 @@ body {
 					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
 					</p>
 					<div class="margin-bottom-30"></div>
-					<hr style="width:20%">
+					<hr style="width:20%; border-top:1px solid #bdbdbd">
 				</div>
 			</div>
 		</div>
@@ -336,7 +350,7 @@ body {
 					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
 					</p>
 					<div class="margin-bottom-30"></div>
-					<hr style="width:20%">
+					<hr style="width:20%; border-top:1px solid #bdbdbd">
 				</div>
 				
 			</div>
