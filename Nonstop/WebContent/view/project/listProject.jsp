@@ -353,8 +353,7 @@
 				<ul class="dropdown-menu">
 					<li><a href="#">Language</a></li>
 					<li><a href="#">Framework</a></li>
-					<li class="divider"></li>
-					<li><a href="#">etc...</a></li>
+					<li><a href="#">DBMS</a></li>
 				</ul>
 			</li>
 			

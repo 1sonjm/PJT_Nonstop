@@ -9,6 +9,8 @@ public interface LetterService {
 	
 	public void addLetter(Letter letter) throws Exception;
 	
+	public void addApplicantLetter(String sendId , String receiveId) throws Exception;
+	
 	public Map<String, Object> getReceiveLetterList(String receiveId) throws Exception;
 	
 	public Map<String, Object> getSendLetterList(String sendId) throws Exception;

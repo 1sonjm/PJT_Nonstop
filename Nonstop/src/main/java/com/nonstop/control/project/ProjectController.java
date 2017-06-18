@@ -22,9 +22,9 @@ import com.nonstop.domain.ProjComment;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.RecordApplicant;
 import com.nonstop.domain.Search;
-import com.nonstop.domain.Tech;
 import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
+import com.nonstop.service.letter.LetterService;
 import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.project.ProjectService;
 import com.nonstop.service.techuse.TechUseService;
@@ -51,6 +51,11 @@ public class ProjectController {
 	@Autowired
 	@Qualifier("techUseServiceImpl")
 	private TechUseService techUseService;
+	//setter Method
+	
+	@Autowired
+	@Qualifier("letterServiceImpl")
+	private LetterService letterService;
 	//setter Method
 	
 	public ProjectController(){
@@ -101,6 +106,7 @@ public class ProjectController {
 	
 	@RequestMapping(value="getProject", method=RequestMethod.GET)
 	public String getProject( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+							  @ModelAttribute("projComment") ProjComment projComment,
 			     			  @RequestParam("projNo") int projNo ,
 							  Model model, HttpSession session ) throws Exception {
 		
@@ -127,10 +133,9 @@ public class ProjectController {
 		projectService.updateViewCount(project);
 		List<RecordApplicant> listApplicant = projectService.getApplicantList(projNo);
 		
-		System.out.println("listApplicant="+listApplicant);
-		
 		session.setAttribute("projNo", projNo);
 		model.addAttribute("projCommentList", projCommentList);
+		model.addAttribute("projComment", projComment);
 		model.addAttribute("listTechUse", listTechUse);
 		model.addAttribute("project", project);
 		model.addAttribute("user", user);
@@ -266,8 +271,6 @@ public class ProjectController {
 		
 		System.out.println("/addJsonComment");
 		
-		System.out.println("projComment : "+projComment);
-		
 		projectService.addComment(projComment);
 		
 		projComment = projectService.getComment(projComment.getComNo());
@@ -289,9 +292,6 @@ public class ProjectController {
 		
 		int recProjNo = projNo;
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
-		
-		System.out.println("recProjNo="+recProjNo);
-		System.out.println("recUserId="+recUserId);
 		
 		projectService.addApplicant(recProjNo, recUserId);
 		
@@ -316,12 +316,23 @@ public class ProjectController {
 	
 	@RequestMapping(value="inviteApplicant", method=RequestMethod.POST)
 	public String inviteApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
-								   @RequestParam("checkBoxes") int [] items,
-								   Model model , HttpSession session) throws Exception{
+								   @RequestParam("checkBoxes") int [] checkBoxes,
+								   @RequestParam("recUserIdItems") String [] recUserIdItems,
+								   Model model , HttpSession session,HttpServletRequest req) throws Exception{
 
 		System.out.println("/view/project/inviteProject: POST");
+		int [] recNo = checkBoxes;
+		System.out.println("adsfasdfadsfdsafasdf"+recNo[1]);
+		System.out.println("adsfasdfadsfdsafasdf"+recNo[0]);
 		
-		int [] recNo = items;
+		String letSendId=((User)session.getAttribute("user")).getUserId();
+		String [] letReceiveId = recUserIdItems;
+		
+		if(letReceiveId.length > 0){
+			for(int j=0; j<letReceiveId.length;j++){
+				letterService.addApplicantLetter(letSendId, letReceiveId[j]);
+			}
+		}
 		
 		if(recNo.length > 0){
 			for(int i=0; i<recNo.length;i++){
@@ -338,7 +349,8 @@ public class ProjectController {
 	public String deleteApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
 								   @ModelAttribute("project") Project project, 
 								   HttpSession session, Model model ) throws Exception {
-		int recProjNo = project.getProjNo();	
+		int recProjNo = project.getProjNo();
+		System.out.println("sdfsdfdsfdsfsdfsdfsdfsdf11111111111111"+recProjNo);
 		String recUserId = ((User)session.getAttribute("user")).getUserId();
 		projectService.deleteApplicant(recProjNo, recUserId);
 		

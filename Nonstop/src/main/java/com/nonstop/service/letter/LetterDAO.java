@@ -8,6 +8,8 @@ public interface LetterDAO {
 	
 	public void addLetter(Letter letter) throws Exception;
 	
+	public void addApplicantLetter(String sendId , String receiveId) throws Exception;
+	
 	public List<Letter> getReceiveLetterList(String receiveId) throws Exception;
 	
 	public List<Letter> getSendLetterList(String sendId) throws Exception;
