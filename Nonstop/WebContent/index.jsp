@@ -263,18 +263,28 @@ body {
 			//$(self.location).attr("href","/user/logout");
 			self.location = "https://192.168.0.16:8444/#" + Math.random().toString(16).substr(2);
 		});
+		
+		$.ajax("/statistics/getJSONPostCountList",{
+			method : "GET", dataType : "json",
+			success : function(jsonData){
+				$("#countDevelop").text(jsonData.dataList.DEVELOP);
+				$("#countDesign").text(jsonData.dataList.DESIGN);
+				$("#countProject").text(jsonData.dataList.PROJECT);
+				
+				if(!jsonData.dataList.flag){
+					$("li a span").remove(".label-primary");
+				}
+			}
+		})
 	});
- 	 });
+});
 </script>
 </head>
 
-
-
-
-<c:if test="${dataList==null}">
+<%-- <c:if test="${dataList==null}">
 	<c:redirect url="/statistics/getJSONPostCountList" />
 </c:if>
-
+ --%>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 
 
@@ -506,7 +516,7 @@ body {
 						<li><a href="#" id="listLetter"> <!-- 쪽지 --> <span
 								class="glyphicon glyphicon-envelope"
 								style="margin-top: 3px; margin-bottom: 5px"></span> <!-- 알림 -->
-								<span class="label label-rounded label-primary"
+								<span id="dddd" class="label label-rounded label-primary"
 								style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 						</a></li>
 						<li class="dropdown"><a class="dropdown-toggle"
@@ -538,7 +548,7 @@ body {
 						<div class="intro-main">
 							<ul class="main-ul">
 								<li>
-									<h1>${dataList.DEVELOP}</h1>
+									<h1 id="countDevelop"></h1>
 									<p>개발자 포트폴리오</p>
 								</li>
 								<li>
@@ -547,7 +557,7 @@ body {
 									</div>
 								</li>
 								<li>
-									<h1>${dataList.DESIGN}</h1>
+									<h1 id="countDesign"></h1>
 									<p>디자인 포트폴리오</p>
 								</li>
 								<li>
@@ -556,17 +566,19 @@ body {
 									</div>
 								</li>
 								<li>
-									<h1>${dataList.PROJECT}</h1>
+									<h1 id="countProject"></h1>
 									<p>등록된 프로젝트</p>
 								</li>
 							</ul>
 
 							<p class="intro-text">
-								개발자, 디자이너 모집 및 프로젝트 진행을 논스톱에서 한번에 해결하세요.<br /> 뭐라고 써야할지 모르겠다 도움
-								필요.
+								웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱<br />포트폴리오 등록과 구인구직을 위한 프로젝트 등록 논스톱에서
+								한번에 해결하세요.<br /> 웹사이트, 어플리케이션 개발 및 디자인 통합솔루션 논스톱포트폴리오 등록과 구인구직을 <br />위한
+								프로젝트 등록 논스톱에서 한번에 해결하세요.
 							</p>
 
-							<button class="sq_button" type="button">회원가입</button>
+							<button class="sq_button" type="button"
+								style="background-color: #ff6600">회원가입</button>
 							<button class="sq_button" type="button">일단, 둘러볼게요</button>
 
 							<div class="margin-top-30">
@@ -584,7 +596,7 @@ body {
 	</header>
 
 	<!-- About Section -->
-
+<!-- 
 
 
 	<div class="margin-bottom-20"></div>
@@ -596,7 +608,7 @@ body {
 	<div class="margin-bottom-50"></div>
 	<button class="sq_button" type="button"
 		style="background-color: #ff6600">회원가입</button>
-	<button class="sq_button" type="button">일단, 둘러볼게요</button>
+	<button class="sq_button" type="button">일단, 둘러볼게요</button> -->
 	<div class="center-block">
 		<a href="#about" class="btn btn-circle page-scroll"> <span
 			class="glyphicon glyphicon-chevron-down" aria-hidden="true"></span>
