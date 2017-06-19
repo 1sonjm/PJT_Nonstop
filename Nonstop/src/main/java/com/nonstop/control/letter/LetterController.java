@@ -245,14 +245,16 @@ public class LetterController {
 	@RequestMapping(value = "toolbarMailCheck", method = RequestMethod.GET)
 	public void toolbarMailCheck(HttpSession session , Model model) throws Exception {
 
-		System.out.println("/user/toolbarMailCheck : GET");
+		System.out.println("/letter/toolbarMailCheck : GET");
 		
 		String userId = ((User)session.getAttribute("user")).getUserId();
-		
-		if(letterService.getUnreadLetterList(userId).size() > 0){
-			model.addAttribute("flag", true);
-		}else {
-			model.addAttribute("flag", false);
+		User user = (User)session.getAttribute("user");
+		if(user!=null){
+			if(letterService.getUnreadLetterList(userId).size() > 0){
+				model.addAttribute("flag", true);
+			}else {
+				model.addAttribute("flag", false);
+			}
 		}
 	}
 }
