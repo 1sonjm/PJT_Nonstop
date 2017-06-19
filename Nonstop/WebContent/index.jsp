@@ -218,7 +218,7 @@ body {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("#projDeveloper").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
-				self.location = "/project/listProject"
+				self.location = "/project/listProject?postDivision=1"
 			}); 
 		 });
 	

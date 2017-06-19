@@ -40,8 +40,8 @@
 		VALUES (seq_let_no.nextval,
 				#{sendId},
 				#{receiveId},
-				"프로젝트 초대 알림 입니다.",
-				"축하드립니다.님의 프로젝트에 초대 되었습니다.",
+				#{letTitle},
+				#{letDetail},
 				SYSDATE,
 				'',1,'','')
 	 </insert>

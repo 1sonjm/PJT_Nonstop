@@ -330,7 +330,9 @@ public class ProjectController {
 		
 		if(letReceiveId.length > 0){
 			for(int j=0; j<letReceiveId.length;j++){
-				letterService.addApplicantLetter(letSendId, letReceiveId[j]);
+				String letTitle = "프로젝트 초대 알림 입니다.";
+				String letDetail = letSendId+"님의 프로젝트에 초대되었습니다. 프로젝트명은 프로필에서 확인 가능하며 자세한 사항은 해당기업 담당자와 연락을 취하여 조율하시기 바랍니다.";
+				letterService.addApplicantLetter(letSendId, letReceiveId[j] , letTitle , letDetail);
 			}
 		}
 		

@@ -30,12 +30,14 @@ public class LetterDAOImpl implements LetterDAO{
 		sqlSession.insert("LetterMapper.addLetter",letter);
 	}
 	
-	public void addApplicantLetter(String sendId, String receiveId) throws Exception {
+	public void addApplicantLetter(String sendId, String receiveId , String letTitle , String letDetail) throws Exception {
 		
 		Map<String , Object> map = new HashMap<String , Object>();
 		
 		map.put("sendId", sendId);
 		map.put("receiveId", receiveId);
+		map.put("letDetail", letDetail);
+		map.put("letTitle", letTitle);
 		sqlSession.insert("LetterMapper.addApplicantLetter" , map);
 	}
 

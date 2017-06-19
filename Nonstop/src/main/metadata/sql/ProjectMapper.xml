@@ -83,7 +83,7 @@
     <select    id="getProject"   parameterType="map"   resultMap="projectSelectMap">
       SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
       round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-      round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no,
+      round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no,
       (select count(rec_user_id) from record_applicant WHERE rec_proj_no = #{projNo}) as rec_count
       FROM project p , (SELECT * FROM scrap WHERE user_id=#{scrapUserId:VARCHAR}) a
       WHERE p.proj_no=a.proj_no(+) AND p.proj_no=#{projNo}
@@ -95,7 +95,7 @@
     <select  id="getProjectList"  parameterType="map"   resultMap="projectSelectMap">
       SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
             round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-            round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no, 
+            round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no, 
             (SELECT count(rec_user_id) FROM record_applicant WHERE rec_proj_no=p.proj_no) as rec_count
           <!--   ,(SELECT t.tech_name FROM techuse tu, tech t WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no = p.proj_no) as tech_name -->
        FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a

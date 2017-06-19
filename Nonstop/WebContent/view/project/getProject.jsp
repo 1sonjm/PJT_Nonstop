@@ -319,7 +319,7 @@ hr.thick-line {
 	background-color: #ececec;
 	border: 0;
 	border-radius: 0;
-	width: 120px;
+	/* width: 120px; */
 	text-align : center;
 }
 

@@ -241,8 +241,8 @@
 
 					<div class="form-group">
 					    <label for="projLocation" class="col-sm-offset-1 col-sm-2 control-label">지역</label>
-						    <div class="col-sm-1">
-							    <input  class="form-btn" type="button" onclick="projLocation_daumPostcode()" value="주소 찾기">
+						    <div class="col-sm-1" style="height : 39px">
+							    <input  class="form-btn" type="button" onclick="projLocation_daumPostcode()" value="주소 찾기" style="height : 100%">
 							</div>
 							<div class="col-sm-5">
 							    <input class="form-control" type="text" id="projLocation" placeholder="주소" value="${project.projLocation}">
