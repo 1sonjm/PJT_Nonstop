@@ -26,6 +26,11 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <!-- Theme JavaScript -->
 <script src="../../resources/javascript/mainpage.js"></script>
+<!-- 네이버 -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<!-- 카카오 -->
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 <style>
 body {
@@ -156,6 +161,9 @@ body {
 			//$(self.location).attr("href","/user/logout");
 			self.location = "https://192.168.0.16:8444/#" + Math.random().toString(16).substr(2);
 		});
+		
+	//============= toolbar chat 이동 Event 처리 =============	
+		
 	});
 </script>
 </head>
@@ -192,8 +200,8 @@ body {
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:if test="${empty sessionScope.user.userId }">
-						<li><a href="#" id="login">로그인</a></li>
-						<li><a href="#" id="addUser">회원가입</a></li>
+						<li><a href="#myModalLogin" id="modalLogin" data-toggle="modal" data-target="#myModalLogin">로그인</a></li>
+						<li><a href="#myModalAdd" id="modalAddUser" data-toggle="modal" data-target="#myModalAdd">회원가입</a></li>
 					</c:if>
 					<%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
 					<c:if test="${!empty sessionScope.user.userId }">
@@ -356,6 +364,63 @@ body {
 			</div>
 		</div>
 	</section>
+	
+	<!-- modal login -->
+	<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content">
+        	
+        		<div class="tab-content">
+	        		<form>
+		                <div class="form-group">
+		                    <input type="text" class="form-control" placeholder="User ID">
+		                </div>
+		
+		                <div class="form-group">
+		                    <input type="password" class="form-control" placeholder="Password">
+		                </div>
+		
+		                <button class="btn btn-primary btn-block">LOGIN</button>
+						
+						<div class="text-div"><span>or</span><!-- <br/>Sign in using --></div>
+						<div id="naver_id_login">카카오 아이디로 로그인</div>
+						<div id="naver_id_login">네이버 아이디로 로그인</div>
+
+		            </form>
+        		</div>
+        		
+        	</div>
+        </div>
+    </div>
+    
+    <!-- modal Add User -->
+	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content add-user">
+        	
+        		<div class="tab-content">
+	        		<form>
+		                <div class="form-group">
+		                    <input type="text" class="form-control" placeholder="User ID">
+		                </div>
+		
+		                <div class="form-group">
+		                    <input type="password" class="form-control" placeholder="Password">
+		                </div>
+		
+		                <button class="btn btn-primary btn-block">LOGIN</button>
+						
+						<div class="text-div"><span>or</span><!-- <br/>Sign in using --></div>
+						<div id="naver_id_login">카카오 아이디로 로그인</div>
+						<div id="naver_id_login">네이버 아이디로 로그인</div>
+
+		            </form>
+        		</div>
+        		
+        	</div>
+        </div>
+    </div>
+	
 	<!-- Footer -->
 	<footer>
 		<div class="container text-center">
