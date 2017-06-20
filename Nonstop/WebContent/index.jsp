@@ -394,8 +394,8 @@ body {
     </div>
     
     <!-- modal Add User -->
-	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    	<div class="modal-dialog">
+	<!-- <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog" style="width: 450px">
         	<div class="modal-content add-user">
         	
         		<div class="tab-content">
@@ -408,18 +408,103 @@ body {
 		                    <input type="password" class="form-control" placeholder="Password">
 		                </div>
 		
-		                <button class="btn btn-primary btn-block">LOGIN</button>
-						
-						<div class="text-div"><span>or</span><!-- <br/>Sign in using --></div>
-						<div id="naver_id_login">카카오 아이디로 로그인</div>
-						<div id="naver_id_login">네이버 아이디로 로그인</div>
+		                <button class="btn btn-primary btn-block">회원가입</button>
+		                <button class="btn btn-default btn-block">취소</button>
 
 		            </form>
         		</div>
         		
         	</div>
         </div>
+    </div> -->
+    
+    <!-- modal Add User -->
+	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog" style="width: 450px">
+        	<div class="modal-content" style="margin-top: 30%; padding-bottom: 0; padding-top: 10px;">
+        	
+        		<div class="tab-content">
+	        		
+	        		<div class="tabbable-panel">
+						<div class="tabbable-line">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#tab_default_1" data-toggle="tab"><strong>개인 회원가입 </strong></a>
+								</li>
+								<li>
+									<a href="#tab_default_2" data-toggle="tab"><strong>기업 회원가입</strong></a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_default_1">
+									<form>
+						                <div class="form-group">
+						                    <input type="text" class="form-control" placeholder="User ID">
+						                </div>
+						
+						                <div class="form-group">
+						                    <input type="password" class="form-control" placeholder="Password">
+						                </div>
+						                <div class="form-group">
+						                    <input type="text" class="form-control" placeholder="이름">
+						                </div>
+						
+						                <div class="form-group">
+						                    <input type="password" class="form-control" placeholder="지역">
+						                </div>
+						                <div class="form-group">
+						                    <input type="text" class="form-control" placeholder="메일주소">
+						                </div>
+						
+						                <button class="btn btn-primary btn-block" style="margin-top:60px">회원가입</button>
+						                <button class="btn btn-default btn-block">취소</button>
+				
+						            </form>
+								</div>
+								<div class="tab-pane" id="tab_default_2">
+									<form>
+						                <div class="form-group">
+						                    <input type="text" class="form-control" placeholder="User ID">
+						                </div>
+						
+						                <div class="form-group">
+						                    <input type="password" class="form-control" placeholder="Password">
+						                </div>
+						                <div class="form-group">
+						                    <input type="text" class="form-control" placeholder="User ID">
+						                </div>
+						
+						                <div class="form-group">
+						                    <input type="password" class="form-control" placeholder="Password">
+						                </div>
+						                <div class="form-group">
+						                    <input type="text" class="form-control" placeholder="User ID">
+						                </div>
+						
+						                <div class="form-group">
+						                    <input type="password" class="form-control" placeholder="Password">
+						                </div>
+						
+						                <button class="btn btn-primary btn-block" style="margin-top:60px">회원가입</button>
+						                <button class="btn btn-default btn-block">취소</button>
+						            </form>
+								</div>
+							</div>
+						</div>
+					</div>
+	        		
+        		</div>
+        		
+        	</div>
+        </div>
     </div>
+	
+	
+	
+	
+	
+	
+	
 	
 	<!-- Footer -->
 	<footer>
