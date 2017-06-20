@@ -159,9 +159,9 @@ body {
 	});
 </script>
 </head>
-<%-- <c:if test="${dataList==null}">
+<c:if test="${dataList==null}">
 	<c:redirect url="/statistics/getJSONPostCountList" />
-</c:if> --%>
+</c:if>
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
 	<!-- Navigation -->
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
