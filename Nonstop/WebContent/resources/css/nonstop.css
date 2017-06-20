@@ -12722,6 +12722,7 @@ button.close {
 }
 .modal-backdrop.in {
   opacity: 0.5;
+  z-index: 0;
   filter: alpha(opacity=50);
 }
 .modal-header {
