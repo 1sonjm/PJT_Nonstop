@@ -3,6 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 
 <!DOCTYPE html>
@@ -110,13 +111,24 @@ body {
 
 									<td>${career.techName}</td>
 
-									<td>${career.careerUseTerm}개월&nbsp; &nbsp;</td>
+									<td>
+										<c:if test="${career.careerUseTerm/12 >= 1}">
+										<fmt:parseNumber var="year" value="${career.careerUseTerm/12}" integerOnly="true" />
+											${year}년&nbsp;
+											<c:if test="${career.careerUseTerm%12 >= 1}">
+												${career.careerUseTerm%12}개월 &nbsp; &nbsp;
+											</c:if>
+										</c:if>
+										<c:if test="${career.careerUseTerm/12 < 1}">
+											${career.careerUseTerm}개월 &nbsp; &nbsp;
+										</c:if>
+									</td>
 
 									<c:if test="${career.careerUserId==sessionScope.user.userId }">
 
 
 										<td class="text-right"><i class="fa fa-trash"
-											aria-hidden="true" careerNo="${career.careerNo}"></i></td>
+											aria-hidden="true" title="클릭하시면 해당 개인 기술정보를 삭제 할  수 있습니다." careerNo="${career.careerNo}"></i></td>
 
 
 									</c:if>

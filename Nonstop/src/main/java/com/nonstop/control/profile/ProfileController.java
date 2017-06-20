@@ -21,7 +21,6 @@ import com.nonstop.domain.Follow;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.RecordProject;
-import com.nonstop.domain.Search;
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
@@ -114,6 +113,7 @@ public class ProfileController {
 		model.addAttribute("follow", follow);
 		model.addAttribute("techClassList" , techClassList);
 		model.addAttribute("techDataList" , techDataList);
+		
 		
 		
 		return "forward:/view/profile/profile.jsp";

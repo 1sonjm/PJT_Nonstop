@@ -34,6 +34,18 @@
 				'','','','')
 	 </insert>
 	 
+	 <insert 	id="addApplicantLetter"		parameterType="map" >
+		INSERT
+		INTO letter
+		VALUES (seq_let_no.nextval,
+				#{sendId},
+				#{receiveId},
+				#{letTitle},
+				#{letDetail},
+				SYSDATE,
+				'',1,'','')
+	 </insert>
+	 
 	 <select  id="getReceiveLetterList"  parameterType="String"	resultMap="letterSelectMap">
 			SELECT *
 			FROM (	SELECT inner_table.* , ROWNUM AS row_seq
