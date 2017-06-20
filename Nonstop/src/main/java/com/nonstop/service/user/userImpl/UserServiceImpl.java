@@ -43,6 +43,7 @@ public class UserServiceImpl implements UserService{
 	}
 
 	public User getUser(String userId) throws Exception {
+		System.out.println(userDAO.getUser(userId));
 		return userDAO.getUser(userId);
 	}
 
@@ -68,27 +69,45 @@ public class UserServiceImpl implements UserService{
 	public void updateUser(User user) throws Exception {
 		userDAO.updateUser(user);
 	}
-
-	public boolean checkDuplication(String userId) throws Exception {
-		boolean result=true;
-		User user=userDAO.getUser(userId);
-		if(user != null) {
-			result=false;
-		}
-		return result;
-	}
 	
-	public boolean checkUserId(String userId) throws Exception{
-	      
-	      boolean result = true;
+	public User checkUserId(String userId) throws Exception{
 	      
 	      User user = userDAO.getUser(userId);
 	      
-	      if(user != null ) {
-	         result = false;
-	      }
-	      return result;
+	      return user;
 	   }
 
+	public User getCompany(String userId) throws Exception {
+		return userDAO.getCompany(userId);
+	}
+
+	public void updateCompany(User user) throws Exception {
+		userDAO.updateCompany(user);
+
+	}
+	public void deleteUser(User user) throws Exception {
+		userDAO.deleteUser(user);
+	}
+
+	public Map<String, Object> getCompanyList(Search search) throws Exception {
+		List<User> list= userDAO.getCompanyList(search);
+		int totalCount = userDAO.getTotalCount(search);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list );
+		map.put("totalCount", new Integer(totalCount));
+		
+		return map;
+	}
+
+	@Override
+	public User getProfileUser(String careerUserId) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
+	
+
+	
+
 }

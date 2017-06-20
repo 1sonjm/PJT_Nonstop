@@ -78,7 +78,7 @@ public void getTotalStatisticsList() throws Exception
 // @Test
 public void getMajorStatisticsList() throws Exception
 {
-	System.out.println(statisticsService.getMajorStatisticsList(1,1));
+	System.out.println(statisticsService.getMajorStatisticsList(1, 1));
 }
 
 // @Test
@@ -118,7 +118,7 @@ public void getUserStatisticsList() throws Exception
 	System.out.println(statisticsService.getUserStatisticsList(user));
 }
 
-@Test
+// @Test
 public void createData() throws Exception
 {
 	

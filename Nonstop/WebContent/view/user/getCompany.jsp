@@ -7,23 +7,28 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<script src="/resources/javascript/jquery.js"></script>
+
+<!-- <script src="/resources/javascript/bootstrap.min.js"></script> -->
+
+<script
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+   crossorigin="anonymous"></script>
+<!-- Bootstrap Core CSS -->
+<link href="/resources/css/nonstop.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="/resources/css/full.css" rel="stylesheet"> 
+
+
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -36,12 +41,33 @@
 	<script type="text/javascript">
 		
 		//============= 회원정보수정 Event  처리 =============	
-		 $(function() {
+		  $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button" ).on("click" , function() {
-					self.location = "/user/updateUser?userId=${user.userId}"
+			 $( "#updateCompany" ).on("click" , function() {
+					self.location = "/user/updateCompany?userId=${user.userId}"
 				});
 		});
+		
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( "#listCompany" ).on("click" , function() {
+						self.location = "/user/listCompany"
+					});
+			});
+		 
+		 $(function() {
+				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+				 $( "#deleteUser" ).on("click" , function() {
+					 var userId = $(this).attr('userId')
+					 alert(userId);
+					 self.location = "/user/deleteUser?userId="+userId;
+						
+					});
+			});
+		
+		
+		
+		
 		
 	</script>
 	
@@ -50,8 +76,8 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<%-- <jsp:include page="/layout/toolbar.jsp" />
-   	 --%><!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/view/common/toolbar.jsp" />
+   	 <!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -62,9 +88,10 @@
 	    </div>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>프로필 사진</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userName}</div>
+	  		<div class="col-xs-4 col-md-2 "><strong>기업 로고</strong></div>
+			<img src="/resources/images/upload/${user.image}" class="img-square" width="200">
 		</div>
+		
 		
 	<hr/>
 		<div class="row">
@@ -92,11 +119,34 @@
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>휴대전화번호</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>연락처</strong></div>
 			<div class="col-xs-8 col-md-4">${ !empty user.tel ? user.tel : ''}	</div>
 		</div>
 		
 		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>기업명</strong></div>
+			<div class="col-xs-8 col-md-4">${user.companyName}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>직원수</strong></div>
+			<div class="col-xs-8 col-md-4">${user.empNum}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>설립일</strong></div>
+			<div class="col-xs-8 col-md-4">${user.pubDate}</div>
+		</div>
+		
+		<hr/>
+		
+		
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
@@ -105,15 +155,31 @@
 		
 		<hr/>
 		
-		
-		
-		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "updateCompany">회원정보수정</a>	
+	  		</div>
+		</div>
 		
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
-	  			<button type="button" class="btn btn-primary">회원정보수정</button>
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "listCompany">돌아가기</a>
 	  		</div>
 		</div>
+		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser" userId="${user.userId}">회원탈퇴</a>
+	  		</div>
+		</div>		
+		
+		
+		
+		
+
 		
 		<br/>
 		
