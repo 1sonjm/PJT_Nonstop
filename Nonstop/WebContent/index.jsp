@@ -421,7 +421,7 @@ body {
     <!-- modal Add User -->
 	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog" style="width: 450px">
-        	<div class="modal-content" style="margin-top: 30%; padding-bottom: 0; padding-top: 10px;">
+        	<div class="modal-content" style="margin-top: 10%; padding-bottom: 0; padding-top: 10px;">
         	
         		<div class="tab-content">
 	        		
