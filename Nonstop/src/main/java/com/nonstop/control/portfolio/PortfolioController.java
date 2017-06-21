@@ -31,6 +31,7 @@ import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.techuse.TechUseService;
 import com.nonstop.service.user.UserService;
 
 @Controller
@@ -48,6 +49,10 @@ public class PortfolioController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("techUseServiceImpl")
+	private TechUseService techUseService;
 	
 	public PortfolioController() {
 
@@ -75,10 +80,9 @@ public class PortfolioController {
 		
 		//JSP에서 넘어온 <input> 태그의 name을 알고있다면 getFile(), 모른다면 getFileNames()사용
 		List<MultipartFile> uploadFiles = file.getFiles("portFileName[]");
-		
 		List<PortImages> images = new ArrayList(); 
 		
-		System.out.println(uploadFiles);
+		System.out.println("uploadFiles : "+uploadFiles);
 		
 		if(uploadFiles.size() == 1) {
 			//확장자 구하기
@@ -95,7 +99,21 @@ public class PortfolioController {
 			} else if(ext == "odf") {
 				portfolio.setPortFile("ppt_img.jpg");
 			}
-			
+			//파일 업로드 실행
+			try {
+	            // 1. FileOutputStream 사용
+	            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
+	             
+	            // 2. File 사용
+	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile);
+	            uploadFiles.get(0).transferTo(uploadFile);
+	            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
+	            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
+	            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+		
 		}else {
 			
 			for(int i=0 ; i<uploadFiles.size() ; i++) {
@@ -114,58 +132,34 @@ public class PortfolioController {
 				portImages.setImgOrder(i);
 				
 				images.add(portImages);
-		
+				portfolio.setImages(images);
+				
 			}//end for문
+			//파일 업로드 실행
+			for(int i=0 ; i<uploadFiles.size() ; i++) {
+				try {
+		            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + images.get(i).getImgName());
+		            uploadFiles.get(i).transferTo(uploadFile);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+			}
 		}//end if-else문
-		
-		System.out.println(images);
-		
-		for(int i=0 ; i<uploadFiles.size() ; i++) {
-		
-			try {
-	            // 1. FileOutputStream 사용
-	            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
-	             
-	            // 2. File 사용
-				System.out.println(images.get(i).getImgName());
-				System.out.println(uploadFiles.get(i));
-	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + images.get(i).getImgName());
-	            uploadFiles.get(i).transferTo(uploadFile);
-	            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
-	            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
-	            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
-	        } catch (IOException e) {
-	            e.printStackTrace();
-	        }
-			
-		}
-		
-		System.out.println(portfolio);
-		
-		portfolio.setImages(images);
 		///////////// 이미지 업로드 END /////////////
 		
-		//int [] tuTechNo = items;
-		List<TechUse> techUseList = new ArrayList();
-		TechUse techUse = new TechUse();
-		System.out.println(techUse);
-
+		// 사용기술 업로드 START
+		int tuPortNo = portfolioService.addPortfolio(portfolio);
+		
+		System.out.println(tuPortNo);
+		
 		if(items.length > 0){
-			for(int i=0 ;  i<items.length ; i++){
-				
+			for(int i=0; i<items.length;i++){
+				TechUse techUse = new TechUse();
+				techUse.setTuPortNo(tuPortNo);
 				techUse.setTuTechNo(items[i]);
-				//techUseList.add(techUse);
-				portfolio.getPortTech().add(techUse);
+				techUseService.addTechUsePort(techUse);
 			}
-		}
-		System.out.println("뿜빠빠리빠리뿅 : "+portfolio.getPortTech());
-		//techUseService.addTechUse(tuTechNo[i], tuProjNo);
-		
-		
-		//model.addAttribute("project", project);
-		//model.addAttribute("techUse", techUse);
-	
-		//portfolioService.addPortfolio(portfolio);
+		}//END
 		
 		//model.addAttribute("portfolio",portfolio);
 		

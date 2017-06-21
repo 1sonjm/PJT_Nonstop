@@ -1010,3 +1010,37 @@ input:-webkit-autofill {
   border-bottom: 1px solid #eee;
   padding-bottom: 15px;
 }
+
+.funfacts {
+	display: block;
+}
+
+.funfacts .funfact {
+    text-align: center;
+    color: #fff;
+}
+.funfacts .funfact .st-funfact-icon {
+    font-size: 42px;
+    line-height: 90px;
+}
+
+.funfacts .funfact .st-funfact-counter {
+    font-size: 48px;
+    line-height: 68px;
+    letter-spacing: 3px;
+}
+
+.funfacts .funfact .funfact-title {
+    font-size: 20px;
+    line-height: 40px;
+    letter-spacing: 1px;
+    font-weight: 300;
+}
+.funfacts .funfact:after {
+    content: '';
+    display: block;
+    width: 35px;
+    height: 2px;
+    background-color: #ff6600;
+    margin: 0 auto;
+}

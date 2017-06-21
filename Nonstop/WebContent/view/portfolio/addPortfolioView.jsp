@@ -133,8 +133,6 @@
     /* Validation Check */
     function fncAddPortfolio() {
     	
-    	alert("등러오낭");
-    	
     	var portTitle=$("input[name='portTitle']").val();
     	var	portDetail=$("input[name='portDetail']").val();
     	var portFile=$("input[name='portFile']").val();
@@ -168,7 +166,7 @@
 		alert(items);
 		/* 사용기술 넣는 부분 END */
 		
-    	//$("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit();
+    	$("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit();
     }
 
 
@@ -417,7 +415,8 @@
 						  </div>						 
 						</div>
 					  </div>				
-					</div>	
+					</div>
+					<input type="hidden" name="checkBoxes"/>	
 					<br/>
 					<br/>
 					<div class="margin-bottom-50">	

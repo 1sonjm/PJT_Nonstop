@@ -33,13 +33,16 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	}
 
 	@Override
-	public void addPortfolio(Portfolio portfolio) throws Exception {		
+	public int addPortfolio(Portfolio portfolio) throws Exception {		
 		
 		sqlSession.insert("PortfolioMapper.addPortfolio", portfolio);
+
+		if(portfolio.getImages() != null) {
+			List<PortImages> list = new ArrayList<PortImages>(portfolio.getImages());
+			sqlSession.insert("PortfolioMapper.addPortImages", list);
+		}
 		
-		List<PortImages> list = new ArrayList<PortImages>(portfolio.getImages());
-		
-		sqlSession.insert("PortfolioMapper.addPortImages", list);
+		return portfolio.getPortNo();
 	}
 	
 	@Override
