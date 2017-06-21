@@ -18,6 +18,7 @@ public class Portfolio{
 	private String portDetail;
 	private String portFile;// thumbnail 이미지 용도로 사용
 	private List<PortImages> images;
+	private List<TechUse> portTech;
 	private int endRowNum;
 	private int startRowNum;
 	private int scrapNo;
@@ -183,7 +184,12 @@ public class Portfolio{
 	public void setImages(List<PortImages> images) {
 		this.images = images;
 	}
-	
+	public List<TechUse> getPortTech() {
+		return portTech;
+	}
+	public void setPortTech(List<TechUse> portTech) {
+		this.portTech = portTech;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -213,6 +219,8 @@ public class Portfolio{
 		builder.append(portFile);
 		builder.append(", images=");
 		builder.append(images);
+		builder.append(", portTech=");
+		builder.append(portTech);
 		builder.append(", endRowNum=");
 		builder.append(endRowNum);
 		builder.append(", startRowNum=");

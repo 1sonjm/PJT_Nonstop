@@ -27,6 +27,7 @@ import com.nonstop.domain.PortImages;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
@@ -65,7 +66,9 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="addPortfolio", method=RequestMethod.POST)
-	public String addPortfolio(@ModelAttribute("portfolio") Portfolio portfolio, MultipartHttpServletRequest file, Model model) throws Exception {
+	public String addPortfolio(@ModelAttribute("portfolio") Portfolio portfolio, 
+										@RequestParam("checkBoxes") int [] items,
+										MultipartHttpServletRequest file, Model model) throws Exception {
 				
 		//@RequestParam("portFileName") MultipartFile file : 하나의 파일을 받을 때 사용. portFileName 한개를 MultipartFile을 데이터타입으로 하는 file에 담아온다.
 		//MultipartHttpServletRequest file :  여러개의 파일을 받기위해 사용. getFiles 메소드를 통해 파일을 List 형태로 받을 수 있다.
@@ -83,12 +86,15 @@ public class PortfolioController {
 			int index = portFile.lastIndexOf(".");
 			String ext = portFile.substring(index+1);
 			
+			portfolio.setPortFile(portFile);
+			
 			System.out.println("ext : "+ext+" / portFile : "+portFile);
 			//pdf 파일이면 thumbnail 추출
 			if(ext == "pdf") {
-				
+				portfolio.setPortFile("pdf_img.jpg");
+			} else if(ext == "odf") {
+				portfolio.setPortFile("ppt_img.jpg");
 			}
-			portfolio.setPortFile(portFile);
 			
 		}else {
 			
@@ -98,13 +104,6 @@ public class PortfolioController {
 				PortImages portImages = new PortImages();
 				
 				String portFile = uploadFiles.get(i).getOriginalFilename();
-				int index = portFile.lastIndexOf(".");
-				String ext = portFile.substring(index+1);
-				
-				//pdf 파일이면 thumbnail 추출
-				if(ext == "pdf") {
-					
-				}
 				
 				if(i == 0){
 					//썸네일 이미지 등록
@@ -144,10 +143,31 @@ public class PortfolioController {
 		System.out.println(portfolio);
 		
 		portfolio.setImages(images);
-	
-		portfolioService.addPortfolio(portfolio);
+		///////////// 이미지 업로드 END /////////////
 		
-		model.addAttribute("portfolio",portfolio);
+		//int [] tuTechNo = items;
+		List<TechUse> techUseList = new ArrayList();
+		TechUse techUse = new TechUse();
+		System.out.println(techUse);
+
+		if(items.length > 0){
+			for(int i=0 ;  i<items.length ; i++){
+				
+				techUse.setTuTechNo(items[i]);
+				//techUseList.add(techUse);
+				portfolio.getPortTech().add(techUse);
+			}
+		}
+		System.out.println("뿜빠빠리빠리뿅 : "+portfolio.getPortTech());
+		//techUseService.addTechUse(tuTechNo[i], tuProjNo);
+		
+		
+		//model.addAttribute("project", project);
+		//model.addAttribute("techUse", techUse);
+	
+		//portfolioService.addPortfolio(portfolio);
+		
+		//model.addAttribute("portfolio",portfolio);
 		
 		return "redirect:/view/portfolio/addPortfolioView.jsp";
 	}
@@ -413,5 +433,33 @@ public class PortfolioController {
 		portfolioService.deletePortLike(portLike.getPortLikeNo());
 		
 	}
+	
+   @RequestMapping(value="getJSONPortfolioList/{target}/{currentPage}/{sorting}", method=RequestMethod.GET)
+   public void getJSONPortfolioList(@PathVariable("target")String target
+         ,@PathVariable("currentPage")int currentPage
+         ,@PathVariable("sorting")int sorting, Model model) throws Exception {
+
+      System.out.println("/portfolio/getJSONPortfolioList");
+      
+      String sessionUserId="testUser";
+      
+      Search search = new Search();
+      search.setCurrentPage(currentPage);
+      search.setPostSorting(sorting);
+      search.setStartRowNum((currentPage*16)-16);
+      search.setEndRowNum(currentPage*16);
+      
+      switch(target){
+      case "develop":
+         search.setPostDivision(1);
+         break;
+      case "design":
+         search.setPostDivision(2);
+         break;
+      }
+      List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
+
+      model.addAttribute("list", portfolioList);
+   }
 
 }

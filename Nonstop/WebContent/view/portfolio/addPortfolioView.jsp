@@ -133,7 +133,7 @@
     /* Validation Check */
     function fncAddPortfolio() {
     	
-    	alert("#portUserId").val();
+    	alert("등러오낭");
     	
     	var portTitle=$("input[name='portTitle']").val();
     	var	portDetail=$("input[name='portDetail']").val();
@@ -154,10 +154,21 @@
     		alert("이미지를 등록해주세요.");
     		return;
     	}
-
-    	alert(portUserId);
-    	
-    	$("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit();
+		
+    	/* 사용기술 넣는 부분 START */
+    	var items = [];
+		$("input:checkbox[name=tuTechNo]:checked").each(function(){
+			items.push($(this).val());
+		});
+		
+		alert(items);
+		
+		$("input:hidden[name='checkBoxes']").val( items );
+		
+		alert(items);
+		/* 사용기술 넣는 부분 END */
+		
+    	//$("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit();
     }
 
 
@@ -165,7 +176,7 @@
 
     $(function() {
     	
-    	$(".btn.btn-primary.btn-block.btn-lg").on("click" , function() {
+    	$("input:submit").on("click" , function() {
     		fncAddPortfolio();
     	});
     	
@@ -288,63 +299,82 @@
 					
 					<!-- Multiple Checkboxes -->
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="checkboxes">개발언어</label>
-					  	<div class="row">
-						  <div class="col-md-2">
-						  	<div class="checkbox">
-								<label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Java
-						    	</label>
-							</div>						  	
-						  </div>
-						  <div class="col-md-2">
-							  <div class="checkbox">
-							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="2" type="checkbox">
-							      Python
-							    </label>
-							</div>							  
-						  </div>
-						  <div class="col-md-2">
-							  <div class="checkbox">
-							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="3" type="checkbox">
-							      Php
-							    </label>
-							  </div>							 
+						<label class="col-md-4 control-label" for="checkboxes">개발언어</label>
+						<div class="row">
+						
+							<div class="col-md-1">
+								<div class="checkbox">
+									<label for="checkboxes-0">
+								    	<input name="tuTechNo" id="Java" value="1000" type="checkbox">
+								      	Java
+								   	</label>
+								</div>						  	
+					  		</div>
+						  	<div class="col-md-1">
+								<div class="checkbox">
+							    	<label for="checkboxes-0">
+							      	<input name="tuTechNo" id="Python" value="1001" type="checkbox">
+							     	Python
+							    	</label>
+								</div>							  
+						  	</div>
+						  	<div class="col-md-1">
+								<div class="checkbox">
+							    	<label for="checkboxes-0">
+							      	<input name="tuTechNo" id="PHP" value="1002" type="checkbox">
+							      	PHP
+							    	</label>
+								</div>							 
 							</div>
+						 	<div class="col-md-1">
+						  		<div class="checkbox">
+						    		<label for="checkboxes-0">
+						      		<input name="tuTechNo" id="JavaScript" value="1003" type="checkbox">
+						      		JavaScript
+						    		</label>
+						  		</div>							 
+						  	</div>
+						  	<div class="col-md-1">
+						  		<div class="checkbox">
+						    		<label for="checkboxes-0">
+						      		<input name="tuTechNo" id="Swift" value="1004" type="checkbox">
+						      		Swift
+						    		</label>
+						  		</div>
+						  	</div>
+					  
 						</div>
 					</div>
 					
 					<!-- Multiple Checkboxes -->
 					<div class="form-group">
-					  <label class="col-md-4 control-label" for="checkboxes">프레임워크</label>
-					  	<div class="row">
-						  <div class="col-md-2">
-						  	<div class="checkbox">
-								<label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Spring
-						    	</label>
-							</div>						  	
-						  </div>
-						  <div class="col-md-2">
-							  <div class="checkbox">
-							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Django
-							    </label>
-							</div>							  
-						  </div>
-						  <div class="col-md-2">
-							  <div class="checkbox">
-							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Symfony
-							    </label>
-							  </div>							 
+						<label class="col-md-4 control-label" for="checkboxes">프레임워크</label>
+						<div class="row">
+							<div class="col-md-1">
+							  	<div class="checkbox">
+									<label for="checkboxes-0">
+								      <input name="tuTechNo" id="Spring" value="2000" type="checkbox">
+								      Spring
+							    	</label>
+								</div>						  	
+						  	</div>
+							<div class="col-md-1">
+								<div class="checkbox">
+									<label for="checkboxes-0">
+									<input name="tuTechNo" id="Django" value="2001" type="checkbox">
+								      Django
+								    </label>
+								</div>							  
 							</div>
+						  	<div class="col-md-1">
+								<div class="checkbox">
+							    	<label for="checkboxes-0">
+							      	<input name="tuTechNo" id="Symfony" value="2002" type="checkbox">
+							      	Symfony
+							    	</label>
+							  	</div>							 
+							</div>
+							
 						</div>
 					</div>
 					
@@ -353,30 +383,38 @@
 					<div class="form-group">
 					  <label class="col-md-4 control-label" for="checkboxes">DBMS</label>
 					  	<div class="row">
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 						  	<div class="checkbox">
 								<label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
+							      <input name="tuTechNo" id="Oracle" value="3000" type="checkbox">
 							      Oracle
 						    	</label>
 							</div>						  	
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Mssql
+							      <input name="tuTechNo" id="MsSQL" value="3001" type="checkbox">
+							      MsSQL
 							    </label>
 							</div>							  
 						  </div>
-						  <div class="col-md-2">
+						  <div class="col-md-1">
 							  <div class="checkbox">
 							    <label for="checkboxes-0">
-							      <input name="tuTechName" id="checkboxes-0" value="1" type="checkbox">
-							      Mysql
+							      <input name="tuTechNo" id="MySQL" value="3002" type="checkbox">
+							      MySQL
 							    </label>
 							  </div>
-						  </div>							 
+						  </div>
+						  <div class="col-md-1">
+							  <div class="checkbox">
+							    <label for="checkboxes-0">
+							      <input name="tuTechNo" id="SQLite" value="3003" type="checkbox">
+							      SQLite
+							    </label>
+							  </div>
+						  </div>						 
 						</div>
 					  </div>				
 					</div>	
