@@ -1,277 +1,283 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <!DOCTYPE mapper
-		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+      PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+      "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="ProjectMapper">
- 	
-	<resultMap id="projectSelectMap" type="project">
-		<result property="projNo" 			column="proj_no" 			jdbcType="NUMERIC"/>
-		<result property="projUserId"		column="proj_user_id" 		jdbcType="VARCHAR" />
-		<result property="projDivision" 	column="proj_division" 		jdbcType="NUMERIC" />
-		<result property="projTitle" 		column="proj_title" 		jdbcType="VARCHAR" />
-		<result property="projAnnoStart" 	column="proj_annostart" 	jdbcType="DATE" />
-		<result property="projAnnoEnd" 		column="proj_annoend" 		jdbcType="DATE" />
-		<result property="projStartDate" 	column="proj_startdate" 	jdbcType="DATE" />
-		<result property="projEndDate" 		column="proj_enddate" 		jdbcType="DATE"  />
-		<result property="projLocation" 	column="proj_location" 		jdbcType="VARCHAR" />
-		<result property="projDetail" 		column="proj_detail" 		jdbcType="VARCHAR" />
-		<result property="projViewcount" 	column="proj_viewcount" 	jdbcType="NUMERIC" />
-		<result property="projExpectDate" 	column="proj_expectdate" 	jdbcType="NUMERIC" />
-		<result property="projDday" 		column="proj_dday" 			jdbcType="NUMERIC" />
-		<result property="scrapUserId" 		column="user_id" 			jdbcType="VARCHAR" />
-		<result property="scrapNo" 			column="scrap_no" 			jdbcType="NUMERIC" />
-		<result property="sortFlag"			column="sort_flag" 			jdbcType="NUMERIC" />
-		<result property="recCount"			column="rec_count" 			jdbcType="NUMERIC" />
-	</resultMap>
-	
-	 <resultMap id="commentSelectMap" type="projComment">
-		<result property="comNo" 			column="com_no" 			jdbcType="INTEGER"/>
-		<result property="comProjNo" 		column="com_proj_no" 		jdbcType="INTEGER" />
-		<result property="comUserId" 		column="com_user_id" 		jdbcType="VARCHAR" />
-		<result property="comUserImg" 		column="user_img" 			jdbcType="VARCHAR" />
-		<result property="comRegDate" 		column="com_proj_regdate" 	jdbcType="DATE" />
-		<result property="comContent" 		column="com_proj_content" 	jdbcType="VARCHAR" />
-	</resultMap>
-	
-	<resultMap id="techUseSelectMap" type="techUse">
-		<result property="tuNo" 			column="tu_no" 				jdbcType="INTEGER"/>
-		<result property="tuPortNo" 		column="tu_port_no" 		jdbcType="INTEGER" />
-		<result property="tuProjNo" 		column="tu_proj_no" 		jdbcType="INTEGER" />
-		<result property="tuTechNo" 		column="tu_tech_no" 		jdbcType="INTEGER" />
-	</resultMap>
-	
-	<resultMap id="techSelectMap" type="tech">
-		<result property="techNo" 			column="tech_no" 			jdbcType="INTEGER"/>
-		<result property="techName" 		column="tech_name" 		    jdbcType="INTEGER" />
-		<result property="techClass" 		column="tech_class" 		jdbcType="INTEGER" />
-	</resultMap>
-	
-	<resultMap id="recordApplicantSelectMap" type="recordApplicant">
-		<result property="recNo" 			column="rec_no" 			jdbcType="INTEGER"/>
-		<result property="recProjNo" 		column="rec_proj_no" 		jdbcType="INTEGER" />
-		<result property="recUserId" 		column="rec_user_id" 		jdbcType="VARCHAR" />
-		<result property="recStatus" 		column="rec_status" 		jdbcType="INTEGER" />
-		<result property="recUserImg" 		column="rec_user_img" 		jdbcType="VARCHAR" />
-	</resultMap>
-	
-	
-	
-	<!-- SQL : INSERT -->
-	<insert 	id="addProject"		parameterType="project" >
-	 	INSERT 
-		INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
-		VALUES ( seq_project_proj_no.nextval, 
-		#{projUserId:VARCHAR}, 
-		#{projDivision:NUMERIC},
-		#{projTitle:VARCHAR}, 
-		SYSDATE, 
-		#{projAnnoEnd:DATE},
-		#{projStartDate:DATE}, 
-		#{projEndDate:DATE},
-		#{projLocation:VARCHAR}, 
-		#{projDetail:VARCHAR}, 
-		0)
-		<selectKey keyProperty="projNo" resultType="Integer" order="AFTER">
+    
+   <resultMap id="projectSelectMap" type="project">
+      <result property="projNo"          column="proj_no"          jdbcType="NUMERIC"/>
+      <result property="projUserId"      column="proj_user_id"       jdbcType="VARCHAR" />
+      <result property="projDivision"    column="proj_division"       jdbcType="NUMERIC" />
+      <result property="projTitle"       column="proj_title"       jdbcType="VARCHAR" />
+      <result property="projAnnoStart"    column="proj_annostart"    jdbcType="DATE" />
+      <result property="projAnnoEnd"       column="proj_annoend"       jdbcType="DATE" />
+      <result property="projStartDate"    column="proj_startdate"    jdbcType="DATE" />
+      <result property="projEndDate"       column="proj_enddate"       jdbcType="DATE"  />
+      <result property="projLocation"    column="proj_location"       jdbcType="VARCHAR" />
+      <result property="projDetail"       column="proj_detail"       jdbcType="VARCHAR" />
+      <result property="projViewcount"    column="proj_viewcount"    jdbcType="NUMERIC" />
+      <result property="projExpectDate"    column="proj_expectdate"    jdbcType="NUMERIC" />
+      <result property="projDday"       column="proj_dday"          jdbcType="NUMERIC" />
+      <result property="scrapUserId"       column="user_id"          jdbcType="VARCHAR" />
+      <result property="scrapNo"          column="scrap_no"          jdbcType="NUMERIC" />
+      <result property="sortFlag"         column="sort_flag"          jdbcType="NUMERIC" />
+      <result property="recCount"         column="rec_count"          jdbcType="NUMERIC" />
+      <!-- <result property="techName"         column="tech_name"          jdbcType="VARCHAR" /> -->
+   </resultMap>
+   
+    <resultMap id="commentSelectMap" type="projComment">
+      <result property="comNo"          column="com_no"          jdbcType="INTEGER"/>
+      <result property="comProjNo"       column="com_proj_no"       jdbcType="INTEGER" />
+      <result property="comUserId"       column="com_user_id"       jdbcType="VARCHAR" />
+      <result property="comUserImg"       column="user_img"          jdbcType="VARCHAR" />
+      <result property="comRegDate"       column="com_proj_regdate"    jdbcType="DATE" />
+      <result property="comContent"       column="com_proj_content"    jdbcType="VARCHAR" />
+   </resultMap>
+   
+   <resultMap id="techUseSelectMap" type="techUse">
+      <result property="tuNo"          column="tu_no"             jdbcType="INTEGER"/>
+      <result property="tuPortNo"       column="tu_port_no"       jdbcType="INTEGER" />
+      <result property="tuProjNo"       column="tu_proj_no"       jdbcType="INTEGER" />
+      <result property="tuTechNo"       column="tu_tech_no"       jdbcType="INTEGER" />
+   </resultMap>
+   
+   <resultMap id="techSelectMap" type="tech">
+      <result property="techNo"          column="tech_no"          jdbcType="INTEGER"/>
+      <result property="techName"       column="tech_name"           jdbcType="INTEGER" />
+      <result property="techClass"       column="tech_class"       jdbcType="INTEGER" />
+   </resultMap>
+   
+   <resultMap id="recordApplicantSelectMap" type="recordApplicant">
+      <result property="recNo"          column="rec_no"          jdbcType="INTEGER"/>
+      <result property="recProjNo"       column="rec_proj_no"       jdbcType="INTEGER" />
+      <result property="recUserId"       column="rec_user_id"       jdbcType="VARCHAR" />
+      <result property="recStatus"       column="rec_status"       jdbcType="INTEGER" />
+      <result property="recUserImg"       column="rec_user_img"       jdbcType="VARCHAR" />
+   </resultMap>
+   
+   
+   
+   <!-- SQL : INSERT -->
+   <insert    id="addProject"      parameterType="project" >
+       INSERT 
+      INTO project ( proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount) 
+      VALUES ( seq_project_proj_no.nextval, 
+      #{projUserId:VARCHAR}, 
+      #{projDivision:NUMERIC},
+      #{projTitle:VARCHAR}, 
+      SYSDATE, 
+      #{projAnnoEnd:DATE},
+      #{projStartDate:DATE}, 
+      #{projEndDate:DATE},
+      #{projLocation:VARCHAR}, 
+      #{projDetail:VARCHAR}, 
+      0)
+      <selectKey keyProperty="projNo" resultType="Integer" order="AFTER">
         SELECT seq_project_proj_no.currval FROM dual
-    	</selectKey>
-	 </insert>
-	 
-	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getProject"	parameterType="map"	resultMap="projectSelectMap">
-		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
-		round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-		round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no,
-		(select count(rec_user_id) from record_applicant WHERE rec_proj_no = #{projNo}) as rec_count
-		FROM project p , (SELECT * FROM scrap WHERE user_id=#{scrapUserId:VARCHAR}) a
-		WHERE p.proj_no=a.proj_no(+) AND p.proj_no=#{projNo}
-		<!-- GROUP by  p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, 
-		p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount, r.rec_proj_no, r.rec_user_id, a.proj_no, a.user_id -->
-	
-	 </select>
-	 
-	 <select  id="listProject"  parameterType="map"	resultMap="projectSelectMap">
+       </selectKey>
+    </insert>
+    
+    <!-- SQL : SELECT ONE -->
+    <select    id="getProject"   parameterType="map"   resultMap="projectSelectMap">
+      SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount,
+      round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+      round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no,
+      (select count(rec_user_id) from record_applicant WHERE rec_proj_no = #{projNo}) as rec_count
+      FROM project p , (SELECT * FROM scrap WHERE user_id=#{scrapUserId:VARCHAR}) a
+      WHERE p.proj_no=a.proj_no(+) AND p.proj_no=#{projNo}
+      <!-- GROUP by  p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, 
+      p.proj_startdate, p.proj_enddate, p.proj_location, p.proj_detail, p.proj_viewcount, r.rec_proj_no, r.rec_user_id, a.proj_no, a.user_id -->
+   
+    </select>
+    
+    <select  id="getProjectList"  parameterType="map"   resultMap="projectSelectMap">
+      SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
+            round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+            round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(SYSDATE,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no, 
+            (SELECT count(rec_user_id) FROM record_applicant WHERE rec_proj_no=p.proj_no) as rec_count
+          <!--   ,(SELECT t.tech_name FROM techuse tu, tech t WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no = p.proj_no) as tech_name -->
+       FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
+       <!--     , (SELECT t.tech_name FROM techuse tu, tech t WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no = #{tuProjNo})t -->
+       <where>
+           p.proj_no=a.proj_no(+) And
+       <!--     p.proj_no=t.tu_proj_no(+) And -->
+           <if test="search.postDivision == 1">
+               p.proj_division IN (11,12)  
+           </if>   
+           <if test="search.postDivision == 2">
+               p.proj_division IN (21,22)
+           </if>
+           <if test="search.postDivision != 1 and search.postDivision != 2">
+               p.proj_division = #{search.postDivision}
+           </if>
+           
+           <if test="search.searchCondition != null">
+              <if test="search.searchCondition == 0 and searchKeyword !='' "> 
+                   AND p.proj_title like '%' || #{search.searchKeyword} ||'%'
+              </if>
+              <if test="search.searchCondition == 1 and searchKeyword !='' ">
+                  AND p.proj_location like '%' || #{search.searchKeyword} ||'%'
+              </if>
+           </if>
+       </where>
+          
+           <if test="search.postSorting == 1 or search.postSorting == 0">
+              ORDER BY proj_ViewCount DESC
+           </if>
+           
+           <if test="search.postSorting == 2">
+              ORDER BY proj_annostart DESC
+           </if>
+           
+           <if test="search.postSorting == 3">
+              ORDER BY (CASE WHEN proj_dday=0 THEN proj_dday END) DESC, (CASE WHEN proj_dday>0 THEN proj_dday END) ASC
+           </if>
+           
+           <if test="search.postSorting == 4">
+              ORDER BY rec_count DESC
+           </if>
+          
+    </select>
+    
+    <select  id="getProfileProjList"  parameterType="map"	resultMap="projectSelectMap">
 		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
 			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
-			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, a.scrap_no, 
-			   (select count(rec_user_id) from record_applicant where rec_proj_no=p.proj_no) as rec_count
-	    FROM project p , (SELECT scrap_no, proj_no FROM scrap WHERE user_id=#{scrapUserId}) a
-	    <!--     , (SELECT t.tech_name FROM techuse tu, tech t WHERE tu.tu_tech_no = t.tech_no AND tu_proj_no = #{tuProjNo})t -->
-		 <where>
-		 	 p.proj_no=a.proj_no(+) And
-		 <!-- 	 p.proj_no=t.tu_proj_no(+) And -->
-		 	 <if test="projDivision == 1">
-		         p.proj_division IN (11,12)  
-		     </if>   
-		     <if test="projDivision == 2">
-		         p.proj_division IN (21,22)
-		     </if>
-		     <if test="projDivision != 1 and projDivision != 2">
-		         p.proj_division = #{projDivision}
-		     </if>
-		     
-		 	<if test="search.searchCondition != null">
-			     <if test="search.searchCondition == 0"> 
-				 	   AND p.proj_title like '%' || #{search.searchKeyword} ||'%'
-				 </if>
-			<!-- <if test="search.searchCondition == 1"> 
-				 	   AND t.tech_name '%' || #{search.searchKeyword} ||'%'
-				 </if> -->
-			     <if test="search.searchCondition == 2 and searchKeyword !='' ">
-					   AND p.proj_location like '%' || #{search.searchKeyword} ||'%'
-				 </if>
-			 </if>
-		 </where>
-		 <if test="sortFlag != null">
-			 <if test="sortFlag == 1">
-			 	ORDER BY proj_annostart DESC
-			 </if>
-			 <if test="sortFlag == 2">
-			 	ORDER BY (CASE WHEN proj_dday=0 THEN proj_dday END) DESC, (CASE WHEN proj_dday>0 THEN proj_dday END) ASC
-			 </if>
-			 <if test="sortFlag == 3">
-			 	ORDER BY rec_count DESC
-			 </if>
-			 <if test="sortFlag == 4">
-			 	ORDER BY proj_ViewCount DESC
-			 </if>
-		 </if>
-	 </select>
+			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday, 
+			   (select count(rec_user_id) from record_applicant where rec_proj_no=p.proj_no) as rec_count,a.scrap_no
+	    FROM project p,(SELECT * FROM scrap WHERE user_id=#{sessionId}) a
+		WHERE proj_user_id=#{profileId} AND p.proj_no=a.proj_no(+)
+		
+	 </select>	 
 	 
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT proj_no, proj_user_id, proj_division, proj_title, proj_annostart, proj_annoend, proj_startdate, proj_enddate, proj_location, proj_detail, proj_viewcount
-						FROM project
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-									proj_title = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-									proj_location = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
-	 </select>
-	 
-	 <update	id="updateViewCount"	parameterType="project" >
-	   	UPDATE project
-	   	<set>
-	   		proj_viewcount	=	proj_viewcount+1
-	   	</set>
-	   	WHERE proj_no = #{projNo}
-	 </update>
-	 
-	 
-	 <update	id="updateProject"	parameterType="project" >
-	   	UPDATE project
-	   	<set>
-	   		proj_division	=	#{projDivision:NUMERIC}, 
-	   		proj_title		=	#{projTitle:VARCHAR}, 
-	   		proj_annoend	=	#{projAnnoEnd:DATE}, 
-	   		proj_startdate	=	#{projStartDate:DATE}, 
-	   		proj_enddate	=	#{projEndDate:DATE},
-	   		proj_location   =   #{projLocation:VARCHAR}, 
-	   		proj_detail		=	#{projDetail:VARCHAR}
-	   	</set>
-	   	WHERE proj_no = #{projNo}
-	 </update>
-	 <!-- <select  id="listProject" resultMap="projectSelectMap">
-	  	
-	 </select> -->
-	 <delete id="deleteProject" parameterType="project">
-		DELETE from project
-		where proj_no=#{projNo}
-	 </delete>
-	 
-	 <insert 	id="addComment"		parameterType="projComment" >
-	 	INSERT INTO 
-	 	proj_comment( com_no , com_proj_no , com_user_id , com_proj_regdate , com_proj_content) 
-		VALUES	 (	seq_proj_comment_com_no.nextVal, 
-		#{comProjNo}, 
-		#{comUserId}, 
-		SYSDATE, 
-		#{comContent})
-		<selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
+	 <select  id="getProfileScrapProjList"  parameterType="map"	resultMap="projectSelectMap">
+		SELECT p.proj_no, p.proj_user_id, p.proj_division, p.proj_title, p.proj_annostart, p.proj_annoend, p.proj_startdate, p.proj_enddate, p.proj_location, concat(substr(proj_detail, 1, 120) ,'...')as proj_detail, p.proj_viewcount,
+			   round((TO_DATE(concat(p.proj_enddate,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_startdate,'YYYY-MM-DD HH24:MI:SS'))) as proj_expectdate,
+			   round((TO_DATE(concat(p.proj_annoend,'235959'),'YYYY-MM-DD HH24:MI:SS')-TO_DATE(p.proj_annostart,'YYYY-MM-DD HH24:MI:SS'))) as proj_dday,
+			   (SELECT count(rec_user_id) from record_applicant where rec_proj_no=p.proj_no) as rec_count,a.scrap_no
+	    FROM project p , (SELECT * FROM scrap WHERE user_id=#{sessionId} AND port_no is null) a
+		WHERE a.proj_no = p.proj_no AND a.user_id=#{profileId}
+		
+	 </select>	 
+    
+    <update   id="updateViewCount"   parameterType="project" >
+         UPDATE project
+         <set>
+            proj_viewcount   =   proj_viewcount+1
+         </set>
+         WHERE proj_no = #{projNo}
+    </update>
+    
+    
+    <update   id="updateProject"   parameterType="project" >
+         UPDATE project
+         <set>
+            proj_division   =   #{projDivision:NUMERIC}, 
+            proj_title      =   #{projTitle:VARCHAR}, 
+            proj_annoend   =   #{projAnnoEnd:DATE}, 
+            proj_startdate   =   #{projStartDate:DATE}, 
+            proj_enddate   =   #{projEndDate:DATE},
+            proj_location   =   #{projLocation:VARCHAR}, 
+            proj_detail      =   #{projDetail:VARCHAR}
+         </set>
+         WHERE proj_no = #{projNo}
+    </update>
+    <!-- <select  id="listProject" resultMap="projectSelectMap">
+        
+    </select> -->
+    <delete id="deleteProject" parameterType="project">
+      DELETE from project
+      where proj_no=#{projNo}
+    </delete>
+    
+    <insert    id="addComment"      parameterType="projComment" >
+       INSERT INTO 
+       proj_comment( com_no , com_proj_no , com_user_id , com_proj_regdate , com_proj_content) 
+      VALUES    (   seq_proj_comment_com_no.nextVal, 
+      #{comProjNo}, 
+      #{comUserId}, 
+      SYSDATE, 
+      #{comContent})
+      <selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
         SELECT seq_proj_comment_com_no.currval FROM dual
-    	</selectKey>
-	 </insert>
-	 
-	<select  id="getComment"  parameterType="int"	resultMap="commentSelectMap">
-		SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
-		FROM proj_comment c, users u 
-		WHERE c.com_no = #{comNo} 
-		AND u.user_id = c.com_user_id
-	</select>
-	 
+       </selectKey>
+    </insert>
+    
+   <select  id="getComment"  parameterType="int"   resultMap="commentSelectMap">
+      SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
+      FROM proj_comment c, users u 
+      WHERE c.com_no = #{comNo} 
+      AND u.user_id = c.com_user_id
+   </select>
+    
  
 
-	<delete id="deleteComment" parameterType="int">
-		DELETE from proj_comment
-		where com_no = #{value}
-	</delete>
-	
-	<delete id="deleteCommentTotal" parameterType="int">
-		DELETE from proj_comment
-		where com_proj_no = #{comProjNo}
-	</delete>
-	 
-	 
-	<select  id="getCommentList"  parameterType="int"	resultMap="commentSelectMap">
+   <delete id="deleteComment" parameterType="int">
+      DELETE from proj_comment
+      where com_no = #{value}
+   </delete>
+   
+   <delete id="deleteCommentTotal" parameterType="int">
+      DELETE from proj_comment
+      where com_proj_no = #{comProjNo}
+   </delete>
+    
+    
+   <select  id="getCommentList"  parameterType="int"   resultMap="commentSelectMap">
 
-		SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
-		FROM proj_comment c, users u 
-		WHERE c.com_proj_no = #{comProjNo} 
-		AND u.user_id = c.com_user_id
-		ORDER BY com_proj_regdate DESC
-	</select>
-	
-	<insert id="addApplicant"	parameterType="recordApplicant" >
-	 	INSERT INTO record_applicant ( 
-			rec_no, 
-			rec_proj_no, 
-			rec_user_id, 
-			rec_status
-		) VALUES ( 
-			seq_record_applicant_rec_no.nextval, 
-			#{recProjNo:NUMERIC},
-			#{recUserId:VARCHAR},
-			0
-		)
-	 </insert>
-	 
-	 <select 	id="getApplicant"	parameterType="map"	resultMap="recordApplicantSelectMap">
-		SELECT rec_proj_no, rec_user_id
-		FROM record_applicant
-		WHERE rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
-	 </select>
-	 
-	 <select  id="listApplicant"  parameterType="int"	resultMap="recordApplicantSelectMap">
-		SELECT r.rec_no, r.rec_proj_no, r.rec_user_id, r.rec_status, u.user_id, u.user_img as rec_user_img
-		FROM record_applicant r, users u
-		WHERE r.rec_user_id = u.user_id
-		AND r.rec_proj_no = #{recProjNo:NUMERIC}
-	 </select>
-	
-	 <update	id="inviteApplicant" parameterType="int" >
-	   	UPDATE record_applicant
-	   	<set>
-	   		rec_status	=  1
-	   	</set>
-	   	WHERE rec_no = #{recNo:NUMERIC}
-	 </update>
-	
-	 <select 	id="deleteApplicant"	parameterType="map"	resultMap="recordApplicantSelectMap">
-		DELETE from record_applicant
-		where rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
-	 </select>
-	 
-	 <select 	id="deleteApplicantTotal"	parameterType="map"	resultMap="recordApplicantSelectMap">
-		DELETE from record_applicant
-		where rec_proj_no = #{recProjNo:NUMERIC}
-	 </select>
-	 
-	
-	 
+      SELECT c.com_no, c.com_proj_no, c.com_user_id, c.com_proj_regdate, c.com_proj_content, u.user_id, u.user_img
+      FROM proj_comment c, users u 
+      WHERE c.com_proj_no = #{comProjNo} 
+      AND u.user_id = c.com_user_id
+      ORDER BY com_proj_regdate DESC
+   </select>
+   
+   <insert id="addApplicant"   parameterType="recordApplicant" >
+       INSERT INTO record_applicant ( 
+         rec_no, 
+         rec_proj_no, 
+         rec_user_id, 
+         rec_status
+      ) VALUES ( 
+         seq_record_applicant_rec_no.nextval, 
+         #{recProjNo:NUMERIC},
+         #{recUserId:VARCHAR},
+         0
+      )
+    </insert>
+    
+    <select    id="getApplicant"   parameterType="map"   resultMap="recordApplicantSelectMap">
+      SELECT rec_proj_no, rec_user_id
+      FROM record_applicant
+      WHERE rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
+    </select>
+    
+    <select  id="getApplicantList"  parameterType="int"   resultMap="recordApplicantSelectMap">
+      SELECT r.rec_no, r.rec_proj_no, r.rec_user_id, r.rec_status, u.user_id, u.user_img as rec_user_img
+      FROM record_applicant r, users u
+      WHERE r.rec_user_id = u.user_id
+      AND r.rec_proj_no = #{recProjNo:NUMERIC}
+    </select>
+   
+    <update   id="inviteApplicant" parameterType="int" >
+         UPDATE record_applicant
+         <set>
+            rec_status   =  1
+         </set>
+         WHERE rec_no = #{recNo:NUMERIC}
+    </update>
+   
+    <select    id="deleteApplicant"   parameterType="map"   resultMap="recordApplicantSelectMap">
+      DELETE from record_applicant
+      where rec_proj_no = #{recProjNo:NUMERIC} AND rec_user_id = #{recUserId:VARCHAR}
+    </select>
+    
+    <select    id="deleteApplicantTotal"   parameterType="map"   resultMap="recordApplicantSelectMap">
+      DELETE from record_applicant
+      where rec_proj_no = #{recProjNo:NUMERIC}
+    </select>
+    
+   
+    
 </mapper>

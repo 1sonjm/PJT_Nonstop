@@ -98,13 +98,24 @@
 	/*border-radius: 100%; */
 }
 
+
+.sidebar-nav span>i {
+	float: right;
+	width: auto;
+	font-size: 20px;
+	margin-top: 0px;
+	color: #cccccc;
+}
+
 .sidebar-nav a>i {
 	float: right;
 	width: auto;
 	font-size: 14px;
 	margin-top: 4px;
+	margin-right: 18px;
 	color: #cccccc;
 }
+
 
 .sidebar-nav ul li.nav-small-cap {
 	font-size: 13.5px;
@@ -293,6 +304,7 @@ $.ajax("/statistics/getUserStatisticsList/"+userId+"/"+role,{
 	},
 	success : function(aaa) {
 		for (var i=0; i<aaa.dataList.length; i++){
+			console.log(aaa.dataList[i].techName+"ddd"+aaa.dataList[i].careerUseTerm);
 			dataSet.push({
 				TechName: aaa.dataList[i].techName,
 				UseTerm: aaa.dataList[i].careerUseTerm
@@ -393,7 +405,36 @@ AmCharts.makeChart("chartdiv",
     			});
     		});
     	
+    	$("span i.glyphicon").on('click',function(){
+    		var flag = $(this).attr('class').trim();
+    		var targetUserId =$(this).attr('targetUserId');
+    		var target;
+    		 if(flag == 'glyphicon glyphicon-remove-circle'){
+    			target = "deleteJsonFollow";
+    		}else{
+    			target = "addJsonFollow";
+    		}
+    		$.ajax(
+    			{
+    				url : "/profile/"+target+"/"+targetUserId,
+    				method : "GET" ,
+    				dateType : "json",
+    				headers : {
+    					"Accept" : "application/json",
+    					"Content-Type" : "application/json"	
+    				},
+    				context : this,
+    				success : function(JSONData , status) { 
+    					if(flag == 'glyphicon glyphicon-remove-circle'){
+    						$(this).removeClass('glyphicon glyphicon-remove-circle').addClass('glyphicon glyphicon-plus-sign');
+    					}else{
+    						$(this).removeClass('glyphicon glyphicon-plus-sign').addClass('glyphicon glyphicon-remove-circle');
+    					}
+    				}
+    		}); 
+    	});
     });
+	
 	
     	
 
@@ -403,7 +444,7 @@ AmCharts.makeChart("chartdiv",
 <body>
 	<div id="main-wrapper">
 		<header>
-			<jsp:include page="/view/common/toolbar.jsp" />
+			<jsp:include page="/view/common/toolbar.jsp"/>
 		</header>
 
 		<aside class="left-sidebar">
@@ -445,11 +486,17 @@ AmCharts.makeChart("chartdiv",
 										<div class="icon">
 											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 										</div> <span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
-											${follow.targetUserId} </span> 
+											${follow.targetUserId} </span>
+											<span>
+											<i class="glyphicon glyphicon-remove-circle" targetUserId="${follow.targetUserId}" followNo="${follow.followNo}" title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
+											</span>
 											<a href="#followLetter" data-toggle="modal">
-											 <i class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다." aria-hidden="true"></i>
+											 <i class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다."  aria-hidden="true"></i>
+											 
 											</a>
 									</li>
+									
+									
 								</c:forEach>
 
 							</ul>
@@ -556,6 +603,7 @@ AmCharts.makeChart("chartdiv",
 
 	</div>
 
+
 <div aria-hidden="true" aria-labelledby="myModalLabel"
 						role="dialog" tabindex="-1" id="followLetter" class="modal fade"
 						style="display: none;">
@@ -620,7 +668,6 @@ AmCharts.makeChart("chartdiv",
 						<!-- /.modal-dialog -->
 					</div>
 					<!-- /.modal -->
-
 
 
 

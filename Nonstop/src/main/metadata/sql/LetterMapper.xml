@@ -34,6 +34,18 @@
 				'','','','')
 	 </insert>
 	 
+	 <insert 	id="addApplicantLetter"		parameterType="map" >
+		INSERT
+		INTO letter
+		VALUES (seq_let_no.nextval,
+				#{sendId},
+				#{receiveId},
+				#{letTitle},
+				#{letDetail},
+				SYSDATE,
+				'',1,'','')
+	 </insert>
+	 
 	 <select  id="getReceiveLetterList"  parameterType="String"	resultMap="letterSelectMap">
 			SELECT *
 			FROM (	SELECT inner_table.* , ROWNUM AS row_seq
@@ -54,6 +66,12 @@
 			SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_regdate,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
 			FROM letter
 			WHERE let_receive_id=#{userId} AND let_save=1
+	 </select>
+	 
+	 <select  id="getUnreadLetterList"  parameterType="String"	resultMap="letterSelectMap">
+			SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_regdate,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
+			FROM letter
+			WHERE let_receive_id=#{userId} AND let_readdate is null
 	 </select>
 	 
 	  <select  id="getLetter"  parameterType="int"	resultMap="letterSelectMap">
@@ -106,6 +124,7 @@
 	 	DELETE
 	 	FROM letter WHERE let_no =#{letNo} 
 	 </delete>
+	 
 	 
 	
 </mapper>		

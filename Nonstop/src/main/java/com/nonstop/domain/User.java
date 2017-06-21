@@ -2,8 +2,10 @@ package com.nonstop.domain;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
 
-//==>ȸ�������� �𵨸�(�߻�ȭ/ĸ��ȭ)�� Bean
+
+
 public class User {
 	
 	///Field
@@ -18,8 +20,8 @@ public class User {
 	private int empNum;
 	private Date pubDate;
 	private String image;
-	
-	
+	private MultipartFile file;
+
 	
 	///Constructor
 	public User(){
@@ -164,6 +166,18 @@ public class User {
 		return "User [userId=" + userId + ", userName=" + userName + ", password=" + password + ", role=" + role
 				+ ", tel=" + tel + ", email=" + email + ", addr=" + addr + ", companyName=" + companyName + ", empNum="
 				+ empNum + ", pubDate=" + pubDate + ", image=" + image + "]";
+	}
+
+
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 	
 

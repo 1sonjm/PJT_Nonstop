@@ -53,17 +53,13 @@
 <script type="text/javascript">
 function getJsonDataList(type,addr){
 	$.ajax("/statistics/"+addr,{
-		method : "GET" ,
-		dataType : "json" ,
-		headers : {
-			"Accept" : "application/json"//,
-			//"Content-Type" : "application/json"
-		},
+		method : "GET", dataType : "json",
 		data:{
 			techClass : $('#selectTechClass').val(),
 			techNo : $('#selectTechData').val(),
 			searchStartDate : $('input[name="dateStart"]').val(),
-			searchEndDate : $('input[name="dateEnd"]').val()
+			searchEndDate : $('input[name="dateEnd"]').val(),
+			aa : $('#selectViewDiv').val()
 		},
 		success : function(jsonData) {
 			if(jsonData.length != 0){
@@ -211,12 +207,10 @@ $(function(){
 
 </head>
 <body>
-
-<jsp:include page="/view/common/toolbar.jsp" />
-
+<header>
+			<jsp:include page="/view/common/toolbar.jsp"/>
+		</header>
 <div class="container" style="margin-top: 20px">
-	<img alt="" src="https://chart.googleapis.com/chart?cht=qr&chs=210x210&chl=http://www.naver.com&chld=M
-https://developers.google.com/chart/infographics/docs/qr_codes"/>
 	<ul class="nav nav-pills nav-justified">
 		<li class="active"><a data-toggle="tab" aria-expanded="true" href="#total">전체 기술 집계</a></li>
 		<li><a data-toggle="tab" href="#major">과반수 사용 기술</a></li>

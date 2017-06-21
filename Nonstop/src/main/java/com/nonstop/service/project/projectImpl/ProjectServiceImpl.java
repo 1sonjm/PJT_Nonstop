@@ -57,9 +57,9 @@ public class ProjectServiceImpl implements ProjectService{
 		projectDAO.deleteProject(project);
 	}
 	
-	public List<Project> listProject(int projDivision, String scrapUserId, Search search, int sortFlag) throws Exception {
+	public List<Project> getProjectList(Search search , String scrapUserId) throws Exception {
 		
-		List<Project> list = projectDAO.listProject(projDivision,scrapUserId,search,sortFlag);
+		List<Project> list = projectDAO.getProjectList(search, scrapUserId);
 		return list;
 	}
 	
@@ -99,8 +99,8 @@ public class ProjectServiceImpl implements ProjectService{
 	}
 	
 	@Override
-	public List<RecordApplicant> listApplicant(int recProjNo) throws Exception {
-		return projectDAO.listApplicant(recProjNo);
+	public List<RecordApplicant> getApplicantList(int recProjNo) throws Exception {
+		return projectDAO.getApplicantList(recProjNo);
 	}
 	
 	@Override
@@ -119,4 +119,14 @@ public class ProjectServiceImpl implements ProjectService{
 		
 		projectDAO.deleteApplicantTotal(recProjNo);
 	}
+	
+	public List<Project> getProfileProjList(String sessionId, String profileId) throws Exception {
+		return projectDAO.getProfileProjList(sessionId, profileId);
+	}
+	
+	public List<Project> getProfileScrapProjList(String sessionId, String profileId) throws Exception {
+		return projectDAO.getProfileScrapProjList(sessionId, profileId);
+	}
+
+	
 }

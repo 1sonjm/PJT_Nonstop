@@ -131,54 +131,102 @@ window.onload = function () {
 				alert('Failed to capture your screen. Please check Chrome console logs for further information.');
 			});
 		});
-	}
-	
-	// 채팅방 개설
-	// get a local stream
-	navigator.mediaDevices.getUserMedia({ 
-		audio: true,
-		video: true})
-		.then(function (stream) {
-		
-		// .. show it in a self-view
-		selfView.srcObject = stream;
-		// .. and keep it to be sent later
-		localStream = stream;
+        var sessionId = document.getElementById("session_txt").value;
+        signalingChannel = new SignalingChannel(sessionId);
 
-		
-		selfView.style.visibility = "visible";
+        // show and update share link
+        var link = document.getElementById("share_link");
+        var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
+        link.href = link.textContent = window.location.href + maybeAddHash;
+        shareView.style.visibility = "visible";
 
-		var sessionId = document.getElementById("session_txt").value;
-		signalingChannel = new SignalingChannel(sessionId);
+        callButton.onclick = function () {
+            start(true);
+        };
 
-		// show and update share link
-		var link = document.getElementById("share_link");
-		var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
-		link.href = link.textContent = window.location.href + maybeAddHash;
-		shareView.style.visibility = "visible";
-
-		callButton.onclick = function () {
-			start(true);
-		};
-
-		// another peer has joined our session
-		signalingChannel.onpeer = function (evt) {
+        // another peer has joined our session
+        signalingChannel.onpeer = function (evt) {
+			callButton.value = "연결";
 			callButton.disabled = false;
 			shareView.style.visibility = "hidden";
+			shareView.style.display = "none";
 
-			peer = evt.peer;
-			peer.onmessage = handleMessage;
+            peer = evt.peer;
+            peer.onmessage = handleMessage;
 
-			peer.ondisconnect = function () {
+            peer.ondisconnect = function () {
 				callButton.disabled = true;
 				remoteView.style.visibility = "hidden";
 				postChatMessage("[연결이 종료되었습니다]");
-				if (pc)
-					pc.close();
-				pc = null;
-			};
-		};
-	}).catch(logError);
+                if (pc)
+                    pc.close();
+                pc = null;
+            };
+        };
+        
+	}
+	
+	// 채팅방 개설
+	// 디바이스 체크
+		navigator.mediaDevices.enumerateDevices()
+			.then(function(devices) {
+				if(devices.length < 1){
+					//document.getElementById("capture-screen").click();
+				}else{
+					// get a local stream
+					navigator.mediaDevices.getUserMedia({ 
+						audio: true,
+						video: true})
+						.then(function (stream) {
+						
+						// .. show it in a self-view
+						selfView.srcObject = stream;
+						// .. and keep it to be sent later
+						localStream = stream;
+
+						
+						selfView.style.visibility = "visible";
+
+						var sessionId = document.getElementById("session_txt").value;
+						signalingChannel = new SignalingChannel(sessionId);
+
+						// show and update share link
+						var link = document.getElementById("share_link");
+						var maybeAddHash = window.location.href.indexOf('#') !== -1 ? "" : ("#" + sessionId);
+						link.href = link.textContent = window.location.href + maybeAddHash;
+						shareView.style.visibility = "visible";
+						var qrLink = document.getElementById("share_link_qr");
+						qrLink.src = "http://www.qr-code-generator.com/phpqrcode/getCode.php?cht=qr&chl=https%3A%2F%2F192.168.0.16%3A8444%2F%23"+sessionId+"&chs=150x150&choe=UTF-8&chld=L|0";
+						
+						callButton.onclick = function () {
+							start(true);
+						};
+
+						// another peer has joined our session
+						signalingChannel.onpeer = function (evt) {
+							callButton.value = "연결";
+							callButton.disabled = false;
+							shareView.style.visibility = "hidden";
+							shareView.style.display = "none";
+
+							peer = evt.peer;
+							peer.onmessage = handleMessage;
+
+							peer.ondisconnect = function () {
+								callButton.disabled = true;
+								remoteView.style.visibility = "hidden";
+								postChatMessage("[연결이 종료되었습니다]");
+								if (pc)
+									pc.close();
+								pc = null;
+							};
+						};
+					}).catch(logError);
+				}
+			})
+			.catch(function(err) {
+				console.log(err.name + ": " + err.message);
+			});
 	
 		
 // if (hash) {

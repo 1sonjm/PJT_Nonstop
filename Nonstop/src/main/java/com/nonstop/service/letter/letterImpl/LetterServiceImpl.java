@@ -28,6 +28,11 @@ public class LetterServiceImpl implements LetterService {
 	public void addLetter(Letter letter) throws Exception {
 		letterDAO.addLetter(letter);
 	}
+	
+	public void addApplicantLetter(String sendId, String receiveId , String letTitle , String letDetail) throws Exception {
+		letterDAO.addApplicantLetter(sendId, receiveId , letTitle , letDetail);
+		
+	}
 
 	public Map<String, Object> getReceiveLetterList(String receiveId) throws Exception {
 			
@@ -93,6 +98,12 @@ public class LetterServiceImpl implements LetterService {
 		
 		return map;
 	}
+	
+	public List<Letter> getUnreadLetterList(String userId) throws Exception {
+		return letterDAO.getUnreadLetterList(userId);
+	}
+
+	
 
 }
 

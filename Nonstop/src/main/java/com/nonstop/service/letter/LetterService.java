@@ -9,6 +9,8 @@ public interface LetterService {
 	
 	public void addLetter(Letter letter) throws Exception;
 	
+	public void addApplicantLetter(String sendId , String receiveId , String letTitle , String letDetail) throws Exception;
+	
 	public Map<String, Object> getReceiveLetterList(String receiveId) throws Exception;
 	
 	public Map<String, Object> getSendLetterList(String sendId) throws Exception;
@@ -30,5 +32,7 @@ public interface LetterService {
 	public void updateSendView(int letNo , String userId) throws Exception;
 	
 	public Map<String , Object> getSaveLetterList(String userId) throws Exception;
+	
+	public List<Letter> getUnreadLetterList(String userId) throws Exception;
 
 }

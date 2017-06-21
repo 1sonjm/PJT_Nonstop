@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
+import com.nonstop.service.letter.LetterService;
 import com.nonstop.service.statistics.StatisticsService;
 
 @Controller
@@ -21,7 +23,11 @@ public class StatisticsController {
 
 	@Autowired
 	@Qualifier("statisticsServiceImpl")
-	private StatisticsService statisticsService;	
+	private StatisticsService statisticsService;
+	
+	@Autowired
+	@Qualifier("letterServiceImpl")
+	private LetterService letterService;
 	
 	public StatisticsController(){
 		System.out.println(this.getClass());
@@ -63,9 +69,9 @@ public class StatisticsController {
 	}
 	
 	@RequestMapping(value="getJSONMajorStatisticsList", method=RequestMethod.GET)
-	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics){
+	public void getJSONMajorStatisticsList(Model model, @ModelAttribute("statistics") Statistics statistics, @RequestParam("aa") int division){
 		System.out.println("/statstics/getJSONMajorStatisticsList");
-		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass()));
+		model.addAttribute("dataList", statisticsService.getMajorStatisticsList(statistics.getTechClass(),division));
 	}
 	
 	@RequestMapping(value="getJSONPeriodStatisticsList", method=RequestMethod.GET)
@@ -81,10 +87,9 @@ public class StatisticsController {
 	}
 	
 	@RequestMapping(value="getJSONPostCountList", method=RequestMethod.GET)
-	public String getJSONPostCountList(Model model){
+	public void getJSONPostCountList(Model model , HttpSession session) throws Exception{
 		System.out.println("/statstics/getJSONPostCountList");
 		model.addAttribute("dataList", statisticsService.getPostCountList());
-		return "/index.jsp";
 	}
 	
 	@RequestMapping(value="getUserStatisticsList/{userId}/{role}", method=RequestMethod.GET)

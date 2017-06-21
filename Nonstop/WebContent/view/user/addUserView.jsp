@@ -1,5 +1,7 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ page pageEncoding="utf-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
 <!DOCTYPE html>
@@ -7,16 +9,26 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
-	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
+<script src="/resources/javascript/jquery.js"></script>
+
+<!-- <script src="/resources/javascript/bootstrap.min.js"></script> -->
+
+<script
+   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+   crossorigin="anonymous"></script>
+<!-- Bootstrap Core CSS -->
+<link href="/resources/css/nonstop.css" rel="stylesheet">
+
+<!-- Custom CSS -->
+<link href="/resources/css/full.css" rel="stylesheet"> 
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -29,23 +41,22 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "°¡ÀÔ"  Event ¿¬°á =============
+		//============= "ê°€ì…"  Event ì—°ê²° =============
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				fncAddUser();
 			});
 		});	
 		
 		
-		//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
+		//============= "ì·¨ì†Œ"  Event ì²˜ë¦¬ ë°  ì—°ê²° =============
 		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
 				$("form")[0].reset();
 			});
 		});	
-	
 		
 		function fncAddUser() {
 			
@@ -56,64 +67,56 @@
 			var email=$("input[name='email']").val();
 			var tel=$("input[name='tel']").val();
 			var addr=$("input[name='addr']").val();
-			
+			var image=$("input[name='image']").val();
 			
 			
 			if(id == null || id.length <1){
-				alert("¾ÆÀÌµğ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("ì•„ì´ë””ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			
 			if(name == null || name.length <1){
-				alert("ÀÌ¸§Àº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("ì´ë¦„ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			
 			if(pw == null || pw.length <1){
-				alert("ÆĞ½º¿öµå´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("íŒ¨ìŠ¤ì›Œë“œëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			if(pw_confirm == null || pw_confirm.length <1){
-				alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("íŒ¨ìŠ¤ì›Œë“œ í™•ì¸ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			
 			if(email == null || email.length <1){
-				alert("ÀÌ¸ŞÀÏÀº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("ì´ë©”ì¼ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			
 			if(tel == null || tel.length <1){
-				alert("¿¬¶ôÃ³´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("ì—°ë½ì²˜ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			
 			if(addr == null || addr.length <1){
-				alert("ÁÖ¼Ò´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+				alert("ì£¼ì†ŒëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 				return;
 			}
 			
 			
 			if( pw != pw_confirm ) {				
-				alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+				alert("ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 				$("input:text[name='password2']").focus();
 				return;
 			}
 				
-			/* var value = "";	
-			if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
-				var value = $("option:selected").val() + "-" 
-									+ $("input[name='phone2']").val() + "-" 
-									+ $("input[name='phone3']").val();
-			}
-
-			$("input:hidden[name='phone']").val( value ); */
 			
 			$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
 		}
 		
 
-		//==>"ÀÌ¸ŞÀÏ" À¯È¿¼ºCheck  Event Ã³¸® ¹× ¿¬°á
+		//==>"ì´ë©”ì¼" ìœ íš¨ì„±Check  Event ì²˜ë¦¬ ë° ì—°ê²°
 		 $(function() {
 			 
 			 $("input[name='email']").on("change" , function() {
@@ -121,13 +124,13 @@
 				 var email=$("input[name='email']").val();
 			    
 				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-			    	alert("ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
+			    	alert("ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
 			     }
 			});
 			 
 		});	
 		
-		//¾ÆÀÌµğ Áßº¹Ã¼Å©
+		//ì•„ì´ë”” ì¤‘ë³µì²´í¬
 		   $(function(){
 		      
 		      $("#userId").on("keyup", function(){
@@ -149,10 +152,10 @@
 		                    success : function(JSONData, status) {   
 		                                            
 		                       if(! JSONData.result) {
-		                          $("#checkId").html("Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+		                          $("#checkId").html("ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
 		                       } 
 		                       else {
-		                    	   $("#checkId").html("»ç¿ë°¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.");
+		                    	   $("#checkId").html("ì‚¬ìš©ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤.");
 			                       
 		                       }
 		                    }
@@ -169,14 +172,77 @@
       $("#password2").keyup( function() {
          if( $("#password").val() != $("#password2").val() ) {
             $("#checkpw").text('');
-            $("#checkpw").html("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+            $("#checkpw").html("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
          } else {
             $("#checkpw").text('');
-            $("#checkpw").html("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù.");
+            $("#checkpw").html("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
          }
       });
    }); 
-		//==>"IDÁßº¹È®ÀÎ" Event Ã³¸® ¹× ¿¬°á
+		 
+		 
+		 
+		 $(document).on('click', '#close-preview', function(){ 
+		        $('.image-preview').popover('hide');
+		        // Hover befor close the preview
+		        $('.image-preview').hover(
+		            function () {
+		               $('.image-preview').popover('show');
+		            }, 
+		             function () {
+		               $('.image-preview').popover('hide');
+		            }
+		        );    
+		    });
+
+
+		    $(function() {
+		        // Create the close button
+		        var closebtn = $('<button/>', {
+		            type:"button",
+		            text: 'x',
+		            id: 'close-preview',
+		            style: 'font-size: initial;',
+		        });
+		        closebtn.attr("class","close pull-right");
+		        // Set the popover default content
+		        $('.image-preview').popover({
+		            trigger:'manual',
+		            html:true,
+		            title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+		            content: "There's no image",
+		            placement:'bottom'
+		        });
+		        // Clear event
+		        $('.image-preview-clear').click(function(){
+		            $('.image-preview').attr("data-content","").popover('hide');
+		            $('.image-preview-filename').val("");
+		            $('.image-preview-clear').hide();
+		            $('.image-preview-input input:file').val("");
+		            $(".image-preview-input-title").text("Browse"); 
+		        }); 
+		        // Create the preview image
+		        $(".image-preview-input input:file").change(function (){     
+		            var img = $('<img/>', {
+		                id: 'dynamic',
+		                width:250,
+		                height:200
+		            });      
+		            var file = this.files[0];
+		            var reader = new FileReader();
+		            // Set preview image into the popover data-content
+		            reader.onload = function (e) {
+		                $(".image-preview-input-title").text("Change");
+		                $(".image-preview-clear").show();
+		                $(".image-preview-filename").val(file.name);            
+		                img.attr('src', e.target.result);
+		                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+		            }        
+		            reader.readAsDataURL(file);
+		        });  
+		    });
+		    
+		//==>"IDì¤‘ë³µí™•ì¸" Event ì²˜ë¦¬ ë° ì—°ê²°
 		 
 
 	</script>		
@@ -186,97 +252,109 @@
 <body>
 
 	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Nonstop</a>
-   		</div>
-   	</div>
+	<jsp:include page="/view/common/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">°³ ÀÎ È¸ ¿ø °¡ ÀÔ</h1>
+		<h1 class="bg-primary text-center">ê°œ ì¸ íšŒ ì› ê°€ ì…</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-		
-		
+		<form class="form-horizontal" method="post" enctype="multipart/form-data">		
 		<div class="form-group">
-                  <label class="col-md-4 control-label" for="userId">¾ÆÀÌµğ</label>      
-                  <div class="col-md-4">      
-                     <input class="form-control input-md" type="text" id="userId" name="userId">
-                        <div id="checkId" style="color:red; font-size:12px;">¾ÆÀÌµğ¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.</div>
+                  <label class="col-md-4 control-label" for="userId">ì•„ì´ë””</label>      
+                  <div class="col-md-4">
+                  	 <input class="form-control input-md" type="text" id="userId" name="userId" value="${param.userId }">
+                        <div id="checkId" style="color:red; font-size:12px;">ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.</div>
                   </div>
                </div>
 		  
 		  <div class="form-group">
-                  <label class="col-md-4 control-label" for="password2">ºñ¹Ğ¹øÈ£</label>   
+                  <label class="col-md-4 control-label" for="password">ë¹„ë°€ë²ˆí˜¸</label>   
                   <div class="col-md-4">            
                      <input class="form-control input-md" type="password" id="password" name="password">
                   </div>
                </div>      
                
                <div class="form-group">
-                  <label class="col-md-4 control-label" for="password2">ºñ¹Ğ¹øÈ£È®ÀÎ</label>   
+                  <label class="col-md-4 control-label" for="password2">ë¹„ë°€ë²ˆí˜¸í™•ì¸</label>   
                   <div class="col-md-4">            
                      <input class="form-control input-md" type="password" id="password2" name="password2">
                         <div id="checkpw" style="color:red; font-size:12px;"></div>
                   </div>
                </div>
 		  
-		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸§</label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ì´ë¦„</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="È¸¿øÀÌ¸§">
+
+		      <input type="text" class="form-control" id="userName" name="userName" placeholder="íšŒì›ì´ë¦„" value="${param.nickname }">
+
+
+
 		    </div>
 		  </div>
 		  
 		  
 		  <div class="form-group">
-		    <label for="tel" class="col-sm-offset-1 col-sm-3 control-label">¿¬¶ôÃ³</label>
+		    <label for="tel" class="col-sm-offset-1 col-sm-3 control-label">ì—°ë½ì²˜</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="tel" name="tel" placeholder="¿¬¶ôÃ³">
+		      <input type="text" class="form-control" id="tel" name="tel" placeholder="ì—°ë½ì²˜">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="addr" class="col-sm-offset-1 col-sm-3 control-label">ÁÖ¼Ò</label>
+		    <label for="addr" class="col-sm-offset-1 col-sm-3 control-label">ì£¼ì†Œ</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="addr" name="addr" placeholder="ÁÖ¼Ò">
+		      <input type="text" class="form-control" id="addr" name="addr" placeholder="ì£¼ì†Œ">
 		    </div>
 		  </div>
 		  
 		  
 		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ÀÌ¸ŞÀÏ</label>
+		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">ì´ë©”ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="ÀÌ¸ŞÀÏ">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="ì´ë©”ì¼">
 		    </div>
 		  </div>
 		  
 		  
-		  <div class="form-group">
-		    <label for="image" class="col-sm-offset-1 col-sm-3 control-label">ÇÁ·ÎÇÊ »çÁø</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="image" name="image" placeholder="»çÁø">
-		    </div>
-		  </div>
+		 <div class="form-group">
+						<label class="col-md-4 control-label">í”„ë¡œí•„ ì‚¬ì§„</label>  
+					 	<div class="col-md-5">
+						   <!-- image-preview-filename input [CUT FROM HERE]-->
+				           <div class="input-group image-preview">
+				              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+				                <span class="input-group-btn">
+				                    <!-- image-preview-clear button -->
+				                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+				                        <span class="glyphicon glyphicon-remove"></span> Clear
+				                    </button>
+				                    <!-- image-preview-input -->
+				                    <div class="btn btn-default image-preview-input">
+				                        <span class="glyphicon glyphicon-folder-open"></span>
+				                        <span class="image-preview-input-title">ì°¾ì•„ë³´ê¸°</span>
+				                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="file" id="image"/> <!-- rename it -->
+				                    </div>
+				                </span>
+				            </div><!-- /input-group image-preview [TO HERE]--> 
+						</div>
+					</div>						
 		  
 		  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >°¡ &nbsp;ÀÔ</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary"  >ê°€ &nbsp;ì…</button>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 	
 </body>
 

@@ -26,27 +26,81 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_img) 
+		INTO users( user_id , user_name , user_pwd , user_role , user_tel , user_email , user_addr , user_img ) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 2 , #{tel} , 
-							#{email:VARCHAR} , #{addr} ,  #{image:VARCHAR} )
+							#{email:VARCHAR} , #{addr} , #{image:VARCHAR} )
 	 </insert>
 	 
 	 <insert 	id="addCompany"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img) 
+		INTO users( user_id , user_name , user_pwd , user_role , user_tel , user_email , user_addr , user_ceo , user_emp, user_est , user_img) 
 		VALUES	 (	#{userId} , #{userName} , #{password} , 3 , #{tel} , 
 							#{email:VARCHAR} , #{addr} , #{companyName} , #{empNum:VARCHAR}, #{pubDate:VARCHAR}, #{image:VARCHAR} )
 	 </insert>
 	 
 	 
-	   <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
+	   
+	 
+	 
+	 <update	id="updateUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		user_name 				= #{userName} ,
+			user_tel				= #{tel},
+			user_addr 				= #{addr} ,
+			<if test="image == null">
+				user_img				= #{image:VARCHAR},
+			</if>
+			user_email				= #{email},
+			user_pwd				= #{password}			
+			
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 
+	 
+	 <update	id="updateCompany"	parameterType="user" >
+	   	UPDATE users
+	   	<set>
+	   		user_name 				= #{userName} ,
+			user_tel				= #{tel},
+			user_addr 				= #{addr} ,
+			user_email				= #{email},
+			user_pwd				= #{password},
+			user_img				= #{image:VARCHAR}, 
+			user_emp				= #{empNum},
+			user_est				= #{pubDate},
+			user_ceo				= #{companyName}
+			
+			
+	   	</set>
+	   	WHERE user_id = #{userId}
+	 </update>
+	 
+	 <update id="deleteUser"	parameterType="user">
+		UPDATE users 
+		 <set>
+		user_role					= 4
+		</set>
+		WHERE user_id = #{userId}
+	</update>
+	 
+	 
+	 
+	<select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
 		user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_img 		
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
 	 
-	 <select 	id="getProfileUser"	parameterType="string"	resultMap="userSelectMap">
+	
+	
+	
+		 
+		 
+<select 	id="getProfileUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
 		user_id , user_role, user_addr, user_img, user_ceo ,user_emp,user_est
 		FROM users 
@@ -54,66 +108,76 @@
 	 </select>
 	 
 	  <select 	id="getCompany"		parameterType="string"	resultMap="userSelectMap" >
+
 	 	SELECT
 	    user_id , user_name , user_pwd , user_role , user_tel, user_email, user_addr, user_ceo , user_emp, user_est, user_img 
 		FROM users
 		WHERE user_id = #{value}
 			 	
 	 </select>
-	 
-	 
-	 
-	 
-	 <update	id="updateUser"	parameterType="user" >
-	   	UPDATE users
-	   	<set>
-	   		user_name 	= #{userName} ,
-			user_tel	= #{tel},
-			user_addr 				= #{addr} ,
-			user_email				=	#{email}
-	   	</set>
-	   	WHERE user_id = #{userId}
-	 </update>
-		 
 
-	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , user_email
-											FROM users
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id = #{searchKeyword}
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY user_id ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
+
+	<select  id="getUserList"  parameterType="search"   resultMap="userSelectMap">
+           SELECT *
+           FROM (   SELECT inner_table.* , ROWNUM AS row_seq
+                    FROM ( SELECT user_id , user_name , user_email
+                           FROM users 
+                           WHERE (user_role = 2 OR user_role = 1) 
+                                <if test="searchCondition != null">    
+                                    <if test="searchCondition == 0 and searchKeyword !='' ">
+                                        AND user_id like '%'||#{searchKeyword}||'%'
+                                    </if>
+                                	<if test="searchCondition == 1 and searchKeyword !='' ">
+                                          AND user_name like '%'||#{searchKeyword}||'%'
+                                    </if>
+                                 </if>                                    
+                                    ORDER BY user_id ) inner_table
+                     WHERE ROWNUM &lt;= #{endRowNum} )
+         	WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+       </select>
+
 	 	 
-				
+		<select  id="getCompanyList"  parameterType="search"   resultMap="userSelectMap">
+           SELECT *
+           FROM (   SELECT inner_table.* , ROWNUM AS row_seq
+                       FROM      (   SELECT user_id , user_name , user_ceo
+                                    FROM users 
+                                    WHERE (user_role = 3 OR user_role = 1) 
+                                 <if test="searchCondition != null">
+                                    
+                                       <if test="searchCondition == 0 and searchKeyword !='' ">
+                                          AND user_id like '%'||#{searchKeyword}||'%'
+                                       </if>
+                                       <if test="searchCondition == 1 and searchKeyword !='' ">
+                                          AND user_name like '%'||#{searchKeyword}||'%'
+                                       </if>
+                                    
+                                 </if>                                    
+                                    ORDER BY user_id ) inner_table
+                     WHERE ROWNUM &lt;= #{endRowNum} )
+         WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
+       </select>
 		
 	
  
-	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
-	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , user_email
-						FROM users
-						<if test="searchCondition != null">
-							<where>
-								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id = #{searchKeyword}
-								</if>
-								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
-								</if>
-							</where>
-						</if> ) countTable						
-	 </select>
+	 <select  id="getTotalCount"  parameterType="search"    resultType="int">
+           SELECT COUNT(*)
+           FROM(   SELECT user_id , user_name , user_email
+                     FROM users 
+                  <if test="searchCondition != null">
+                     <where>
+                        <if test="searchCondition == 0 and searchKeyword !='' ">
+                         user_id like '%'||#{searchKeyword}||'%'
+                        </if>
+                        <if test="searchCondition == 1 and searchKeyword !='' ">
+                         user_name like '%'||#{searchKeyword}||'%'
+                        </if>
+                     </where>
+                  </if> 
+                     ) countTable                  
+       </select>
+	 
+	
+	 
 	 
 </mapper>

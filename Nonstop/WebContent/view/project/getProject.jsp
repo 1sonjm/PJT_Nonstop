@@ -37,6 +37,22 @@
 	z-index: 99999;
 }
 
+table {
+   	border-collapse: collapse;
+    border: collapse;
+    width: 100%;
+    padding-left : 20px;
+    table-layout : fixed;
+}
+
+th, tr {
+    padding: 8px;
+    text-align: left;
+    table-layout:fixed;
+    text-overflow:ellipsis;
+    overflow:hidden;
+}
+
 /* 로딩되는 쓸데없어보이는 아이인데 */
 .rounder {
 	width: 60px;
@@ -303,7 +319,7 @@ hr.thick-line {
 	background-color: #ececec;
 	border: 0;
 	border-radius: 0;
-	width: 120px;
+	/* width: 120px; */
 	text-align : center;
 }
 
@@ -352,18 +368,23 @@ xmp{
 	color: #d5d5d5;
     }
     
-.modal-header h4.modal-title {
+#modal-header1 h4.modal-title {
 	font-family: "Open Sans", sans-serif;
 	font-weight: 300;
 }
 
-.modal-body label {
+#modal-body1 label {
 	font-family: "Open Sans", sans-serif;
 	font-weight: 400;
 }
 
-.modal-dialog {
+#modal-dialog1 {
 	width : 300px;
+}
+
+
+#modal-dialog2 {
+	width : 500px;
 }
     
 </style>
@@ -420,18 +441,24 @@ xmp{
 		});
 		//프로젝트 초대하기
 	 	$("#invite").on("click", function(){
-	 		
 	 		var items = [];
+	 		var items2 = [];
 			$("input:checkbox[name=recNo]:checked").each(function(){
 				items.push($(this).val());
 			});
 			
+			$(".recUserId").each(function(){
+				items2.push($(this).attr("recUserIdValue"));
+			});
+			
+			$("input:hidden[name='recUserIdItems']").val( items2 );
 			$("input:hidden[name='checkBoxes']").val( items );
-	 		
+			
+			alert($("input:hidden[name='checkBoxes']").val( ));
 			if(confirm("프로젝트에 한번 초대된 인원은 수정이 불가능합니다.\n정말 프로젝트에 초대하시겠습니까? ") !=0){
 				$("form").attr("method", "POST").attr("action", "/project/inviteApplicant").submit();
 			}else{
-			}
+			} 
 		});
 		
 	});
@@ -578,19 +605,50 @@ xmp{
 					});
 	       });
 	   });
-	   
 	   $(function() {
-		   $("#messageQuestion").on("click" , function() {       	
-		    	  self.location="/letter/addLetter";
-		      });
+	 	 //메일전송
+		 $("#send").on("click", function(){
+			var receiveId=$("input[name='receiveId']").val();
+			var title=$("input[name='letTitle']").val();
+			var letDetail=$("input[name='letDetail']").val();
+			
+			if(receiveId == null || receiveId.length<1 ){
+				alert("수신자는 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			if(title == null || title.length<1){
+				alert("제목은 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+		 });
 	   });
-    
+	   
+	 
+	   $(function() {
+		   //right side 프로필 사진 클릭시 기업 프로필로 이동
+		   $("#coProfileImg").on("click", function(){
+			   self.location ="/profile/getOtherProfile?userId="+$("#projUserId").val();
+		   });
+		   
+		   //comment 프로필 사진 클릭시 해당 프로필로 이동
+		   $(".comment-img").on("click", function(){
+			   self.location ="/profile/getOtherProfile?userId="+$(this).attr("comUserVal");
+		   });
+		   
+		   //applicant 프로필 사진 클릭시 해당 프로필로 이동
+		   $(".applUserImg").on("click", function(){
+			   self.location ="/profile/getOtherProfile?userId="+$(this).attr("applUserVal");
+		   });
+		   
+	   });
+	   
 	</script>
 </head>
 
 <body>
 	<jsp:include page="/view/common/toolbar.jsp" />
-	
+<%-- 	<c:import url="/user/toolbarMailCheck"/> --%>
 	<form class="form-group" name="detailForm">
 	<div id="main">
 		<div class="container">
@@ -611,7 +669,7 @@ xmp{
 								<c:if test="${sessionScope.user.role == '2'}">
 									<button type="button" class="btn btn-info btn-lg" id="backButton">목록으로 가기</button>
 								 	 <c:choose>
-										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId}">
+										<c:when test="${sessionScope.user.userId==recordApplicant.recUserId && project.projDday>0}">
 											<button type="button" class="btn btn-info btn-lg" id="applCancleButton">지원취소</button>
 										</c:when>
 										<c:when test="${project.projDday<=0}">
@@ -649,7 +707,7 @@ xmp{
 												id="deleteScrap" projNo="${project.projNo}" scrap="${project.scrapNo}"></i>
 										</c:if>
 
-										<strong style="font-size: 25px;">${project.projTitle}</strong>
+										<strong style="font-size: 25px;" >${project.projTitle}</strong>
 										<c:choose>
 											<c:when test="${project.projDday<=0}">
 												<div class="w3-panel w3-round-large" id="shape1">
@@ -726,7 +784,7 @@ xmp{
 													<c:set var="i" value="0"/>
 														<c:forEach var="listTechUse" items="${listTechUse}" >
 														<c:set var="i" value="${i+1}"/>
-														<a type="button" class="btn btn-info" id="techNameButton">${listTechUse.tuTechName}</a>
+														<span class="label label-info" style="color : #000;">${listTechUse.tuTechName}</span>
 													</c:forEach>
 												</th>
 											</tr>
@@ -762,9 +820,7 @@ xmp{
                                    
                                     <div class="media">
 									  <div class="media-left">
-									    <a href="#">
 									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
-									    </a>
 									  </div>
 									  
 							  	    <div class="media-body">
@@ -789,20 +845,21 @@ xmp{
 								
 									<!-- ajax로 받은 데이터 들어올 곳 -->						
 									<div id="ajaxTarget"></div> 																    
-								
+									
 									<c:set var="i" value="0"/>
 									<c:forEach var="projCommentList" items="${projCommentList}" >
 									<c:set var="i" value="${i+1}"/>
+									<input type="hidden" class="comNo" value="${projCommen.comNo}"/>
+									
 									
 									<div class="media">
 									  <div class="media-left">
-									    <a href="#">									    
-									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="">
-									    </a>
+									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									      <input type="hidden" class="comUserId" value="${projCommentList.comUserId}"/>        
 									  </div>
 									  <div class="media-body">
 									  	<div class="comment-div">
-									  		<h6><strong>${projCommentList.comUserId}</strong>
+									  		<h6><strong >${projCommentList.comUserId}</strong>
 									  			&nbsp;&nbsp;•&nbsp;&nbsp;${projCommentList.comRegDate}
 									  			<c:set var="sessionUserId" value="${sessionScope.user.userId}"/>
 									  			<c:if test="${projCommentList.comUserId eq sessionUserId}">
@@ -810,7 +867,7 @@ xmp{
 									  				<input type="hidden" value="${projCommentList.comNo}"/>
 									  			</c:if>
 									  		</h6>
-									  		<p>${projCommentList.comContent}</p>							  		
+									  		<p>${projCommentList.comContent}</p>
 									  	</div>										  
 									  </div>
 									</div>
@@ -834,7 +891,7 @@ xmp{
 					<div class="about-fixed">
 
 						<div class="my-pic">
-						    <img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
+						    <img class="userImg" src="../../resources/images/upload/${user.image}" alt=""  id="coProfileImg">
               			</div>
               			
               			<div class="my-detail">
@@ -868,16 +925,15 @@ xmp{
 						 	<input type="hidden" name="projUserId" id="projUserId" value="${project.projUserId}"/>
 						 	<center>
 						 	<c:if test="${sessionScope.user.userId != project.projUserId}">
-								<button type="button" class="btn btn-info btn-lg" id="messageQuestion">쪽지 문의</button>
+								<button type="button" class="btn btn-info btn-lg" id="messageQuestion" data-toggle="modal" data-target="#letter">쪽지 문의</button>
 							</c:if>
 								<c:if test="${sessionScope.user.role == 2}">
-								<%-- 	<c:if test="${project.projFollowFlag == true}"> --%>
-										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
+									<c:if test="${project.projFollowFlag == true}">
 										<button type="button" class="btn btn-info btn-lg" id="follow2">팔로우 취소</button>
-									<%-- </c:if>
+									</c:if>
 									<c:if test="${project.projFollowFlag == false}">
-										
-									</c:if> --%>
+										<button type="button" class="btn btn-info btn-lg" id="follow1">팔로우 하기</button>
+									</c:if>
 								</c:if>
 							</center>
 		                 </div>
@@ -890,9 +946,6 @@ xmp{
 		</div>
 	</div>
 	
-	
-
-
 
 	<!-- Back to Top Start -->
 	<!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->
@@ -903,14 +956,14 @@ xmp{
 	<!-- jQuery -->
 </form>
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" 	style="display: none;">
-		<div class="modal-dialog">
+		<div class="modal-dialog" id="modal-dialog1">
 			<div class="modal-content">
-				<div class="modal-header">
+				<div class="modal-header" id="modal-header1">
 					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
 					<h4 class="modal-title">지원자 목록</h4>
 				</div>
-				<div class="modal-body">
-					<form role="form" id="addMail" class="form-horizontal">
+				<div class="modal-body" id="modal-body1">
+					<form role="form" id="applList" class="form-horizontal">
 						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
 						<div class="form-group" style="height : 250; overflow-y: scroll; overflow-x:hidden; layout:fixed;">
 							<c:if test="${project.projDday<=0}">
@@ -923,14 +976,15 @@ xmp{
 									  	<div class="checkbox">
 											<label for="checkboxes-0" style="font-size : 20px">
 										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox">
-										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
-										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px " >
+										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0; float:left;" applUserVal="${recordApplicant.recUserId}">
 										      </button>
-										      ${recordApplicant.recUserId}
-										      <c:if test="${recordApplicant.recStatus==1}">
-										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
-										      <c:set var="isChk" value="true"/>
-										      </c:if>
+										      <div class="recUserId" name="recUserId" recUserIdValue="${recordApplicant.recUserId}" style="float:right; margin-right:20px">${recordApplicant.recUserId}
+											      <c:if test="${recordApplicant.recStatus==1}">
+												      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; margin-left:30px; border : 0; width:25px; height:25px; padding :0; float:right;"></button>
+												      <c:set var="isChk" value="true"/>
+											      </c:if>
+										      </div>
 									    	</label>
 										</div>		
 									  </div>
@@ -944,8 +998,8 @@ xmp{
 								<div class="form-group">
 									<div class="col-md-12">
 										<label style="font-size : 20px; margin-left:35px">
-										    <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 ">
-										      	<img class="img" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0">
+										    <button type="button" class="applUserButton" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px" >
+										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0" applUserVal="${recordApplicant.recUserId}">
 										    </button>
 										      ${recordApplicant.recUserId}
 										      <c:if test="${recordApplicant.recStatus==1}">
@@ -956,8 +1010,9 @@ xmp{
 								</div>
 							</c:forEach>
 							</c:if>
-							<input type="hidden" name="checkBoxes"/>
 						</div>
+						<input type="hidden" name="checkBoxes" />
+						<input type="hidden" name="recUserIdItems"/>
 					</form>
 				</div>
 				
@@ -970,6 +1025,73 @@ xmp{
 			<!-- /.modal-content -->
 		</div>
 		<!-- /.modal-dialog -->
-</div>
+	</div>
+
+<!-- Modal -->
+	<div aria-hidden="true" aria-labelledby="myModalLabel"
+		role="dialog" tabindex="-1" id="letter" class="modal fade"
+		style="display: none;">
+		<div class="modal-dialog" id="modal-dialog2">
+
+			<div class="modal-content">
+				<div class="modal-header" id="modal-header2">
+					<button aria-hidden="true" data-dismiss="modal" class="close"
+						type="button">×</button>
+					<h4 class="modal-title">Send to mail your partner</h4>
+				</div>
+				<div class="modal-body" id="modal-body2">
+					<form role="form" id="addMail" class="form-horizontal">
+						<input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
+						<input type="hidden" name="checkBoxes" />
+						<input type="hidden" name="recUserIdItems"/>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">From</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="sendId"
+									value="${sessionScope.user.userId}" readOnly>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">To</label>
+							<div class="col-lg-10">
+								<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
+									id="inputEmail1" class="form-control" value="${project.projUserId}" readOnly>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Title</label>
+							<div class="col-lg-10">
+								<input type="text" name="letTitle"
+									placeholder="메일 제목을 입력하세요" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Mail</label>
+							<div class="col-lg-10">
+								<textarea maxlength="2000" rows="10" cols="30"
+									name="letDetail" placeholder="2000자까지 입력가능"
+									class="form-control"></textarea>
+								<br /> 2000/<span id="chars">2000</span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<span style="float : right">
+									<button class="btn btn-send" type="submit" id="send" receiveId="${sessionScope.user.userId}" >send</button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 </body>
 </html>

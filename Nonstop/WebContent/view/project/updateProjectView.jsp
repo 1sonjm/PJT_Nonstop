@@ -26,6 +26,8 @@
 	<!-- Bootstrap Core JavaScript -->
 	<script src="/resources/javascript/bootstrap.min.js"></script>
 	
+	<script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
+	
     <style>	
     legend {
     	border-bottom:0;
@@ -81,12 +83,11 @@
 		
 		$("input:hidden[name='checkBoxes']").val( items );
 		
-		var projLocation = "";	
-		if( $("select[name='projLocation1']").val() != ""  &&  $("select[name='projLocation2']").val() != "") {
-			var projLocation = $("select[name='projLocation1']").val() + " " + $("select[name='projLocation2']").val();
-		}
+		var projLocation = $("#projLocation").val();
+		var projLocationArray=projLocation.split(" ");
+		var location = projLocationArray[0]+" "+projLocationArray[1];
 
-		$("input:hidden[name='projLocation']").val( projLocation );
+		$("input:hidden[name='projLocation']").val( location );
 		
 		$("form").attr("method", "POST").attr("action", "/project/updateProject").submit();
 	}
@@ -106,6 +107,24 @@
 			history.go(-1);
 		});
   });
+   
+  function projLocation_daumPostcode() {
+       new daum.Postcode({
+           oncomplete: function(data) {
+               var fullAddr = ''; 
+
+               if (data.userSelectedType === 'R') { 
+                   fullAddr = data.roadAddress;
+
+               } else { 
+                   fullAddr = data.jibunAddress;
+               }
+               
+               $("#projLocation").val(fullAddr);
+           }
+       }).open();
+   }
+   
 
     </script>
     
@@ -165,6 +184,7 @@
 <!-- Navigation -->
 <!-- ToolBar Start /////////////////////////////////////-->
 <jsp:include page="/view/common/toolbar.jsp" />
+<%-- <c:import url="/user/toolbarMailCheck"/> --%>
 <!-- ToolBar End   /////////////////////////////////////-->
 
 <div class="margin-top-120">
@@ -221,18 +241,12 @@
 
 					<div class="form-group">
 					    <label for="projLocation" class="col-sm-offset-1 col-sm-2 control-label">지역</label>
-						    <div class="col-sm-3">
-						    	<select class="form-control" name="projLocation1" id="projLocation1">
-								  	<option value="서울" >서울</option>
-									<option value="인천" >인천</option>
-								</select>
+						    <div class="col-sm-1" style="height : 39px">
+							    <input  class="form-btn" type="button" onclick="projLocation_daumPostcode()" value="주소 찾기" style="height : 100%">
 							</div>
-							<div class="col-sm-3">
-								<select class="form-control" name="projLocation2" id="projLocation2">
-								  	<option value="강서구" >강서구</option>
-									<option value="부평구" >부평</option>
-								</select>
-						    </div>
+							<div class="col-sm-5">
+							    <input class="form-control" type="text" id="projLocation" placeholder="주소" value="${project.projLocation}">
+							</div>
 					    <input type="hidden" name="projLocation" />
 					</div>
 					
