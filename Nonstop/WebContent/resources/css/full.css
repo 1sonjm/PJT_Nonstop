@@ -330,7 +330,17 @@ html {
 .intro .intro-body .intro-text {
   font-size: 14px;
 }
+.intro .page-scroll {
+	position: fixed;
+    color: rgb(148, 148, 148);
+    font-size: 30px;
+    margin-top: 170px;
+    margin-left: -31px;
+}
 
+.intro .page-scroll:hover {
+  color: white;
+}
 
 @media (min-width: 768px) {
   .intro {
@@ -338,18 +348,18 @@ html {
     padding: 0;
   }
   .intro .intro-body .brand-heading {
-    font-size: 40px;
+    font-size: 30px;
   	text-transform:uppercase;
   	font-weight: 700;
-  	letter-spacing : 0.13em;
+  	letter-spacing : 0.25em;
   	line-height: 1.4em;
   	font-color: #fff;
   	margin-bottom: 7px;
   }
   .intro .intro-body .intro-text {
    	font-size: 14px;
-   	color: #d6d6d6;
-   	font-weight: 400;
+   	color: #ebebeb;
+   	font-weight: 200;
   }
   .intro-main {
     width: 70%;
@@ -1020,27 +1030,30 @@ input:-webkit-autofill {
     color: #fff;
 }
 .funfacts .funfact .st-funfact-icon {
-    font-size: 42px;
+    font-size: 40px;
     line-height: 90px;
+    margin-bottom: 20px;
 }
 
 .funfacts .funfact .st-funfact-counter {
-    font-size: 48px;
-    line-height: 68px;
+    font-size: 30px;
+    line-height: 20px;
     letter-spacing: 3px;
+    font-weight: 600;
 }
 
 .funfacts .funfact .funfact-title {
-    font-size: 20px;
+    font-size: 14px;
     line-height: 40px;
     letter-spacing: 1px;
     font-weight: 300;
+    color: #ebebeb;
 }
 .funfacts .funfact:after {
     content: '';
     display: block;
     width: 35px;
-    height: 2px;
+    height: 3px;
     background-color: #ff6600;
     margin: 0 auto;
 }

@@ -215,16 +215,17 @@ body {
 	<!-- Intro Header -->
 	<header class="intro" id="intro">
 		<div class="intro-body">
-			<div class="container">
+			<div class="container" style="margin-top: 60;">
 				<div class="row">
 					<div class="col-md-10 col-md-offset-1">
-						<h1 class="brand-heading">NONSTOP <br/> PROJECT AND PORTFOLIO</h1>
-						<div class="margin-bottom-20"></div>
-						
+					<p class="intro-text" style="color:#ff6600;font-size: 20;font-weight: 400;">
+							웹 / 어플리케이션 구인구직 솔루션
+						</p>
+						<h1 class="brand-heading">NONSTOP YOUR PROJECT AND PORTFOLIO</h1>
 						<p class="intro-text">
 							논스톱에서 웹사이트, 어플리케이션 개발 및 디자인 포트폴리오를 관리하고 관련 프로젝트에 참여해 보세요.
 						</p>
-						<div class="margin-bottom-50"></div>
+						<div class="margin-bottom-120"></div>
 						
 						<%-- <div class="intro-main">
 							<ul class="main-ul">
@@ -264,22 +265,22 @@ body {
 								<div class="row">
 									<div class="col-md-4">
 										<div class="funfact">
-											<div class="st-funfact-icon"><i class="fa fa-briefcase"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" data-from="0" data-to="25964" data-runit="1">25964</span>+</div>
+											<div class="st-funfact-icon"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+											<div class="st-funfact-counter"><span class="st-ff-count" data-from="0" data-to="25964" data-runit="1">125</span>+</div>
 											<strong class="funfact-title">Development Portfolio</strong>
 										</div><!-- .funfact -->
 									</div>
 									<div class="col-md-4">
 										<div class="funfact">
-											<div class="st-funfact-icon"><i class="fa fa-clock-o"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" data-from="0" data-to="35469" data-runit="1">35469</span>+</div>
+											<div class="st-funfact-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+											<div class="st-funfact-counter"><span class="st-ff-count" data-from="0" data-to="35469" data-runit="1">135</span>+</div>
 											<strong class="funfact-title">Design Portfolio</strong>
 										</div><!-- .funfact -->
 									</div>
 									<div class="col-md-4">
 										<div class="funfact">
-											<div class="st-funfact-icon"><i class="fa fa-send"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" data-from="0" data-to="86214" data-runit="1">86214</span>+</div>
+											<div class="st-funfact-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
+											<div class="st-funfact-counter"><span class="st-ff-count" data-from="0" data-to="86214" data-runit="1">122</span>+</div>
 											<strong class="funfact-title">Projects</strong>
 										</div><!-- .funfact -->
 									</div>
@@ -287,18 +288,10 @@ body {
 							</div>
 						</div>
 										
-						
-						<!-- 버튼 주석처리
-						<div class="margin-bottom-50"></div>
-						<button class="sq_button" type="button" style="background-color: #ff6600">회원가입</button>
-						<button class="sq_button" type="button">일단, 둘러볼게요</button>
-						-->
-						
-						<div class="center-block">
-							<a href="#about" class="page-scroll" data-index="0" style="position: fixed; margin-top: 6%; margin-left: -2%;"> <!-- class="btn btn-circle page-scroll" -->
-							<span class="fa fa-chevron-down" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"><p>더 알아보기</p></span>
+						<div class="col-md-12" style="text-align:center">
+							<a href="#about" class="page-scroll" data-index="0"> <!-- class="btn btn-circle page-scroll" -->
+							<span class="fa fa-chevron-down" aria-hidden="true"><p>더 알아보기</p></span>
 							</a>
-							
 						</div>
 						
 					</div>
