@@ -31,6 +31,10 @@ public class TechUseServiceImpl implements TechUseService{
 		techUseDAO.addTechUse(tuTechNo, tuProjNo);
 	}
 	
+	public void addTechUsePort(TechUse techUse) throws Exception {
+		techUseDAO.addTechUsePort(techUse);
+	}
+	
 	public TechUse getTechUse(int tuNo) throws Exception{
 		
 		return techUseDAO.getTechUse(tuNo);

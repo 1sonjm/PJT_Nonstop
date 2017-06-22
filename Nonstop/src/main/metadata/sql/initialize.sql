@@ -105,9 +105,11 @@ INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'SQLite',3);
 DROP SEQUENCE seq_portfolio_port_no;
 DROP SEQUENCE seq_port_like_port_like_no;
 DROP SEQUENCE seq_port_comment_com_no;
+DROP SEQUENCE seq_port_images_img_no;
 CREATE SEQUENCE seq_portfolio_port_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_like_port_like_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_comment_com_no INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_port_images_img_no INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE portfolio ( 
   port_no           NUMBER             NOT NULL,
@@ -119,6 +121,8 @@ CREATE TABLE portfolio (
   port_file         VARCHAR2(100)      UNIQUE,
   port_detail       VARCHAR2(4000),
   port_viewcount    NUMBER(20),
+  port_like_count    NUMBER(20),
+  port_com_count    NUMBER(20),
   PRIMARY KEY(port_no)
 );
 CREATE TABLE port_like ( 
@@ -134,6 +138,13 @@ CREATE TABLE port_comment (
   com_port_regdate  DATE,
   com_port_content  VARCHAR2(200),
   PRIMARY KEY(com_no)
+);
+CREATE TABLE port_images(
+img_no NUMBER							NOT NULL,
+img_port_no NUMBER						NOT NULL REFERENCES portfolio(port_no),
+img_name VARCHAR2(50)					NOT NULL,
+img_order NUMBER(30),
+PRIMARY KEY(img_no)
 );
 
 INSERT INTO portfolio (port_no,port_user_id,port_division,port_title,port_regdate,port_file,port_detail) 

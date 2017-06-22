@@ -144,21 +144,43 @@ public class ProjectController {
 		
 		return "forward:/view/project/getProject.jsp";
 	}
-	
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	/*@RequestMapping(value="getJsonProduct/{prodNo}", method={RequestMethod.GET, RequestMethod.POST})
-	public void getJsonProduct( @PathVariable int prodNo, Model model, HttpSession session ) throws Exception {
+	@RequestMapping(value="getJsonProject/{projNo}", method=RequestMethod.GET)
+	public void getJsonProject( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+							  @ModelAttribute("projComment") ProjComment projComment,
+			     			  @RequestParam("projNo") int projNo ,
+							  Model model, HttpSession session ) throws Exception {
 		
-		System.out.println("/product/getProduct : GET");
-		Product product = productService.getProduct(prodNo);
-		model.addAttribute("product", product);
+		Project project = new Project();
+	
+		String scrapUserId = ((User)session.getAttribute("user")).getUserId();
 		
-	}*/
-	
-	
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
+		project = projectService.getProject(projNo ,scrapUserId);
+		
+		List<ProjComment> projCommentList = projectService.getCommentList(projNo);
+		List<TechUse> listTechUse = techUseService.getTechUseList(projNo);
+		User user = userService.getUser(project.getProjUserId());
+		
+		Follow follow = profileService.getFollow(scrapUserId, project.getProjUserId());
+		
+		if(follow != null){
+			project.setProjFollowFlag(true);
+		}
+		
+		recordApplicant = projectService.getApplicant(projNo, scrapUserId);
+		projectService.updateViewCount(project);
+		List<RecordApplicant> listApplicant = projectService.getApplicantList(projNo);
+		
+		session.setAttribute("projNo", projNo);
+		model.addAttribute("projCommentList", projCommentList);
+		model.addAttribute("projComment", projComment);
+		model.addAttribute("listTechUse", listTechUse);
+		model.addAttribute("project", project);
+		model.addAttribute("user", user);
+		model.addAttribute("recordApplicant", recordApplicant);
+		model.addAttribute("listApplicant", listApplicant);
+		
+	}
 	
 	@RequestMapping(value="updateProjectView", method=RequestMethod.GET)
 	public String updateProjectView( @RequestParam("projNo") int projNo , HttpSession session, Model model ) throws Exception{
@@ -253,6 +275,7 @@ public class ProjectController {
 		for(int i=0; i<list.size(); i++){
 			projNoList.add(list.get(i).getProjNo());
 	    }
+		
 		List<TechUse> listTechUse = new ArrayList<TechUse>();
 		if(projNoList.size() != 0 ){
 			listTechUse = techUseService.listTechUse(projNoList);
@@ -265,6 +288,50 @@ public class ProjectController {
 		return "forward:/view/project/listProject.jsp";
 	}
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value="listJsonProject")
+	public void listJsonProject( @ModelAttribute("search") Search search,
+							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
+		
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(projPageSize);
+		String scrapUserId = "testUser";
+		
+		
+		if((User)session.getAttribute("user") != null) {
+			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+		
+		List<Project> list = projectService.getProjectList(search, scrapUserId);
+        
+        String postDivision = String.valueOf(search.getPostDivision());
+		
+		if(postDivision.startsWith("1")){
+			search.setPostDivision(1);
+		}else{
+			search.setPostDivision(2);
+		}
+		search.setPostSorting(2);
+		
+		List<Integer> projNoList = new ArrayList<Integer>();
+		for(int i=0; i<list.size(); i++){
+			projNoList.add(list.get(i).getProjNo());
+	    }
+		List<TechUse> listTechUse = new ArrayList<TechUse>();
+		if(projNoList.size() != 0 ){
+			listTechUse = techUseService.listTechUse(projNoList);
+		}
+        
+		model.addAttribute("list", list);
+		model.addAttribute("search", search);
+		model.addAttribute("listTechUse", listTechUse);
+		
+	}	
+		
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 	
 	@RequestMapping(value={"addJsonComment"}, method=RequestMethod.POST)
 	public void addJsonComment( @ModelAttribute("projComment") ProjComment projComment, HttpSession session, Model model ) throws Exception {
@@ -312,7 +379,20 @@ public class ProjectController {
 		model.addAttribute("listApplicant", listApplicant);
 		
 		return "forward:/view/project/getProject.jsp";
+		
 	}
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	@RequestMapping(value="listJsonApplicant/{projNo}")
+	public void listJsonApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+									   @RequestParam("projNo") int recProjNo,
+									   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
+		
+		List<RecordApplicant> listApplicant = projectService.getApplicantList(recProjNo);
+        
+		model.addAttribute("listApplicant", listApplicant);
+		
+	}	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	@RequestMapping(value="inviteApplicant", method=RequestMethod.POST)
 	public String inviteApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
@@ -322,8 +402,6 @@ public class ProjectController {
 
 		System.out.println("/view/project/inviteProject: POST");
 		int [] recNo = checkBoxes;
-		System.out.println("adsfasdfadsfdsafasdf"+recNo[1]);
-		System.out.println("adsfasdfadsfdsafasdf"+recNo[0]);
 		
 		String letSendId=((User)session.getAttribute("user")).getUserId();
 		String [] letReceiveId = recUserIdItems;

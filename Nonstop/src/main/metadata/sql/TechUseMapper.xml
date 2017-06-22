@@ -35,6 +35,20 @@
 			#{tuTechNo:NUMERIC}
 		)
 	 </insert>
+	 
+	 <insert 	id="addTechUsePort"	 parameterType="techUse">
+	 	INSERT INTO techuse ( 
+			tu_no, 
+			tu_port_no,
+			tu_proj_no, 
+			tu_tech_no) 
+		VALUES ( 
+			seq_techuse_tu_no.nextval, 
+			#{tuPortNo}, 
+			#{tuProjNo},
+			#{tuTechNo}
+		)
+	 </insert>
 		
 	 <select  id="getTechUseList"  parameterType="int"	resultMap="techUseSelectMap">
 

@@ -16,15 +16,20 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/resources/css/nonstop.css" rel="stylesheet">
-
-    <!-- Custom CSS -->
-    <link href="/resources/css/full.css" rel="stylesheet">
     
+    <!-- Custom CSS -->
+    <!-- <link href="/resources/css/full.css" rel="stylesheet"> -->
+
     <!-- jQuery -->
 	<script src="/resources/javascript/jquery.js"></script>
 	
 	<!-- Bootstrap Core JavaScript -->
 	<script src="/resources/javascript/bootstrap.min.js"></script>
+	
+	<!-- 이미지 갤러리 CSS, JS -->
+	<link rel="stylesheet" href="/resources/Gallery/css/blueimp-gallery.min.css">
+	<script src="/resources/Gallery/js/blueimp-gallery.min.js"></script>
+	
     <style>
     .my-pic img { 
       width:100%;	
@@ -281,7 +286,29 @@
     </style>
 
    <script type="text/javascript">
-   
+  
+   $(function() {
+	   
+	   
+	   /* Gallery Script */
+	   document.getElementById('links').onclick = function (event) {
+		    event = event || window.event;
+		    var target = event.target || event.srcElement,
+		        link = target.src ? target.parentNode : target,
+		        options = {index: link, event: event},
+		        links = this.getElementsByTagName('a');
+		    blueimp.Gallery(links, options);
+		};
+		
+		/* Gallery Script Carousel */
+		blueimp.Gallery(
+		    document.getElementById('links').getElementsByTagName('a'),
+		    {
+		        container: '#blueimp-gallery-carousel',
+		        carousel: true,
+		    }
+		);
+   });
    /* 댓글 버튼 */
    function fnMove(comment){
         var position = $("#comment").offset();
@@ -610,11 +637,48 @@
 								<c:when test="${portFileArray[fn:length(portFileArray)-1]=='pdf' || portFileArray[fn:length(portFileArray)-1] == 'odp' || portFileArray[fn:length(portFileArray)-1] == 'odt' || portFileArray[fn:length(portFileArray)-1] == 'ods'}">
 									<iframe src = "/resources/ViewerJS/#../../resources/images/upload/${portfolio.portFile}" width="100%" height="100%" allowfullscreen webkitallowfullscreen></iframe>
 								</c:when>
-<%-- 							<c:when test="${portFileArray[fn:length(portFileArray)-1] == 'odp'}">
+								<%--<c:when test="${portFileArray[fn:length(portFileArray)-1] == 'odp'}">
 									<iframe src = "/resources/ViewerJS/#../../resources/images/upload/${portfolio.portFile}" width="100%" height="100%" allowfullscreen webkitallowfullscreen></iframe>
 								</c:when> --%>
+								
+								<c:when test="${!empty portfolio.images}">
+								
+									<%-- <img src="/resources/images/upload/${portfolio.portFile}" alt=""> --%>
+								
+									<!-- The Gallery as lightbox dialog, should be a child element of the document body -->
+									<div id="blueimp-gallery" class="blueimp-gallery">
+									    <div class="slides"></div>
+									    <h3 class="title"></h3>
+									    <a class="prev">‹</a>
+									    <a class="next">›</a>
+									    <a class="close">×</a>
+									    <a class="play-pause"></a>
+									    <ol class="indicator"></ol>
+									</div>
+	                               
+	                            	<div id="links" class="col-md-12" style="padding-left: 0; padding-right: 0;">
+	                            		<!-- 메인 이미지 -->
+	                            		<img src="/resources/images/upload/${portfolio.portFile}" alt="">
+	                            		<!-- 모든 이미지 -->
+	                            		<ul class="images" style=" list-style: none;margin-left: -40px;margin-top: 20px;">
+											
+											<c:set var="i" value="0"/>
+											<c:forEach var="portImages" items="${portfolio.images}" >
+											<c:set var="i" value="${i+1}"/>
+											
+											<li class="col-sm-1" style="padding-left: 0; padding-right: 7px; width:10%">
+												<a href="/resources/images/upload/${portImages.imgName}" title="Banana">
+											        <img src="/resources/images/upload/${portImages.imgName}" alt="Banana" style="border-radius:5px; width:100%;">
+											    </a>
+										    </li>
+										    
+										    </c:forEach>
+										    
+									    </ul>
+									</div>
+								</c:when>
 								<c:otherwise>
-									<img src="../../resources/images/upload/${portfolio.portFile}" alt="">
+									<img src="/resources/images/upload/${portfolio.portFile}" alt="">
 								</c:otherwise>
 								</c:choose>	
                                 
@@ -707,7 +771,7 @@
             	<div class="about-fixed">
               
 	            	<div class="my-pic">
-	              		<img class="userImg" src="../../resources/images/upload/${user.image}" alt="">
+	              		<img class="userImg" src="/resources/images/upload/${user.image}" alt="">
 	           		</div>
           
 	              	<div class="my-detail">

@@ -2,6 +2,7 @@ package com.nonstop.control.portfolio;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -18,15 +19,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.nonstop.domain.Follow;
 import com.nonstop.domain.PortComment;
+import com.nonstop.domain.PortImages;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Search;
+import com.nonstop.domain.TechUse;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
+import com.nonstop.service.techuse.TechUseService;
 import com.nonstop.service.user.UserService;
 
 @Controller
@@ -45,6 +50,10 @@ public class PortfolioController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
+	@Autowired
+	@Qualifier("techUseServiceImpl")
+	private TechUseService techUseService;
+	
 	public PortfolioController() {
 
 	}
@@ -62,39 +71,99 @@ public class PortfolioController {
 	}
 	
 	@RequestMapping(value="addPortfolio", method=RequestMethod.POST)
-	public String addPortfolio(@ModelAttribute("portfolio") Portfolio portfolio, @RequestParam("portFileName") MultipartFile file, Model model) throws Exception {
+	public String addPortfolio(@ModelAttribute("portfolio") Portfolio portfolio, 
+										@RequestParam("checkBoxes") int [] items,
+										MultipartHttpServletRequest file, Model model) throws Exception {
 				
-		String portFile=file.getOriginalFilename();
+		//@RequestParam("portFileName") MultipartFile file : 하나의 파일을 받을 때 사용. portFileName 한개를 MultipartFile을 데이터타입으로 하는 file에 담아온다.
+		//MultipartHttpServletRequest file :  여러개의 파일을 받기위해 사용. getFiles 메소드를 통해 파일을 List 형태로 받을 수 있다.
 		
-		System.out.println("portFile : "+portFile);
+		//JSP에서 넘어온 <input> 태그의 name을 알고있다면 getFile(), 모른다면 getFileNames()사용
+		List<MultipartFile> uploadFiles = file.getFiles("portFileName[]");
+		List<PortImages> images = new ArrayList(); 
 		
-		portfolio.setPortFile(portFile);
+		System.out.println("uploadFiles : "+uploadFiles);
 		
-		//user를 세션을 통해 받아와야 하는데 아직 로그인을 할 수 없으니 임시로 넣는다
-		//나중에 수정할 부분이다!!
-		portfolio.setPortUserId("user01");
+		if(uploadFiles.size() == 1) {
+			//확장자 구하기
+			String portFile = uploadFiles.get(0).getOriginalFilename();
+			int index = portFile.lastIndexOf(".");
+			String ext = portFile.substring(index+1);
+			
+			portfolio.setPortFile(portFile);
+			
+			System.out.println("ext : "+ext+" / portFile : "+portFile);
+			//pdf 파일이면 thumbnail 추출
+			if(ext == "pdf") {
+				portfolio.setPortFile("pdf_img.jpg");
+			} else if(ext == "odf") {
+				portfolio.setPortFile("ppt_img.jpg");
+			}
+			//파일 업로드 실행
+			try {
+	            // 1. FileOutputStream 사용
+	            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
+	             
+	            // 2. File 사용
+	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile);
+	            uploadFiles.get(0).transferTo(uploadFile);
+	            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
+	            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
+	            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
 		
-		System.out.println("addPortfolio : "+portfolio);
+		}else {
+			
+			for(int i=0 ; i<uploadFiles.size() ; i++) {
+				//portImages를 밖에서 생성하면 마지막 값이 덮어쓰기 된다. 참조형 자료형이라서? 아무튼 안에서 생성해야 정상적으로 작동
+				//아마도 add하는 값이 들어가는게 아니라 주소값이 list에 들어가기 때문인듯 하다.
+				PortImages portImages = new PortImages();
+				
+				String portFile = uploadFiles.get(i).getOriginalFilename();
+				
+				if(i == 0){
+					//썸네일 이미지 등록
+					portfolio.setPortFile(portFile);
+				}
+				
+				portImages.setImgName(portFile);
+				portImages.setImgOrder(i);
+				
+				images.add(portImages);
+				portfolio.setImages(images);
+				
+			}//end for문
+			//파일 업로드 실행
+			for(int i=0 ; i<uploadFiles.size() ; i++) {
+				try {
+		            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + images.get(i).getImgName());
+		            uploadFiles.get(i).transferTo(uploadFile);
+		        } catch (IOException e) {
+		            e.printStackTrace();
+		        }
+			}
+		}//end if-else문
+		///////////// 이미지 업로드 END /////////////
 		
-        try {
-            // 1. FileOutputStream 사용
-            // FileOutputStream output = new FileOutputStream("C:/images/" + fileName);
-             
-            // 2. File 사용
-            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile);
-            file.transferTo(uploadFile);
-            //문제1. images폴더에 파일이 업로드 되는 문제. 왜 upload 폴더로 안들어갈까
-            //File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + portFile); 맨 뒤에 '/'를 붙여야 한다.
-            //'/'를 붙이지 않으면 파일이름 앞에 upload가 붙는다.
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-	
-		portfolioService.addPortfolio(portfolio);
+		// 사용기술 업로드 START
+		int tuPortNo = portfolioService.addPortfolio(portfolio);
 		
-		model.addAttribute("portfolio",portfolio);
+		System.out.println(tuPortNo);
 		
-		return "forward:/view/portfolio/getPortfolio.jsp";
+		if(items.length > 0){
+			for(int i=0; i<items.length;i++){
+				TechUse techUse = new TechUse();
+				techUse.setTuPortNo(tuPortNo);
+				techUse.setTuTechNo(items[i]);
+				techUseService.addTechUsePort(techUse);
+			}
+		}//END
+		
+		//model.addAttribute("portfolio",portfolio);
+		
+		return "redirect:/view/portfolio/addPortfolioView.jsp";
 	}
 	
 	@RequestMapping(value="listPortfolio")
@@ -358,5 +427,33 @@ public class PortfolioController {
 		portfolioService.deletePortLike(portLike.getPortLikeNo());
 		
 	}
+	
+   @RequestMapping(value="getJSONPortfolioList/{target}/{currentPage}/{sorting}", method=RequestMethod.GET)
+   public void getJSONPortfolioList(@PathVariable("target")String target
+         ,@PathVariable("currentPage")int currentPage
+         ,@PathVariable("sorting")int sorting, Model model) throws Exception {
+
+      System.out.println("/portfolio/getJSONPortfolioList");
+      
+      String sessionUserId="testUser";
+      
+      Search search = new Search();
+      search.setCurrentPage(currentPage);
+      search.setPostSorting(sorting);
+      search.setStartRowNum((currentPage*16)-16);
+      search.setEndRowNum(currentPage*16);
+      
+      switch(target){
+      case "develop":
+         search.setPostDivision(1);
+         break;
+      case "design":
+         search.setPostDivision(2);
+         break;
+      }
+      List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
+
+      model.addAttribute("list", portfolioList);
+   }
 
 }

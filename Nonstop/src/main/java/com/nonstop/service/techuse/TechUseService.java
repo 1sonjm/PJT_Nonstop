@@ -9,7 +9,8 @@ import com.nonstop.domain.TechUse;
 public interface TechUseService {
 	
 	public void addTechUse(int tuTechNo, int tuProjNo) throws Exception;
-
+	
+	public void addTechUsePort(TechUse techUse) throws Exception;
 //	public List<TechUse> getTechUse(int techNo) throws Exception;
 	public TechUse getTechUse(int tuNo) throws Exception;
 	

@@ -1,6 +1,7 @@
 package com.nonstop.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Portfolio{
 	
@@ -15,7 +16,9 @@ public class Portfolio{
 	private String portYear;
 	private String portDay;
 	private String portDetail;
-	private String portFile;
+	private String portFile;// thumbnail 이미지 용도로 사용
+	private List<PortImages> images;
+	private List<TechUse> portTech;
 	private int endRowNum;
 	private int startRowNum;
 	private int scrapNo;
@@ -28,8 +31,6 @@ public class Portfolio{
 	private boolean portFollowFlag;
 	private boolean portScrFlag;
 	private String scrapUserId;
-	
-	
 	
 	public Portfolio() {
 	}
@@ -177,7 +178,18 @@ public class Portfolio{
 	public void setScrapNo(int scrapNo) {
 		this.scrapNo = scrapNo;
 	}
-	
+	public List<PortImages> getImages() {
+		return images;
+	}
+	public void setImages(List<PortImages> images) {
+		this.images = images;
+	}
+	public List<TechUse> getPortTech() {
+		return portTech;
+	}
+	public void setPortTech(List<TechUse> portTech) {
+		this.portTech = portTech;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -205,6 +217,10 @@ public class Portfolio{
 		builder.append(portDetail);
 		builder.append(", portFile=");
 		builder.append(portFile);
+		builder.append(", images=");
+		builder.append(images);
+		builder.append(", portTech=");
+		builder.append(portTech);
 		builder.append(", endRowNum=");
 		builder.append(endRowNum);
 		builder.append(", startRowNum=");
