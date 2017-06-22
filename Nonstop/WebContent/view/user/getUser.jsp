@@ -59,7 +59,7 @@
 			 
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( "#updateUserV" ).on("click" , function() {
-				 alert(1);
+				 
 				 var userId = $(this).attr('userId');
 					self.location = "/user/updateUser?userId=${user.userId}"
 				});
@@ -76,7 +76,7 @@
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "#deleteUser" ).on("click" , function() {
 					 var userId = $(this).attr('userId')
-					 alert(userId);
+					 
 						self.location = "/user/deleteUser?userId="+userId;
 					});
 			});

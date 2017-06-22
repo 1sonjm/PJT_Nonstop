@@ -454,7 +454,7 @@ $(function() {
 //============= 내정보보기 이동 Event 처리 =============	
 $(function() {
 	$("#getUser").on("click" , function() {
-		//alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		self.location = "/user/getUser?userId="+userId;
 	}); 
@@ -462,7 +462,7 @@ $(function() {
 //============= 기업정보보기 이동 Event 처리 =============	
 $(function() {
 	$("#getCompany").on("click" , function() {
-		//alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		self.location = "/user/getCompany?userId="+userId;
 	}); 
@@ -472,7 +472,7 @@ $(function() {
 //============= 내정보수정 이동 Event 처리 =============	
 $(function() {
 	$("#updateUser").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/updateUser?userId="+userId;
 	}); 
@@ -480,7 +480,7 @@ $(function() {
 //============= 기업정보수정 이동 Event 처리 =============	
 $(function() {
 	$("#updateCompany").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/updateCompany?userId="+userId;
 	}); 
@@ -488,7 +488,7 @@ $(function() {
 //============= 회원목록조회 이동 Event 처리 =============	
 $(function() {
 	$("#listUser").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/listUser"
 	}); 
@@ -496,7 +496,7 @@ $(function() {
 //============= 기업목록조회 이동 Event 처리 =============	
 $(function() {
 	$("#listCompany").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/listCompany"
 	}); 
