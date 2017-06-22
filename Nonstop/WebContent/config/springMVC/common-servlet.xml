@@ -35,10 +35,10 @@
 	          <mvc:annotation-driven /> 사용으로 interceptor 를 직접
 	          DefaultAnnotationHandlerMapping 에 주입 할 수 없으니 
 	       	  아래의 설정방법으로 interceptor 주입-->
-   	<mvc:interceptors>
+   	<!-- <mvc:interceptors>
 		
    		<mvc:interceptor>
-			<!-- <mvc:mapping path="/**"/> -->
+			<mvc:mapping path="/**"/>
 			<mvc:mapping path="/user/**"/>
 			<mvc:mapping path="/profile/**"/>
 			<mvc:mapping path="/letter/**"/>
@@ -47,7 +47,7 @@
 			<bean class="com.nonstop.common.Interceptor.LogonCheckInterceptor" />
    		</mvc:interceptor>
 
-   	</mvc:interceptors>
+   	</mvc:interceptors> -->
    	
 
 

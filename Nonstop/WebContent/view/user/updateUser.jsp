@@ -28,6 +28,47 @@
 <!-- Bootstrap Core CSS -->
 <link href="/resources/css/nonstop.css" rel="stylesheet">
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
+
+<style>
+
+.text-info{
+         color: black;
+}
+.text-muted {
+color: black;
+}
+
+
+.container{
+    margin-top:20px;
+}
+.image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
+</style>
+
+
+
+
 <script type="text/javascript">
 	//============= "수정"  Event 연결 =============
 	$(function() {
@@ -67,7 +108,7 @@
 	///////////////////////////////////////////////////////////////////////
 	function fncUpdateUser() {
 		var name = $("input[name='userName']").val();
-
+		var image=$("input[name='image']").val();
 		if (name == null || name.length < 1) {
 			alert("이름은  반드시 입력하셔야 합니다.");
 			return;

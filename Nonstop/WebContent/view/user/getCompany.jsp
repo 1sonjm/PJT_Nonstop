@@ -51,7 +51,7 @@
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "#listCompany" ).on("click" , function() {
-						self.location = "/user/listCompany"
+						self.location = "/index.jsp"
 					});
 			});
 		 
@@ -162,6 +162,7 @@
 	  		</div>
 		</div>
 		
+		<hr/>
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
@@ -169,6 +170,7 @@
 	  		</div>
 		</div>
 		
+		<hr/>
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
@@ -176,6 +178,7 @@
 	  		</div>
 		</div>		
 		
+		<hr/>
 		
 		
 		

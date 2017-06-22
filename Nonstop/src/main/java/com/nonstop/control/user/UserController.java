@@ -2,8 +2,6 @@ package com.nonstop.control.user;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -255,6 +253,14 @@ public class UserController {
 	       
 	}
 	
+	@RequestMapping( value="login", method=RequestMethod.GET )
+	public String login() throws Exception{
+		
+		System.out.println("/user/logon : GET");
+
+		return "redirect:/view/user/loginView.jsp";
+	}
+	
 	@RequestMapping( value="login", method=RequestMethod.POST )
 	   public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
 	      
@@ -300,8 +306,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "listUser")
-	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
-			throws Exception {
+	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/listUser : GET / POST");
 
@@ -309,12 +314,11 @@ public class UserController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-
 		Map<String, Object> map = userService.getUserList(search);
 
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
-		System.out.println(resultPage);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println("으아으아으: "+resultPage);
+		 System.out.println(map.get("list"));
 
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
@@ -346,6 +350,17 @@ public class UserController {
 		return "forward:/view/user/listCompany.jsp";
 	}
 
+	@RequestMapping( value="checkId/{userId}", method=RequestMethod.GET)
+	   public void checkUserId(  @PathVariable String userId, Model model) throws Exception {
+	      
+	      System.out.println("/user/checkUserId : GET");
+	      
+	      boolean result = userService.checkId(userId);
+	      
+	      model.addAttribute("result", new Boolean(result));
+	      
+	   }
+	
 	@RequestMapping( value="checkUserId/{tempId}", method=RequestMethod.POST)
 	   public String checkUserId(  @PathVariable String tempId, Model model , HttpSession session) throws Exception {
 	      

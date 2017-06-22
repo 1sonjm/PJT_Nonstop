@@ -64,11 +64,11 @@ public class Search {
 	
 
 	public int getEndRowNum() {
-		return this.endRowNum;
+		return getCurrentPage()*getPageSize();
 	}
 
 	public int getStartRowNum() {
-		return this.startRowNum;
+		return (getCurrentPage()-1)*getPageSize()+1;
 	}
 	
 	public void setEndRowNum(int endRowNum) {
