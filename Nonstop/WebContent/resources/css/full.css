@@ -334,8 +334,8 @@ html {
 	position: fixed;
     color: rgb(148, 148, 148);
     font-size: 30px;
-    margin-top: 170px;
-    margin-left: -31px;
+    margin-top: 69px;
+    margin-left: -37px;
 }
 
 .intro .page-scroll:hover {
@@ -448,8 +448,7 @@ html {
   padding: 100px 0;
   text-align: center;
   color: #666666;
-  /* background: url(/resources/images/layout/mainpage_1.jpg) no-repeat bottom center scroll; */
-  background-color: #e8e8e8;;
+  background-color: #efefef;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
@@ -463,7 +462,7 @@ html {
 @media (min-width: 768px) {
   .about {
     height: 100%;
-    padding: 0;
+    padding: 150px;
   }
   .about .about-section .brand-heading {
     font-size: 28px;
@@ -487,9 +486,40 @@ html {
     height: 75px;
     padding: 20px;
     width: 75px;
-}
-  
   }
+  .about .single-blog {
+  	background: #fff;
+  	text-align: left;
+  }
+  
+  .about .featured-content {
+  	width:100%; 
+  	height:294px; 
+  	overflow:hidden
+  }
+  .about .featured-content img {
+  	display:block; 
+  	width:100%; 
+  	height:auto;
+  }
+  .single-blog-text {
+  	padding-left: 30px;
+  	padding-right: 30px;
+  	padding-bottom: 15px;
+  }
+  .blog-btn {
+  	color: #ff6600;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 2px solid;
 }
 
 
@@ -564,8 +594,7 @@ html {
   padding: 100px 0;
   text-align: center;
   color: #666666;
-  /* background: url(/resources/images/layout/mainpage_1.jpg) no-repeat bottom center scroll; */
-  background-color: #e8e8e8;;
+  background-color: #efefef;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   background-size: cover;
