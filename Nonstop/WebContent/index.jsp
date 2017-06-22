@@ -278,8 +278,9 @@ body {
 			method : "GET", dataType : "json",
 			success : function(jsonData){
 				if(jsonData.flag){
-					document.querySelector("#listLetter").innerHTML = '<span id="dddd" class="label label-rounded label-primary"'
-																					+'style="padding: 0 .8em .1em; border-radius: .5em">new</span>';
+					var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
+						  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
+		$("#listLetter").html(displayValue);
 					
 				}
 			}
