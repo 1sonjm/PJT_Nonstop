@@ -48,6 +48,32 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
+        .container{
+    margin-top:20px;
+}
+.image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -63,12 +89,6 @@
 		
 		
 		//============= "취소"  Event 처리 및  연결 =============
-		$(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
 	
 		
 		function fncAddCompany() {
@@ -126,15 +146,7 @@
 				$("input:text[name='password2']").focus();
 				return;
 			}
-				
-			/* var value = "";	
-			if( $("input:text[name='phone2']").val() != ""  &&  $("input:text[name='phone3']").val() != "") {
-				var value = $("option:selected").val() + "-" 
-									+ $("input[name='phone2']").val() + "-" 
-									+ $("input[name='phone3']").val();
-			}
 
-			$("input:hidden[name='phone']").val( value ); */
 			
 			$("form").attr("method" , "POST").attr("action" , "/user/addCompany").submit();
 		}
@@ -169,7 +181,7 @@
 	
 		 
 		//==>"ID중복확인" Event 처리 및 연결
-		$(function(){
+		  $(function(){
 		      
 		      $("#userId").on("keyup", function(){
 		         
@@ -179,7 +191,7 @@
 		                  
 		          $.ajax(
 		                {
-		                    url : '/user/checkUserId/'+userId,
+		                    url : '/user/checkId/'+userId,
 		                    method : "GET",
 		                    dataType : "json",
 		                    headers : {
@@ -191,8 +203,7 @@
 		                                            
 		                       if(! JSONData.result) {
 		                          $("#checkId").html("존재하는 아이디입니다.");
-		                       
-		                       }
+		                       } 
 		                       else {
 		                    	   $("#checkId").html("사용가능한 아이디입니다.");
 			                       
@@ -201,6 +212,7 @@
 		              });         
 		         });      
 		      });
+	   
 	   
 		 $(function(){      
       
@@ -405,7 +417,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+			 
 		    </div>
 		  </div>
 		</form>

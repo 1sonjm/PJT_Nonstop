@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ page pageEncoding="utf-8"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -39,6 +39,15 @@
          color: black;
          padding-left: 10px;
         }
+        
+        .text-muted {
+         color: black;
+        }
+        .row {
+        height: 15px;
+        } 
+       
+        
      </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -59,7 +68,7 @@
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "#listUserV" ).on("click" , function() {
-						self.location = "/user/listUser"
+						self.location = "/index.jsp"
 					});
 			});
 		 
@@ -93,9 +102,17 @@
 	    
 	    
 	    
-	    <div class="row">
+	    <div>
 	  		<div class="col-xs-4 col-md-2 "><strong>프로필 사진</strong></div>
-			<img src="/resources/images/upload/${user.image}" class="img-square" width="200" height="200">
+			
+			<c:if test= "${empty user.image}">
+			<img src="/resources/images/layout/defaultProfile.jpg" class="img-rounded" width="200" height="200">		
+			</c:if>
+			<c:if test= "${!empty user.image}">
+			<img src="/resources/images/upload/${user.image}" class="img-rounded" width="200" height="200">		
+			</c:if>
+			
+			
 		</div>
 		<hr/>
 	
@@ -106,9 +123,9 @@
 		
 		<hr/>
 	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userId}</div>
+		<div class="row" >
+	  		<div class="col-xs-4 col-md-2" ><strong>아 이 디</strong></div>
+			<div class="col-xs-8 col-md-4" >${user.userId}</div>
 		</div>
 		
 		<hr/>
@@ -134,7 +151,7 @@
 			
 		<hr/>
 		
-		<div class="row">
+		<div class="form-group">
 	  		<div class="col-md-12 text-center ">
 	  			
 				<!-- <a class="btn btn-primary btn" href="#" role="button" id = "updateUser">회원정보수정</a> -->
@@ -142,14 +159,16 @@
 	  		</div>
 		</div>
 		<br/>
-		<div class="row">
+		<hr/>
+		<div class="form-group">
 	  		<div class="col-md-12 text-center ">
 	  			
 				<a class="btn btn-primary btn" href="#" role="button" id = "listUserV">돌아가기</a>
 	  		</div>
 		</div>
 		<br/>
-		<div class="row">
+		<hr/>
+		<div class="form-group">
 	  		<div class="col-md-12 text-center ">
 	  			
 				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser" userId="${user.userId}">회원탈퇴</a>

@@ -106,6 +106,18 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 	
+	public boolean checkId(String userId) throws Exception{
+	      
+	      boolean result = true;
+	      
+	      User user = userDAO.getUser(userId);
+	      
+	      if(user != null ) {
+	         result = false;
+	      }
+	      return result;
+	   }
+	
 	
 
 	
