@@ -60,9 +60,10 @@ body {
 }
 
 .mail-box .sm-side {
-	background: none repeat scroll 0 0 #e5e8ef;
+	background: none repeat scroll 0 0 #f7f7f7;
 	border-radius: 4px 0 0 4px;
-	width: 25%;
+	width: 15%;
+	height:100%;
 }
 
 .mail-box .lg-side {
@@ -72,11 +73,13 @@ body {
 }
 
 .mail-box .sm-side .user-head {
-	background: none repeat scroll 0 0 #00a8b3;
+	background: none repeat scroll 0 0 #e8e8e8;
 	border-radius: 4px 0 0;
 	color: #fff;
 	min-height: 80px;
-	padding: 10px;
+	padding-top: 10px;
+	border-bottom:1px solid #e2e2e2;
+	padding-left: 22px;
 }
 
 .user-head .inbox-avatar {
@@ -84,24 +87,28 @@ body {
 	width: 65px;
 }
 
-.user-head .inbox-avatar img {
+ #userLetterImg{
+	margin-top:5px;
 	border-radius: 4px;
+	
 }
 
 .user-head .user-name {
 	display: inline-block;
-	margin: 0 0 0 10px;
+	margin-top: 10px;
 }
 
 .user-head .user-name h5 {
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: 300;
 	margin-bottom: 0;
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 .user-head .user-name h5 a {
-	color: #fff;
+	color: #666;
+	font-weight:600;
+	padding-left:15px;
 }
 
 .user-head .user-name span a {
@@ -123,7 +130,7 @@ a.mail-dropdown {
 }
 
 .btn-compose {
-	background: none repeat scroll 0 0 #ff6c60;
+	background: none repeat scroll 0 0 #ff6600;
 	color: #fff;
 	padding: 12px 0;
 	text-align: center;
@@ -131,14 +138,14 @@ a.mail-dropdown {
 }
 
 .btn-compose:hover {
-	background: none repeat scroll 0 0 #f5675c;
+	background: none repeat scroll 0 0 #ff6600;
 	color: #fff;
 }
 
 ul.inbox-nav {
 	display: inline-block;
 	margin: 0;
-	padding: 0;
+	padding-bottom: 10px;
 	width: 100%;
 }
 
@@ -181,8 +188,9 @@ ul.labels-info li h4 {
 	font-size: 13px;
 	padding-left: 15px;
 	padding-right: 15px;
-	padding-top: 5px;
+	padding-top: 20px;
 	text-transform: uppercase;
+	font-weight:600;
 }
 
 ul.labels-info li {
@@ -211,9 +219,9 @@ ul.labels-info li a i {
 }
 
 .inbox-head {
-	background: none repeat scroll 0 0 #41cac0;
+	background: none repeat scroll 0 0 #737373;
 	border-radius: 0 4px 0 0;
-	color: #fff;
+	color: #e6e6e6;
 	min-height: 80px;
 	padding: 20px;
 }
@@ -555,6 +563,8 @@ ul {
 		 $("#readMark").on("click" , function() {
 			 $("form").attr("method" , "POST").attr("action" , "/letter/updateReadDate").submit();
 			});
+		  
+		 
 		
 		 
 		  //메세지 보관/삭제
@@ -596,6 +606,39 @@ ul {
 					});
 				});
 	});	
+	 
+	 
+	 $(function(){
+	      
+	      $("#letReceiveId").on("keyup", function(){
+	         
+	         var userId = $("#letReceiveId").val();
+	         
+	         
+	                  
+	          $.ajax(
+	                {
+	                    url : '/user/checkUserId/'+userId,
+	                    method : "GET",
+	                    dataType : "json",
+	                    headers : {
+	                       "Accept" : "application/json",
+	                       "Content-Type" : "application/json"
+	                    },
+	                    context : this,
+	                    success : function(JSONData, status) {   
+	                                            
+	                       if(! JSONData.result) {
+	                          $("#letReceiveId").html("존재하는 아이디입니다.");
+	                       } 
+	                       else {
+	                    	   $("#letReceiveId").html("사용가능한 아이디입니다.");
+		                       
+	                       }
+	                    }
+	              });         
+	         });      
+	      });
 </script>
 </head>
 
@@ -603,19 +646,18 @@ ul {
 	<header>
 			<jsp:include page="/view/common/toolbar.jsp"/>
 		</header>
-	<div class="container">
+	<div class="container-fluid" style="padding-right:0px; padding-left:0px;">
 
 		<div class="mail-box">
 			<aside class="sm-side">
 				<div class="user-head">
-					<a class="inbox-avatar" href="javascript:;"> <img width="50"
-						hieght="60" src="../../resources/images/upload/${user.image}">
-					</a>
+					<div style="width:50px; height:55px; overflow:hidden; border-radius:4px; float: left;">
+					 	<img id="userLetterImg" style="width: 100%; height:auto;"  src="../../resources/images/upload/${user.image}">
+					</div>
 					<div class="user-name">
 						<h5>
 							<a href="#">${user.userId}</a>
 						</h5>
-
 					</div>
 
 				</div>
@@ -649,7 +691,7 @@ ul {
 											<label class="col-lg-2 control-label">To</label>
 											<div class="col-lg-10">
 												<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
-													id="inputEmail1" class="form-control">
+													id="letReceiveId" class="form-control">
 											</div>
 										</div>
 
@@ -691,14 +733,14 @@ ul {
 				<ul class="inbox-nav inbox-divider">
 					<li>
 						<!-- class="active" --> <a href="#"><i class="fa fa-inbox"
-							id="inBox" receiveId="${sessionScope.user.userId}">받은 메일함</i> <!-- <span class="label label-danger pull-right">2</span> --></a>
+							id="inBox" receiveId="${sessionScope.user.userId}"> 받은 메일함</i> <!-- <span class="label label-danger pull-right">2</span> --></a>
 
 					</li>
 					<li><a href="#"><i class="fa fa-envelope-o" id="sendBox"
-							sendId="${sessionScope.user.userId}">보낸 메일함</i></a></li>
+							sendId="${sessionScope.user.userId}"> 보낸 메일함</i></a></li>
 					<li><a href="#" id="saveBox"
 						userId="${sessionScope.user.userId}"><i
-							class="fa fa-bookmark-o">보관메일함</i></a></li>
+							class="fa fa-bookmark-o"> 보관메일함</i></a></li>
 
 				</ul>
 
@@ -725,14 +767,14 @@ ul {
 			<aside class="lg-side">
 				<div class="inbox-head">
 					<h3>받은 메일함</h3>
-					<form action="#" class="pull-right position">
+					<!-- <form action="#" class="pull-right position">
 						<div class="input-append">
 							<input type="text" class="sr-input" placeholder="Search Mail">
 							<button class="btn sr-btn" type="button">
 								<i class="fa fa-search"></i>
 							</button>
 						</div>
-					</form>
+					</form> -->
 				</div>
 				<div class="inbox-body">
 					<div class="mail-option">

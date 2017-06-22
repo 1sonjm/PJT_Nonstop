@@ -1050,13 +1050,6 @@ $(function() {
         </div>
     </div>
 	
-	
-	
-	
-	
-	
-	
-	
 	<!-- Footer -->
 	<footer>
 		<div class="container text-center">
