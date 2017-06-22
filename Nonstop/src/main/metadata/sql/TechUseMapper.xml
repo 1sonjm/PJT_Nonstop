@@ -45,7 +45,7 @@
 		VALUES ( 
 			seq_techuse_tu_no.nextval, 
 			#{tuPortNo}, 
-			#{tuProjNo},
+			0,
 			#{tuTechNo}
 		)
 	 </insert>
