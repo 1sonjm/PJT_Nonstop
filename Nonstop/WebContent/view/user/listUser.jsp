@@ -81,7 +81,7 @@
 		
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
-		 $(function() {
+		 /* $(function() {
 			 
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(  "td:nth-child(5) > i" ).on("click" , function() {
@@ -113,17 +113,17 @@
 						});
 						////////////////////////////////////////////////////////////////////////////////////////////
 					
-			});
+			}); */
 			
 			//==> userId LINK Event End User 에게 보일수 있도록 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "coral");
+		/* 	$( ".ct_list_pop td:nth-child(3)" ).css("color" , "coral");
 			$("h7").css("color" , "coral");
 			
 			//==> 아래와 같이 정의한 이유는 ??
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "smokewhite");
 			
 			
-		});	
+		});	 */
 	
 	</script>
 	
@@ -196,7 +196,7 @@
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
             <th align="left">이메일</th>
-            <th align="left">간략정보</th>
+            <th align="left">연락처</th>
           </tr>
         </thead>
        
@@ -210,10 +210,7 @@
 			  <td align="left"  title="Click : 회원정보 확인">${userList.userId}</td>
 			  <td align="left">${userList.userName}</td>
 			  <td align="left">${userList.email}</td>
-			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${userList.userId}"></i>
-			  	<input type="hidden" value="${userList.userId}">
-			  </td>
+			  <td align="left">${userList.tel}</td>
 			</tr>
 			
 			

@@ -53,7 +53,7 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser( @ModelAttribute("user") User user,@RequestParam("file") MultipartFile file, Model model) throws Exception {
+	public String addUser( @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file, Model model) throws Exception {
 
 		System.out.println("/user/addUser : POST");
 		
@@ -186,27 +186,29 @@ public class UserController {
 	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateFile") MultipartFile file) throws Exception{
+	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("input-file-preview") MultipartFile file) throws Exception{
 
 		System.out.println("/user/updateUser : POST");	
 		// Business Logic
 		userService.updateUser(user);
 
+		String image=file.getOriginalFilename();
+
+		user.setImage(image);
+		
+        try {
+            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
+            file.transferTo(uploadFile);
+        } catch (IOException e) {
+            e.printStackTrace();	
+	}
+		
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
 		if (sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
 
-			String image=file.getOriginalFilename();
-
-			user.setImage(image);
 			
-	        try {
-	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
-	            file.transferTo(uploadFile);
-	        } catch (IOException e) {
-	            e.printStackTrace();	
-		}
   
 	        return "forward:/view/user/getUser.jsp";
 	}
@@ -226,7 +228,7 @@ public class UserController {
 	}
 
 	@RequestMapping( value="updateCompany", method=RequestMethod.POST )
-	public String updateCompany( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateCompany") MultipartFile file) throws Exception{
+	public String updateCompany( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("input-file-preview") MultipartFile file) throws Exception{
 		
 		System.out.println("/user/updateCompany : POST");
 		

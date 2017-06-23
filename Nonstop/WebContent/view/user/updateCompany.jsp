@@ -293,7 +293,7 @@
 				                    <div class="btn btn-default image-preview-input">
 				                        <span class="glyphicon glyphicon-folder-open"></span>
 				                        <span class="image-preview-input-title">찾아보기</span>
-				                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="updateCompany" id="image" <%-- value="${user.image} --%>"/> <!-- rename it -->
+				                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="updateFile" id="image" <%-- value="${user.image} --%>"/> <!-- rename it -->
 				                    </div>
 				                </span>
 				            </div><!-- /input-group image-preview [TO HERE]--> 

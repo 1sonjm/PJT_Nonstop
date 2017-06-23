@@ -73,7 +73,7 @@
 		
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
-		 $(function() {
+		/*  $(function() {
 			 
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(  "td:nth-child(5) > i" ).on("click" , function() {
@@ -115,7 +115,7 @@
 			
 			//==> 아래와 같이 정의한 이유는 ??
 			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-		});	
+		});	 */
 	
 	</script>
 	
@@ -180,7 +180,7 @@
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
             <th align="left">기업명</th>
-            <th align="left">간략정보</th >
+            <th align="left">연락처</th>
           </tr>
         </thead>
        
@@ -195,10 +195,7 @@
 			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.companyName}</td>
-			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${user.userId}"></i>
-			  	<input type="hidden" value="${user.userId}">
-			  </td>
+			  <td align="left">${user.tel}</td>
 			  
 			</tr>
           </c:forEach>
