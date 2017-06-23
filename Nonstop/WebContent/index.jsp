@@ -1,370 +1,217 @@
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page pageEncoding="utf-8"%>
-
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
-
 <html class="full" lang="ko">
 <!-- Make sure the <html> tag is set to the .full CSS class. Change the background image in the full.css file. -->
-
 <head>
-
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="description" content="">
 <meta name="author" content="">
-
-<!-- ///////////// Ä«Ä«¿À °èÁ¤ ¿¬µ¿ ////////////////// -->
-<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"/> -->
-<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
-<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-<!-- ////////////////////////////////////////////////// -->
-
-<!-- ///////////////////////³×ÀÌ¹ö///////////////////////////////////// -->
-<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
-<!-- ///////////////////////³×ÀÌ¹ö///////////////////////////////////// -->
-
-
-<!-- ÇÕÃÄÁö°í ÃÖ¼ÒÈ­µÈ ÃÖ½Å CSS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <title>Nonstop</title>
 <!-- Bootstrap Core CSS -->
- <link href="/resources/css/nonstop.css" rel="stylesheet">
+<link href="/resources/css/nonstop.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="/resources/css/full.css" rel="stylesheet">
-
-
-<!-- jQuery -->
-<script src="/resources/javascript/jquery.js"></script> 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- Bootstrap Core JavaScript -->
-<!-- <script src="/resources/javascript/bootstrap.min.js"></script> -->
-
+<!-- Custom CSS -->
+<link href="/resources/css/main.css" rel="stylesheet">
 <!-- Awesome Font -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-
+<!-- jQuery -->
+<script src="/resources/javascript/jquery.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="/resources/javascript/bootstrap.min.js"></script>
 <!-- Plugin JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <!-- Theme JavaScript -->
 <script src="../../resources/javascript/mainpage.js"></script>
-
-<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script> -->
-
-<!-- <script
-   src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-   integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-   crossorigin="anonymous"></script> -->
-<!-- ÇÕÃÄÁö°í ÃÖ¼ÒÈ­µÈ ÃÖ½Å ÀÚ¹Ù½ºÅ©¸³Æ® µå·´´Ù¿î-->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-<!--  ¸ğ´ŞÆË¾÷ -->
-<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script> -->
-
-
-<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-<!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+<!-- ///////////////////////ë„¤ì´ë²„//////////////////////// -->
+<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
+<!-- ///////////// ì¹´ì¹´ì˜¤ ê³„ì • ì—°ë™ ////////////////// -->
+<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+<!-- ////////////////////////////////////////////////// -->
 
 <style>
 body {
 	padding-top: 0;
 }
-
-.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
-    z-index: 2;
-    margin-left: -1px;
-    background: mistyrose;
-}
-
 #center {
 	margin-left: 0%;
 	margin-right: 0%;
 }
-
 @media ( min-width : 1200px) {
 	#center {
-		margin-left: 25%; @media ( min-width : 1200px) { #center {
 		margin-left: 24.5%;
 		margin-right: 5%;
 	}
 }
-
-.log-frm {
-}
-.log-frm ul {
-    margin: 0 !important;
-    padding: 0 !important;
-}
-.log-frm ul li {
-    color: #666;
-    display: block;
-    font-size: 14px;
-    line-height: 25px;
-}
-.log-frm ul li a {
-    color: #f47521;
-    cursor: pointer;
-    display: block;
-    padding: 10px 0;
-}
-.log-frm ul li p {
-    border: 1px solid #ccc;
-    color: #666;
-    font-size: 12px;
-    line-height: 18px;
-    margin: 10px 0;
-    padding: 2px 5px;
-}
-.log-frm ul li input[type="text"] {
-    border: 1px solid #ccc;
-    border-radius: 0;
-    color: #000;
-    display: block;
-    font-size: 13px;
-    line-height: 19px;
-    margin-bottom: 10px;
-    width: 100%;
-}
-.model-l {    
-    padding-right: 0px;    
-}
-.model-r .o-r {
-    background: #fff none repeat scroll 0 0;
-    border: medium none;
-    border-radius: 100%;
-    bottom: 0;
-    height: 40px;
-    margin: auto;
-    overflow: hidden;
-    position: absolute;
-    left: -19px;
-    top: 0;
-    width: 40px;
-    z-index: 99999;
-}
-.model-r .o-r span {
-    background: #fff none repeat scroll 0 0;
-    border: 2px solid #ccc;
-    color: #666;
-    display: block;
-    height: 100%;
-    padding: 8px 0 0;
-    text-align: center;
-    width: 100%;
-    border-radius: 100%;
-    display:block;
-    position: relative;
-}
-.model-r {
-    padding-left: 30px;
-    position: relative;
-    border-left: 1px dotted #cccccc;
-}
-.forgot {
-    display: none;
-}
-
-input[type="file"] {
-    display: block;
-    margin-top: 7px;
-    margin-left: -66;
-}
-
-.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
-    z-index: 2;
-    margin-left: -50px;
-    width: 210px;
-    height: 37px;
-}
-
-
 </style>
-
-
-
 <script type="text/javascript">
-	//============= °³ÀÎÈ¸¿ø°¡ÀÔ ¹öÆ°=============	
-	$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "#addUserV" ).on("click" , function() {
-				fncAddUser();
-			});
-		});	
-		
-		
-		//============= ±â¾÷È¸¿ø°¡ÀÔ ¹öÆ°=============
-		
-		
-		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "#addCompanyV" ).on("click" , function() {
-				fncAddCompany();
-			});
-		});	
-		
-		//============= °³ÀÎÈ¸¿ø°¡ÀÔ =============	
-function fncAddUser() {
-			
-			var id=$("input[name='userId']").val();
-			var name=$("input[name='userName']").val();
-			var pw=$("input[name='password']").val();
-			var pw_confirm=$("input[name='password2']").val();
-			var email=$("input[name='email']").val();
-			var tel=$("input[name='tel']").val();
-			var addr=$("input[name='addr']").val();
-			var image=$("input[name='image']").val();
-			
-			
-			if(id == null || id.length <1){
-				alert("¾ÆÀÌµğ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(name == null || name.length <1){
-				alert("ÀÌ¸§Àº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(pw == null || pw.length <1){
-				alert("ÆĞ½º¿öµå´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(email == null || email.length <1){
-				alert("ÀÌ¸ŞÀÏÀº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(tel == null || tel.length <1){
-				alert("¿¬¶ôÃ³´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(addr == null || addr.length <1){
-				alert("ÁÖ¼Ò´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			
-			if( pw != pw_confirm ) {				
-				alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-				$("input:text[name='password2']").focus();
-				return;
-			}
-				
-			
-			$("#addUserF").attr("method" , "POST").attr("action" , "/user/addUser").submit();
-		}
-		
-//============= ±â¾÷È¸¿ø°¡ÀÔ =============
-function fncAddCompany() {
-			
-			var id2=$("input[name='userId2']").val();
-			var name2=$("input[name='userName2']").val();
-			var pw2=$("input[name='password22']").val();
-			var pw_confirm2=$("input[name='password222']").val();
-			var email2=$("input[name='email2']").val();
-			var tel2=$("input[name='tel2']").val();
-			var addr2=$("input[name='addr2']").val();
-			var image2=$("input[name='image2']").val();
-			var companyName2=$("input[name='companyName2']").val();
-			var empNum2=$("input[name='empNum2']").val();
-			var pubDate=$("input[name='pubDate']").val();
-			
-			
-			if(id2 == null || id2.length <1){
-				alert("¾ÆÀÌµğ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(name2 == null || name2.length <1){
-				alert("ÀÌ¸§Àº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(pw2 == null || pw2.length <1){
-				alert("ÆĞ½º¿öµå´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			if(pw_confirm2 == null || pw_confirm2.length <1){
-				alert("ÆĞ½º¿öµå È®ÀÎÀº  ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(email2 == null || email2.length <1){
-				alert("ÀÌ¸ŞÀÏÀº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(tel2 == null || tel2.length <1){
-				alert("¿¬¶ôÃ³´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			if(addr2 == null || addr2.length <1){
-				alert("ÁÖ¼Ò´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
-				return;
-			}
-			
-			
-			if( pw2 != pw_confirm2 ) {				
-				alert("ºñ¹Ğ¹øÈ£ È®ÀÎÀÌ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-				$("input:text[name='password2']").focus();
-				return;
-			}
-
-			
-			$("#addCompanyF").attr("method" , "POST").attr("action" , "/user/addCompany").submit();
-		}
-	//======= ÀÌ¸ŞÀÏ ==========	
+//============= ê°œì¸íšŒì›ê°€ì… ë²„íŠ¼ =============	
 $(function() {
-	 
-	 $("input[name='email']").on("change" , function() {
-		
-		 var email=$("input[name='email']").val();
-	    
-		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-	    	alert("ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
-	     }
-	});
-	 
-});	
-	//====== datePicker ========
-$(function(){
-	$("#datepicker").datepicker({dateFormat:"yy-mm-dd", 
-		dayNamesMin: ['ÀÏ', '¿ù', 'È­', '¼ö', '¸ñ', '±İ', 'Åä' ], 
-		  monthNames : ['1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù', '10¿ù', '11¿ù', '12¿ù']
-
+	$( "#addUserV" ).on("click" , function() {
+		fncAddUser();
 	});
 });	
 	
+//============= ê¸°ì—…íšŒì›ê°€ì… ë²„íŠ¼ =============
+$(function() {
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	$( "#addCompanyV" ).on("click" , function() {
+		fncAddCompany();
+	});
+});	
+
+//============= ê°œì¸íšŒì›ê°€ì… =============	
+function fncAddUser() {
+		
+	var id=$("input[name='userId']").val();
+	var name=$("input[name='userName']").val();
+	var pw=$("input[name='password']").val();
+	var pw_confirm=$("input[name='password2']").val();
+	var email=$("input[name='email']").val();
+	var tel=$("input[name='tel']").val();
+	var addr=$("input[name='addr']").val();
+	var image=$("input[name='image']").val();
+	
+	
+	if(id == null || id.length <1){
+		alert("ì•„ì´ë””ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(name == null || name.length <1){
+		alert("ì´ë¦„ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(pw == null || pw.length <1){
+		alert("íŒ¨ìŠ¤ì›Œë“œëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	if(pw_confirm == null || pw_confirm.length <1){
+		alert("íŒ¨ìŠ¤ì›Œë“œ í™•ì¸ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(email == null || email.length <1){
+		alert("ì´ë©”ì¼ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(tel == null || tel.length <1){
+		alert("ì—°ë½ì²˜ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(addr == null || addr.length <1){
+		alert("ì£¼ì†ŒëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	
+	if( pw != pw_confirm ) {				
+		alert("ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		$("input:text[name='password2']").focus();
+		return;
+	}
+		
+	
+	$("#addUserF").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+}
+	
+//============= ê¸°ì—…íšŒì›ê°€ì… =============
+function fncAddCompany() {
+		
+	var id=$("input[name='userId']").val();
+	var name=$("input[name='userName']").val();
+	var pw=$("input[name='password']").val();
+	var pw_confirm=$("input[name='password2']").val();
+	var email=$("input[name='email']").val();
+	var tel=$("input[name='tel']").val();
+	var addr=$("input[name='addr']").val();
+	var image=$("input[name='image']").val();
+	var companyName=$("input[name='companyName']").val();
+	var empNum=$("input[name='empNum']").val();
+	var pubDate=$("input[name='pubDate']").val();
+	
+	var id=$("input[name='userId']").val();
+	if(id == null || id.length <1){
+		alert("ì•„ì´ë””ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(name == null || name.length <1){
+		alert("ì´ë¦„ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(pw == null || pw.length <1){
+		alert("íŒ¨ìŠ¤ì›Œë“œëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	if(pw_confirm == null || pw_confirm.length <1){
+		alert("íŒ¨ìŠ¤ì›Œë“œ í™•ì¸ì€  ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(email == null || email.length <1){
+		alert("ì´ë©”ì¼ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(tel == null || tel.length <1){
+		alert("ì—°ë½ì²˜ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	if(addr == null || addr.length <1){
+		alert("ì£¼ì†ŒëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
+		return;
+	}
+	
+	
+	if( pw != pw_confirm ) {				
+		alert("ë¹„ë°€ë²ˆí˜¸ í™•ì¸ì´ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		$("input:text[name='password2']").focus();
+		return;
+	}
+	
+	$("#addCompanyF").attr("method" , "POST").attr("action" , "/user/addCompany").submit();
+}
+	
+$(function() {
+	//======= ì´ë©”ì¼ ==========
+ 	$("input[name='email']").on("change" , function() {
+		
+		var email=$("input[name='email']").val();
+    
+		if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
+    		alert("ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
+     	}
+	});
+ 	//====== datePicker ========
+ 	$("#datepicker").datepicker({dateFormat:"yy-mm-dd", 
+ 		dayNamesMin: ['ì¼', 'ì›”', 'í™”', 'ìˆ˜', 'ëª©', 'ê¸ˆ', 'í† ' ], 
+ 		  monthNames : ['1ì›”', '2ì›”', '3ì›”', '4ì›”', '5ì›”', '6ì›”', '7ì›”', '8ì›”', '9ì›”', '10ì›”', '11ì›”', '12ì›”']
+ 	});
+});	
+
+//============ ì•„ì´ë”” ì¤‘ë³µ ì²´í¬ =====================
 $(function(){
     
-    $("#userId").on("keyup", function(){
+	$("#userId").on("keyup", function(){
        
-       var userId = $("#userId").val();
+    	var userId = $("#userId").val();
        
-       
-                
-        $.ajax(
-              {
-                  url : '/user/checkUserId/'+userId,
+       		$.ajax(
+            	{
+                  url : '/user/checkId/'+userId,
                   method : "GET",
                   dataType : "json",
                   headers : {
@@ -375,94 +222,81 @@ $(function(){
                   success : function(JSONData, status) {   
                                           
                      if(! JSONData.result) {
-                        $("#checkId").html("Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÔ´Ï´Ù.");
+                         $("#checkIdd").html("ì¡´ì¬í•˜ëŠ” ì•„ì´ë””ì…ë‹ˆë‹¤.");
                      } 
-                     else {
-                  	   $("#checkId").html("»ç¿ë°¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.");
+                     else if(userId <4){
+                    	 $("#checkIdd").html("ì•„ì´ë””ëŠ” 4ì ì´ìƒì´ì–´ì•¼ í•©ë‹ˆë‹¤."); 
+                     }
+                     else{
+                  	   	 $("#checkIdd").html("ì‚¬ìš©ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤.");
 	                       
                      }
                   }
-            });         
-       });      
-    });
-
-$(function(){      
-
-$("#password").keyup( function(){
-	$("#checkpw").text('');
-	});
-
-$("#password2").keyup( function() {
-	if( $("#password").val() != $("#password2").val() ) {
-  	$("#checkpw").text('');
-  	$("#checkpw").html("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
-	} else {
-  	$("#checkpw").text('');
-  	$("#checkpw").html("ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù.");
+            });//ajax         
+     });
+	
+	$("#password").keyup( function(){
+		$("#checkpw").text('');
+		});
+	$("#password2").keyup( function() {
+		if( $("#password").val() != $("#password2").val() ) {
+		  	$("#checkpw").text('');
+		  	$("#checkpw").html("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
+		} else {
+		  	$("#checkpw").text('');
+		  	$("#checkpw").html("ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.");
 		}
 	});
-}); 
-
-
-function ayantoggle(){
-$(".forgot").slideToggle('slow');
-}
-
-$(function() {
-
-$("#logout").on("click" , function() {
-$(self.location).attr("href","/user/logout");
-//self.location = "/user/logout"
-}); 
 });
-
-$( function() {
+//============= login/logout ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
 	
-	$("#userId").focus();
-	
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	$("#loginButton").on("click" , function() {
-		
+	$("#loginButton").on("click", function() {
 		
 		var id=$("input:text").val();
 		var pw=$("input:password").val();
 		
-		
 		if(id == null || id.length <1) {
-			alert('ID ¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
+			alert('ID ë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
 			$("#userId").focus();
 			return;
 		}
 		
 		if(pw == null || pw.length <1) {
-			alert('ÆĞ½º¿öµå¸¦ ÀÔ·ÂÇÏÁö ¾ÊÀ¸¼Ì½À´Ï´Ù.');
+			alert('íŒ¨ìŠ¤ì›Œë“œë¥¼ ì…ë ¥í•˜ì§€ ì•Šìœ¼ì…¨ìŠµë‹ˆë‹¤.');
 			$("#password").focus();
 			return;
 		}
 		
-		
 		$("#aaa").attr("method","POST").attr("action","/user/login").submit();
 	});
-});	
-
-
-//============= ÂÊÁöÇÔ ÀÌµ¿ Event Ã³¸® =============	
-$(function() {
-	$("#listLetter").on("click" , function() {
-		var receiveId = $("#userId").val();		
-		self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
-	}); 
+	
+	$("#logout").on("click" , function() {
+		$(self.location).attr("href","/user/logout");
+	});
 });
-
-//============= ÇÁ·ÎÇÊ ÀÌµ¿ Event Ã³¸® =============	
+//============= íšŒì›ê°€ì… ì´ë™ Event ì²˜ë¦¬ =============	
 $(function() {
-	$("#profile").on("click" , function() {
-		var role= $(this).attr('role');
+	$("#addUser").on("click", function() {
+		self.location = "/user/addUser"
+	});
+});
+//============= ìª½ì§€í•¨ ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
+	$("#listLetter").on("click", function() {
+		var receiveId = $("#userId").val();
+		self.location = "/letter/getReceiveLetterList?receiveId=" + receiveId;
+	});
+});
+//============= í”„ë¡œí•„ ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
+	$("#profile").on("click", function() {
+		var role = $(this).attr('role');
 		self.location = "/profile/getMineProfile?role="+role;
-	}); 
+	});
 });
-
-//============= ³»Á¤º¸º¸±â ÀÌµ¿ Event Ã³¸® =============	
+	
+//============= ë‚´ì •ë³´ë³´ê¸° ì´ë™ Event ì²˜ë¦¬ =============	
 $(function() {
 	$("#getUser").on("click" , function() {
 		//alert($("#userId").val());
@@ -470,8 +304,15 @@ $(function() {
 		self.location = "/user/getUser?userId="+userId;
 	}); 
 });
-
-//============= ³»Á¤º¸¼öÁ¤ ÀÌµ¿ Event Ã³¸® =============	
+//============= ê¸°ì—…ì •ë³´ë³´ê¸° ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
+	$("#getCompany").on("click" , function() {
+		//alert($("#userId").val());
+		var userId = $("#userId").val();	 	
+		self.location = "/user/getCompany?userId="+userId;
+	}); 
+});
+//============= ë‚´ì •ë³´ìˆ˜ì • ì´ë™ Event ì²˜ë¦¬ =============	
 $(function() {
 	$("#updateUser").on("click" , function() {
 		alert($("#userId").val());
@@ -479,14 +320,38 @@ $(function() {
 		 self.location = "/user/updateUser?userId="+userId;
 	}); 
 });
+//============= ê¸°ì—…ì •ë³´ìˆ˜ì • ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
+	$("#updateCompany").on("click" , function() {
+		alert($("#userId").val());
+		var userId = $("#userId").val();	 	
+		 self.location = "/user/updateCompany?userId="+userId;
+	}); 
+});
+//============= íšŒì›ëª©ë¡ì¡°íšŒ ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
+	$("#listUser").on("click" , function() {
+		alert($("#userId").val());
+		var userId = $("#userId").val();	 	
+		 self.location = "/user/listUser"
+	}); 
+});
+//============= ê¸°ì—…ëª©ë¡ì¡°íšŒ ì´ë™ Event ì²˜ë¦¬ =============	
+$(function() {
+	$("#listCompany").on("click" , function() {
+		alert($("#userId").val());
+		var userId = $("#userId").val();	 	
+		 self.location = "/user/listCompany"
+	}); 
+});
 
 
+/* //============= í†µê³„ ì´ë™ Event ì²˜ë¦¬ =============	
  $(function() {
 	 
 	 $("#listFollow").on("click" , function() {
 	
 	var reqUserId = $("#userId").val();
-
 	self.location = "/profile/getFollowList?reqUserId="+reqUserId;
 	
  	 popWin 
@@ -494,539 +359,707 @@ $(function() {
 							"popWin", 
 							"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
 							"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
-
 	$("#logout").on("click", function() {
 		$(self.location).attr("href", "/user/logout");
-
 	});
-});
+}); */
 
-
-
-
-//============= Åë°è ÀÌµ¿ Event Ã³¸® =============	
+//============= í†µê³„ ì´ë™ Event ì²˜ë¦¬ =============	
 $(function() {
 	$("#statistics").on("click", function() {
 		self.location = "/statistics/getListStatistics"
 	});
 });
-
-//============= toolbar project ÀÌµ¿ Event Ã³¸® =============	
+//============= toolbar chat ë° ë©”ì¸ í†µê³„ ë°ì´í„° ë°›ì•„ì˜¤ê¸°  ì´ë™ Event ì²˜ë¦¬ =============
 $(function() {
-	$("#projDesigner").on("click", function() {
-		self.location = "/project/listProject?postDivision=2"
-	});
-});
-
-//============= toolbar project ÀÌµ¿ Event Ã³¸® =============
-
-$(function() {
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 	$("#projDeveloper").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
-			self.location = "/project/listProject"
-		}); 
-	 });
-
-//============= toolbar portfolio ÀÌµ¿ Event Ã³¸® =============
-$(function() {
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 	$("#portDesigner").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
-			self.location = "/portfolio/listPortfolio?portDivision=2"
-		}); 
-	 });
-
-//============= toolbar portfolio ÀÌµ¿ Event Ã³¸® =============
-$(function() {
-		//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	 	$("#portDeveloper").on("click" , function() {
-			//$(self.location).attr("href","/user/logout");
-			self.location = "/portfolio/listPortfolio?portDivision=1"
-		}); 
-	 });
-	 
-//============= toolbar chat ÀÌµ¿ Event Ã³¸® =============
-$(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	$("#chat").on("click", function() {
-		//$(self.location).attr("href","/user/logout");
 		self.location = "https://192.168.0.16:8444/#" + Math.random().toString(16).substr(2);
 	});
-});
-	 }); 
-
-
- <!-- //³×ÀÌ¹ö¾ÆÀÌµğ·Î·Î±×ÀÎ ¹öÆ° ³ëÃâ ¿µ¿ª -->
-
 	
- 
+	$.ajax("/statistics/getJSONPostCountList",{
+		method : "GET", dataType : "json",
+		success : function(jsonData){
+			$("#countDevelop").text(jsonData.dataList.DEVELOP);
+			$("#countDesign").text(jsonData.dataList.DESIGN);
+			$("#countProject").text(jsonData.dataList.PROJECT);
+		}
+	})
+	
+	$.ajax("/letter/toolbarMailCheck",{
+		method : "GET", dataType : "json",
+		success : function(jsonData){
+			if(jsonData.flag){
+				var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
+					  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
+	$("#listLetter").html(displayValue);
+				
+			}
+		}
+	})
+	//countTo ì´ë²¤íŠ¸
+	$(".st-ff-count").countTo();
+});
+//============= toolbar project ì´ë™ Event ì²˜ë¦¬ =============   
+$(function() {
+   $("#projDesigner").on("click" , function() {
+     self.location = "/project/listProject?postDivision=2"
+  }); 
+});
 
- 		//========== Ä«Ä«¿À ==============
- 		Kakao.init('fc5658887af25f840e94144f6722b228');
-		
-        function loginWithKakao() {
-     // ·Î±×ÀÎ Ã¢À» ¶ç¿ó´Ï´Ù.
-     Kakao.Auth.login({
-       success: function(authObj) {
-    	   /* alert("dddddddd :: "+JSON.stringify(authObj)); */
-         var accessToken = Kakao.Auth.getAccessToken();
-         Kakao.Auth.setAccessToken(accessToken);
-         
-         Kakao.API.request({
-            url: '/v1/user/me',
-            success: function(res) {
-            	console.log("ressssss :: " + res);
-               var userId = res.kaccount_email;       
-               var tempId = userId.replace(".", ",");
-               console.log("userId :: " + userId);
-               console.log("tempId :: " + tempId);
-               $.ajax(
-                   {
-                           url : "/user/checkUserId/"+tempId,
-                           method : "POST",
-                           dataType : "json",
-                           headers : {
-                              "Accept" : "application/json",
-                              "Content-Type" : "application/json"
-                           },
-                           success : function(JSONData, status) {     
-                              if(JSONData.user ==null ) {
-                            	  alert("°èÁ¤ÀÌ ¾ø½À´Ï´Ù. È¸¿ø°¡ÀÔÀ» ÇØÁÖ½Ã±â ¹Ù¶ø´Ï´Ù.");
-                            	  self.location="/view/user/addUserView.jsp?userId="+userId;                 
-                              }else if(JSONData.user.role == 4){
-                            	alert("Å»ÅğÇÑ °èÁ¤ÀÔ´Ï´Ù.");  
-                            	$(self.location).attr("href","/user/logout");
+//============= toolbar project ì´ë™ Event ì²˜ë¦¬ =============
+$(function() {
+    $("#projDeveloper").on("click" , function() {
+     	self.location = "/project/listProject?postDivision=1"
+    }); 
+});
+//============= toolbar portfolio ì´ë™ Event ì²˜ë¦¬ =============
+$(function() {
+	$("#portDesigner").on("click", function() {
+		self.location = "/portfolio/listPortfolio?postDivision=2"
+	});
+});
+//============= toolbar portfolio ì´ë™ Event ì²˜ë¦¬ =============
+$(function() {
+	$("#portDeveloper").on("click", function() {
+		self.location = "/portfolio/listPortfolio?postDivision=1"
+	});
+});
+//============ ì¹´ì¹´ì˜¤ ==============
+Kakao.init('fc5658887af25f840e94144f6722b228');
 
-                            	  location.reload();
-                              }else{
-                            	  location.reload();
-                              }
-                           }
-                     });
-                    }                  
-                 });
-               },
-               fail: function(err) {
-                 alert(JSON.stringify(err));
-               }
-             });
+function loginWithKakao() {
+// ë¡œê·¸ì¸ ì°½ì„ ë„ì›ë‹ˆë‹¤.
+	Kakao.Auth.login({
+ 		success: function(authObj) {
+   			/* alert("dddddddd :: "+JSON.stringify(authObj)); */
+   			var accessToken = Kakao.Auth.getAccessToken();
+    		Kakao.Auth.setAccessToken(accessToken);
+    
+    		Kakao.API.request({
+    			url: '/v1/user/me',
+       			success: function(res) {
+	        		console.log("ressssss :: " + res);
+	           		var userId = res.kaccount_email;       
+	           		var tempId = userId.replace(".", ",");
+	           		console.log("userId :: " + userId);
+	           		console.log("tempId :: " + tempId);
+	           		$.ajax(
+	            		{
+	                   		url : "/user/checkUserId/"+tempId,
+	                      	method : "POST",
+	                      	dataType : "json",
+	                      	headers : {
+	                       		"Accept" : "application/json",
+	                       		"Content-Type" : "application/json"
+	                      	},
+	                      	success : function(JSONData, status) {     
+	                       		if(JSONData.user ==null ) {
+	                       			alert("ê³„ì •ì´ ì—†ìŠµë‹ˆë‹¤. íšŒì›ê°€ì…ì„ í•´ì£¼ì‹œê¸° ë°”ëë‹ˆë‹¤.");
+	                       			self.location="/view/user/addUserView.jsp?userId="+userId;                 
+	                         	}else if(JSONData.user.role == 4){
+	                       			alert("íƒˆí‡´í•œ ê³„ì •ì…ë‹ˆë‹¤.");  
+	                       			$(self.location).attr("href","/user/logout");
+	
+	                       	  		location.reload();
+	                         	}else{
+	                       	  		location.reload();
+	                         	}
+	                      	}
+	                });
+          		}                  
+      		});
+	  	},
+	   	fail: function(err) {
+	   		alert(JSON.stringify(err));
+	   	}
+  	});
+}
+$(document).on('click', '#close-preview', function(){ 
+    $('.image-preview').popover('hide');
+    // Hover befor close the preview
+    $('.image-preview').hover(
+        function () {
+           $('.image-preview').popover('show');
+        }, 
+         function () {
+           $('.image-preview').popover('hide');
         }
- 
+    );    
+});
+//ì´ë¯¸ì§€=====================
+$(function() {
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+    // Set the popover default content
+    $('.image-preview').popover({
+        trigger:'manual',
+        html:true,
+        title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+        content: "There's no image",
+        placement:'bottom'
+    });
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview').attr("data-content","").popover('hide');
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Browse"); 
+    }); 
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){     
+        var img = $('<img/>', {
+            id: 'dynamic',
+            width:250,
+            height:200
+        });      
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);            
+            img.attr('src', e.target.result);
+            $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+        }        
+        reader.readAsDataURL(file);
+    });  
+});
+  	
 </script>
 </head>
 
-
-
-
 <body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top">
-
-
-
 	<!-- Navigation -->
 	<nav class="navbar navbar-custom navbar-fixed-top" role="navigation">
 		<div class="container">
 			<div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target=".navbar-main-collapse">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-main-collapse">
 					Menu <i class="fa fa-bars"></i>
 				</button>
-				<a class="navbar-brand page-scroll" href="#page-top"> NONSTOP </a>
+				<a class="navbar-brand link_paging" href="#page-top"> NONSTOP </a>
 			</div>
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse navbar-main-collapse">
 				<ul class="nav navbar-nav" id="center">
 					<!-- Hidden li included to remove active class from about link when scrolled up past about section -->
 					<li class="hidden"><a href="#page-top"></a></li>
-
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Portfolio</a>
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Portfolio</a>
 						<ul class="dropdown-menu">
 							<li><a href="#" id="portDesigner">Designer</a></li>
 							<li><a href="#" id="portDeveloper">Developer</a></li>
 						</ul></li>
-
-					<li class="dropdown"><a class="dropdown-toggle"
-						data-toggle="dropdown" href="#">Project </a>
+					<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#">Project </a>
 						<ul class="dropdown-menu">
 							<li><a href="#" id="projDesigner">Designer</a></li>
 							<li><a href="#" id="projDeveloper">Developer</a></li>
 						</ul></li>
-
 					<li><a href="#" id="statistics">Statistics</a></li>
-
 					<li><a id="chat" href="#">CHAT</a></li>
-
 				</ul>
-<ul class="nav navbar-nav navbar-right">
-               <c:if test="${empty sessionScope.user.userId }">
-                  <li><a href="#myModalLogin" id="modalLogin" data-toggle="modal" data-target="#myModalLogin">·Î±×ÀÎ</a></li>
-                  <li><a href="#myModalAdd" id="modalAddUser" data-toggle="modal" data-target="#myModalAdd">È¸¿ø°¡ÀÔ</a></li>
-               </c:if>
-               <%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
-               <c:if test="${!empty sessionScope.user.userId }">
-                  <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}´Ô È¯¿µÇÕ´Ï´Ù.</a></li>
-                  <li>
-                     <a href="#" id="listLetter">
-                        <!-- ÂÊÁö -->
-                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-                        <!-- ¾Ë¸² -->
-                        <span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
-                     </a>
-                  </li>
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
-                     <ul class="dropdown-menu">
-                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-                        <li><a href="#" id="profile">ÇÁ·ÎÇÊ</a></li>
-                        <li><a href="#" id="getUser">³»Á¤º¸º¸±â</a></li>
-                        <li><a href="#" id="updateUser">³»Á¤º¸¼öÁ¤</a></li>
-                        <li><a href="#" id="listFollow">ÆÈ·Î¿ì ¸ñ·Ïº¸±â</a></li>
-                        <li><a href="#" id="logout">·Î±×¾Æ¿ô</a></li>
-                     </ul></li>
-               </c:if>
-            </ul>
-</div>
-         <!-- /.navbar-collapse -->
-      </div>
-      <!-- /.container -->
-   </nav>
-<header class="intro" id="intro">
-      <div class="intro-body">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-10 col-md-offset-1">
-                  <h1 class="brand-heading">NONSTOP <br/> PROJECT AND PORTFOLIO</h1>
-                  <div class="margin-bottom-20"></div>
-                  
-                  <p class="intro-text">
-                     ³í½ºÅé¿¡¼­ À¥»çÀÌÆ®, ¾îÇÃ¸®ÄÉÀÌ¼Ç °³¹ß ¹× µğÀÚÀÎ Æ÷Æ®Æú¸®¿À¸¦ °ü¸®ÇÏ°í °ü·Ã ÇÁ·ÎÁ§Æ®¿¡ Âü¿©ÇØ º¸¼¼¿ä.<br /> 
-                     °£ÆíÇÏ°Ô ÀÚ½ÅÀÇ Æ÷Æ®Æú¸®¿À¸¦ °ü¸®ÇÒ ¼ö ÀÖ°í ´Ù¾çÇÑ ÇÁ·ÎÁ§Æ® Âü¿©¸¦ ÅëÇØ Ä¿¸®¾î¸¦ ³ôÀÏ ¼ö ÀÖ½À´Ï´Ù. 
-                  </p>
-                  <div class="margin-bottom-50"></div>
-                  
-                  <div class="intro-main">
-                     <ul class="main-ul">
-                        <li>
-                           <h1>${dataList.DEVELOP}</h1>
-                           <p>°³¹ßÀÚ Æ÷Æ®Æú¸®¿À</p>
-                        </li>
-                        <li>
-                           <div class="verticle-line">
-                              <br />
-                              <br />
-                              <br />
-                           </div>
-                        </li>
-                        <li>
-                           <h1>${dataList.DESIGN}</h1>
-                           <p>µğÀÚÀÎ Æ÷Æ®Æú¸®¿À</p>
-                        </li>
-                        <li>
-                           <div class="verticle-line">
-                              <br />
-                              <br />
-                              <br />
-                           </div>
-                        </li>
-                        <li>
-                           <h1>${dataList.PROJECT}</h1>
-                           <p>µî·ÏµÈ ÇÁ·ÎÁ§Æ®</p>
-                        </li>
-                     </ul>
-                  </div>
-                  
-                  
-                  <!-- ¹öÆ° ÁÖ¼®Ã³¸®
-                  <div class="margin-bottom-50"></div>
-                  <button class="sq_button" type="button" style="background-color: #ff6600">È¸¿ø°¡ÀÔ</button>
-                  <button class="sq_button" type="button">ÀÏ´Ü, µÑ·¯º¼°Ô¿ä</button>
-                  -->
-                  
-                  <div class="center-block">
-                     <a href="#about" class="page-scroll" data-index="0" style="position: fixed; margin-top: 6%; margin-left: -2%;"> <!-- class="btn btn-circle page-scroll" -->
-                     <span class="fa fa-chevron-down" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"><p>´õ ¾Ë¾Æº¸±â</p></span>
-                     </a>
-                     
-                  </div>
-                  
-               </div>
-            </div>
-         </div>
-      </div>
-      <ul class="pagination paging_home">
-         <li class="active">
-            <a href="#intro" data-index="1" class="link_paging">1</a>
-         </li>
-         <li class="">
-            <a href="#about" data-index="2" class="link_paging">1</a>
-         </li>
-         <li class="">
-            <a href="#download" data-index="3" class="link_paging">1</a>
-         </li>
-         <li class="">
-            <a href="#contact" data-index="4" class="link_paging">1</a>
-         </li>
-      </ul>
-</header>
-<!-- About Section -->
-   <section id="about" class="about">
-      <div class="about-section">
-         <div class="container">
-            <div class="col-md-12">
-               <i class="fa fa-quote-left" aria-hidden="true"></i>
-               <h2 class="brand-heading">Portfolio Service</h2>
-               <p>
-               ±×µ¿¾È ÀÛ¾÷ÇÑ Æ÷Æ®Æú¸®¿À¸¦ ¼Õ½±°Ô ¿Ã¸®°í °ü¸®ÇÒ ¼ö ÀÖ½À´Ï´Ù. pdf ÆÄÀÏ Çü½Ä Áö¿ø°ú ´ÙÁß ÀÌ¹ÌÁö ¾÷·Îµå¸¦ Áö¿ø µî ÀÌÀü¿¡ ¸¸µé¾î³õÀº Æ÷Æ®Æú¸®¿À ÆÄÀÏÀ» ¼öÁ¤¾øÀÌ µî·ÏÇÏ¿© »ç¿ëÇÒ ¼ö ÀÖµµ·Ï ¼­ºñ½ºÇÏ±â À§ÇØ ³ë·ÂÇÏ°í ÀÖ½À´Ï´Ù. °¢ÀÚ µî·ÏÇÑ ÀÛ¾÷µéÀº ÇÁ·ÎÇÊ ÆäÀÌÁö¿¡¼­ µû·Î °ü¸®ÇÒ ¼ö ÀÖÀ¸¸ç ¼­·ÎÀÇ ÀÛ¾÷¹°À» ÃßÃµÇÏ°í ÀÇ°ßÀ» ³ª´­ ¼ö ÀÖ½À´Ï´Ù.
-               </p>
-               <div class="margin-bottom-30"></div>
-               <hr style="width:20%; border-top:1px solid #bdbdbd">
-            </div>
-         </div>
-      </div>
-   </section>
-   
-   <!-- Download Section -->
-   <section id="download" class="download">
-      <div class="download-section">
-         <div class="container">
-         
-            <div class="col-md-12">
-               <i class="fa fa-quote-left" aria-hidden="true"></i>
-               <h2 class="brand-heading">Project Service</h2>
-               <p>
-               ±×µ¿¾È ÀÛ¾÷ÇÑ Æ÷Æ®Æú¸®¿À¸¦ ¼Õ½±°Ô ¿Ã¸®°í °ü¸®ÇÒ ¼ö ÀÖ½À´Ï´Ù. pdf ÆÄÀÏ Çü½Ä Áö¿ø°ú ´ÙÁß ÀÌ¹ÌÁö ¾÷·Îµå¸¦ Áö¿ø µî ÀÌÀü¿¡ ¸¸µé¾î³õÀº Æ÷Æ®Æú¸®¿À ÆÄÀÏÀ» ¼öÁ¤¾øÀÌ µî·ÏÇÏ¿© »ç¿ëÇÒ ¼ö ÀÖµµ·Ï ¼­ºñ½ºÇÏ±â À§ÇØ ³ë·ÂÇÏ°í ÀÖ½À´Ï´Ù. °¢ÀÚ µî·ÏÇÑ ÀÛ¾÷µéÀº ÇÁ·ÎÇÊ ÆäÀÌÁö¿¡¼­ µû·Î °ü¸®ÇÒ ¼ö ÀÖÀ¸¸ç ¼­·ÎÀÇ ÀÛ¾÷¹°À» ÃßÃµÇÏ°í ÀÇ°ßÀ» ³ª´­ ¼ö ÀÖ½À´Ï´Ù.
-               </p>
-               <div class="margin-bottom-30"></div>
-               <hr style="width:20%">
-            </div>
-         
-         </div>
-      </div>
-   </section>
- <!-- Contact Section -->
-   <section id="contact" class="contact">
-      <div class="contact-section">
-         <div class="container">
-         
-            <div class="col-md-12">
-               <i class="fa fa-quote-left" aria-hidden="true"></i>
-               <h2 class="brand-heading">Tech Statistic Service</h2>
-               <p>
-               ±×µ¿¾È ÀÛ¾÷ÇÑ Æ÷Æ®Æú¸®¿À¸¦ ¼Õ½±°Ô ¿Ã¸®°í °ü¸®ÇÒ ¼ö ÀÖ½À´Ï´Ù. pdf ÆÄÀÏ Çü½Ä Áö¿ø°ú ´ÙÁß ÀÌ¹ÌÁö ¾÷·Îµå¸¦ Áö¿ø µî ÀÌÀü¿¡ ¸¸µé¾î³õÀº Æ÷Æ®Æú¸®¿À ÆÄÀÏÀ» ¼öÁ¤¾øÀÌ µî·ÏÇÏ¿© »ç¿ëÇÒ ¼ö ÀÖµµ·Ï ¼­ºñ½ºÇÏ±â À§ÇØ ³ë·ÂÇÏ°í ÀÖ½À´Ï´Ù. °¢ÀÚ µî·ÏÇÑ ÀÛ¾÷µéÀº ÇÁ·ÎÇÊ ÆäÀÌÁö¿¡¼­ µû·Î °ü¸®ÇÒ ¼ö ÀÖÀ¸¸ç ¼­·ÎÀÇ ÀÛ¾÷¹°À» ÃßÃµÇÏ°í ÀÇ°ßÀ» ³ª´­ ¼ö ÀÖ½À´Ï´Ù.
-               </p>
-               <div class="margin-bottom-30"></div>
-               <hr style="width:20%; border-top:1px solid #bdbdbd">
-            </div>
-            
-         </div>
-      </div>
-   </section>
-   
-   <!-- modal login -->
-   <div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-       <div class="modal-dialog">
-           <div class="modal-content">
-           
-              <div class="tab-content">
-                 <form id="aaa">
-                      <div class="form-group">
-                          <input type="text" class="form-control" name="userId" id="userId" placeholder="User ID">
-                      </div>
-      
-                      <div class="form-group">
-                          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
-                      </div>
-     
-                      <button class="btn btn-primary btn-block" id="loginButton">LOGIN</button>
-                  
-                 	  <div class="text-div"><span>or</span><!-- <br/>Sign in using --></div>
-                  
-                  
-                  	  <div class="form-group">
-                  	  	<a id="kakao-login-btn" href="javascript:loginWithKakao()">
-							<img src="/resources/images/layout/kakao_account_login_btn_medium_narrow.png" width="100%"/>
-						</a>
-					  </div>
+				<ul class="nav navbar-nav navbar-right">
+					<c:if test="${empty sessionScope.user.userId }">
+						<li><a href="#myModalLogin" id="modalLogin" data-toggle="modal" data-target="#myModalLogin">ë¡œê·¸ì¸</a></li>
+						<li><a href="#myModalAdd" id="modalAddUser" data-toggle="modal" data-target="#myModalAdd">íšŒì›ê°€ì…</a></li>
+					</c:if>
+					
+					<%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
+               		<c:if test="${!empty sessionScope.user.userId }">
+               
+		            	<c:if test="${sessionScope.user.role == '1'}">
+		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.</a></li>
+		                  	<li>
+		                    	<a href="#" id="listLetter">
+		                        	<!-- ìª½ì§€ -->
+		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+		                        	<!-- ì•Œë¦¼ -->
+		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+		                     	</a>
+		                  	</li>
+		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
+		                    	<ul class="dropdown-menu">
+		                        	<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
+		                        	<li><a href="#" id="profile" role="${user.role}">í”„ë¡œí•„</a></li>
+		                        	<li><a href="#" id="listUser">ê°œì¸íšŒì›ëª©ë¡ì¡°íšŒ</a></li>
+		                        	<li><a href="#" id="listCompany">ê¸°ì—…íšŒì›ëª©ë¡ì¡°íšŒ</a></li>
+		                        	<li><a href="#" id="getUser">ë‚´ì •ë³´ë³´ê¸°</a></li>
+		                        	<li><a href="#" id="updateUser">ë‚´ì •ë³´ìˆ˜ì •</a></li>
+		                        	<!-- <li><a href="#" id="listFollow">íŒ”ë¡œìš° ëª©ë¡ë³´ê¸°</a></li> -->
+		                        	<li><a href="#" id="logout">ë¡œê·¸ì•„ì›ƒ</a></li>
+		                     	</ul>
+		                  	</li>
+                     	</c:if>
+		               	<c:if test="${sessionScope.user.role == '2'}">
+		                  	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.</a></li>
+		                  	<li>
+		                    	<a href="#" id="listLetter">
+		                        	<!-- ìª½ì§€ -->
+		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+		                        	<!-- ì•Œë¦¼ -->
+		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+		                     	</a>
+		                  	</li>
+		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
+		                    <ul class="dropdown-menu">
+		                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
+		                        <li><a href="#" id="profile">í”„ë¡œí•„</a></li>
+		                        <li><a href="#" id="getUser">ë‚´ì •ë³´ë³´ê¸°</a></li>
+		                        <li><a href="#" id="updateUser">ë‚´ì •ë³´ìˆ˜ì •</a></li>
+		                        <!-- <li><a href="#" id="listFollow">íŒ”ë¡œìš° ëª©ë¡ë³´ê¸°</a></li> -->
+		                        <li><a href="#" id="logout">ë¡œê·¸ì•„ì›ƒ</a></li>
+		                     </ul></li>
+		                </c:if>
+		                <c:if test="${sessionScope.user.role == '3'}">
+		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤.</a></li>
+		                  	<li>
+		                    	<a href="#" id="listLetter">
+		                        <!-- ìª½ì§€ -->
+		                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+		                        <!-- ì•Œë¦¼ -->
+		                        <span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+		                     	</a>
+		                  	</li>
+		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
+		                    <ul class="dropdown-menu">
+		                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
+		                        <li><a href="#" id="profile">í”„ë¡œí•„</a></li>
+		                        <li><a href="#" id="getCompany">ê¸°ì—…ì •ë³´ë³´ê¸°</a></li>
+		                        <li><a href="#" id="updateCompany">ê¸°ì—…ì •ë³´ìˆ˜ì •</a></li>
+		                        <!-- <li><a href="#" id="listFollow">íŒ”ë¡œìš° ëª©ë¡ë³´ê¸°</a></li> -->
+		                        <li><a href="#" id="logout">ë¡œê·¸ì•„ì›ƒ</a></li>
+		                    </ul></li>
+		                 </c:if>	
+					</c:if>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container -->
+	</nav>
+	
+	<!-- Intro Header -->
+	<header class="intro" id="intro">
+		<div class="intro-body">
+			<div class="container" style="margin-top: 60;">
+				<div class="row">
+					<div class="col-md-10 col-md-offset-1">
+					<p class="intro-text" style="color:#ff6600;font-size: 20;font-weight: 400;">
+							ì›¹ / ì–´í”Œë¦¬ì¼€ì´ì…˜ êµ¬ì¸êµ¬ì§ ì†”ë£¨ì…˜
+						</p>
+						<h1 class="brand-heading">NONSTOP YOUR PROJECT AND PORTFOLIO</h1>
+						<p class="intro-text">
+							ë…¼ìŠ¤í†±ì—ì„œ ì›¹ì‚¬ì´íŠ¸, ì–´í”Œë¦¬ì¼€ì´ì…˜ ê°œë°œ ë° ë””ìì¸ í¬íŠ¸í´ë¦¬ì˜¤ë¥¼ ê´€ë¦¬í•˜ê³  ê´€ë ¨ í”„ë¡œì íŠ¸ì— ì°¸ì—¬í•´ ë³´ì„¸ìš”.
+						</p>
+						<div class="margin-bottom-80"></div>
+						
+						<%-- <div class="intro-main">
+							<ul class="main-ul">
+								<li>
+									<h1>${dataList.DEVELOP}</h1>
+									<p>ê°œë°œì í¬íŠ¸í´ë¦¬ì˜¤</p>
+								</li>
+								<li>
+									<div class="verticle-line">
+										<br />
+										<br />
+										<br />
+									</div>
+								</li>
+								<li>
+									<h1>${dataList.DESIGN}</h1>
+									<p>ë””ìì¸ í¬íŠ¸í´ë¦¬ì˜¤</p>
+								</li>
+								<li>
+									<div class="verticle-line">
+										<br />
+										<br />
+										<br />
+									</div>
+								</li>
+								<li>
+									<h1>${dataList.PROJECT}</h1>
+									<p>ë“±ë¡ëœ í”„ë¡œì íŠ¸</p>
+								</li>
+							</ul>
+						</div> --%>
+						<!-- <p id="countDevelop"></p>
+						<p id="countDesign"></p>
+						<p id="countProject"></p> -->
+						
+						<div class="funfacts">
+							<div class="col-md-12">
+								<div class="row">
+									<div class="col-md-4">
+										<div class="funfact">
+											<div class="st-funfact-icon"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countDevelop" data-from="0" data-to="125" data-runit="1">125</span>+</div>
+											<strong class="funfact-title">Development Portfolio</strong>
+										</div><!-- .funfact -->
+									</div>
+									<div class="col-md-4">
+										<div class="funfact">
+											<div class="st-funfact-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countDesign" data-from="0" data-to="135" data-runit="1">135</span>+</div>
+											<strong class="funfact-title">Design Portfolio</strong>
+										</div><!-- .funfact -->
+									</div>
+									<div class="col-md-4">
+										<div class="funfact">
+											<div class="st-funfact-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countProject" data-from="0" data-to="122" data-runit="1">122</span>+</div>
+											<strong class="funfact-title">Projects</strong>
+										</div><!-- .funfact -->
+									</div>
+								</div>
+							</div>
+						</div>
+										
+						<div class="col-md-12" style="text-align:center">
+							<a href="#about" class="page-scroll" data-index="0"> <!-- class="btn btn-circle page-scroll" -->
+							<span class="fa fa-chevron-down" aria-hidden="true"><p>ë” ì•Œì•„ë³´ê¸°</p></span>
+							</a>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+		<ul class="pagination paging_home">
+			<li class="active">
+				<a href="#intro" data-index="1" class="link_paging">1</a>
+			</li>
+			<li class="">
+				<a href="#about" data-index="2" class="link_paging">1</a>
+			</li>
+			<li class="">
+				<a href="#download" data-index="3" class="link_paging">1</a>
+			</li>
+			<li class="">
+				<a href="#contact" data-index="4" class="link_paging">1</a>
+			</li>
+		</ul>
+	</header>
+	<!-- About Section -->
+	<section id="about" class="about">
+		<div class="about-section">
+			<div class="container">
+				<div class="col-md-12">
+					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<h2 class="brand-heading">Portfolio Service</h2>
+					<p>
+					ê·¸ë™ì•ˆ ì‘ì—…í•œ í¬íŠ¸í´ë¦¬ì˜¤ë¥¼ ì†ì‰½ê²Œ ì˜¬ë¦¬ê³  ê´€ë¦¬í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. pdf íŒŒì¼ í˜•ì‹ ì§€ì›ê³¼ ë‹¤ì¤‘ ì´ë¯¸ì§€ ì—…ë¡œë“œë¥¼ ì§€ì› ë“± ì´ì „ì— ë§Œë“¤ì–´ë†“ì€ í¬íŠ¸í´ë¦¬ì˜¤ íŒŒì¼ì„ ìˆ˜ì •ì—†ì´ ë“±ë¡í•˜ì—¬ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ ì„œë¹„ìŠ¤í•˜ê¸° ìœ„í•´ ë…¸ë ¥í•˜ê³  ìˆìŠµë‹ˆë‹¤. ê°ì ë“±ë¡í•œ ì‘ì—…ë“¤ì€ í”„ë¡œí•„ í˜ì´ì§€ì—ì„œ ë”°ë¡œ ê´€ë¦¬í•  ìˆ˜ ìˆìœ¼ë©° ì„œë¡œì˜ ì‘ì—…ë¬¼ì„ ì¶”ì²œí•˜ê³  ì˜ê²¬ì„ ë‚˜ëˆŒ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+					</p>
+					<div class="margin-bottom-30"></div>
+					<hr style="width:20%; border-top:1px solid #bdbdbd">
+					<div class="margin-bottom-60"></div>
+				</div>
+			</div>
+			
+			<div class="col-md-12">
+				<div class="col-md-4 col-sm-4">
+					<div class="single-blog">
+			
+						<div class="featured-content">
+							<img class="img-responsive" src="/resources/images/upload/app (1).jpg" alt="">
+							<div class="portfolio-detail">
+								<div class="portfolio-overlay"></div>
+								<a href="img/demo-images/portfolio/full/01.jpg" data-litebox-group="myGallery" class="litebox"></a>
+							</div>
+						</div>
+						<div class="single-blog-text">
+							<h3>ë‹¤ì¤‘ ì´ë¯¸ì§€ ì—…ë¡œë“œ</h3>
+							<p>ì—¬ëŸ¬ê°œì˜ ì´ë¯¸ì§€ë¥¼ ì—…ë¡œë“œ í•  ìˆ˜ ìˆê³  ì´ë¯¸ì§€ í´ë¦­ì‹œ ì „ì²´í™”ë©´ìœ¼ë¡œ ë³¼ ìˆ˜ ìˆê¸°ì— í¸ë¦¬í•©ë‹ˆë‹¤.</p>
+							<p><a href="" class="btn blog-btn">View Image</a></p>
+						</div>
+					</div>
+				</div><!--blog col end-->
+				<div class="col-md-4 col-sm-4">
+					<div class="single-blog">
+						<div class="featured-content">
+							<img class="img-responsive" src="/resources/images/upload/app (8).jpg" alt="">
+							<div class="portfolio-detail">
+								<div class="portfolio-overlay"></div>
+								<a href="img/demo-images/portfolio/full/02.jpg" data-litebox-group="myGallery" class="litebox"></a>
+							</div>
+						</div>
+						<div class="single-blog-text">
+							<h3>PDF íŒŒì¼ í˜•ì‹ ì§€ì›</h3>
+							<p>PDF íŒŒì¼ í˜•ì‹ í¬íŠ¸í´ë¦¬ì˜¤ê°€ ìˆë‹¤ë©´ ì¶”ê°€ ì‘ì—… ì—†ì´ ê·¸ëŒ€ë¡œ ì—…ë¡œë“œí•˜ì—¬ ì‚¬ìš©í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.</p>
+							<p><a href="" class="btn blog-btn">View PDF</a></p>
+						</div>
+					</div>
+				</div><!--blog col end-->
+				<div class="col-md-4 col-sm-4">
+					<div class="single-blog">
+						<div class="featured-content">
+							<img class="img-responsive" src="/resources/images/upload/app (7).jpg" alt="">
+							<div class="portfolio-detail">
+								<div class="portfolio-overlay"></div>
+								<a href="img/demo-images/portfolio/full/03.jpg" data-litebox-group="myGallery" class="litebox"></a>
+							</div>
+						</div>
+						<div class="single-blog-text">
+							<h3>ODP íŒŒì¼ í˜•ì‹ ì§€ì›</h3>
+							<p>	Open Document íŒŒì¼ í˜•ì‹ì„ ì§€ì›í•©ë‹ˆë‹¤. ê°–ê³  ìˆëŠ” PPTíŒŒì¼ì´ ìˆë‹¤ë©´ ODPíŒŒì¼ ì—…ë¡œë“œë¥¼ ì´ìš©í•´ë³´ì„¸ìš”.</p>
+							<p><a href="" class="btn blog-btn">View ODP</a></p>
+						</div>	
+					</div>
+				</div><!--blog col end-->
+			</div>
+			
+		</div>
+	</section>
+	
+	<!-- Download Section -->
+	<section id="download" class="download">
+		<div class="download-section">
+			<div class="container">
+			
+				<div class="col-md-12">
+					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<h2 class="brand-heading">Project Service</h2>
+					<p>
+					ê³¨ì¹˜ì•„í”ˆ í”„ë¡œì íŠ¸ ë¹¨ë¦¬í•´ê²°í•  ìˆ˜ ì—†ì„ê¹Œ? ë¯¿ì„ë§Œí•œ í”„ë¦¬ëœì„œ ì–´ë””ì—†ì„ê¹Œ? ê²€ì¦ë˜ì§€ì•Šì€ í”„ë¦¬ëœì„œëŠ” í”„ë¡œì íŠ¸ë¥¼ ë§ì¹  ìˆ˜ë„ ìˆìŠµë‹ˆë‹¤. í”„ë¦¬ëœì„œì˜ ê°œì¸ ê¸°ìˆ ëŠ¥ë ¥ ì •ë³´ë¥¼ ì§ì ‘í™•ì¸í•´ë³´ê³  ê³µë™ í”„ë¡œì íŠ¸ì— ì°©ìˆ˜í•˜ì„¸ìš”.
+					ì í•©í•œ ì‘ì—…ìë¥¼ ì°¾ëŠë¼ ì§€ì¹œë‹¹ì‹  NONSTOPì—ì„œ ì„±ê³µì„ ê¸°ì›í•©ë‹ˆë‹¤.
+					</p>
+					<div class="margin-bottom-30"></div>
+					<hr style="width:20%">
+				</div>
+			
+			</div>
+		</div>
+	</section>
+	
+	<!-- Contact Section -->
+	<section id="contact" class="contact">
+		<div class="contact-section">
+			<div class="container">
+			
+				<div class="col-md-12">
+					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<h2 class="brand-heading">Tech Statistic Service</h2>
+					<p>
+					ê·¸ë™ì•ˆ ì‘ì—…í•œ í¬íŠ¸í´ë¦¬ì˜¤ë¥¼ ì†ì‰½ê²Œ ì˜¬ë¦¬ê³  ê´€ë¦¬í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤. pdf íŒŒì¼ í˜•ì‹ ì§€ì›ê³¼ ë‹¤ì¤‘ ì´ë¯¸ì§€ ì—…ë¡œë“œë¥¼ ì§€ì› ë“± ì´ì „ì— ë§Œë“¤ì–´ë†“ì€ í¬íŠ¸í´ë¦¬ì˜¤ íŒŒì¼ì„ ìˆ˜ì •ì—†ì´ ë“±ë¡í•˜ì—¬ ì‚¬ìš©í•  ìˆ˜ ìˆë„ë¡ ì„œë¹„ìŠ¤í•˜ê¸° ìœ„í•´ ë…¸ë ¥í•˜ê³  ìˆìŠµë‹ˆë‹¤. ê°ì ë“±ë¡í•œ ì‘ì—…ë“¤ì€ í”„ë¡œí•„ í˜ì´ì§€ì—ì„œ ë”°ë¡œ ê´€ë¦¬í•  ìˆ˜ ìˆìœ¼ë©° ì„œë¡œì˜ ì‘ì—…ë¬¼ì„ ì¶”ì²œí•˜ê³  ì˜ê²¬ì„ ë‚˜ëˆŒ ìˆ˜ ìˆìŠµë‹ˆë‹¤.
+					</p>
+					<div class="margin-bottom-30"></div>
+					<hr style="width:20%; border-top:1px solid #bdbdbd">
+				</div>
+				
+			</div>
+		</div>
+	</section>
+	
+	<!-- modal login -->
+	<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog">
+        	<div class="modal-content" style="margin-top: 30%; padding-bottom: 0; padding-top: 10px;">
+        	
+        		<div class="tab-content">
+	        		<form id="aaa">
+		                <div class="form-group">
+		                    <input type="text" class="form-control" name="userId" id="userId" placeholder="User ID">
+		                </div>
+		
+		                <div class="form-group">
+		                    <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+		                </div>
+		
+		                <button class="btn btn-primary btn-block" id="loginButton">LOGIN</button>
+						
+						<div class="text-div"><span>or</span></div>
+						
+						<div class="form-group">
+	                  	  	<a id="kakao-login-btn" href="javascript:loginWithKakao()">
+								<img src="/resources/images/layout/kakao_account_login_btn_medium_narrow.png" width="100%"/>
+							</a>
+					  	</div>
 					  
-					  <div class="form-group" id="naver_id_login">
-                  	  	<img src="/resources/images/layout/naverLogin.PNG"/>
-					  </div>
+					  	<div id="naver_id_login" class="form-group">
+                  	  		<img src="/resources/images/layout/naverLogin.PNG"/>
+					  	</div>
 
-                  </form>
-              </div>
-              
-           </div>
+		            </form>
+        		</div>
+        		
+        	</div>
         </div>
     </div>
-<script type="text/javascript">
-
-var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N","http://127.0.0.1:8080");
+    <script type="text/javascript">
+    //============ ë„¤ì´ë²„ ==============
+    var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N","http://127.0.0.1:8080");
 	var state = naver_id_login.getUniqState();
 	naver_id_login.setButton("green", 3,52);
 	naver_id_login.setDomain(".service.com");
 	naver_id_login.setState(state);
 	naver_id_login.init_naver_id_login();
-	
 
-								
-
-
-function naverSignInCallback() {
- alert(naver_id_login.getProfileData('email'));
- var userId=naver_id_login.getProfileData('email');    
- var tempId = userId.replace(".", ",");
- console.log("userId :: " + userId);
- console.log("tempId :: " + tempId);
+	function naverSignInCallback() {
+		alert(naver_id_login.getProfileData('email'));
+		var userId=naver_id_login.getProfileData('email');    
+	 	var tempId = userId.replace(".", ",");
+	 	console.log("userId :: " + userId);
+	 	console.log("tempId :: " + tempId);
  
  
- $.ajax(
-         {
-             url : '/user/checkUserId/'+tempId,
-             method : "POST",
-             dataType : "json",
-             headers : {
-                "Accept" : "application/json",
-                "Content-Type" : "application/json"
-             },
-             context : this,
-             success : function(JSONData, status) {     
-                if(JSONData.user ==null ) {
-              	  
-              	  self.location="/view/user/addUserView.jsp?userId="+userId;                 
+ 		$.ajax(
+        	{
+	        	url : '/user/checkUserId/'+tempId,
+	            method : "POST",
+	            dataType : "json",
+	            headers : {
+	                "Accept" : "application/json",
+	                "Content-Type" : "application/json"
+	            },
+	            context : this,
+	            success : function(JSONData, status) {     
+	            	if(JSONData.user ==null ) {
+              	  	self.location="/view/user/addUserView.jsp?userId="+userId;                 
                 }else if(JSONData.user.role == 4){
-              	alert("Å»ÅğÇÑ °èÁ¤ÀÔ´Ï´Ù.");
-              	$(self.location).attr("href","/user/logout");
-              	location.reload();
+              		alert("íƒˆí‡´í•œ ê³„ì •ì…ë‹ˆë‹¤.");
+              		$(self.location).attr("href","/user/logout");
+              		location.reload();
                 }else{
               	  location.reload();
                 }
              }
-       });   
-      }                  
+       	});   
+    }                  
     
- 		naver_id_login.get_naver_userprofile("naverSignInCallback()");
-
-</script>
-
-<!-- modal Add User -->
-   <div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-       <div class="modal-dialog" style="width: 450px">
-           <div class="modal-content" style="margin-top: 10%; padding-bottom: 0; padding-top: 10px;">
-           
-              <div class="tab-content">
-                 
-                 <div class="tabbable-panel">
-                  <div class="tabbable-line">
-                     <ul class="nav nav-tabs">
-                        <li class="active">
-                           <a href="#tab_default_1" data-toggle="tab"><strong>°³ÀÎ È¸¿ø°¡ÀÔ </strong></a>
-                        </li>
-                        <li>
-                           <a href="#tab_default_2" data-toggle="tab"><strong>±â¾÷ È¸¿ø°¡ÀÔ</strong></a>
-                        </li>
-                     </ul>
-                     <div class="tab-content">
-                        <div class="tab-pane active" id="tab_default_1">
-                           <form id="addUserF">
-                                  <div class="form-group">
-                                      <input type="text" id="userId" name="userId1" class="form-control" placeholder="User ID">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="password" id="password" name="password1" class="form-control" placeholder="Password">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="password" id="password2" name="password21" class="form-control" placeholder="Password È®ÀÎ">
-                                  </div>
-                                  <div id="checkpw" style="color:red; font-size:12px;"></div>
-                                  <div class="form-group">
-                                      <input type="text" id="userName" name="userName1" class="form-control" placeholder="ÀÌ¸§">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="addr" name="addr1" class="form-control" placeholder="ÁÖ¼Ò">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="tel" name="tel1" class="form-control" placeholder="¿¬¶ôÃ³">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="email" name="email1" class="form-control" placeholder="ÀÌ¸ŞÀÏ">
-                                  </div>
+ 	naver_id_login.get_naver_userprofile("naverSignInCallback()");
+ 	</script>
+    
+    <!-- modal Add User -->
+	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog" style="width: 450px">
+        	<div class="modal-content" style="margin-top: -4%; padding-bottom: 0; padding-top: 10px;">
+        	
+        		<div class="tab-content">
+	        		
+	        		<div class="tabbable-panel">
+						<div class="tabbable-line">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#tab_default_1" data-toggle="tab"><strong>ê°œì¸ íšŒì›ê°€ì… </strong></a>
+								</li>
+								<li>
+									<a href="#tab_default_2" data-toggle="tab"><strong>ê¸°ì—… íšŒì›ê°€ì…</strong></a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_default_1">
+									<form id="addUserF" method="post" enctype="multipart/form-data">
+	                                	<div class="form-group">
+	                                    	<input type="text" id="userId" name="userId" class="form-control" placeholder="User ID">
+	                                    	<div id="checkIdd" style="color:red; font-size:12px;">ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.</div>
+	                 				 	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+	                                  	</div>
+		                                <div class="form-group">
+		                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Password í™•ì¸">
+		                                </div>
+	                                  	<div id="checkpw" style="color:red; font-size:12px;"></div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="userName" name="userName" class="form-control" placeholder="ì´ë¦„">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="addr" name="addr" class="form-control" placeholder="ì£¼ì†Œ">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="tel" name="tel" class="form-control" placeholder="ì—°ë½ì²˜">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="email" name="email" class="form-control" placeholder="ì´ë©”ì¼">
+	                                  	</div>
                  				
-                 				
-                 				  <!-- ===================ÇÁ·ÎÇÊ »çÁø========================= --> 
-                 				
-                 				
-                 				
-                                  <button class="btn btn-primary btn-block" id="addUserV" style="margin-top:60px">È¸¿ø°¡ÀÔ</button>
-                                  <button class="btn btn-default btn-block">Ãë¼Ò</button>
+                                  		<button class="btn btn-primary btn-block" id="addUserV" style="margin-top:60px">íšŒì›ê°€ì…</button>
+                                  		<button class="btn btn-default btn-block">ì·¨ì†Œ</button>
             
-                              </form>
-                        </div>
-                        <div class="tab-pane" id="tab_default_2">
-                           <form id="addCompanyF">
-                                  <div class="form-group">
-                                      <input type="text" id="userId" name="userId2" class="form-control" placeholder="User ID">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="password" id="password" name="password22" class="form-control" placeholder="Password">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="password" id="password2" name="password222" class="form-control" placeholder="Password È®ÀÎ">
-                                  </div>
-                                  <div id="checkpw" style="color:red; font-size:12px;"></div>
-                                  <div class="form-group">
-                                      <input type="text" id="userName" name="userName2" class="form-control" placeholder="ÀÌ¸§">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="addr" name="addr2" class="form-control" placeholder="ÀÌ¸§">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="tel" name="tel2" class="form-control" placeholder="¿¬¶ôÃ³">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="email" name="email2" class="form-control" placeholder="ÀÌ¸ŞÀÏ">
-                                  </div>
-                                  <div class="form-group">
-                                      <input type="text" id="companyName" name="companyName2" class="form-control" placeholder="±â¾÷¸í">
-                                  </div>
-                                   <div class="form-group">
-                                      <input type="text" id="empNum" name="empNum2" class="form-control" placeholder="Á÷¿ø¼ö">
-                                  </div>
+									</form>
+                        		</div>
+                        		<div class="tab-pane" id="tab_default_2">
+		                        	<form id="addCompanyF" method="post" enctype="multipart/form-data">
+		                            	<div class="form-group">
+		                                	<input type="text" id="userId" name="userId" class="form-control" placeholder="User ID">
+		                                	<div id="checkIdd" style="color:red; font-size:12px;">ì•„ì´ë””ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.</div>
+		                                </div>
+                                  		<div class="form-group">
+                                      		<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                                  		</div>
+	                                  	<div class="form-group">
+	                                      	<input type="password" id="password2" name="password2" class="form-control" placeholder="Password í™•ì¸">
+	                                  	</div>
+	                                  	<div id="checkpw" style="color:red; font-size:12px;"></div>
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="userName" name="userName" class="form-control" placeholder="ì´ë¦„">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="addr" name="addr" class="form-control" placeholder="ì£¼ì†Œ">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="tel" name="tel" class="form-control" placeholder="ì—°ë½ì²˜">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="email" name="email" class="form-control" placeholder="ì´ë©”ì¼">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="companyName" name="companyName" class="form-control" placeholder="ê¸°ì—…ëª…">
+	                                  	</div>
+	                                   	<div class="form-group">
+	                                      	<input type="text" id="empNum" name="empNum" class="form-control" placeholder="ì§ì›ìˆ˜">
+	                                  	</div>
                                   
-                                  <div class="form-group">
-                                      <input type="text" id="datepicker" name="pubDate" class="form-control" placeholder="¼³¸³ÀÏ" readonly>
-                                  </div>
-                 				  
+		                                <div class="form-group">
+		                                	<input type="text" id="datepicker" name="pubDate" class="form-control" placeholder="ì„¤ë¦½ì¼" readonly>
+		                               	</div>
+                 				   		<div class="form-group">
+						
+									 	<div class="col-md-5">
+										   <!-- image-preview-filename input [CUT FROM HERE]-->
+								           <div class="input-group image-preview">
+								              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
+								                <span class="input-group-btn">
+								                    <!-- image-preview-clear button -->
+								                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
+								                        <span class="glyphicon glyphicon-remove"></span> Clear
+								                    </button>
+								                    <!-- image-preview-input -->
+								                    <div class="btn btn-default image-preview-input">
+								                        <span class="glyphicon glyphicon-folder-open"></span>
+								                        <span class="image-preview-input-title">ì°¾ì•„ë³´ê¸°</span>
+								                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="file" id="image"/> <!-- rename it -->
+								                    </div>
+								                </span>
+								            </div><!-- /input-group image-preview [TO HERE]--> 
+										</div>
+									</div>						
 
-
-
-									<!-- =========================±â¾÷·Î°í======================================= -->
-
-
-               
-                                  <button class="btn btn-primary btn-block" id="addCompanyV" style="margin-top:60px">È¸¿ø°¡ÀÔ</button>
-                                  <button class="btn btn-default btn-block">Ãë¼Ò</button>
-                              </form>
-                        </div>
-                     </div>
-                  </div>
-               </div>
-                 
-              </div>
-              
-           </div>
+                                	<button class="btn btn-primary btn-block" id="addCompanyV" style="margin-top:60px">íšŒì›ê°€ì…</button>
+                                	<button class="btn btn-default btn-block">ì·¨ì†Œ</button>
+                              	</form>
+								</div>
+							</div>
+						</div>
+					</div>
+	        		
+        		</div>
+        		
+        	</div>
         </div>
     </div>
-    
-   <!-- Footer -->
-   <footer>
-      <div class="container text-center">
-         <p>Copyright &copy; NONSTOP 2017</p>
-      </div>
-   </footer>
+	
+	<!-- Footer -->
+	<footer>
+		<div class="container text-center">
+			<p>Copyright &copy; NONSTOP 2017</p>
+		</div>
+	</footer>
 </body>
 </html>
-
-
-
-
-										
