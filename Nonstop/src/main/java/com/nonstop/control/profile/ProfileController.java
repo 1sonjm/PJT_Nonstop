@@ -75,13 +75,13 @@ public class ProfileController {
 		User user = userService.getProfileMine(sessionId);
 		//개인기술경력 리스트 
 		Map<String , Object> map = profileService.getCareerList(sessionId);
-		
-		if(role.equals("2")){
+		System.out.println("********************"+user.getRole());
+		if(user.getRole().equals("2")){
 		//프로젝트 작업이력 
 		List<RecordProject> recordProject = profileService.getRecordProjectList(sessionId);
 		//프로젝트 작업이력 리스트
 		model.addAttribute("recordProject"  , recordProject);
-		}else if(role.equals("3")){
+		}else if(user.getRole().equals("3")){
 		List<RecordProject> recordProject = profileService.getRecordProjectList2(sessionId);
 		model.addAttribute("recordProject"  , recordProject);
 		}

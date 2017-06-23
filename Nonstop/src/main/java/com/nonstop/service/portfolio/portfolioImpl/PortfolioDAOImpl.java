@@ -1,5 +1,6 @@
 package com.nonstop.service.portfolio.portfolioImpl;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.nonstop.domain.PortComment;
+import com.nonstop.domain.PortImages;
 import com.nonstop.domain.PortLike;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.service.portfolio.PortfolioDAO;
@@ -31,8 +33,16 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 	}
 
 	@Override
-	public void addPortfolio(Portfolio portfolio) throws Exception {		
-		sqlSession.insert("PortfolioMapper.addPortfolio", portfolio);		
+	public int addPortfolio(Portfolio portfolio) throws Exception {		
+		
+		sqlSession.insert("PortfolioMapper.addPortfolio", portfolio);
+
+		if(portfolio.getImages() != null) {
+			List<PortImages> list = new ArrayList<PortImages>(portfolio.getImages());
+			sqlSession.insert("PortfolioMapper.addPortImages", list);
+		}
+		
+		return portfolio.getPortNo();
 	}
 	
 	@Override
@@ -43,7 +53,14 @@ public class PortfolioDAOImpl  implements PortfolioDAO{
 		map.put("portNo", portNo);
 		map.put("sessionUserId", sessionUserId);
 		
-		return sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
+		Portfolio portfolio = new Portfolio();
+		portfolio = sqlSession.selectOne("PortfolioMapper.getPortfolio", map);
+		
+		List<PortImages> portImages = new ArrayList<PortImages>();
+		portImages = sqlSession.selectList("PortfolioMapper.getPortImages", portNo);
+		portfolio.setImages(portImages);
+		
+		return portfolio;
 	}
 
 	public List<Portfolio> getPortfolioList(Search search, String sessionUserId) throws Exception {

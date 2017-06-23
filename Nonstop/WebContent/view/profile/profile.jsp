@@ -304,7 +304,7 @@ $.ajax("/statistics/getUserStatisticsList/"+userId+"/"+role,{
 	},
 	success : function(aaa) {
 		for (var i=0; i<aaa.dataList.length; i++){
-			console.log(aaa.dataList[i].techName+"ddd"+aaa.dataList[i].careerUseTerm);
+			
 			dataSet.push({
 				TechName: aaa.dataList[i].techName,
 				UseTerm: aaa.dataList[i].careerUseTerm

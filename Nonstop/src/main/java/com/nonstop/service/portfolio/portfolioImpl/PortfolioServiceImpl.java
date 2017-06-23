@@ -29,9 +29,9 @@ public class PortfolioServiceImpl implements PortfolioService{
 	}
 
 	@Override
-	public void addPortfolio(Portfolio portfolio) throws Exception {
+	public int addPortfolio(Portfolio portfolio) throws Exception {
 		// TODO Auto-generated method stub
-		portfolioDAO.addPortfolio(portfolio);
+		return portfolioDAO.addPortfolio(portfolio);
 	}
 
 	@Override

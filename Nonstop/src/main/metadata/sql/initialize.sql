@@ -10,7 +10,8 @@ DROP TABLE record_applicant;
 DROP TABLE project;
 DROP TABLE port_comment;
 DROP TABLE port_like;
-DROP TABLE portfolio;
+DROP TABLE port_images;
+DROP TABLE portfolio CASCADE CONSTRAINTS;
 DROP TABLE tech;
 DROP TABLE users;
 
@@ -105,13 +106,15 @@ INSERT INTO tech VALUES (seq_tech_tech_no3.nextval,'SQLite',3);
 DROP SEQUENCE seq_portfolio_port_no;
 DROP SEQUENCE seq_port_like_port_like_no;
 DROP SEQUENCE seq_port_comment_com_no;
+DROP SEQUENCE seq_port_images_img_no;
 CREATE SEQUENCE seq_portfolio_port_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_like_port_like_no INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_port_comment_com_no INCREMENT BY 1 START WITH 1;
+CREATE SEQUENCE seq_port_images_img_no INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE portfolio ( 
-  port_no           NUMBER             NOT NULL,
-  port_user_id      VARCHAR2(30)       NOT NULL REFERENCES users(user_id),
+  port_no           NUMBER             NOT NULL PRIMARY KEY,
+  port_user_id      VARCHAR2(30)       NOT NULL,
   port_division     NUMBER(2),
   port_title        VARCHAR2(100),
   port_regdate      DATE,
@@ -119,21 +122,36 @@ CREATE TABLE portfolio (
   port_file         VARCHAR2(100)      UNIQUE,
   port_detail       VARCHAR2(4000),
   port_viewcount    NUMBER(20),
-  PRIMARY KEY(port_no)
+  port_like_count    NUMBER(20),
+  port_com_count    NUMBER(20),
+  CONSTRAINT portfolio_fk
+  FOREIGN KEY (port_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 CREATE TABLE port_like ( 
-  port_like_no      NUMBER             NOT NULL,
-  port_no           NUMBER             NOT NULL REFERENCES portfolio(port_no),
-  user_id           VARCHAR2(30)       NOT NULL REFERENCES users(user_id),
-  PRIMARY KEY(port_like_no)
+  port_like_no      NUMBER             NOT NULL PRIMARY KEY,
+  port_no           NUMBER             NOT NULL,
+  user_id           VARCHAR2(30)       NOT NULL,
+  CONSTRAINT port_like_fk
+  FOREIGN KEY (port_no) REFERENCES portfolio(port_no) ON DELETE CASCADE,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 CREATE TABLE port_comment ( 
-  com_no            NUMBER             NOT NULL,
-  com_port_no       NUMBER             NOT NULL REFERENCES portfolio(port_no),
-  com_user_id       VARCHAR2(30)       NOT NULL REFERENCES users(user_id),
+  com_no            NUMBER             NOT NULL PRIMARY KEY,
+  com_port_no       NUMBER             NOT NULL, 
+  com_user_id       VARCHAR2(30)       NOT NULL,
   com_port_regdate  DATE,
   com_port_content  VARCHAR2(200),
-  PRIMARY KEY(com_no)
+  CONSTRAINT port_comment_fk
+  FOREIGN KEY (com_port_no) REFERENCES portfolio(port_no) ON DELETE CASCADE,
+  FOREIGN KEY (com_user_id) REFERENCES users(user_id) ON DELETE CASCADE
+);
+CREATE TABLE port_images(
+  img_no 			NUMBER				NOT NULL PRIMARY KEY, 
+  img_port_no 		NUMBER				NOT NULL,
+  img_name 			VARCHAR2(50)		NOT NULL,
+  img_order 		NUMBER(30),
+  CONSTRAINT port_images_fk
+  FOREIGN KEY (img_port_no) REFERENCES portfolio(port_no) ON DELETE CASCADE
 );
 
 INSERT INTO portfolio (port_no,port_user_id,port_division,port_title,port_regdate,port_file,port_detail) 
@@ -166,12 +184,11 @@ DROP SEQUENCE seq_record_applicant_rec_no;
 DROP SEQUENCE seq_proj_comment_com_no;
 CREATE SEQUENCE seq_project_proj_no       INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_record_applicant_rec_no    INCREMENT BY 1 START WITH 1;
-CREATE SEQUENCE seq_proj_scrap_proj_scrap_no   INCREMENT BY 1 START WITH 1;
 CREATE SEQUENCE seq_proj_comment_com_no   INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE project( 
-  proj_no           NUMBER            NOT NULL,
-  proj_user_id      VARCHAR2(30)      NOT NULL  REFERENCES users(user_id),
+  proj_no           NUMBER            NOT NULL PRIMARY KEY,
+  proj_user_id      VARCHAR2(30)      NOT NULL,
   proj_division     NUMBER(2),
   proj_title        VARCHAR2(100),
   proj_annostart    DATE,
@@ -181,22 +198,27 @@ CREATE TABLE project(
   proj_location     VARCHAR2(20),
   proj_detail       VARCHAR2(4000),
   proj_viewcount    NUMBER,
-  PRIMARY KEY(proj_no)
+  CONSTRAINT project_fk
+  FOREIGN KEY (proj_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 CREATE TABLE record_applicant ( 
-  rec_no            NUMBER            NOT NULL,
-  rec_proj_no       NUMBER            NOT NULL REFERENCES project(proj_no),
-  rec_user_id       VARCHAR2(30)      NOT NULL REFERENCES users(user_id),
+  rec_no            NUMBER            NOT NULL PRIMARY KEY,
+  rec_proj_no       NUMBER            NOT NULL,
+  rec_user_id       VARCHAR2(30)      NOT NULL,
   rec_status        NUMBER(1),
-  PRIMARY KEY(rec_no)
+  CONSTRAINT record_applicant_fk
+  FOREIGN KEY (rec_proj_no) REFERENCES project(proj_no) ON DELETE CASCADE,
+  FOREIGN KEY (rec_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 CREATE TABLE proj_comment ( 
-  com_no            NUMBER            NOT NULL,
-  com_proj_no       NUMBER            NOT NULL REFERENCES project(proj_no),
-  com_user_id       VARCHAR2(30)      NOT NULL REFERENCES users(user_id),
+  com_no            NUMBER            NOT NULL PRIMARY KEY,
+  com_proj_no       NUMBER            NOT NULL,
+  com_user_id       VARCHAR2(30)      NOT NULL,
   com_proj_regdate  DATE,
   com_proj_content  VARCHAR2(200),
-  PRIMARY KEY(com_no)
+  CONSTRAINT proj_comment_fk
+  FOREIGN KEY (com_proj_no) REFERENCES project(proj_no) ON DELETE CASCADE,
+  FOREIGN KEY (com_user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 INSERT INTO project
@@ -244,12 +266,16 @@ CREATE SEQUENCE seq_techuse_tu_no  INCREMENT BY 1 START WITH 100;
 CREATE SEQUENCE seq_statisics_stat_no  INCREMENT BY 1 START WITH 100;
 
 CREATE TABLE techuse(
-  tu_no               NUMBER          NOT NULL ,  
-  tu_port_no          NUMBER          REFERENCES portfolio(port_no),
-  tu_proj_no          NUMBER          REFERENCES project(proj_no),
-  tu_tech_no          NUMBER           NOT NULL REFERENCES tech(tech_no),
-  PRIMARY KEY(tu_no)
-);
+  tu_no               NUMBER          NOT NULL PRIMARY KEY,  
+  tu_port_no          NUMBER,
+  tu_proj_no          NUMBER,
+  tu_tech_no          NUMBER          NOT NULL,
+  CONSTRAINT techuse_fk
+  FOREIGN KEY (tu_port_no) REFERENCES portfolio(port_no) ON DELETE CASCADE,
+  FOREIGN KEY (tu_proj_no) REFERENCES project(proj_no) ON DELETE CASCADE,
+  FOREIGN KEY (tu_tech_no) REFERENCES tech(tech_no) ON DELETE CASCADE
+ );
+
 CREATE TABLE statistics(
   stat_no             NUMBER          NOT NULL,  
   stat_tech_no        NUMBER          NOT NULL REFERENCES tech(tech_no),
@@ -344,7 +370,6 @@ CREATE TABLE scrap (
   scrap_div     NUMBER(1)      NOT NULL,
   PRIMARY KEY(scrap_no)
 );
-
 
 INSERT INTO scrap VALUES (seq_scrap_no.nextval,'user01',1,'',1 );
 INSERT INTO scrap VALUES (seq_scrap_no.nextval,'user01','',1,2);

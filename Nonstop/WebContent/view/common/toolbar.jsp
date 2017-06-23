@@ -16,9 +16,8 @@ $(document).ready(function(){
 			},
 			success : function(a , status) {
 				if(a.flag == true){
-					var displayValue = "<span class='glyphicon glyphicon-envelope' style='margin-top:3px; margin-bottom:5px'></span>"
-									  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
-					/* $('#mail').html($('#listLetter').html()+displayValue); */
+					var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
+									  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em; background:#ff6600; margin-left:4px;'>NEW</span>";
 					$("#mail").html(displayValue);
 				}
 			}
@@ -162,7 +161,7 @@ $(document).ready(function(){
     $(function() {
        $("#profile2").on("click" , function() {
     	   var role=$(this).attr('role');
-         self.location = "/profile/getMineProfile?role="+role
+         self.location = "/profile/getMineProfile?role="+role;
       }); 
     });
     
