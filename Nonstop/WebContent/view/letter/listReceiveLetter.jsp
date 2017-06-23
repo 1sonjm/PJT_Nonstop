@@ -618,7 +618,7 @@ ul {
 	                  
 	          $.ajax(
 	                {
-	                    url : '/user/checkUserId/'+userId,
+	                    url : '/user/checkId/'+userId,
 	                    method : "GET",
 	                    dataType : "json",
 	                    headers : {

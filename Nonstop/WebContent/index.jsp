@@ -291,7 +291,8 @@ $(function() {
 //============= 프로필 이동 Event 처리 =============	
 $(function() {
 	$("#profile").on("click", function() {
-		self.location = "/profile/getMineProfile"
+		var role = $(this).attr('role');
+		self.location = "/profile/getMineProfile?role="+role;
 	});
 });
 	
@@ -585,7 +586,7 @@ $(function() {
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
 		                    	<ul class="dropdown-menu">
 		                        	<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-		                        	<li><a href="#" id="profile">프로필</a></li>
+		                        	<li><a href="#" id="profile" role="${user.role}">프로필</a></li>
 		                        	<li><a href="#" id="listUser">개인회원목록조회</a></li>
 		                        	<li><a href="#" id="listCompany">기업회원목록조회</a></li>
 		                        	<li><a href="#" id="getUser">내정보보기</a></li>
