@@ -83,12 +83,6 @@ public class UserDAOImpl implements UserDAO{
 
 	@Override
 	public List<User> getCompanyList(Search search) throws Exception {
-		return sqlSession.selectList("UserMapper.getCompanyList", search);
-		
+		return sqlSession.selectList("UserMapper.getCompanyList", search);		
 	}
-
-
-	
-	
-	
 }

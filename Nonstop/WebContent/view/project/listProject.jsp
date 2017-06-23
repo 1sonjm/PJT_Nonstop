@@ -77,7 +77,7 @@
      	#shape2{
         	margin:0;
         	padding:5px;
-        	background-color: orange;
+        	background-color: #f78a09;
      	}
      	
      	/* scrap button */
@@ -158,6 +158,38 @@
 		    -moz-border-radius: 6px 0 6px 6px;
 		    border-radius: 6px 0 6px 6px;
 		}
+		
+		.modal-header{
+			font-family: "Open Sans", sans-serif;
+			font-weight: 300;
+		}
+		
+		.modal-body{
+			font-family: "Open Sans", sans-serif;
+			font-weight: 400;
+		}
+		
+		.modal-footer {
+			font-family: "Open Sans", sans-serif;
+			font-weight: 400;
+		}
+		
+		/* Scroll To Top */
+	   .scroll-to-top {
+	       display: none;
+	       font-size: 35px;
+	       position: fixed;
+	       right: 40px;
+	       bottom: 50px;
+	       z-index: 999;
+	       transition: all 0.3s ease-in-out;
+	       color : #ff6600;
+	   }
+	   
+	   .scroll-to-top:hover,
+	   .scroll-to-top:focus {
+	       color: #333333;
+	   }
 		     	
      	
 	</style>
@@ -300,16 +332,71 @@
 				self.location ="/view/project/addProjectView.jsp";
 			});
 			
-			if($("#sessionUserId").val() == "" || $("#sessionUserId").val() ==null ){
-				$(".detailButton").on("click", function(){
-					self.location ="/user/login";
-				});
-			}else{
-				$(".detailButton").on("click", function(){
-					self.location ="/project/getProject?projNo="+$(this).attr("value");
-				});
-			}
+		});	
+		
+		
+		$(function () {
+			'use strict';
+		    /* 스크롤 버튼 */
+			//DOM(Document Object Model)이 로드되었을 때 실행되어야 하는 코드
+		    jQuery(document).ready(function () {
+		
+		    	/* Smooth Scroll */		
+			    $('a.smoth-scroll').on("click", function (e) {
+			        var anchor = $(this);
+			        $('html, body').stop().animate({
+			            scrollTop: $(anchor.attr('href')).offset().top - 50
+			        }, 1000);
+			        e.preventDefault();
+			    });
+				
+				/* Scroll To Top */			
+			    $(window).scroll(function(){
+			    if ($(this).scrollTop() >= 500) {
+			        $('.scroll-to-top').fadeIn();
+			     } else {
+			        $('.scroll-to-top').fadeOut();
+			     }
+			     });
 			
+			    $('.scroll-to-top').click(function(){
+			      $('html, body').animate({scrollTop : 0},800);
+			      return false;
+			      });
+		    });
+		});
+		
+		
+		////상세보기 눌렀을때 : 로그인 안되었을시
+		$(function() {
+			$(".detailButton").on("click", function(){
+				
+				if($("#sessionUserId").val() == "" || $("#sessionUserId").val() ==null ){
+					
+					$("#loginButton").on("click" , function() {
+						
+						var id=$("input:text[name='userId']").val();
+						var pw=$("input:password[name='password']").val();
+						
+						if(id == null || id.length <1) {
+							alert('ID 를 입력하지 않으셨습니다.');
+							$("input:text[name='userId']").focus();
+							return;
+						}
+						
+						if(pw == null || pw.length <1) {
+							alert('패스워드를 입력하지 않으셨습니다.');
+							$("input:text[name='userId']").focus();
+							return;
+						}
+						
+						$("form").attr("method","POST").attr("action","/user/login").submit();
+					});
+				}else{
+				////상세보기 눌렀을때 : 로그인 되었을시
+					self.location ="/project/getProject?projNo="+$(this).attr("value");
+				}
+			});
 		});
 		
 		
@@ -350,6 +437,66 @@
 	                   });
 	            });
 
+	</script>
+	
+							
+	<!-- ///////////// 카카오 계정 연동 ////////////////// -->
+	<!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"/> -->
+	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width" />
+	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+	<!-- ////////////////////////////////////////////////// -->				
+	<script type="text/javascript">
+				
+	Kakao.init('fc5658887af25f840e94144f6722b228');
+	
+	    function loginWithKakao() {
+         // 로그인 창을 띄웁니다.
+         Kakao.Auth.login({
+           success: function(authObj) {
+        	   /* alert("dddddddd :: "+JSON.stringify(authObj)); */
+             var accessToken = Kakao.Auth.getAccessToken();
+             Kakao.Auth.setAccessToken(accessToken);
+             
+             Kakao.API.request({
+                url: '/v1/user/me',
+                success: function(res) {
+                	console.log("ressssss :: " + res);
+                   var userId = res.kaccount_email;       
+                   var tempId = userId.replace(".", ",");
+                   console.log("userId :: " + userId);
+                   console.log("tempId :: " + tempId);
+                   $.ajax(
+                       {
+                               url : "/user/checkUserId/"+tempId,
+                               method : "POST",
+                               dataType : "json",
+                               headers : {
+                                  "Accept" : "application/json",
+                                  "Content-Type" : "application/json"
+                               },
+                               success : function(JSONData, status) {     
+                                  if(JSONData.user ==null ) {
+                                	  alert("계정이 없습니다. 회원가입을 해주시기 바랍니다.");
+                                	  self.location="/view/user/addUserView.jsp?userId="+userId;                 
+                                  }else if(JSONData.user.role == 4){
+                                	alert("탈퇴한 계정입니다.");  
+                                	$(self.location).attr("href","/user/logout");
+ 	
+                                	  location.reload();
+                                  }else{
+                                	  location.reload();
+                                  }
+                               }
+                         });
+                        }                  
+                     });
+                   },
+                   fail: function(err) {
+                     alert(JSON.stringify(err));
+                   }
+                 });
+	        }
+				               
 	</script>
 
 
@@ -393,30 +540,13 @@
 			</li>
 			
 			<!-- 사용기술 분류 -->
-			<li class="dropdown">
+			<!-- <li class="dropdown">
 				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 					<span >사용 기술</span>
-					<%-- <c:choose>
-					<c:when test ="${param.postSorting==1}">
-						<span>조회순</span>
-					</c:when>
-					<c:when test ="${param.postSorting==2}">
-						<span>최신순</span>
-					</c:when>
-					<c:when test ="${param.postSorting==3}">
-						<span>마감임박순</span>
-					</c:when>
-					<c:when test ="${param.postSorting==4}">
-						<span>지원자순</span>
-					</c:when>
-					<c:otherwise>
-						<span>조회순</span>
-					</c:otherwise>
-					</c:choose> --%>
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<!-- <li><a href="#">Language</a></li> -->
+					<li><a href="#">Language</a></li>
 	              <li class="dropdown-submenu">
 	                <a tabindex="-1" href="#" value="2">Language</a>
 	                <ul class="dropdown-menu">
@@ -445,7 +575,7 @@
 	                </ul>
 	              </li>
 				</ul>
-			</li>
+			</li> -->
 			
 			<!-- 소팅 분류 -->
 			<li class="dropdown">
@@ -567,8 +697,6 @@
 
 								<tr style="height: 50px">
 
-									<!-- <th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="thatDay" value=""><script language=javascript>d_day()</script>일 남음</th>
-									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="expectDay" value=""><script language=javascript>expect_day()</script>일</th> -->
 									<th colspan="3" style="border-right: 1px solid #ddd; text-align: center" id="thatDay" value="">
 										<c:choose>
 											<c:when test="${project.projDday<=0}">
@@ -634,7 +762,10 @@
 								<tr>
 									<th colspan="4" ></th>
 									<th colspan="4" class="detailButton" value="${project.projNo}">
-										<button type="button" class="label label-info" style="font-size : 15px; color : #000; margin : 0; width :100% ; height : 100%">상 세 보 기</button>
+										<button type="button" class="label label-info" style="font-size : 15px; 
+												color : #000; margin : 0; width :100% ; height : 100%" id="modalLogin" 
+												data-toggle="modal" data-target="#myModalLogin">상 세 보 기
+										</button>
 									</th>
 									<th colspan="4" ></th>
 								</tr>
@@ -645,7 +776,102 @@
 	            </div>
 	         </div>
 	      </div>
+	      
+	<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+       <div class="modal-dialog">
+           <div class="modal-content">
+           
+              <div class="tab-content">
+                 <form id="aaa">
+                      <div class="form-group">
+                          <input type="text" class="form-control" name="userId" id="userId" placeholder="User ID" >
+                      </div>
+      
+                      <div class="form-group">
+                          <input type="password" class="form-control" name="password" id="password" placeholder="Password">
+                      </div>
+     
+                      <button class="btn btn-primary btn-block" id="loginButton">LOGIN</button>
+                  
+                 	  <div class="text-div"><span>or</span><!-- <br/>Sign in using --></div>
+                  
+                  
+                  	  <div class="form-group">
+                  	  	<a id="kakao-login-btn" href="javascript:loginWithKakao()">
+							<img src="/resources/images/layout/kakao_account_login_btn_medium_narrow.png" />
+						</a>
+					  </div>
+					  
+					  <div class="form-group" >
+					  	<a id="naver_id_login" >
+                  	  		<img src="/resources/images/layout/naverLogin.png" style="width: 222px; heigth : 39px"/>
+                  	  	</a>
+					  </div>
 
+                  </form>
+              </div>
+              
+           </div>
+        </div>
+    </div>
+	
+	<!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->
+	<a href="#" class="scroll-to-top"><span class="glyphicon glyphicon-circle-arrow-up" aria-hidden="true"></span></a>
+	
+<!-- ///////////////////////네이버///////////////////////////////////// -->
+	<script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+	<!-- ///////////////////////네이버///////////////////////////////////// -->
+	
+	<script type="text/javascript">
+	  	var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N","http://127.0.0.1:8080");
+	  	var state = naver_id_login.getUniqState();
+	  	naver_id_login.setButton("green", 3,48);
+	  	naver_id_login.setDomain(".service.com");
+	  	naver_id_login.setState(state);
+	  	naver_id_login.init_naver_id_login();
+  	
+  	</script>
+  	
+	<script type="text/javascript"> 
+	  function naverSignInCallback() {
+	    alert(naver_id_login.getProfileData('email'));
+	    var userId=naver_id_login.getProfileData('email');    
+	    var tempId = userId.replace(".", ",");
+	    console.log("userId :: " + userId);
+	    console.log("tempId :: " + tempId);
+	    
+	    
+	    $.ajax(
+	            {
+	                url : '/user/checkUserId/'+tempId,
+	                method : "POST",
+	                dataType : "json",
+	                headers : {
+	                   "Accept" : "application/json",
+	                   "Content-Type" : "application/json"
+	                },
+	                context : this,
+	                success : function(JSONData, status) {     
+	                   if(JSONData.user ==null ) {
+	                 	  
+	                 	  self.location="/view/user/addUserView.jsp?userId="+userId;                 
+	                   }else if(JSONData.user.role == 4){
+	                 	alert("탈퇴한 계정입니다.");
+	                 	$(self.location).attr("href","/user/logout");
+	                 	location.reload();
+	                   }else{
+	                 	  location.reload();
+	                   }
+	                }
+	          });   
+	         }                  
+	       
+	    	naver_id_login.get_naver_userprofile("naverSignInCallback()");
+  
+	</script>			
+				
+	
 </body>
 
 </html>

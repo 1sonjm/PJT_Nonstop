@@ -511,6 +511,7 @@ ul {
 			var receiveId=$("input[name='receiveId']").val();
 			var title=$("input[name='letTitle']").val();
 			var letDetail=$("input[name='letDetail']").val();
+			var flag=$("#letReceiveUserId").text().trim();
 			
 			if(receiveId == null || receiveId.length<1 ){
 				alert("수신자는 반드시 입력하셔야 합니다.");
@@ -518,6 +519,10 @@ ul {
 			}
 			if(title == null || title.length<1){
 				alert("제목은 반드시 입력하셔야 합니다.");
+				return false;
+			}
+			if(flag == '존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.'){
+				alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
 				return false;
 			}
 			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
@@ -607,38 +612,6 @@ ul {
 				});
 	});	
 	 
-	 
-	 $(function(){
-	      
-	      $("#letReceiveId").on("keyup", function(){
-	         
-	         var userId = $("#letReceiveId").val();
-	         
-	         
-	                  
-	          $.ajax(
-	                {
-	                    url : '/user/checkUserId/'+userId,
-	                    method : "GET",
-	                    dataType : "json",
-	                    headers : {
-	                       "Accept" : "application/json",
-	                       "Content-Type" : "application/json"
-	                    },
-	                    context : this,
-	                    success : function(JSONData, status) {   
-	                                            
-	                       if(! JSONData.result) {
-	                          $("#letReceiveId").html("존재하는 아이디입니다.");
-	                       } 
-	                       else {
-	                    	   $("#letReceiveId").html("사용가능한 아이디입니다.");
-		                       
-	                       }
-	                    }
-	              });         
-	         });      
-	      });
 </script>
 </head>
 
@@ -657,6 +630,7 @@ ul {
 					<div class="user-name">
 						<h5>
 							<a href="#">${user.userId}</a>
+							
 						</h5>
 					</div>
 
@@ -668,6 +642,37 @@ ul {
 					<div aria-hidden="true" aria-labelledby="myModalLabel"
 						role="dialog" tabindex="-1" id="myModal" class="modal fade"
 						style="display: none;">
+						<script type="text/javascript">
+						$(function(){
+	      
+	      $("#letReceiveId").on("keyup", function(){
+	         
+	         var userId = $("#letReceiveId").val();
+	                  
+	          $.ajax(
+	                {
+	                    url : "/user/checkId/"+userId,
+	                    method : "GET",
+	                    dataType : "json",
+	                    headers : {
+	                       "Accept" : "application/json",
+	                       "Content-Type" : "application/json"
+	                    },
+	                    context : this,
+	                    success : function(JSONData, status) {   
+	                                            
+	                       if(! JSONData.result) {
+	                          $("#letReceiveUserId").html("존재하는 아이디입니다.메세지 전송이 가능합니다.");
+	                       } 
+	                       else {
+	                    	   $("#letReceiveUserId").html("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+		                       
+	                       }
+	                    }
+	              });         
+	         });      
+	      });
+</script>
 						<div class="modal-dialog">
 
 							<div class="modal-content">
@@ -692,7 +697,9 @@ ul {
 											<div class="col-lg-10">
 												<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
 													id="letReceiveId" class="form-control">
+												<div id="letReceiveUserId" style="color:#ff6600; padding-left:12px;">수신자를 입력해 주세요</div>
 											</div>
+										
 										</div>
 
 										<div class="form-group">
