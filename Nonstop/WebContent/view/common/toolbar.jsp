@@ -3,7 +3,11 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+.label-primary {
+    background-color: #ff6600;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 		$.ajax(
