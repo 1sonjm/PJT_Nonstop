@@ -16,6 +16,8 @@
 <link href="/resources/css/nonstop.css" rel="stylesheet">
 <!-- Custom CSS -->
 <link href="/resources/css/full.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="/resources/css/main.css" rel="stylesheet">
 <!-- Awesome Font -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- jQuery -->
@@ -395,17 +397,18 @@ $(function() {
 	//countTo 이벤트
 	$(".st-ff-count").countTo();
 });
-//============= toolbar project 이동 Event 처리 =============	
+//============= toolbar project 이동 Event 처리 =============   
 $(function() {
-	$("#projDesigner").on("click", function() {
-		self.location = "/project/listProject?projDivision=2&sortFlag=0"
-	});
+   $("#projDesigner").on("click" , function() {
+     self.location = "/project/listProject?postDivision=2"
+  }); 
 });
+
 //============= toolbar project 이동 Event 처리 =============
 $(function() {
-	$("#projDeveloper").on("click", function() {
-		self.location = "/project/listProject?projDivision=1&sortFlag=0"
-	});
+    $("#projDeveloper").on("click" , function() {
+     	self.location = "/project/listProject?postDivision=1"
+    }); 
 });
 //============= toolbar portfolio 이동 Event 처리 =============
 $(function() {
@@ -652,7 +655,7 @@ $(function() {
 						<p class="intro-text">
 							논스톱에서 웹사이트, 어플리케이션 개발 및 디자인 포트폴리오를 관리하고 관련 프로젝트에 참여해 보세요.
 						</p>
-						<div class="margin-bottom-120"></div>
+						<div class="margin-bottom-80"></div>
 						
 						<%-- <div class="intro-main">
 							<ul class="main-ul">
@@ -762,7 +765,7 @@ $(function() {
 					<div class="single-blog">
 			
 						<div class="featured-content">
-							<img class="img-responsive" src="resources/images/upload/app (1).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/app (1).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/01.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -778,7 +781,7 @@ $(function() {
 				<div class="col-md-4 col-sm-4">
 					<div class="single-blog">
 						<div class="featured-content">
-							<img class="img-responsive" src="resources/images/upload/app (8).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/app (8).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/02.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -794,7 +797,7 @@ $(function() {
 				<div class="col-md-4 col-sm-4">
 					<div class="single-blog">
 						<div class="featured-content">
-							<img class="img-responsive" src="resources/images/upload/app (7).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/app (7).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/03.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -854,7 +857,7 @@ $(function() {
 	<!-- modal login -->
 	<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     	<div class="modal-dialog">
-        	<div class="modal-content" style="margin-top: -4%; padding-bottom: 0; padding-top: 10px;">
+        	<div class="modal-content" style="margin-top: 30%; padding-bottom: 0; padding-top: 10px;">
         	
         		<div class="tab-content">
 	        		<form id="aaa">
