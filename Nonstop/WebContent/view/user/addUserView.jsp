@@ -36,6 +36,32 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
+        .container{
+    margin-top:20px;
+}
+.image-preview-input {
+    position: relative;
+	overflow: hidden;
+	margin: 0px;    
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;    
+}
+.image-preview-input input[type=file] {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	padding: 0;
+	font-size: 20px;
+	cursor: pointer;
+	opacity: 0;
+	filter: alpha(opacity=0);
+}
+.image-preview-input-title {
+    margin-left:2px;
+}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -51,12 +77,7 @@
 		
 		
 		//============= "취소"  Event 처리 및  연결 =============
-		$(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
-			});
-		});	
+		
 		
 		function fncAddUser() {
 			
@@ -141,7 +162,7 @@
 		                  
 		          $.ajax(
 		                {
-		                    url : '/user/checkUserId/'+userId,
+		                    url : '/user/checkId/'+userId,
 		                    method : "GET",
 		                    dataType : "json",
 		                    headers : {
@@ -289,7 +310,7 @@
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
 		    <div class="col-sm-4">
 
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름" value="${param.nickname }">
+		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
 
 
 
@@ -347,7 +368,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+			  
 		    </div>
 		  </div>
 		</form>
