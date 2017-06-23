@@ -268,6 +268,10 @@ $(function() {
 			return;
 		}
 		
+		
+		
+		
+		
 		$("#aaa").attr("method","POST").attr("action","/user/login").submit();
 	});
 	

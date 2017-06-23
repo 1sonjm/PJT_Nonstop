@@ -227,6 +227,22 @@ $(document).ready(function(){
       }); 
     });
     
+    
+    
+    $(function() {
+    	$("#getCompany").on("click" , function() {
+    		//alert($("#userId").val());
+    		var userId = $("#userId").val();	 	
+    		self.location = "/user/getCompany?userId="+userId;
+    	}); 
+    });
+    
+    $(function() {
+    	$("#updateCompany").on("click" , function() {
+    		var userId = $("#userId").val();	 	
+    		 self.location = "/user/updateCompany?userId="+userId;
+    	}); 
+    });
     //============= 내정보수정 이동 Event 처리 =============
      $(function() {
        
