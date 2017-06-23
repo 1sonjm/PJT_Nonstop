@@ -288,11 +288,12 @@ $(function() {
 		self.location = "/letter/getReceiveLetterList?receiveId=" + receiveId;
 	});
 });
-//============= 프로필 이동 Event 처리 =============	
+//============= 프로필 이동 Event 처리 =============   
 $(function() {
-	$("#profile").on("click", function() {
-		self.location = "/profile/getMineProfile"
-	});
+   $("#profile").on("click", function() {
+      var role = $(this).attr('role');
+      self.location = "/profile/getMineProfile?role="+role;
+   });
 });
 	
 //============= 내정보보기 이동 Event 처리 =============	
@@ -383,20 +384,29 @@ $(function() {
 			$("#countProject").text(jsonData.dataList.PROJECT);
 		}
 	})
-	
-	$.ajax("/letter/toolbarMailCheck",{
-		method : "GET", dataType : "json",
-		success : function(jsonData){
-			if(jsonData.flag){
-				document.querySelector("#listLetter").innerHTML = '<span id="dddd" class="label label-rounded label-primary"'
-																				+'style="padding: 0 .8em .1em; border-radius: .5em">new</span>';
-				
-			}
-		}
-	})
+
 	//countTo 이벤트
 	$(".st-ff-count").countTo();
 });
+
+$(document).ready(function(){
+	$.ajax(
+	{
+		url:"/letter/toolbarMailCheck",
+		method: "GET",
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"	
+		},
+		success : function(a , status) {
+			if(a.flag == true){
+				var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
+								  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em; background:#ff6600; margin-left:4px;'>NEW</span>";
+				$("#mail").html(displayValue);
+			}
+		}
+	})
+})
 //============= toolbar project 이동 Event 처리 =============   
 $(function() {
    $("#projDesigner").on("click" , function() {
@@ -577,14 +587,13 @@ $(function() {
 		                    	<a href="#" id="listLetter">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        	<!-- 알림 -->
-		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+		                        	
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
 		                    	<ul class="dropdown-menu">
 		                        	<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-		                        	<li><a href="#" id="profile">프로필</a></li>
+		                        	<li><a href="#" id="profile" role="${user.role}">프로필</a></li>
 		                        	<li><a href="#" id="listUser">개인회원목록조회</a></li>
 		                        	<li><a href="#" id="listCompany">기업회원목록조회</a></li>
 		                        	<li><a href="#" id="getUser">내정보보기</a></li>
@@ -607,7 +616,7 @@ $(function() {
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
 		                    <ul class="dropdown-menu">
 		                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-		                        <li><a href="#" id="profile">프로필</a></li>
+		                        <li><a href="#" id="profile" role="${user.role}">프로필</a></li>
 		                        <li><a href="#" id="getUser">내정보보기</a></li>
 		                        <li><a href="#" id="updateUser">내정보수정</a></li>
 		                        <!-- <li><a href="#" id="listFollow">팔로우 목록보기</a></li> -->
@@ -627,7 +636,7 @@ $(function() {
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
 		                    <ul class="dropdown-menu">
 		                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-		                        <li><a href="#" id="profile">프로필</a></li>
+		                        <li><a href="#" id="profile" role="${user.role}">프로필</a></li>
 		                        <li><a href="#" id="getCompany">기업정보보기</a></li>
 		                        <li><a href="#" id="updateCompany">기업정보수정</a></li>
 		                        <!-- <li><a href="#" id="listFollow">팔로우 목록보기</a></li> -->
@@ -765,7 +774,7 @@ $(function() {
 					<div class="single-blog">
 			
 						<div class="featured-content">
-							<img class="img-responsive" src="/resources/images/upload/app (1).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/designApp(1).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/01.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -781,7 +790,7 @@ $(function() {
 				<div class="col-md-4 col-sm-4">
 					<div class="single-blog">
 						<div class="featured-content">
-							<img class="img-responsive" src="/resources/images/upload/app (8).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/designApp(8).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/02.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -797,7 +806,7 @@ $(function() {
 				<div class="col-md-4 col-sm-4">
 					<div class="single-blog">
 						<div class="featured-content">
-							<img class="img-responsive" src="/resources/images/upload/app (7).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/designApp(7).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/03.jpg" data-litebox-group="myGallery" class="litebox"></a>
