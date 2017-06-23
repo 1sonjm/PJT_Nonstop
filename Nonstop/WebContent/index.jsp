@@ -388,20 +388,27 @@ $(function() {
 			$("#countProject").text(jsonData.dataList.PROJECT);
 		}
 	})
-	
-	$.ajax("/letter/toolbarMailCheck",{
-		method : "GET", dataType : "json",
-		success : function(jsonData){
-			if(jsonData.flag){
+	//countTo 이벤트
+	$(".st-ff-count").countTo();
+});
+
+$(document).ready(function(){
+	$.ajax(
+	{
+		url:"/letter/toolbarMailCheck",
+		method: "GET",
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"	
+		},
+		success : function(a , status) {
+			if(a.flag == true){
 				var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
-					  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
-	$("#listLetter").html(displayValue);
-				
+								  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em; background:#ff6600; margin-left:4px;'>NEW</span>";
+				$("#mail").html(displayValue);
 			}
 		}
 	})
-	//countTo 이벤트
-	$(".st-ff-count").countTo();
 });
 //============= toolbar project 이동 Event 처리 =============   
 $(function() {
@@ -584,7 +591,7 @@ $(function() {
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
 		                        	<!-- 알림 -->
-		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+		                        	
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
