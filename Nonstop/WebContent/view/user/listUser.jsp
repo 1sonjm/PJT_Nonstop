@@ -19,7 +19,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 <script src="/resources/javascript/jquery.js"></script>
-
+  
 <!-- <script src="/resources/javascript/bootstrap.min.js"></script> -->
 
 <script
@@ -35,8 +35,16 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
-            padding-top : 50px;
+            padding-top : 50px; 
         }
+      
+      table, .table {
+      margin-top: 40px;
+      }  
+        
+        h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+      color: black;
+      }  
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -67,13 +75,13 @@
 			});
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
-			$( "td:nth-child(2)" ).css("color" , "red");
+			$( "td:nth-child(2)" ).css("color" , "coral");
 			
 		});	
 		
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
-		 $(function() {
+		 /* $(function() {
 			 
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$(  "td:nth-child(5) > i" ).on("click" , function() {
@@ -105,15 +113,17 @@
 						});
 						////////////////////////////////////////////////////////////////////////////////////////////
 					
-			});
+			}); */
 			
 			//==> userId LINK Event End User 에게 보일수 있도록 
-			$( ".ct_list_pop td:nth-child(3)" ).css("color" , "red");
-			$("h7").css("color" , "red");
+		/* 	$( ".ct_list_pop td:nth-child(3)" ).css("color" , "coral");
+			$("h7").css("color" , "coral");
 			
 			//==> 아래와 같이 정의한 이유는 ??
-			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "whitesmoke");
-		});	
+			$(".ct_list_pop:nth-child(4n+6)" ).css("background-color" , "smokewhite");
+			
+			
+		});	 */
 	
 	</script>
 	
@@ -145,19 +155,27 @@
 			    <form class="form-inline" name="detailForm">
 			    
 				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
+				    <select class="form-control input-sm" name="searchCondition"   >
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
 						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
 					</select>
 				  </div>
 				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  <div class="input-group">
+				    <label class="sr-only" for="searchKeyword">겁색어 입력</label>
+				  	<input type="text" class="form-control input-sm" id="searchKeyword" name="searchKeyword" 
+				  	value="${! empty search.searchKeyword ? search.searchKeyword : '' }" placeholder="겁색어 입력">
+				  	<span class="input-group-btn">
+				  	<button class="btn btn-default btn-sm" type="button">검색</button>
+				  	</span>
 				  </div>
 				  
-				  <button type="button" class="btn btn-default">검색</button>
+				    <%-- <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  </div> --%>
+				  
+				 <!--  <button type="button" class="btn btn-default">검색</button> -->
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -178,7 +196,7 @@
             <th align="left" >회원 ID</th>
             <th align="left">회원명</th>
             <th align="left">이메일</th>
-            <th align="left">간략정보</th>
+            <th align="left">연락처</th>
           </tr>
         </thead>
        
@@ -187,19 +205,17 @@
 	 	<c:set var="i" value="0" />
 		  <c:forEach var="userList" items="${list}">
 			<c:set var="i" value="${ i+1 }" /> 
-			<tr>
-			
+			<tr>	
 			  <td align="center">${ i }</td>
 			  <td align="left"  title="Click : 회원정보 확인">${userList.userId}</td>
 			  <td align="left">${userList.userName}</td>
 			  <td align="left">${userList.email}</td>
-			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id= "${userList.userId}"></i>
-			  	<input type="hidden" value="${userList.userId}">
-			  </td>
-
+			  <td align="left">${userList.tel}</td>
 			</tr>
+			
+			
 	       </c:forEach> 
+        
         
         </tbody>
       

@@ -68,7 +68,9 @@
 			user_addr 				= #{addr} ,
 			user_email				= #{email},
 			user_pwd				= #{password},
-			user_img				= #{image:VARCHAR}, 
+			<if test="image == null">
+				user_img				= #{image:VARCHAR},
+			</if> 
 			user_emp				= #{empNum},
 			user_est				= #{pubDate},
 			user_ceo				= #{companyName}
@@ -120,7 +122,7 @@
 	<select  id="getUserList"  parameterType="search"   resultMap="userSelectMap">
            SELECT *
            FROM (   SELECT inner_table.* , ROWNUM AS row_seq
-                    FROM ( SELECT user_id , user_name , user_email
+                    FROM ( SELECT user_id , user_name , user_email , user_tel
                            FROM users 
                            WHERE (user_role = 2 OR user_role = 1) 
                                 <if test="searchCondition != null">    
@@ -140,7 +142,7 @@
 		<select  id="getCompanyList"  parameterType="search"   resultMap="userSelectMap">
            SELECT *
            FROM (   SELECT inner_table.* , ROWNUM AS row_seq
-                       FROM      (   SELECT user_id , user_name , user_ceo
+                       FROM      (   SELECT user_id , user_name , user_ceo , user_tel
                                     FROM users 
                                     WHERE (user_role = 3 OR user_role = 1) 
                                  <if test="searchCondition != null">

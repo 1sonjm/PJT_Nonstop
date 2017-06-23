@@ -2,8 +2,6 @@ package com.nonstop.control.user;
 
 import java.io.File;
 import java.io.IOException;
-import java.math.BigInteger;
-import java.security.SecureRandom;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,7 +53,7 @@ public class UserController {
 	}
 	
 	@RequestMapping( value="addUser", method=RequestMethod.POST )
-	public String addUser( @ModelAttribute("user") User user,@RequestParam("file") MultipartFile file, Model model) throws Exception {
+	public String addUser( @ModelAttribute("user") User user, @RequestParam("file") MultipartFile file, Model model) throws Exception {
 
 		System.out.println("/user/addUser : POST");
 		
@@ -188,27 +186,29 @@ public class UserController {
 	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateFile") MultipartFile file) throws Exception{
+	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("input-file-preview") MultipartFile file) throws Exception{
 
 		System.out.println("/user/updateUser : POST");	
 		// Business Logic
 		userService.updateUser(user);
 
+		String image=file.getOriginalFilename();
+
+		user.setImage(image);
+		
+        try {
+            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
+            file.transferTo(uploadFile);
+        } catch (IOException e) {
+            e.printStackTrace();	
+	}
+		
 		String sessionId = ((User) session.getAttribute("user")).getUserId();
 		if (sessionId.equals(user.getUserId())) {
 			session.setAttribute("user", user);
 		}
 
-			String image=file.getOriginalFilename();
-
-			user.setImage(image);
 			
-	        try {
-	            File uploadFile = new File("C:/Users/BitCamp/git/PJT_Nonstop/Nonstop/WebContent/resources/images/upload/" + image);
-	            file.transferTo(uploadFile);
-	        } catch (IOException e) {
-	            e.printStackTrace();	
-		}
   
 	        return "forward:/view/user/getUser.jsp";
 	}
@@ -228,7 +228,7 @@ public class UserController {
 	}
 
 	@RequestMapping( value="updateCompany", method=RequestMethod.POST )
-	public String updateCompany( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("updateCompany") MultipartFile file) throws Exception{
+	public String updateCompany( @ModelAttribute("user") User user , Model model , HttpSession session, @RequestParam("input-file-preview") MultipartFile file) throws Exception{
 		
 		System.out.println("/user/updateCompany : POST");
 		
@@ -253,6 +253,14 @@ public class UserController {
 		
 	       return "forward:/view/user/getCompany.jsp";
 	       
+	}
+	
+	@RequestMapping( value="login", method=RequestMethod.GET )
+	public String login() throws Exception{
+		
+		System.out.println("/user/logon : GET");
+
+		return "redirect:/view/user/loginView.jsp";
 	}
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
@@ -300,8 +308,7 @@ public class UserController {
 	}
 
 	@RequestMapping(value = "listUser")
-	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request)
-			throws Exception {
+	public String listUser(@ModelAttribute("search") Search search, Model model, HttpServletRequest request) throws Exception {
 
 		System.out.println("/user/listUser : GET / POST");
 
@@ -309,12 +316,11 @@ public class UserController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-
 		Map<String, Object> map = userService.getUserList(search);
 
-		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit,
-				pageSize);
-		System.out.println(resultPage);
+		Page resultPage = new Page(search.getCurrentPage(), ((Integer) map.get("totalCount")).intValue(), pageUnit, pageSize);
+		System.out.println("으아으아으: "+resultPage);
+		 System.out.println(map.get("list"));
 
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
@@ -346,6 +352,30 @@ public class UserController {
 		return "forward:/view/user/listCompany.jsp";
 	}
 
+	@RequestMapping( value="checkId/{userId}", method=RequestMethod.GET)
+	   public void checkUserId(  @PathVariable String userId, Model model) throws Exception {
+	      
+	      System.out.println("/user/checkUserId : GET");
+	      
+	      boolean result = userService.checkId(userId);
+	      
+	      model.addAttribute("result", new Boolean(result));
+	      
+	   }
+	@RequestMapping( value="checkRole/{role}", method=RequestMethod.POST)
+	   public void checkRole(  @PathVariable String role, Model model) throws Exception {
+	      
+	      System.out.println("/user/role : POST");
+	      
+	      boolean result = userService.checkRole(role);
+	      
+	      model.addAttribute("result", new Boolean(result));
+	      
+	   }
+	
+	
+	
+	
 	@RequestMapping( value="checkUserId/{tempId}", method=RequestMethod.POST)
 	   public String checkUserId(  @PathVariable String tempId, Model model , HttpSession session) throws Exception {
 	      
@@ -363,6 +393,8 @@ public class UserController {
 	      
 	         return "forward:/index.jsp";
 	   }
+	
+	
 	
 	
 	@RequestMapping( value="deleteUser", method=RequestMethod.GET )

@@ -51,7 +51,7 @@
 		 $(function() {
 				//==> DOM Object GET 3啊瘤 规过 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "#listCompany" ).on("click" , function() {
-						self.location = "/user/listCompany"
+						self.location = "/index.jsp"
 					});
 			});
 		 
@@ -59,7 +59,7 @@
 				//==> DOM Object GET 3啊瘤 规过 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 				 $( "#deleteUser" ).on("click" , function() {
 					 var userId = $(this).attr('userId')
-					 alert(userId);
+					 
 					 self.location = "/user/deleteUser?userId="+userId;
 						
 					});
@@ -162,6 +162,7 @@
 	  		</div>
 		</div>
 		
+		<hr/>
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
@@ -169,6 +170,7 @@
 	  		</div>
 		</div>
 		
+		<hr/>
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
@@ -176,6 +178,7 @@
 	  		</div>
 		</div>		
 		
+		<hr/>
 		
 		
 		
