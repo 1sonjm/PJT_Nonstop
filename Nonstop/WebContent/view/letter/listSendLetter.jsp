@@ -60,9 +60,10 @@ body {
 }
 
 .mail-box .sm-side {
-	background: none repeat scroll 0 0 #e5e8ef;
+	background: none repeat scroll 0 0 #f7f7f7;
 	border-radius: 4px 0 0 4px;
-	width: 25%;
+	width: 15%;
+	height:100%;
 }
 
 .mail-box .lg-side {
@@ -72,11 +73,13 @@ body {
 }
 
 .mail-box .sm-side .user-head {
-	background: none repeat scroll 0 0 #00a8b3;
+	background: none repeat scroll 0 0 #e8e8e8;
 	border-radius: 4px 0 0;
 	color: #fff;
 	min-height: 80px;
-	padding: 10px;
+	padding-top: 10px;
+	border-bottom:1px solid #e2e2e2;
+	padding-left: 22px;
 }
 
 .user-head .inbox-avatar {
@@ -85,23 +88,25 @@ body {
 }
 
 .user-head .inbox-avatar img {
+	margin-top:5px;
 	border-radius: 4px;
 }
 
 .user-head .user-name {
 	display: inline-block;
-	margin: 0 0 0 10px;
+	margin-top: 10px;
 }
 
 .user-head .user-name h5 {
-	font-size: 14px;
+	font-size: 18px;
 	font-weight: 300;
 	margin-bottom: 0;
-	margin-top: 15px;
+	margin-top: 10px;
 }
 
 .user-head .user-name h5 a {
-	color: #fff;
+	color: #666;
+	font-weight:600;
 }
 
 .user-head .user-name span a {
@@ -123,7 +128,7 @@ a.mail-dropdown {
 }
 
 .btn-compose {
-	background: none repeat scroll 0 0 #ff6c60;
+	background: none repeat scroll 0 0 #ff6600;
 	color: #fff;
 	padding: 12px 0;
 	text-align: center;
@@ -131,14 +136,14 @@ a.mail-dropdown {
 }
 
 .btn-compose:hover {
-	background: none repeat scroll 0 0 #f5675c;
+	background: none repeat scroll 0 0 #ff6600;
 	color: #fff;
 }
 
 ul.inbox-nav {
 	display: inline-block;
 	margin: 0;
-	padding: 0;
+	padding-bottom: 10px;
 	width: 100%;
 }
 
@@ -181,8 +186,9 @@ ul.labels-info li h4 {
 	font-size: 13px;
 	padding-left: 15px;
 	padding-right: 15px;
-	padding-top: 5px;
+	padding-top: 20px;
 	text-transform: uppercase;
+	font-weight:600;
 }
 
 ul.labels-info li {
@@ -211,9 +217,9 @@ ul.labels-info li a i {
 }
 
 .inbox-head {
-	background: none repeat scroll 0 0 #41cac0;
+	background: none repeat scroll 0 0 #737373;
 	border-radius: 0 4px 0 0;
-	color: #fff;
+	color: #e6e6e6;
 	min-height: 80px;
 	padding: 20px;
 }
@@ -546,7 +552,7 @@ ul {
 	<header>
 			<jsp:include page="/view/common/toolbar.jsp"/>
 		</header>
-	<div class="container">
+	<div class="container-fluid" style="padding-right:0px; padding-left:0px;">
 
 		<div class="mail-box">
 			<aside class="sm-side">
@@ -664,14 +670,7 @@ ul {
 			<aside class="lg-side">
 				<div class="inbox-head">
 					<h3>보낸 메일함</h3>
-					<form action="#" class="pull-right position">
-						<div class="input-append">
-							<input type="text" class="sr-input" placeholder="Search Mail">
-							<button class="btn sr-btn" type="button">
-								<i class="fa fa-search"></i>
-							</button>
-						</div>
-					</form>
+					
 				</div>
 				<div class="inbox-body">
 					<div class="mail-option">

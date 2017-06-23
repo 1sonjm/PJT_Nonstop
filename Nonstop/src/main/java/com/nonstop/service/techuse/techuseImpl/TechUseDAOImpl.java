@@ -41,7 +41,10 @@ public class TechUseDAOImpl implements TechUseDAO{
 		sqlSession.insert("TechUseMapper.addTechUse", map);
 		
 	}
-
+	
+	public void addTechUsePort(TechUse techUse) throws Exception { 
+		sqlSession.insert("TechUseMapper.addTechUsePort", techUse);
+	}
 	
 	public TechUse getTechUse(int tuNo) throws Exception{
 		

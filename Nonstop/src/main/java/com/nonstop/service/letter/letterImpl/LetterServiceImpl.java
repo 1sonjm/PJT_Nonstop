@@ -29,8 +29,8 @@ public class LetterServiceImpl implements LetterService {
 		letterDAO.addLetter(letter);
 	}
 	
-	public void addApplicantLetter(String sendId, String receiveId) throws Exception {
-		letterDAO.addApplicantLetter(sendId, receiveId);
+	public void addApplicantLetter(String sendId, String receiveId , String letTitle , String letDetail) throws Exception {
+		letterDAO.addApplicantLetter(sendId, receiveId , letTitle , letDetail);
 		
 	}
 

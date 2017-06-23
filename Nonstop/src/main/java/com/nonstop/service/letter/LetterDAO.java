@@ -8,7 +8,7 @@ public interface LetterDAO {
 	
 	public void addLetter(Letter letter) throws Exception;
 	
-	public void addApplicantLetter(String sendId , String receiveId) throws Exception;
+	public void addApplicantLetter(String sendId , String receiveId , String letTitle , String letDetail) throws Exception;
 	
 	public List<Letter> getReceiveLetterList(String receiveId) throws Exception;
 	
@@ -19,7 +19,7 @@ public interface LetterDAO {
 	public void deleteLetter(int letNo) throws Exception;
 	
 	public void updateReadDate(int letNo) throws Exception;
-
+	
 	public void updateSave(int letNo) throws Exception;
 	
 	public void addSave(int letNo) throws Exception;

@@ -13,6 +13,7 @@ import javax.websocket.server.ServerEndpoint;
 
 @ServerEndpoint("/broadcasting")
 public class Broadsocket {
+/*
 	public Broadsocket()
 	{
 		super();
@@ -48,4 +49,5 @@ public class Broadsocket {
 		System.out.println("[onClose] "+session);
 		clients.remove(session);
 	}
+*/
 }

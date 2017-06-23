@@ -319,7 +319,7 @@ hr.thick-line {
 	background-color: #ececec;
 	border: 0;
 	border-radius: 0;
-	width: 120px;
+	/* width: 120px; */
 	text-align : center;
 }
 
@@ -454,7 +454,7 @@ xmp{
 			$("input:hidden[name='recUserIdItems']").val( items2 );
 			$("input:hidden[name='checkBoxes']").val( items );
 			
-			
+			alert($("input:hidden[name='checkBoxes']").val( ));
 			if(confirm("프로젝트에 한번 초대된 인원은 수정이 불가능합니다.\n정말 프로젝트에 초대하시겠습니까? ") !=0){
 				$("form").attr("method", "POST").attr("action", "/project/inviteApplicant").submit();
 			}else{
@@ -976,14 +976,15 @@ xmp{
 									  	<div class="checkbox">
 											<label for="checkboxes-0" style="font-size : 20px">
 										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox">
-										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 " >
+										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px " >
 										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0; float:left;" applUserVal="${recordApplicant.recUserId}">
 										      </button>
-										      <div class="recUserId" name="recUserId" recUserIdValue="${recordApplicant.recUserId}" style="float:right">${recordApplicant.recUserId}</div>
-										      <c:if test="${recordApplicant.recStatus==1}">
-										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
-										      <c:set var="isChk" value="true"/>
-										      </c:if>
+										      <div class="recUserId" name="recUserId" recUserIdValue="${recordApplicant.recUserId}" style="float:right; margin-right:20px">${recordApplicant.recUserId}
+											      <c:if test="${recordApplicant.recStatus==1}">
+												      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; margin-left:30px; border : 0; width:25px; height:25px; padding :0; float:right;"></button>
+												      <c:set var="isChk" value="true"/>
+											      </c:if>
+										      </div>
 									    	</label>
 										</div>		
 									  </div>
@@ -997,7 +998,7 @@ xmp{
 								<div class="form-group">
 									<div class="col-md-12">
 										<label style="font-size : 20px; margin-left:35px">
-										    <button type="button" class="applUserButton" style="background-color : white ; border : 0; width:40px; height:40px; padding :0 " >
+										    <button type="button" class="applUserButton" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px" >
 										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0" applUserVal="${recordApplicant.recUserId}">
 										    </button>
 										      ${recordApplicant.recUserId}

@@ -10,7 +10,7 @@ import com.nonstop.domain.Search;
 
 public interface PortfolioDAO {
 
-	public void addPortfolio(Portfolio portfolio) throws Exception;
+	public int addPortfolio(Portfolio portfolio) throws Exception;
 
 	public Portfolio getPortfolio(int portNo, String sessionUserId) throws Exception;
 	

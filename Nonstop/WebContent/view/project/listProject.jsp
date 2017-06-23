@@ -110,7 +110,55 @@
 		.navbar-static-top .input-group-sm{
 		   margin-top: 15px;
 		}
-     	
+		
+		.dropdown-submenu {
+  			position: relative;
+		}
+		
+		.dropdown-submenu>.dropdown-menu {
+		    top: 0;
+		    left: 100%;
+		    margin-top: -6px;
+		    margin-left: -1px;
+		    -webkit-border-radius: 0 6px 6px 6px;
+		    -moz-border-radius: 0 6px 6px;
+		    border-radius: 0 6px 6px 6px;
+		}
+		
+		.dropdown-submenu:hover>.dropdown-menu {
+		    display: block;
+		}
+		
+		.dropdown-submenu>a:after {
+		    display: block;
+		    content: " ";
+		    float: right;
+		    width: 0;
+		    height: 0;
+		    border-color: transparent;
+		    border-style: solid;
+		    border-width: 5px 0 5px 5px;
+		    border-left-color: #ccc;
+		    margin-top: 5px;
+		    margin-right: -10px;
+		}
+		
+		.dropdown-submenu:hover>a:after {
+		    border-left-color: #fff;
+		}
+		
+		.dropdown-submenu.pull-left {
+		    float: none;
+		}
+		
+		.dropdown-submenu.pull-left>.dropdown-menu {
+		    left: -100%;
+		    margin-left: 10px;
+		    -webkit-border-radius: 6px 0 6px 6px;
+		    -moz-border-radius: 6px 0 6px 6px;
+		    border-radius: 6px 0 6px 6px;
+		}
+		     	
      	
 	</style>
 	<!-- 筌�占쏙옙占쏙옙占� 占쏙옙占쏙옙 prev/next 甕곤옙占쏙옙 -->
@@ -348,12 +396,54 @@
 			<li class="dropdown">
 				<a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 					<span >사용 기술</span>
+					<%-- <c:choose>
+					<c:when test ="${param.postSorting==1}">
+						<span>조회순</span>
+					</c:when>
+					<c:when test ="${param.postSorting==2}">
+						<span>최신순</span>
+					</c:when>
+					<c:when test ="${param.postSorting==3}">
+						<span>마감임박순</span>
+					</c:when>
+					<c:when test ="${param.postSorting==4}">
+						<span>지원자순</span>
+					</c:when>
+					<c:otherwise>
+						<span>조회순</span>
+					</c:otherwise>
+					</c:choose> --%>
 					<span class="caret"></span>
 				</a>
 				<ul class="dropdown-menu">
-					<li><a href="#">Language</a></li>
-					<li><a href="#">Framework</a></li>
-					<li><a href="#">DBMS</a></li>
+					<!-- <li><a href="#">Language</a></li> -->
+	              <li class="dropdown-submenu">
+	                <a tabindex="-1" href="#" value="2">Language</a>
+	                <ul class="dropdown-menu">
+	                  <li><a tabindex="-1" href="#" value="1000">Java</a></li>
+	                  <li><a href="#"value="1001">Python</a></li>
+	                  <li><a href="#" value="1002">PHP</a></li>
+	                  <li><a href="#" value="1003">JavaScript</a></li>
+	                  <li><a href="#" value="1004">Swift</a></li>
+	                </ul>
+	              </li>
+	              <li class="dropdown-submenu">
+	                <a tabindex="-1" href="#"  value="3">Framework</a>
+	                <ul class="dropdown-menu">
+	                  <li><a tabindex="-1" href="#">Spring</a></li>
+	                  <li><a href="#" value="2000">Django</a></li>
+	                  <li><a href="#" value="2001">Symfony</a></li>
+	                </ul>
+	              </li>
+	              <li class="dropdown-submenu">
+	                <a tabindex="-1" href="#"  value="4">DBMS</a>
+	                <ul class="dropdown-menu">
+	                  <li><a tabindex="-1" href="#" value="3000">Oracle</a></li>
+	                  <li><a href="#" value="3001">MsSQL</a></li>
+	                  <li><a href="#" value="3002">MySQL</a></li>
+	                  <li><a href="#" value="3003">SQLite</a></li>
+	                </ul>
+	              </li>
 				</ul>
 			</li>
 			
@@ -505,23 +595,23 @@
 									<th colspan="12">
 									<c:choose>
 										<c:when test="${project.projDivision==11}">
-									  		개발 분야 : 개발>WEB
+									  		<span class="glyphicon glyphicon-flash" aria-hidden="true" style="color : orange ; font-size: 14px"></span>개발 분야  : 개발>WEB
 									  	</c:when>
 										<c:when test="${project.projDivision==12}">
-									  		개발 분야 : 개발>APP
+									  		<span class="glyphicon glyphicon-flash" aria-hidden="true" style="color : orange ; font-size: 14px"></span>개발 분야  : 개발>APP
 									  	</c:when>
 										<c:when test="${project.projDivision==21}">
-									  		개발 분야 : 디자이너>WEB
+									  		<span class="glyphicon glyphicon-flash" aria-hidden="true" style="color : orange ; font-size: 14px"></span>개발 분야  : 디자이너>WEB
 									  	</c:when>
 										<c:when test="${project.projDivision==22}">
-									  		개발 분야 : 디자이너>APP
+									  		<span class="glyphicon glyphicon-flash" aria-hidden="true" style="color : orange ; font-size: 14px"></span>개발 분야  : 디자이너>APP
 									  	</c:when>
 									</c:choose></th>
 								</tr>
 
 
 								<tr style="height: 20px; border-bottom: 1px solid #ddd;">
-									<th colspan="12">개발 기술 : 
+									<th colspan="12"><span class="glyphicon glyphicon-flash" aria-hidden="true" style="color : orange ; font-size: 14px"></span>개발 기술 : 
 										<c:set var="i" value="0"/>
 											<c:forEach var="listTechUse" items="${listTechUse}" >
 											<c:set var="i" value="${i+1}"/>

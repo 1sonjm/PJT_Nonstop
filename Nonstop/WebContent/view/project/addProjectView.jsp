@@ -135,7 +135,7 @@
     <script src="http://code.jquery.com/jquery-1.10.2.js"></script> 
 	<script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
     
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/sunny/jquery-ui.css">
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/cupertino/jquery-ui.css">
 	
 	<style>
 		select{
@@ -148,10 +148,8 @@
     $( function() {
 	    $( "#projStartDate" ).datepicker({
 	      dateFormat : "yy-mm-dd",
-	      buttonImage: "http://kr.seaicons.com/wp-content/uploads/2015/06/calendar-icon.png",
-	      buttonImageOnly: true,
-	      showButtonPanel: true,
-	      buttonText: "Select date" 
+	      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토' ], 
+		  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 	    });
 	    $("img.ui-datepicker-trigger").attr("style", "width:35px; cursor: Pointer;");
 	});
@@ -159,10 +157,8 @@
     $( function() {
 	    $( "#projEndDate" ).datepicker({
 	      dateFormat : "yy-mm-dd",
-	      buttonImage: "http://kr.seaicons.com/wp-content/uploads/2015/06/calendar-icon.png",
-	      buttonImageOnly: true,
-	      showButtonPanel: true,
-	      buttonText: "Select date" 
+	      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토' ], 
+		  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 	    });
 	    $('#projEndDate').insertAfter( $('#projEndDate').next('img') );
 	    $("img.ui-datepicker-trigger").attr("style", "width:35px; cursor: Pointer;");
@@ -171,10 +167,8 @@
     $( function() {
 	    $( "#projAnnoEnd" ).datepicker({
 	      dateFormat : "yy-mm-dd",
-	      buttonImage: "http://kr.seaicons.com/wp-content/uploads/2015/06/calendar-icon.png",
-	      buttonImageOnly: true,
-	      showButtonPanel: true,
-	      buttonText: "Select date"
+	      dayNamesMin: ['일', '월', '화', '수', '목', '금', '토' ], 
+		  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
 	    });
 	    $("img.ui-datepicker-trigger").attr("style", "width:35px; cursor: Pointer;");
 	});
@@ -244,8 +238,8 @@
 					   
 					<div class="form-group">
 					    <label for="projLocation" class="col-sm-offset-1 col-sm-2 control-label">지역</label>
-						    <div class="col-sm-1">
-							    <input  class="form-btn" type="button" onclick="projLocation_daumPostcode()" value="주소 찾기">
+						    <div class="col-sm-1" style="height : 39px">
+							    <input  class="form-btn" type="button" onclick="projLocation_daumPostcode()" value="주소 찾기" style="height : 100%">
 							</div>
 							<div class="col-sm-5">
 							    <input class="form-control" type="text" id="projLocation" placeholder="주소">

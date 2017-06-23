@@ -21,7 +21,6 @@ import com.nonstop.domain.Follow;
 import com.nonstop.domain.Portfolio;
 import com.nonstop.domain.Project;
 import com.nonstop.domain.RecordProject;
-import com.nonstop.domain.Search;
 import com.nonstop.domain.Statistics;
 import com.nonstop.domain.User;
 import com.nonstop.service.portfolio.PortfolioService;
@@ -76,13 +75,13 @@ public class ProfileController {
 		User user = userService.getProfileMine(sessionId);
 		//개인기술경력 리스트 
 		Map<String , Object> map = profileService.getCareerList(sessionId);
-		
-		if(role.equals("2")){
+		System.out.println("********************"+user.getRole());
+		if(user.getRole().equals("2")){
 		//프로젝트 작업이력 
 		List<RecordProject> recordProject = profileService.getRecordProjectList(sessionId);
 		//프로젝트 작업이력 리스트
 		model.addAttribute("recordProject"  , recordProject);
-		}else if(role.equals("3")){
+		}else if(user.getRole().equals("3")){
 		List<RecordProject> recordProject = profileService.getRecordProjectList2(sessionId);
 		model.addAttribute("recordProject"  , recordProject);
 		}
@@ -114,6 +113,7 @@ public class ProfileController {
 		model.addAttribute("follow", follow);
 		model.addAttribute("techClassList" , techClassList);
 		model.addAttribute("techDataList" , techDataList);
+		
 		
 		
 		return "forward:/view/profile/profile.jsp";

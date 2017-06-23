@@ -89,17 +89,7 @@ public class StatisticsController {
 	@RequestMapping(value="getJSONPostCountList", method=RequestMethod.GET)
 	public void getJSONPostCountList(Model model , HttpSession session) throws Exception{
 		System.out.println("/statstics/getJSONPostCountList");
-		
 		model.addAttribute("dataList", statisticsService.getPostCountList());
-		
-		User user = null;
-		if((user=(User)session.getAttribute("user"))!=null){
-		if(letterService.getUnreadLetterList(user.getUserId()).size() > 0){
-			model.addAttribute("flag", true);
-		}else {
-			model.addAttribute("flag", false);
-			}
-		}
 	}
 	
 	@RequestMapping(value="getUserStatisticsList/{userId}/{role}", method=RequestMethod.GET)

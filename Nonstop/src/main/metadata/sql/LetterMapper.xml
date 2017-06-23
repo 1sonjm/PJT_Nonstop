@@ -40,8 +40,8 @@
 		VALUES (seq_let_no.nextval,
 				#{sendId},
 				#{receiveId},
-				"프로젝트 초대 알림 입니다.",
-				"축하드립니다.님의 프로젝트에 초대 되었습니다.",
+				#{letTitle},
+				#{letDetail},
 				SYSDATE,
 				'',1,'','')
 	 </insert>
@@ -52,6 +52,7 @@
 				FROM(	SELECT let_no,let_send_id,let_receive_id,let_title,let_detail, let_regdate ,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
 						FROM letter
 						WHERE let_receive_id = #{receiveId:VARCHAR} )inner_table)
+			ORDER BY let_regdate
 	 </select>
 	 
 	  <select  id="getListSendLetter"  parameterType="String"	resultMap="letterSelectMap">
@@ -60,12 +61,14 @@
 				FROM(	SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_regdate,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
 						FROM letter
 						WHERE let_send_id = #{sendId:VARCHAR} )inner_table)
+			ORDER BY let_regdate
 	 </select>
 	 
 	 <select  id="getSaveLetterList"  parameterType="String"	resultMap="letterSelectMap">
 			SELECT let_no,let_send_id,let_receive_id,let_title,let_detail,let_regdate,NVL(let_readdate,'') let_readdate,NVL(let_save,'') let_save,let_rec_view,let_send_view
 			FROM letter
 			WHERE let_receive_id=#{userId} AND let_save=1
+			ORDER BY let_regdate
 	 </select>
 	 
 	 <select  id="getUnreadLetterList"  parameterType="String"	resultMap="letterSelectMap">
