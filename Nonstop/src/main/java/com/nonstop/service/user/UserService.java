@@ -33,6 +33,8 @@ public interface UserService {
 
 	public boolean checkId(String userId) throws Exception;
 	
+	public boolean checkRole(String role) throws Exception;
+	
 	public void deleteUser(User user) throws Exception;
 
 	public Map<String, Object> getCompanyList(Search search) throws Exception;
