@@ -84,7 +84,7 @@ $(document).ready(function(){
                     <li>
 	                    <a href="#" id="mail">
 	                    	
-	                    		<span class="glyphicon glyphicon-envelope" id="listLetter" style="margin-top:3px; margin-bottom:5px"></span>
+	                    		<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
 	                    		
 	                    </a>
                     </li>
@@ -195,7 +195,7 @@ $(document).ready(function(){
     
     //============= 쪽지함 이동 Event 처리 =============   
     $(function() {
-       $("#mail").on("click" , function() {
+       $("#listLetter").on("click" , function() {
           var receiveId = $("#userId").val();      
           self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
       }); 

@@ -212,10 +212,10 @@
 					<div class="form-group">
 					  <label for="projectDate" class="col-sm-offset-1 col-sm-2 control-label">소요기간</label>
 						    <div class="col-sm-3">
-						      <input type="text" class="form-control" id="projStartDate" name="projStartDate" readonly>
+						      <input type="text" class="form-control" id="projStartDate" name="projStartDate" placeholder="여기를 Click해 주세요." readonly>
 						    </div>
 						    <div class="col-sm-3">
-						      <input type="text" class="form-control" id="projEndDate" name="projEndDate" readonly>
+						      <input type="text" class="form-control" id="projEndDate" name="projEndDate" placeholder="여기를 Click해 주세요." readonly>
 						    </div>
 					</div>
 					
@@ -251,7 +251,7 @@
 					<div class="form-group">
 						<label class="col-md-3 control-label">마감일</label>
 						<div class="col-md-3">
-							<input class="form-control" type="text" name="projAnnoEnd" id="projAnnoEnd" readonly />
+							<input class="form-control" type="text" name="projAnnoEnd" id="projAnnoEnd" placeholder="여기를 Click해 주세요." readonly />
 						</div>
 					</div> 
 					
