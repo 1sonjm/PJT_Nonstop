@@ -275,6 +275,7 @@ function handleMessage(evt) {
 // call start() to initiate
 function start(isInitiator) {	
 	document.querySelector('.init_form').style.display = "none";
+	document.querySelector(".chat_form").style.display = "block";
 	// document.querySelector('.view_form').style.display = "block";
 	callButton.disabled = true;
 	pc = new RTCPeerConnection(configuration);

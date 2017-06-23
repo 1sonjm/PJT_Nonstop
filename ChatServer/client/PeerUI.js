@@ -482,7 +482,7 @@ window.addEventListener('load', function() {
 					var innerHTML = 'I am alone in this room.';
 					setupOffer.innerHTML = innerHTML;
 					setTimeout(function() {
-						setupOffer.onclick(true);
+						document.querySelector("#file_share").onclick(true);
 					}, 2000);
 				}
 			}, 5 * 1000);
