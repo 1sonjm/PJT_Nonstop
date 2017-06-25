@@ -345,25 +345,6 @@ $(function() {
 	}); 
 });
 
-
-/* //============= 통계 이동 Event 처리 =============	
- $(function() {
-	 
-	 $("#listFollow").on("click" , function() {
-	
-	var reqUserId = $("#userId").val();
-	self.location = "/profile/getFollowList?reqUserId="+reqUserId;
-	
- 	 popWin 
-	= window.open("/view/profile/listFollow.jsp",
-							"popWin", 
-							"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
-							"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
-	$("#logout").on("click", function() {
-		$(self.location).attr("href", "/user/logout");
-	});
-}); */
-
 //============= 통계 이동 Event 처리 =============	
 $(function() {
 	$("#statistics").on("click", function() {
@@ -380,8 +361,11 @@ $(function() {
 		method : "GET", dataType : "json",
 		success : function(jsonData){
 			$("#countDevelop").text(jsonData.dataList.DEVELOP);
+			$("#countDevelop").attr("data-to",jsonData.dataList.DEVELOP);
 			$("#countDesign").text(jsonData.dataList.DESIGN);
+			$("#countDesign").attr("data-to",jsonData.dataList.DESIGN);
 			$("#countProject").text(jsonData.dataList.PROJECT);
+			$("#countProject").attr("data-to",jsonData.dataList.PROJECT);
 		}
 	})
 
@@ -666,61 +650,27 @@ $(function() {
 						</p>
 						<div class="margin-bottom-80"></div>
 						
-						<%-- <div class="intro-main">
-							<ul class="main-ul">
-								<li>
-									<h1>${dataList.DEVELOP}</h1>
-									<p>개발자 포트폴리오</p>
-								</li>
-								<li>
-									<div class="verticle-line">
-										<br />
-										<br />
-										<br />
-									</div>
-								</li>
-								<li>
-									<h1>${dataList.DESIGN}</h1>
-									<p>디자인 포트폴리오</p>
-								</li>
-								<li>
-									<div class="verticle-line">
-										<br />
-										<br />
-										<br />
-									</div>
-								</li>
-								<li>
-									<h1>${dataList.PROJECT}</h1>
-									<p>등록된 프로젝트</p>
-								</li>
-							</ul>
-						</div> --%>
-						<!-- <p id="countDevelop"></p>
-						<p id="countDesign"></p>
-						<p id="countProject"></p> -->
-						
 						<div class="funfacts">
 							<div class="col-md-12">
 								<div class="row">
 									<div class="col-md-4">
 										<div class="funfact">
 											<div class="st-funfact-icon"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" id="countDevelop" data-from="0" data-to="125" data-runit="1">125</span>+</div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countDevelop" data-from="0" data-to="" data-runit="1">12</span>+</div>
 											<strong class="funfact-title">Development Portfolio</strong>
 										</div><!-- .funfact -->
 									</div>
 									<div class="col-md-4">
 										<div class="funfact">
 											<div class="st-funfact-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" id="countDesign" data-from="0" data-to="135" data-runit="1">135</span>+</div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countDesign" data-from="0" data-to="" data-runit="1">12</span>+</div>
 											<strong class="funfact-title">Design Portfolio</strong>
 										</div><!-- .funfact -->
 									</div>
 									<div class="col-md-4">
 										<div class="funfact">
 											<div class="st-funfact-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" id="countProject" data-from="0" data-to="122" data-runit="1">122</span>+</div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countProject" data-from="0" data-to="" data-runit="1">12</span>+</div>
 											<strong class="funfact-title">Projects</strong>
 										</div><!-- .funfact -->
 									</div>
