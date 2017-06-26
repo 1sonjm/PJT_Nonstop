@@ -15,7 +15,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/resources/css/nonstop.css" rel="stylesheet">
-
+    
+    <link href="/resources/css/main.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link href="/resources/css/full.css" rel="stylesheet">
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
@@ -154,20 +156,6 @@
 		    border-radius: 6px 0 6px 6px;
 		}
 		
-		.modal-header{
-			font-family: "Open Sans", sans-serif;
-			font-weight: 300;
-		}
-		
-		.modal-body{
-			font-family: "Open Sans", sans-serif;
-			font-weight: 400;
-		}
-		
-		.modal-footer {
-			font-family: "Open Sans", sans-serif;
-			font-weight: 400;
-		}
 		
 		/* Scroll To Top */
 	   .scroll-to-top {
@@ -774,7 +762,7 @@
 	      
 	<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
        <div class="modal-dialog">
-           <div class="modal-content">
+           <div class="modal-content" style="margin-top: 30%; padding-bottom: 0; padding-top: 10px;">
            
               <div class="tab-content">
                  <form id="aaa">
