@@ -268,7 +268,7 @@ public class UserController {
 	      
 	      System.out.println("/user/login : POST");
 
-	      String destinate = "redirect:/user/login";
+	      String destinate = "forward:/index.jsp";
 	      
 	      User dbUser=userService.getUser(user.getUserId());
 	      System.out.println("user 뭐닝" + dbUser);

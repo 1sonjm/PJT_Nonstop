@@ -51,17 +51,18 @@
 	<script type="text/javascript">
 	
 		//=============    검색 / page 두가지 경우 모두  Event  처리 =============	
-		function fncGetUserList(currentPage) {
+		function fncGetList(currentPage) {
 			$("#currentPage").val(currentPage)
 			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 		}
 		
+	
 		
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
 			 //==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			 $( "button.btn.btn-default" ).on("click" , function() {
-				fncGetUserList(1);
+				fncGetList(1);
 			});
 		 });
 		
@@ -78,6 +79,8 @@
 			$( "td:nth-child(2)" ).css("color" , "coral");
 			
 		});	
+		
+		
 		
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============
