@@ -10,7 +10,6 @@ window.addEventListener('load', function() {
 		innerHTML;
 
 	var SIGNALING_URI = 'wss://webrtcweb.com:9449/';
-	//var SIGNALING_URI = 'ws://localhost:8080/broadcasting/';
 
 	var channel = location.href.replace(/\/|:|#|%|\.|\[|\]/g, '');
 
@@ -482,7 +481,7 @@ window.addEventListener('load', function() {
 					var innerHTML = 'I am alone in this room.';
 					setupOffer.innerHTML = innerHTML;
 					setTimeout(function() {
-						document.querySelector("#file_share").onclick(true);
+						setupOffer.onclick(true);
 					}, 2000);
 				}
 			}, 5 * 1000);
