@@ -278,7 +278,8 @@ ul.sidebar-menu {
 }
 /*Chat message bubble container*/
 #chat_div div {
-	display: table;
+	/*이거 왜넣었지?*/
+	/*display: table;*/
 }
 
 .self-Message {
@@ -338,6 +339,7 @@ ul.sidebar-menu {
 }
 
 .chatMessageTime {
+	text-align: right;
 	font-size: 0.7em;
 	color: rgb(70, 70, 70);
 }
