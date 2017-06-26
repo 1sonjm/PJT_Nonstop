@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page pageEncoding="utf-8"%>
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
@@ -66,7 +67,6 @@ $(function() {
 		fncAddCompany();
 	});
 });	
-
 //============= 개인회원가입 =============	
 function fncAddUser() {
 		
@@ -201,7 +201,6 @@ $(function() {
  		  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
  	});
 });	
-
 //============ 아이디 중복 체크 =====================
 $(function(){
     
@@ -268,10 +267,6 @@ $(function() {
 			return;
 		}
 		
-		
-		
-		
-		
 		$("#aaa").attr("method","POST").attr("action","/user/login").submit();
 	});
 	
@@ -292,12 +287,12 @@ $(function() {
 		self.location = "/letter/getReceiveLetterList?receiveId=" + receiveId;
 	});
 });
-//============= 프로필 이동 Event 처리 =============	
+//============= 프로필 이동 Event 처리 =============   
 $(function() {
-	$("#profile").on("click", function() {
-		var role = $(this).attr('role');
-		self.location = "/profile/getMineProfile?role="+role;
-	});
+   $("#profile").on("click", function() {
+      var role = $(this).attr('role');
+      self.location = "/profile/getMineProfile?role="+role;
+   });
 });
 	
 //============= 내정보보기 이동 Event 처리 =============	
@@ -348,8 +343,6 @@ $(function() {
 		 self.location = "/user/listCompany"
 	}); 
 });
-
-
 /* //============= 통계 이동 Event 처리 =============	
  $(function() {
 	 
@@ -367,7 +360,6 @@ $(function() {
 		$(self.location).attr("href", "/user/logout");
 	});
 }); */
-
 //============= 통계 이동 Event 처리 =============	
 $(function() {
 	$("#statistics").on("click", function() {
@@ -388,28 +380,33 @@ $(function() {
 			$("#countProject").text(jsonData.dataList.PROJECT);
 		}
 	})
-	
-	$.ajax("/letter/toolbarMailCheck",{
-		method : "GET", dataType : "json",
-		success : function(jsonData){
-			if(jsonData.flag){
-				var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
-					  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em;  margin-left:4px;'>NEW</span>";
-	$("#listLetter").html(displayValue);
-				
-			}
-		}
-	})
 	//countTo 이벤트
 	$(".st-ff-count").countTo();
 });
+$(document).ready(function(){
+	$.ajax(
+	{
+		url:"/letter/toolbarMailCheck",
+		method: "GET",
+		headers : {
+			"Accept" : "application/json",
+			"Content-Type" : "application/json"	
+		},
+		success : function(a , status) {
+			if(a.flag == true){
+				var displayValue = "<span class='glyphicon glyphicon-envelope' id='listLetter' style='margin-top:3px; margin-bottom:5px'></span>"
+								  +"<span class='label label-rounded label-primary' style='padding: 0 .8em .1em; border-radius: .5em; background:#ff6600; margin-left:4px;'>NEW</span>";
+				$("#mail").html(displayValue);
+			}
+		}
+	})
+})
 //============= toolbar project 이동 Event 처리 =============   
 $(function() {
    $("#projDesigner").on("click" , function() {
      self.location = "/project/listProject?postDivision=2"
   }); 
 });
-
 //============= toolbar project 이동 Event 처리 =============
 $(function() {
     $("#projDeveloper").on("click" , function() {
@@ -430,7 +427,6 @@ $(function() {
 });
 //============ 카카오 ==============
 Kakao.init('fc5658887af25f840e94144f6722b228');
-
 function loginWithKakao() {
 // 로그인 창을 띄웁니다.
 	Kakao.Auth.login({
@@ -583,8 +579,7 @@ $(function() {
 		                    	<a href="#" id="listLetter">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        	<!-- 알림 -->
-		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
+		                        	
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
@@ -771,7 +766,7 @@ $(function() {
 					<div class="single-blog">
 			
 						<div class="featured-content">
-							<img class="img-responsive" src="/resources/images/upload/app (1).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/designApp(1).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/01.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -787,7 +782,7 @@ $(function() {
 				<div class="col-md-4 col-sm-4">
 					<div class="single-blog">
 						<div class="featured-content">
-							<img class="img-responsive" src="/resources/images/upload/app (8).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/designApp(8).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/02.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -803,7 +798,7 @@ $(function() {
 				<div class="col-md-4 col-sm-4">
 					<div class="single-blog">
 						<div class="featured-content">
-							<img class="img-responsive" src="/resources/images/upload/app (7).jpg" alt="">
+							<img class="img-responsive" src="/resources/images/upload/designApp(7).jpg" alt="">
 							<div class="portfolio-detail">
 								<div class="portfolio-overlay"></div>
 								<a href="img/demo-images/portfolio/full/03.jpg" data-litebox-group="myGallery" class="litebox"></a>
@@ -903,7 +898,6 @@ $(function() {
 	naver_id_login.setDomain(".service.com");
 	naver_id_login.setState(state);
 	naver_id_login.init_naver_id_login();
-
 	function naverSignInCallback() {
 		alert(naver_id_login.getProfileData('email'));
 		var userId=naver_id_login.getProfileData('email');    
@@ -1066,3 +1060,4 @@ $(function() {
 		</div>
 	</footer>
 </body>
+</html>

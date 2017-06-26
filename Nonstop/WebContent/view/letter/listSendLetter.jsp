@@ -575,6 +575,37 @@ ul {
 					<div aria-hidden="true" aria-labelledby="myModalLabel"
 						role="dialog" tabindex="-1" id="myModal" class="modal fade"
 						style="display: none;">
+						<script type="text/javascript">
+						$(function(){
+	      
+	      $("#letReceiveId").on("keyup", function(){
+	         
+	         var userId = $("#letReceiveId").val();
+	                  
+	          $.ajax(
+	                {
+	                    url : "/user/checkId/"+userId,
+	                    method : "GET",
+	                    dataType : "json",
+	                    headers : {
+	                       "Accept" : "application/json",
+	                       "Content-Type" : "application/json"
+	                    },
+	                    context : this,
+	                    success : function(JSONData, status) {   
+	                                            
+	                       if(! JSONData.result) {
+	                          $("#letReceiveUserId").html("존재하는 아이디입니다.메세지 전송이 가능합니다.");
+	                       } 
+	                       else {
+	                    	   $("#letReceiveUserId").html("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+		                       
+	                       }
+	                    }
+	              });         
+	         });      
+	      });
+</script>
 						<div class="modal-dialog">
 
 							<div class="modal-content">
@@ -598,7 +629,8 @@ ul {
 											<label class="col-lg-2 control-label">To</label>
 											<div class="col-lg-10">
 												<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
-													id="inputEmail1" class="form-control">
+													id="letReceiveId" class="form-control">
+												<div id="letReceiveUserId" style="color:#ff6600; padding-left:12px;">수신자를 입력해 주세요</div>
 											</div>
 										</div>
 
