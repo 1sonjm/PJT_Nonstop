@@ -25,6 +25,10 @@
 					self.location = "/portfolio/getPortfolio?portNo="
 							+ $(this).find('input').val();
 				});
+		
+		$(".addPortfolio").on("click" , function() {
+            self.location="/portfolio/addPortfolio";
+        });
 	});
 </script>
 <style>
@@ -172,7 +176,7 @@ blockquote h6 {
 
 <body>
 
-
+<a href="#" class="addPortfolio"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="float:right; font-size:50;"></span></a>  
 	<div class="margin-bottom-30">
 		<div class="container">
 			<div class="row">

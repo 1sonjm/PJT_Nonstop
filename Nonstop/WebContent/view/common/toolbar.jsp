@@ -3,7 +3,11 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+.label-primary {
+    background-color: #ff6600;
+}
+</style>
 <script type="text/javascript">
 $(document).ready(function(){
 		$.ajax(
@@ -79,6 +83,7 @@ $(document).ready(function(){
                     
                <c:if test="${!empty sessionScope.user.userId }">
                     <c:if test="${sessionScope.user.role == '1'}">
+
 		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
 		                    	<a href="#" id="listLetter">
@@ -139,7 +144,8 @@ $(document).ready(function(){
 		                    </ul></li>
 		                 </c:if>	
 					</c:if>
-                  
+
+
                   
              </ul>
             </div>
@@ -193,7 +199,7 @@ $(document).ready(function(){
     
     //============= 쪽지함 이동 Event 처리 =============   
     $(function() {
-       $("#listLetter").on("click" , function() {
+       $("#mail").on("click" , function() {
           var receiveId = $("#userId").val();      
           self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
       }); 

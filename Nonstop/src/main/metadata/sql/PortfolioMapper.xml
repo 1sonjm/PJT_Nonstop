@@ -130,7 +130,7 @@
 				  	
 				  	) inner_table, users
 			WHERE users.user_id=inner_table.port_user_id)
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+		WHERE row_seq BETWEEN #{search.startNum} AND #{search.endNum}
 
 	 </select>
 	 

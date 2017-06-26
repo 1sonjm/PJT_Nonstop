@@ -487,21 +487,47 @@ ul {
 	//============= "가입"  Event 연결 =============
 	$(function() {
 
-		$("#send").on(
-				"click",
-				function() {
+		 $("#send").on("click", function(){
+				var receiveId=$("input[name='receiveId']").val();
+				var title=$("input[name='letTitle']").val();
+				var letDetail=$("input[name='letDetail']").val();
+				var flag=$("#letReceiveUserId").text().trim();
+				
+				if(receiveId == null || receiveId.length<1 ){
+					alert("수신자는 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(title == null || title.length<1){
+					alert("제목은 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(flag == '존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.'){
+					alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+					return false;
+				}
+				 $("#addMail").attr("method","POST").attr("action","/letter/addLetter").submit();
+			 });
 
-					$("form").attr("method", "POST").attr("action",
-							"/letter/addLetter").submit();
-				});
-
-		$("#send2").on(
-				"click",
-				function() {
-
-					$("form").attr("method", "POST").attr("action",
-							"/letter/addLetter").submit();
-				});
+		 $("#send2").on("click", function(){
+				var receiveId=$("#reReceiveId").val();
+				var title=$("#reLetTilte").val();
+				var letDetail=$("#reLetDetail").val();
+				var flag=$("#letReceiveUserId").text().trim();
+				
+				if(receiveId == null || receiveId.length<1 ){
+					alert("수신자는 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(title == null || title.length<1){
+					alert("제목은 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(flag == '존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.'){
+					alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+					return false;
+				}
+				 $("#returnMail").attr("method","POST").attr("action","/letter/addLetter").submit();
+			 });
 
 		$("#close").on(
 				"click",
@@ -602,6 +628,37 @@ ul {
 					<div aria-hidden="true" aria-labelledby="myModalLabel"
 						role="dialog" tabindex="-1" id="myModal" class="modal fade"
 						style="display: none;">
+						<script type="text/javascript">
+						$(function(){
+	      
+	      $("#letReceiveId").on("keyup", function(){
+	         
+	         var userId = $("#letReceiveId").val();
+	                  
+	          $.ajax(
+	                {
+	                    url : "/user/checkId/"+userId,
+	                    method : "GET",
+	                    dataType : "json",
+	                    headers : {
+	                       "Accept" : "application/json",
+	                       "Content-Type" : "application/json"
+	                    },
+	                    context : this,
+	                    success : function(JSONData, status) {   
+	                                            
+	                       if(! JSONData.result) {
+	                          $("#letReceiveUserId").html("존재하는 아이디입니다.메세지 전송이 가능합니다.");
+	                       } 
+	                       else {
+	                    	   $("#letReceiveUserId").html("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+		                       
+	                       }
+	                    }
+	              });         
+	         });      
+	      });
+</script>
 						<div class="modal-dialog">
 
 							<div class="modal-content">
@@ -625,7 +682,8 @@ ul {
 											<label class="col-lg-2 control-label">To</label>
 											<div class="col-lg-10">
 												<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
-													id="inputEmail1" class="form-control">
+													id="letReceiveId" class="form-control">
+												<div id="letReceiveUserId" style="color:#ff6600; padding-left:12px;">수신자를 입력해 주세요</div>
 											</div>
 										</div>
 
@@ -704,8 +762,7 @@ ul {
 
 					<table class="table table-inbox table-hover">
 
-						<td class="inbox-small-cells"><c:if
-								test="${letter.sendId != sessionScope.user.userId }">
+						<td class="inbox-small-cells"><c:if test="${letter.sendId != sessionScope.user.userId }">
 								<c:if test="${letter.letSave!=1}">
 									<i id="${letter.letNo }" save="${letter.letSave}"
 										letNo="${letter.letNo}" class="fa fa-star"></i>
@@ -722,7 +779,7 @@ ul {
 										value=" ${letter.letTitle}" readOnly>
 								</div>
 							</div> <br /> <br />
-							<div class="form-group">
+							<div class="form-group" >
 								<label class="col-lg-2 control-label">From</label>
 								<div class="col-lg-10">
 									<input class="form-control" name="sendId"
@@ -756,6 +813,8 @@ ul {
 											letNo="${letter.letNo}" data-toggle="modal"
 											data-target="#myModal2">답장하기</button>
 									</c:if>
+									
+									
 									<div class="modal fade" id="myModal2" tabindex="-1"
 										role="dialog" aria-labelledby="myModalLabel"
 										aria-hidden="true">
@@ -768,12 +827,12 @@ ul {
 												</div>
 
 												<div class="modal-body">
-													<form role="form" id="addMail" class="form-horizontal">
+													<form role="form" id="returnMail" class="form-horizontal">
 
 														<div class="form-group">
 															<label class="col-lg-2 control-label">From</label>
 															<div class="col-lg-10">
-																<input type="text" class="form-control" name="sendId"
+																<input type="text" class="form-control" name="sendId" id="reSendId"
 																	value="${sessionScope.user.userId}" readOnly>
 															</div>
 														</div>
@@ -782,7 +841,7 @@ ul {
 															<label class="col-lg-2 control-label">To</label>
 															<div class="col-lg-10">
 																<input type="text" value="${letter.sendId}"
-																	name="receiveId" id="inputEmail1" class="form-control"
+																	name="receiveId" id="reReceiveId" class="form-control"
 																	readOnly>
 															</div>
 														</div>
@@ -790,7 +849,7 @@ ul {
 														<div class="form-group">
 															<label class="col-lg-2 control-label">Title</label>
 															<div class="col-lg-10">
-																<input type="text" name="letTitle"
+																<input type="text" name="letTitle" id="reLetTilte"
 																	placeholder="메일 제목을 입력하세요" class="form-control">
 															</div>
 														</div>
@@ -798,8 +857,8 @@ ul {
 														<div class="form-group">
 															<label class="col-lg-2 control-label">Mail</label>
 															<div class="col-lg-10">
-																<textarea rows="10" cols="30" name="letDetail"
-																	placeholder="2000자까지 입력가능" class="form-control" id=""
+																<textarea rows="10" cols="30" name="letDetail" id="reLetDetail"
+																	placeholder="2000자까지 입력가능" class="form-control" 
 																	name=""></textarea>
 															</div>
 														</div>

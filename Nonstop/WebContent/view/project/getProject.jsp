@@ -820,7 +820,12 @@ xmp{
                                    
                                     <div class="media">
 									  <div class="media-left">
-									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+									  	  <c:if test= "${sessionScope.user.image==null}">
+									      	<img src="/resources/images/layout/defaultProfile.jpg" width="50px" height="50px" alt="">
+									      </c:if>
+									      <c:if test= "${sessionScope.user.image!=null}">
+									      	<img src="/resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">
+									      </c:if>									      
 									  </div>
 									  
 							  	    <div class="media-body">
@@ -854,7 +859,12 @@ xmp{
 									
 									<div class="media">
 									  <div class="media-left">
-									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									  	  <c:if test= "${projCommentList.comUserImg==null}">
+									  	  	<img class="comment-img" src="/resources/images/layout/defaultProfile.jpg" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									  	  </c:if>
+									  	  <c:if test= "${projCommentList.comUserImg!=null}">
+									      	<img class="comment-img" src="/resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									      </c:if>
 									      <input type="hidden" class="comUserId" value="${projCommentList.comUserId}"/>        
 									  </div>
 									  <div class="media-body">
@@ -957,7 +967,7 @@ xmp{
 </form>
 	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade" 	style="display: none;">
 		<div class="modal-dialog" id="modal-dialog1">
-			<div class="modal-content">
+			<div class="modal-content" style="margin:0; padding : 0;">
 				<div class="modal-header" id="modal-header1">
 					<button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
 					<h4 class="modal-title">지원자 목록</h4>
@@ -975,13 +985,18 @@ xmp{
 									  <div class="col-md-12">
 									  	<div class="checkbox">
 											<label for="checkboxes-0" style="font-size : 20px">
-										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox">
-										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px " >
-										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0; float:left;" applUserVal="${recordApplicant.recUserId}">
+										      <input name="recNo" id="recNo" value="${recordApplicant.recNo}" type="checkbox" style="margin-top: 13px;">
+										      <button type="button" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px; margin-top:0;" >
+										      	<c:if test= "${recordApplicant.recUserImg==null}">
+										    		<img class="applUserImg" src="/resources/images/layout/defaultProfile.jpg" width="40px" height="40px" style="margin : 0; float:left;" applUserVal="${recordApplicant.recUserId}">
+									            </c:if>
+									            <c:if test= "${recordApplicant.recUserImg!=null}">
+													<img class="applUserImg" src="/resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0; float:left;" applUserVal="${recordApplicant.recUserId}">
+												</c:if>
 										      </button>
 										      <div class="recUserId" name="recUserId" recUserIdValue="${recordApplicant.recUserId}" style="float:right; margin-right:20px">${recordApplicant.recUserId}
 											      <c:if test="${recordApplicant.recStatus==1}">
-												      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; margin-left:30px; border : 0; width:25px; height:25px; padding :0; float:right;"></button>
+												      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; margin-left:30px;  margin-top:0; border : 0; width:25px; height:25px; padding :0; float:right;"></button>
 												      <c:set var="isChk" value="true"/>
 											      </c:if>
 										      </div>
@@ -998,13 +1013,18 @@ xmp{
 								<div class="form-group">
 									<div class="col-md-12">
 										<label style="font-size : 20px; margin-left:35px">
-										    <button type="button" class="applUserButton" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px" >
-										      	<img class="applUserImg" src="../../resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0" applUserVal="${recordApplicant.recUserId}">
+										    <button type="button" class="applUserButton" style="background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-right:30px; margin-top:0;" >
+										    	<c:if test= "${recordApplicant.recUserImg==null}">
+										    		<img class="applUserImg" src="/resources/images/layout/defaultProfile.jpg" width="40px" height="40px" style="margin : 0" applUserVal="${recordApplicant.recUserId}">
+									            </c:if>
+									            <c:if test= "${recordApplicant.recUserImg!=null}">
+													<img class="applUserImg" src="/resources/images/upload/${recordApplicant.recUserImg}" width="40px" height="40px" style="margin : 0" applUserVal="${recordApplicant.recUserId}">
+												</c:if>
 										    </button>
 										      ${recordApplicant.recUserId}
-										      <c:if test="${recordApplicant.recStatus==1}">
-										      <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px"></button>
-										      </c:if>
+									        <c:if test="${recordApplicant.recStatus==1}">
+									        <button type="button" class="glyphicon glyphicon-ok" style="color : orange; background-color : white ; border : 0; width:40px; height:40px; padding :0; margin-left : 35px;  margin-top:0;"></button>
+									        </c:if>
 										</label>
 									</div>
 								</div>

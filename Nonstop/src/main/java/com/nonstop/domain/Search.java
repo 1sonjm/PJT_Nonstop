@@ -20,14 +20,11 @@ public class Search {
 	//게시물 소팅용(1:조회순 / 2:최신순 / 3:마감임박순 / 4:지원자순) : project
 	private int postSorting;
 	
-
-
-
-
-	//페이징, 무한스크롤 위한 게시물 번호
-
 	private int endRowNum;
 	private int startRowNum;
+	//페이징, 무한스크롤 위한 게시물 번호
+	private int endNum;
+	private int startNum;
 	
 	///Constructor
 	public Search() {
@@ -61,7 +58,22 @@ public class Search {
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
-	
+
+	public int getEndNum() {
+		return endNum;
+	}
+
+	public void setEndNum(int endNum) {
+		this.endNum = endNum;
+	}
+
+	public int getStartNum() {
+		return startNum;
+	}
+
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
+	}
 
 	public int getEndRowNum() {
 		return getCurrentPage()*getPageSize();

@@ -15,7 +15,9 @@
 
     <!-- Bootstrap Core CSS -->
     <link href="/resources/css/nonstop.css" rel="stylesheet">
-
+    
+    <link href="/resources/css/main.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <link href="/resources/css/full.css" rel="stylesheet">
 	<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
@@ -89,11 +91,6 @@
           color: #d5d5d5;
         }
         
-        form{
-          float : right;
-          margin : 0;
-        }
-        
 		#techNameButton{
 			padding : 2px;
 			heigth : 8px;
@@ -159,20 +156,6 @@
 		    border-radius: 6px 0 6px 6px;
 		}
 		
-		.modal-header{
-			font-family: "Open Sans", sans-serif;
-			font-weight: 300;
-		}
-		
-		.modal-body{
-			font-family: "Open Sans", sans-serif;
-			font-weight: 400;
-		}
-		
-		.modal-footer {
-			font-family: "Open Sans", sans-serif;
-			font-weight: 400;
-		}
 		
 		/* Scroll To Top */
 	   .scroll-to-top {
@@ -609,7 +592,7 @@
 			</li>
 		</ul>
 		
-		<form class="navbar-form navbar-right" role="search">
+		<form class="navbar-form navbar-right" role="search" style="float : right;  margin : 0;">
 		<div class="input-group input-group-sm">
 			<div class="input-group-btn">
 				<input type="hidden" id="searchCondition" name="searchCondition" value="${search.searchCondition}"/>
@@ -779,7 +762,7 @@
 	      
 	<div class="modal fade" id="myModalLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
        <div class="modal-dialog">
-           <div class="modal-content">
+           <div class="modal-content" style="margin-top: 30%; padding-bottom: 0; padding-top: 10px;">
            
               <div class="tab-content">
                  <form id="aaa">
@@ -798,13 +781,13 @@
                   
                   	  <div class="form-group">
                   	  	<a id="kakao-login-btn" href="javascript:loginWithKakao()">
-							<img src="/resources/images/layout/kakao_account_login_btn_medium_narrow.png" />
+							<img src="/resources/images/layout/kakao_account_login_btn_medium_narrow.png" width=100% />
 						</a>
 					  </div>
 					  
 					  <div class="form-group" >
 					  	<a id="naver_id_login" >
-                  	  		<img src="/resources/images/layout/naverLogin.png" style="width: 222px; heigth : 39px"/>
+                  	  		<img src="/resources/images/layout/naverLogin.png"/>
                   	  	</a>
 					  </div>
 
@@ -826,7 +809,7 @@
 	<script type="text/javascript">
 	  	var naver_id_login = new naver_id_login("tbGcrisi6ld7O3IBg80N","http://127.0.0.1:8080");
 	  	var state = naver_id_login.getUniqState();
-	  	naver_id_login.setButton("green", 3,48);
+	  	naver_id_login.setButton("green", 3,52);
 	  	naver_id_login.setDomain(".service.com");
 	  	naver_id_login.setState(state);
 	  	naver_id_login.init_naver_id_login();

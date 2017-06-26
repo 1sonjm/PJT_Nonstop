@@ -46,6 +46,12 @@
         .row {
         height: 15px;
         } 
+        
+        #sizeChange1, #sizeChange2, #sizeChange3, #sizeChange4{
+        	font-size : 17px;
+        	margin : 10px;
+        	font-weight:bold;
+        }
        
         
      </style>
@@ -94,88 +100,54 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<div class="page-header">
-	       <h3 class=" text-info">회원정보조회</h3>
-	       <h5 class="text-muted">내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+		<div class="col-md-12 text-center" style="margin-bottom : 10px;">
+	       <h3>회원정보조회</h3>
+	       <h5 >내 정보를 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
 	    </div>
 	    
 	    
-	    
-	    
-	    <div>
-	  		<div class="col-xs-4 col-md-2 "><strong>프로필 사진</strong></div>
-			
-			<c:if test= "${empty user.image}">
-			<img src="/resources/images/layout/defaultProfile.jpg" class="img-rounded" width="200" height="200">		
+   		<div class="col-md-12 text-center">
+   			<c:if test= "${empty user.image}">
+               	<img class="img-circle" src="/resources/images/layout/defaultProfile.jpg" width="200" height="200" />
+            </c:if>
+            <c:if test= "${!empty user.image}">
+				<img class="img-circle" src="/resources/images/upload/${user.image}" width="200" height="200" />
 			</c:if>
-			<c:if test= "${!empty user.image}">
-			<img src="/resources/images/upload/${user.image}" class="img-rounded" width="200" height="200">		
-			</c:if>
+        </div>
 			
-			
-		</div>
-		<hr/>
-	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
-			<div class="col-xs-8 col-md-4">${user.userName}</div>
+		
+		<div class="col-md-12 text-center">
+			<h3>${user.userId}</h3>
 		</div>
 		
-		<hr/>
-	
-		<div class="row" >
-	  		<div class="col-xs-4 col-md-2" ><strong>아 이 디</strong></div>
-			<div class="col-xs-8 col-md-4" >${user.userId}</div>
+		<div class="col-md-12" id="sizeChange1">
+	  		<div class="col-xs-5 " style="text-align : right; color:#c8c6c6;"><i class="glyphicon glyphicon-user" ></i></div>
+			<div class="col-xs-7" >${user.userName}</div>
 		</div>
 		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>연락처</strong></div>
-			<div class="col-xs-8 col-md-4">${ !empty user.tel ? user.tel : ''}	</div>
-		</div>
-		<hr/>
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
-			<div class="col-xs-8 col-md-4">${user.addr}</div>
+		<div class="col-md-12" id="sizeChange2">
+	  		<div class="col-xs-5 " style="text-align : right; color:#c8c6c6;"><i class="glyphicon glyphicon-earphone" ></i></div>
+			<div class="col-xs-7" >${ !empty user.tel ? user.tel : ''}</div>
 		</div>
 		
-		<hr/>	
-			
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
-			<div class="col-xs-8 col-md-4">${user.email}</div>
+		<div class="col-md-12" id="sizeChange3">
+	  		<div class="col-xs-5 " style="text-align : right; color:#c8c6c6;"><i class="glyphicon glyphicon-home" ></i></div>
+			<div class="col-xs-7" >${user.addr}</div>
 		</div>
 		
-		<hr/>
-			
-		<hr/>
-		
-		<div class="form-group">
-	  		<div class="col-md-12 text-center ">
-	  			
-				<!-- <a class="btn btn-primary btn" href="#" role="button" id = "updateUser">회원정보수정</a> -->
-				<button type="button" class="btn btn-primary" id="updateUserV"  userId="">회원정보수정</button>	
-	  		</div>
+		<div class="col-md-12" id="sizeChange4">
+	  		<div class="col-xs-5 " style="text-align : right; color:#c8c6c6;"><i class="glyphicon glyphicon-envelope" ></i></div>
+			<div class="col-xs-7" >${user.email}</div>
 		</div>
-		<br/>
-		<hr/>
-		<div class="form-group">
-	  		<div class="col-md-12 text-center ">
-	  			
+		
+		<div class="form-group" >
+	  		<div class="col-md-12 text-center " style="margin-top : 10px;">
+				<button type="button" class="btn btn-primary" id="updateUserV"  userId="">회원정보수정</button>
 				<a class="btn btn-primary btn" href="#" role="button" id = "listUserV">돌아가기</a>
-	  		</div>
-		</div>
-		<br/>
-		<hr/>
-		<div class="form-group">
-	  		<div class="col-md-12 text-center ">
-	  			
 				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser" userId="${user.userId}">회원탈퇴</a>
 	  		</div>
 		</div>
-		<br/>
-		<br/>
+		
 		
  	</div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
@@ -183,3 +155,62 @@
 </body>
 
 </html>
+
+<!-- 
+
+<div class="container">
+	<div class="row">
+        <div class="profile-header-container">   
+    		<div class="profile-header-img">
+                <img class="img-circle" src="//lh3.googleusercontent.com/-6V8xOA6M7BA/AAAAAAAAAAI/AAAAAAAAAAA/rzlHcD0KYwo/photo.jpg?sz=120" />
+                badge
+                <div class="rank-label-container">
+                    <span class="label label-default rank-label">100 puntos</span>
+                </div>
+            </div>
+        </div> 
+	</div>
+</div>
+
+body, html {
+    height: 100%;
+    background-repeat: no-repeat;
+    background-image: linear-gradient(rgb(104, 145, 162), rgb(12, 97, 33));
+}
+/**
+ * Profile image component
+ */
+.profile-header-container{
+    margin: 0 auto;
+    text-align: center;
+}
+
+.profile-header-img {
+    padding: 54px;
+}
+
+.profile-header-img > img.img-circle {
+    width: 120px;
+    height: 120px;
+    border: 2px solid #51D2B7;
+}
+
+.profile-header {
+    margin-top: 43px;
+}
+
+/**
+ * Ranking component
+ */
+.rank-label-container {
+    margin-top: -19px;
+    /* z-index: 1000; */
+    text-align: center;
+}
+
+.label.label-default.rank-label {
+    background-color: rgb(81, 210, 183);
+    padding: 5px 10px 5px 10px;
+    border-radius: 27px;
+}
+ -->
