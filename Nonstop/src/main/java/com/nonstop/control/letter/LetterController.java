@@ -252,8 +252,10 @@ public class LetterController {
 		if(user!=null){
 			if(letterService.getUnreadLetterList(userId).size() > 0){
 				model.addAttribute("flag", true);
+				System.out.println("트루");
 			}else {
 				model.addAttribute("flag", false);
+				System.out.println("false");
 			}
 		}
 	}

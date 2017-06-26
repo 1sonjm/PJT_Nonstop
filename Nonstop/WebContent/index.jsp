@@ -601,8 +601,6 @@ $(function() {
 		                    	<a href="#" id="listLetter">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        	<!-- 알림 -->
-		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
@@ -621,8 +619,6 @@ $(function() {
 		                    	<a href="#" id="listLetter">
 		                        <!-- 쪽지 -->
 		                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        <!-- 알림 -->
-		                        <span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>

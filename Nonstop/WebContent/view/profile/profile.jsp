@@ -44,7 +44,7 @@
 }
 
 .left-sidebar {
-	overflow: visible;
+	overflow: auto;
 	position: fixed;
 	width: 240px;
 	height: 100%;
@@ -98,7 +98,6 @@
 	/*border-radius: 100%; */
 }
 
-
 .sidebar-nav span>i {
 	float: right;
 	width: auto;
@@ -115,7 +114,6 @@
 	margin-right: 18px;
 	color: #cccccc;
 }
-
 
 .sidebar-nav ul li.nav-small-cap {
 	font-size: 13.5px;
@@ -288,170 +286,179 @@
 </style>
 
 <script type="text/javascript">
-    
-    //그래프 생성 시작
+	//그래프 생성 시작
 
 	var dataSet = [];
 
 	var userId = "${user.userId}";
 	var role = "${user.role}";
-$.ajax("/statistics/getUserStatisticsList/"+userId+"/"+role,{
-	method : "GET" ,
-	dataType : "json" ,
-	headers : {
-		"Accept" : "application/json"//,
+	$.ajax("/statistics/getUserStatisticsList/" + userId + "/" + role, {
+		method : "GET",
+		dataType : "json",
+		headers : {
+			"Accept" : "application/json"//,
 		//"Content-Type" : "application/json"
-	},
-	success : function(aaa) {
-		for (var i=0; i<aaa.dataList.length; i++){
-			
-			dataSet.push({
-				TechName: aaa.dataList[i].techName,
-				UseTerm: aaa.dataList[i].careerUseTerm
-			});
+		},
+		success : function(aaa) {
+			for (var i = 0; i < aaa.dataList.length; i++) {
+
+				dataSet.push({
+					TechName : aaa.dataList[i].techName,
+					UseTerm : aaa.dataList[i].careerUseTerm
+				});
+			}
 		}
-	}
-});
-AmCharts.makeChart("chartdiv",
-		{
-			"type": "pie",
-			"angle": 12,
-			"balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
-			"depth3D": 15,
-			"titleField": "TechName",
-			"valueField": "UseTerm",
-			"allLabels": [],
-			"balloon": {},
-			"legend": {
-				"enabled": true,
-				"align": "center",
-				"markerType": "circle"
-			},
-			"titles": [],
-			"dataProvider": dataSet
-		}
-	);
+	});
+	AmCharts
+			.makeChart(
+					"chartdiv",
+					{
+						"type" : "pie",
+						"angle" : 12,
+						"balloonText" : "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+						"depth3D" : 15,
+						"titleField" : "TechName",
+						"valueField" : "UseTerm",
+						"allLabels" : [],
+						"balloon" : {},
+						"legend" : {
+							"enabled" : true,
+							"align" : "center",
+							"markerType" : "circle"
+						},
+						"titles" : [],
+						"dataProvider" : dataSet
+					});
 	//그래프 생성 끝
 
-    $(function() {
-    	
-    	//팔로우한 회원 프로필로 이동
-    	$(".followProfile").on("click", function(){
-    		 var userId = $(this).text().trim();
-    		 self.location = "/profile/getOtherProfile?userId="+userId;
-    	 });
-    	
-    	$(".fa-envelope").on('click' , function(){
-    		var userId = $(this).text().trim();
-    		$(this).val(userId);
-    	})
-    	
-    	//글자수 표시
-	       $('textarea').keyup(function() {
-	    	 var maxLength = 2000;
-	         var length = $(this).val().length;
-	         var length = maxLength-length;
-	         $('#chars').text(length);
-	       });
-		 
-		 //메일전송
-		 $("#send").on("click", function(){
-			var receiveId=$("input[name='receiveId']").val();
-			var title=$("input[name='letTitle']").val();
-			var letDetail=$("input[name='letDetail']").val();
-			
-			if(receiveId == null || receiveId.length<1 ){
-				alert("수신자는 반드시 입력하셔야 합니다.");
-				return false;
+	$(function() {
+
+		//팔로우한 회원 프로필로 이동
+		$(".followProfile").on("click", function() {
+			var userId = $(this).text().trim();
+			self.location = "/profile/getOtherProfile?userId=" + userId;
+		});
+
+		$(".fa-envelope").on('click', function() {
+			var userId = $(this).text().trim();
+			$(this).val(userId);
+		})
+
+		//글자수 표시
+		$('textarea').keyup(function() {
+			var maxLength = 2000;
+			var length = $(this).val().length;
+			var length = maxLength - length;
+			$('#chars').text(length);
+		});
+
+		//메일전송
+		$("#send").on(
+				"click",
+				function() {
+					var receiveId = $("input[name='receiveId']").val();
+					var title = $("input[name='letTitle']").val();
+					var letDetail = $("input[name='letDetail']").val();
+
+					if (receiveId == null || receiveId.length < 1) {
+						alert("수신자는 반드시 입력하셔야 합니다.");
+						return false;
+					}
+					if (title == null || title.length < 1) {
+						alert("제목은 반드시 입력하셔야 합니다.");
+						return false;
+					}
+					$("form").attr("method", "POST").attr("action",
+							"/letter/addLetter").submit();
+				});
+
+		//팔로우 add /delete
+		$(document).on("click", "#follow", function() {
+
+			var flag = $(this).text().trim();
+			var requestTarget;
+
+			if (flag == "팔로우") {
+				requestTarget = "addJsonFollow";
+			} else {
+				requestTarget = "deleteJsonFollow";
 			}
-			if(title == null || title.length<1){
-				alert("제목은 반드시 입력하셔야 합니다.");
-				return false;
-			}
-			 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
-		 });
+			var targetUserId = $(this).attr('targetUserId');
 
-    	
-    	//팔로우 add /delete
-    	$(document).on("click","#follow",function() {
-    		
-    		var flag = $(this).text().trim();
-    		var requestTarget;
-    		
-    		if(flag == "팔로우"){
-    			requestTarget = "addJsonFollow";
-    		}else{
-    			requestTarget = "deleteJsonFollow";
-    		}
-    		var targetUserId = $(this).attr('targetUserId');
-    		
-    		$.ajax(
-    			{
-    				url : "/profile/"+requestTarget+"/"+targetUserId,
-    				method : "GET" ,
-    				dateType : "json",
-    				headers : {
-    					"Accept" : "application/json",
-    					"Content-Type" : "application/json"	
-    				},
-    				success : function(JSONData , status) {
+			$.ajax({
+				url : "/profile/" + requestTarget + "/" + targetUserId,
+				method : "GET",
+				dateType : "json",
+				headers : {
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},
+				success : function(JSONData, status) {
 
-    			      		if(flag=="팔로우"){
-    			      			$( "#followflag" ).text("언팔로우");
-    			      		}else{
-    			      			$( "#followflag" ).text("팔로우");
-    			      		}
-    				}
-    			});
-    		});
-    	
-    	$("span i.glyphicon").on('click',function(){
-    		var flag = $(this).attr('class').trim();
-    		var targetUserId =$(this).attr('targetUserId');
-    		var target;
-    		 if(flag == 'glyphicon glyphicon-remove-circle'){
-    			target = "deleteJsonFollow";
-    		}else{
-    			target = "addJsonFollow";
-    		}
-    		$.ajax(
-    			{
-    				url : "/profile/"+target+"/"+targetUserId,
-    				method : "GET" ,
-    				dateType : "json",
-    				headers : {
-    					"Accept" : "application/json",
-    					"Content-Type" : "application/json"	
-    				},
-    				context : this,
-    				success : function(JSONData , status) { 
-    					if(flag == 'glyphicon glyphicon-remove-circle'){
-    						$(this).removeClass('glyphicon glyphicon-remove-circle').addClass('glyphicon glyphicon-plus-sign');
-    					}else{
-    						$(this).removeClass('glyphicon glyphicon-plus-sign').addClass('glyphicon glyphicon-remove-circle');
-    					}
-    				}
-    		}); 
-    	});
-    });
-	
-	
-    	
+					if (flag == "팔로우") {
+						$("#followflag").text("언팔로우");
+					} else {
+						$("#followflag").text("팔로우");
+					}
+				}
+			});
+		});
 
-    </script>
+		$("span i.glyphicon")
+				.on(
+						'click',
+						function() {
+							var flag = $(this).attr('class').trim();
+							var targetUserId = $(this).attr('targetUserId');
+							var target;
+							if (flag == 'glyphicon glyphicon-remove-circle') {
+								target = "deleteJsonFollow";
+							} else {
+								target = "addJsonFollow";
+							}
+							$
+									.ajax({
+										url : "/profile/" + target + "/"
+												+ targetUserId,
+										method : "GET",
+										dateType : "json",
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										context : this,
+										success : function(JSONData, status) {
+											if (flag == 'glyphicon glyphicon-remove-circle') {
+												$(this)
+														.removeClass(
+																'glyphicon glyphicon-remove-circle')
+														.addClass(
+																'glyphicon glyphicon-plus-sign');
+											} else {
+												$(this)
+														.removeClass(
+																'glyphicon glyphicon-plus-sign')
+														.addClass(
+																'glyphicon glyphicon-remove-circle');
+											}
+										}
+									});
+						});
+	});
+</script>
 
 </head>
 <body>
 	<div id="main-wrapper">
 		<header>
-			<jsp:include page="/view/common/toolbar.jsp"/>
+			<jsp:include page="/view/common/toolbar.jsp" />
 		</header>
 
 		<aside class="left-sidebar">
 			<div class="slimScrollDiv"
 				style="position: relative; overflow: visible; width: auto; height: 100%;">
 				<div class="scroll-sidebar"
-					style="overflow-x: visible; overflow-y: hidden; width: auto; height: 100%;">
+					style="overflow-x: visible; overflow-y: auto; width: auto; height: 100%;">
 					<div class="user-profile">
 						<div class="profile-img">
 							<img src="../../resources/images/upload/${user.image}"
@@ -486,17 +493,19 @@ AmCharts.makeChart("chartdiv",
 										<div class="icon">
 											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 										</div> <span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
-											${follow.targetUserId} </span>
-											<span>
-											<i class="glyphicon glyphicon-remove-circle" targetUserId="${follow.targetUserId}" followNo="${follow.followNo}" title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
-											</span>
-											<a href="#followLetter" data-toggle="modal">
-											 <i class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다."  aria-hidden="true"></i>
-											 
-											</a>
+											${follow.targetUserId} </span> <span> <i
+											class="glyphicon glyphicon-remove-circle"
+											targetUserId="${follow.targetUserId}"
+											followNo="${follow.followNo}"
+											title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
+									</span> <a href="#followLetter" data-toggle="modal"> <i
+											class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다."
+											aria-hidden="true"></i>
+
+									</a>
 									</li>
-									
-									
+
+
 								</c:forEach>
 
 							</ul>
@@ -555,11 +564,26 @@ AmCharts.makeChart("chartdiv",
 										</c:if></li>
 								</ul>
 								<div class="tab-content">
+
 									<div class="tab-pane active" id="profile">
 										<c:if test="${user.role=='2'}">
-											<p>사용가능 기술 그래프</p>
-											<div id="chartdiv"
-												style="width: 100%; height: 400px; background-color: #FFFFFF;"></div>
+											<div class="row">
+												<!-- Column -->
+												<div class="col-md-12">
+													<div class="card">
+														<div class="col-md-12">
+															<div class="page-header text-center">
+																<h5 class=" text-left"
+																	style="padding-left: 10px; font-size: 16px">사용가능
+																	기술 그래프</h5>
+															</div>
+
+															<div id="chartdiv"
+																style="width: 100%; height: 400px; background-color: #FFFFFF;"></div>
+														</div>
+													</div>
+												</div>
+											</div>
 											<jsp:include page="/view/profile/listCareer.jsp" />
 										</c:if>
 										<c:if test="${user.role=='3'}">
@@ -604,70 +628,69 @@ AmCharts.makeChart("chartdiv",
 	</div>
 
 
-<div aria-hidden="true" aria-labelledby="myModalLabel"
-						role="dialog" tabindex="-1" id="followLetter" class="modal fade"
-						style="display: none;">
-						<div class="modal-dialog">
+	<div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog"
+		tabindex="-1" id="followLetter" class="modal fade"
+		style="display: none;">
+		<div class="modal-dialog">
 
-							<div class="modal-content">
-								<div class="modal-header">
-									<button aria-hidden="true" data-dismiss="modal" class="close"
-										type="button">×</button>
-									<h4 class="modal-title">Send to mail your partner</h4>
-								</div>
-								<div class="modal-body">
-									<form role="form" id="addMail" class="form-horizontal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button aria-hidden="true" data-dismiss="modal" class="close"
+						type="button">×</button>
+					<h4 class="modal-title">Send to mail your partner</h4>
+				</div>
+				<div class="modal-body">
+					<form role="form" id="addMail" class="form-horizontal">
 
-										<div class="form-group">
-											<label class="col-lg-2 control-label">From</label>
-											<div class="col-lg-10">
-												<input type="text" class="form-control" name="sendId"
-													value="${sessionScope.user.userId}" readOnly>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-lg-2 control-label">To</label>
-											<div class="col-lg-10">
-												<input type="text" placeholder="수신자를 입력하세요" name="receiveId" value=""
-													id="inputEmail1" class="form-control">
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-lg-2 control-label">Title</label>
-											<div class="col-lg-10">
-												<input type="text" name="letTitle"
-													placeholder="메일 제목을 입력하세요" class="form-control">
-											</div>
-										</div>
-
-										<div class="form-group">
-											<label class="col-lg-2 control-label">Mail</label>
-											<div class="col-lg-10">
-												<textarea maxlength="2000" rows="10" cols="30"
-													name="letDetail" placeholder="2000자까지 입력가능"
-													class="form-control"></textarea>
-												<br /> 2000/<span id="chars">2000</span>
-											</div>
-										</div>
-
-										<div class="form-group">
-											<div class="col-lg-offset-2 col-lg-10">
-												<span>
-													<button class="btn btn-send" type="submit" id="send"
-														receiveId="${sessionScope.user.userId}">send</button>
-												</span>
-											</div>
-										</div>
-									</form>
-								</div>
+						<div class="form-group">
+							<label class="col-lg-2 control-label">From</label>
+							<div class="col-lg-10">
+								<input type="text" class="form-control" name="sendId"
+									value="${sessionScope.user.userId}" readOnly>
 							</div>
-							<!-- /.modal-content -->
 						</div>
-						<!-- /.modal-dialog -->
-					</div>
-					<!-- /.modal -->
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">To</label>
+							<div class="col-lg-10">
+								<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
+									value="" id="inputEmail1" class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Title</label>
+							<div class="col-lg-10">
+								<input type="text" name="letTitle" placeholder="메일 제목을 입력하세요"
+									class="form-control">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label class="col-lg-2 control-label">Mail</label>
+							<div class="col-lg-10">
+								<textarea maxlength="2000" rows="10" cols="30" name="letDetail"
+									placeholder="2000자까지 입력가능" class="form-control"></textarea>
+								<br /> 2000/<span id="chars">2000</span>
+							</div>
+						</div>
+
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<span>
+									<button class="btn btn-send" type="submit" id="send"
+										receiveId="${sessionScope.user.userId}">send</button>
+								</span>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+			<!-- /.modal-content -->
+		</div>
+		<!-- /.modal-dialog -->
+	</div>
+	<!-- /.modal -->
 
 
 
