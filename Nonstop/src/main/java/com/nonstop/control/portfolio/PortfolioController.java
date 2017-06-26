@@ -178,22 +178,22 @@ public class PortfolioController {
 		}
 		
 		//16개씩 리스트 가져오기
-		if(search.getEndRowNum() == 0) {
-			search.setStartRowNum(1);
-			search.setEndRowNum(16);
+		if(search.getEndNum() == 0) {
+			search.setStartNum(1);
+			search.setEndNum(16);
 		}else{
-			int startRowNum = search.getEndRowNum()+1;
-			int endRowNum = startRowNum+16;
+			int startNum = search.getEndNum()+1;
+			int endNum = startNum+16;
 
-			search.setStartRowNum(startRowNum);
-			search.setEndRowNum(endRowNum);
+			search.setStartRowNum(startNum);
+			search.setEndRowNum(endNum);
 		}
 		
 		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
 		
 		//Portfolio Ranking 출력
-		search.setStartRowNum(1);
-		search.setEndRowNum(12);
+		search.setStartNum(1);
+		search.setEndNum(12);
 		
 		//search.postDivision의 맨 앞글자가 1이면 개발 전체, 2이면 디자인 전체로 세팅
 		String postDivision = String.valueOf(search.getPostDivision());
@@ -225,11 +225,11 @@ public class PortfolioController {
 			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 
-		int startRowNum = search.getEndRowNum()+1;
-		int endRowNum = startRowNum+15;
+		int startNum = search.getEndNum()+1;
+		int endNum = startNum+15;
 
-		search.setStartRowNum(startRowNum);
-		search.setEndRowNum(endRowNum);
+		search.setStartNum(startNum);
+		search.setEndNum(endNum);
 
 		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
 
