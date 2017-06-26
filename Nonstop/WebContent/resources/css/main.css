@@ -268,7 +268,7 @@
   .download .download-section .intro-text {
     font-size: 26px;
   }
-  .download .download-section i {
+  .download .download-section #download-icon {
     background: none repeat scroll 0 0 rgb(223, 105, 26);
     -webkit-border-radius: 50%;
     -moz-border-radius: 50%;
@@ -781,4 +781,19 @@ input:-webkit-autofill {
     height: 3px;
     background-color: #ff6600;
     margin: 0 auto;
+}
+
+.rotate-box-icon i{
+	font-size: 35px;
+	background-color: none;
+	color: #bdbdbd;
+    margin-bottom: 10px;
+}
+.download-section .col-md-3 {
+	padding-left: 25px;
+	padding-rignt: 25px;
+}
+.rotate-box-info h4 {
+	font-weight: 500;
+	margin: 15px;
 }

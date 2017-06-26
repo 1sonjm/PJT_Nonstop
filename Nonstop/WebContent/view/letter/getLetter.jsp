@@ -487,21 +487,47 @@ ul {
 	//============= "가입"  Event 연결 =============
 	$(function() {
 
-		$("#send").on(
-				"click",
-				function() {
+		 $("#send").on("click", function(){
+				var receiveId=$("input[name='receiveId']").val();
+				var title=$("input[name='letTitle']").val();
+				var letDetail=$("input[name='letDetail']").val();
+				var flag=$("#letReceiveUserId").text().trim();
+				
+				if(receiveId == null || receiveId.length<1 ){
+					alert("수신자는 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(title == null || title.length<1){
+					alert("제목은 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(flag == '존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.'){
+					alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+					return false;
+				}
+				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+			 });
 
-					$("form").attr("method", "POST").attr("action",
-							"/letter/addLetter").submit();
-				});
-
-		$("#send2").on(
-				"click",
-				function() {
-
-					$("form").attr("method", "POST").attr("action",
-							"/letter/addLetter").submit();
-				});
+		 $("#send2").on("click", function(){
+				var receiveId=$("input[name='receiveId']").val();
+				var title=$("input[name='letTitle']").val();
+				var letDetail=$("input[name='letDetail']").val();
+				var flag=$("#letReceiveUserId").text().trim();
+				
+				if(receiveId == null || receiveId.length<1 ){
+					alert("수신자는 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(title == null || title.length<1){
+					alert("제목은 반드시 입력하셔야 합니다.");
+					return false;
+				}
+				if(flag == '존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.'){
+					alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
+					return false;
+				}
+				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+			 });
 
 		$("#close").on(
 				"click",

@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -99,12 +99,12 @@
 	    </div>
 		
 		<div class="col-md-12 text-center">
-			<%-- <c:if test="${empty user.image}">
-               	<img class="img-circle" src="/resources/images/layout/defaultProfile.jpg" width="200" height="200" />
-            </c:if>
-            <c:if test= "${!empty user.image}"> --%>
+            <c:if test="${empty user.image}">
+				<img class="img-circle" src="/resources/images/layout/defaultProfile.jpg" width="200" height="200" />
+			</c:if>
+            <c:if test="${!empty user.image}">
 				<img class="img-circle" src="/resources/images/upload/${user.image}" width="200" height="200" />
-			<%-- </c:if> --%>
+			</c:if>
         </div>
 		
 		<div class="col-md-12 text-center" style=" margin-bottom: 30px;">

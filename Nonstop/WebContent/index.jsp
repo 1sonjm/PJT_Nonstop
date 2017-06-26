@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page pageEncoding="utf-8"%>
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
@@ -282,7 +281,7 @@ $(function() {
 });
 //============= 쪽지함 이동 Event 처리 =============	
 $(function() {
-	$("#listLetter").on("click", function() {
+	$("#mail").on("click", function() {
 		var receiveId = $("#userId").val();
 		self.location = "/letter/getReceiveLetterList?receiveId=" + receiveId;
 	});
@@ -343,23 +342,6 @@ $(function() {
 		 self.location = "/user/listCompany"
 	}); 
 });
-/* //============= 통계 이동 Event 처리 =============	
- $(function() {
-	 
-	 $("#listFollow").on("click" , function() {
-	
-	var reqUserId = $("#userId").val();
-	self.location = "/profile/getFollowList?reqUserId="+reqUserId;
-	
- 	 popWin 
-	= window.open("/view/profile/listFollow.jsp",
-							"popWin", 
-							"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
-							"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
-	$("#logout").on("click", function() {
-		$(self.location).attr("href", "/user/logout");
-	});
-}); */
 //============= 통계 이동 Event 처리 =============	
 $(function() {
 	$("#statistics").on("click", function() {
@@ -376,12 +358,16 @@ $(function() {
 		method : "GET", dataType : "json",
 		success : function(jsonData){
 			$("#countDevelop").text(jsonData.dataList.DEVELOP);
+			$("#countDevelop").attr("data-to",jsonData.dataList.DEVELOP);
 			$("#countDesign").text(jsonData.dataList.DESIGN);
+			$("#countDesign").attr("data-to",jsonData.dataList.DESIGN);
 			$("#countProject").text(jsonData.dataList.PROJECT);
+			$("#countProject").attr("data-to",jsonData.dataList.PROJECT);
+			//countTo 이벤트
+			$(".st-ff-count").countTo();
 		}
 	})
-	//countTo 이벤트
-	$(".st-ff-count").countTo();
+	
 });
 $(document).ready(function(){
 	$.ajax(
@@ -576,7 +562,7 @@ $(function() {
 		            	<c:if test="${sessionScope.user.role == '1'}">
 		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
-		                    	<a href="#" id="listLetter">
+		                    	<a href="#" id="mail">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
 		                        	
@@ -598,11 +584,9 @@ $(function() {
 		               	<c:if test="${sessionScope.user.role == '2'}">
 		                  	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
-		                    	<a href="#" id="listLetter">
+		                    	<a href="#" id="mail">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        	<!-- 알림 -->
-		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
@@ -618,11 +602,9 @@ $(function() {
 		                <c:if test="${sessionScope.user.role == '3'}">
 		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
-		                    	<a href="#" id="listLetter">
+		                    	<a href="#" id="mail">
 		                        <!-- 쪽지 -->
 		                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        <!-- 알림 -->
-		                        <span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
@@ -658,61 +640,27 @@ $(function() {
 						</p>
 						<div class="margin-bottom-80"></div>
 						
-						<%-- <div class="intro-main">
-							<ul class="main-ul">
-								<li>
-									<h1>${dataList.DEVELOP}</h1>
-									<p>개발자 포트폴리오</p>
-								</li>
-								<li>
-									<div class="verticle-line">
-										<br />
-										<br />
-										<br />
-									</div>
-								</li>
-								<li>
-									<h1>${dataList.DESIGN}</h1>
-									<p>디자인 포트폴리오</p>
-								</li>
-								<li>
-									<div class="verticle-line">
-										<br />
-										<br />
-										<br />
-									</div>
-								</li>
-								<li>
-									<h1>${dataList.PROJECT}</h1>
-									<p>등록된 프로젝트</p>
-								</li>
-							</ul>
-						</div> --%>
-						<!-- <p id="countDevelop"></p>
-						<p id="countDesign"></p>
-						<p id="countProject"></p> -->
-						
 						<div class="funfacts">
 							<div class="col-md-12">
 								<div class="row">
 									<div class="col-md-4">
 										<div class="funfact">
 											<div class="st-funfact-icon"><i class="fa fa-keyboard-o" aria-hidden="true"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" id="countDevelop" data-from="0" data-to="125" data-runit="1">125</span>+</div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countDevelop" data-from="0" data-to="0" data-runit="1"></span>+</div>
 											<strong class="funfact-title">Development Portfolio</strong>
 										</div><!-- .funfact -->
 									</div>
 									<div class="col-md-4">
 										<div class="funfact">
 											<div class="st-funfact-icon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" id="countDesign" data-from="0" data-to="135" data-runit="1">135</span>+</div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countDesign" data-from="0" data-to="0" data-runit="1"></span>+</div>
 											<strong class="funfact-title">Design Portfolio</strong>
 										</div><!-- .funfact -->
 									</div>
 									<div class="col-md-4">
 										<div class="funfact">
 											<div class="st-funfact-icon"><i class="fa fa-users" aria-hidden="true"></i></div>
-											<div class="st-funfact-counter"><span class="st-ff-count" id="countProject" data-from="0" data-to="122" data-runit="1">122</span>+</div>
+											<div class="st-funfact-counter"><span class="st-ff-count" id="countProject" data-from="0" data-to="0" data-runit="1"></span>+</div>
 											<strong class="funfact-title">Projects</strong>
 										</div><!-- .funfact -->
 									</div>
@@ -755,9 +703,9 @@ $(function() {
 					<p>
 					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
 					</p>
-					<div class="margin-bottom-30"></div>
+					<div class="margin-bottom-50"></div>
 					<hr style="width:20%; border-top:1px solid #bdbdbd">
-					<div class="margin-bottom-60"></div>
+					<div class="margin-bottom-70"></div>
 				</div>
 			</div>
 			
@@ -813,6 +761,9 @@ $(function() {
 				</div><!--blog col end-->
 			</div>
 			
+			<div class="col-md-12" style="text-align:center">
+				<span class="fa fa-chevron-down" aria-hidden="true" style="margin-top: 150px; font-size: 30; color: #cccccc;"><p>Project Service</p></span>
+			</div>
 		</div>
 	</section>
 	
@@ -822,14 +773,55 @@ $(function() {
 			<div class="container">
 			
 				<div class="col-md-12">
-					<i class="fa fa-quote-left" aria-hidden="true"></i>
+					<i class="fa fa-quote-left" id="download-icon" aria-hidden="true"></i>
 					<h2 class="brand-heading">Project Service</h2>
 					<p>
 					골치아픈 프로젝트 빨리해결할 수 없을까? 믿을만한 프리랜서 어디없을까? 검증되지않은 프리랜서는 프로젝트를 망칠 수도 있습니다. 프리랜서의 개인 기술능력 정보를 직접확인해보고 공동 프로젝트에 착수하세요.
 					적합한 작업자를 찾느라 지친당신 NONSTOP에서 성공을 기원합니다.
 					</p>
-					<div class="margin-bottom-30"></div>
+					<div class="margin-bottom-50"></div>
 					<hr style="width:20%">
+					<div class="margin-bottom-100"></div>
+				</div>
+				
+				<div class="container">
+	                <div class="row">
+	                    <div class="col-md-3">
+                            <span class="rotate-box-icon"><i class="fa fa-users"></i></span>
+                            <div class="rotate-box-info">
+                                <h4>프로젝트 등록</h4>
+                                <p>진행하고자 하는 프로젝트를 사이트에 등록합니다. 등록된 프로젝트는 사이트의 프리랜서 회원들에게 공개됩니다.</p>
+                            </div>
+	                    </div>
+	
+	                    <div class="col-md-3">
+                            <span class="rotate-box-icon"><i class="fa fa-diamond"></i></span>
+                            <div class="rotate-box-info">
+                                <h4>프리랜서 검증</h4>
+                                <p>프로필 페이지를 통해 프리랜서의 기술력과 그동안 참여한 프로젝트 및 프리랜서가 등록한 포트폴리오를 조회할 수 있습니다.</p>
+                            </div>
+	                    </div>
+	
+	                    <div class="col-md-3">
+                            <span class="rotate-box-icon"><i class="fa fa-heart"></i></span>
+                            <div class="rotate-box-info">
+                                <h4>프로젝트 초대</h4>
+                                <p>함께 프로젝트를 진행하고 싶은 프리랜서가 있다면 프로젝트에 초대할 수 있습니다.</p>
+                            </div>
+	                    </div>
+	                    
+	                    <div class="col-md-3">
+                            <span class="rotate-box-icon"><i class="fa fa-clock-o"></i></span>
+                            <div class="rotate-box-info">
+                                <h4>미팅 + 프로젝트 착수</h4>
+                                <p>프로젝트에 참여한 회원들과 온라인으로 의사소통할 수 있는 채팅기능을 지원합니다.</p>
+                            </div>
+	                    </div>
+	                </div> <!-- /.row -->
+	            </div>
+	            
+	            <div class="col-md-12" style="text-align:center">
+					<span class="fa fa-chevron-down" aria-hidden="true" style="margin-top: 100px; font-size: 30; color: #e3e3e3;"><p>Tech Statistics Service</p></span>
 				</div>
 			
 			</div>
