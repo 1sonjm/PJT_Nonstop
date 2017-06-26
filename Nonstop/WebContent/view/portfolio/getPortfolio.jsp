@@ -695,7 +695,7 @@
                                 <div id="comment" class="comment">
                                 	<h3>Discuss About Post</h3>
                                 	<div class="margin-top-20"></div>
-                                  	<h6>22 Comments</h6>
+                                  	<h6>${portfolio.totalPortComment} Comments</h6>
                                   	<hr class="thick-line">
                                    
                                     <c:if test="${!empty sessionScope.user}">

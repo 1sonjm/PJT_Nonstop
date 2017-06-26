@@ -36,7 +36,7 @@
 		)
 	 </insert>
 	 
-	 <insert 	id="addTechUsePort"	 parameterType="techUse">
+	 <insert 	id="addTechUsePort"	 parameterType="map">
 	 	INSERT INTO techuse ( 
 			tu_no, 
 			tu_port_no,
@@ -44,9 +44,10 @@
 			tu_tech_no) 
 		VALUES ( 
 			seq_techuse_tu_no.nextval, 
-			#{tuPortNo}, 
-			0,
-			#{tuTechNo}
+			#{tuPortNo:NUMERIC},
+			<!-- 뒤에 데이터타입을 붙여주면 값이 없을 때 null이 들어간다. projNo에 0을 넣으면 projNo(부모키)가 0인 것을 찾기 때문에 부모키를 찾을 수 없다는 무결성 오류가 남 -->
+			#{tuProjNo:NUMERIC},
+			#{tuTechNo:NUMERIC}
 		)
 	 </insert>
 		
@@ -74,6 +75,11 @@
 	<delete id="deleteTechUse" parameterType="int">
 		DELETE from techuse
 		where tu_proj_no=#{tuProjNo:NUMERIC}
+	</delete>
+	
+	<delete id="deleteTechUsePort" parameterType="int">
+		DELETE from techuse
+		where tu_port_no=#{tuPortNo:NUMERIC}
 	</delete>
 	 
 </mapper>

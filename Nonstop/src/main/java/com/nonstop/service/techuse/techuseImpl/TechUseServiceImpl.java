@@ -31,8 +31,8 @@ public class TechUseServiceImpl implements TechUseService{
 		techUseDAO.addTechUse(tuTechNo, tuProjNo);
 	}
 	
-	public void addTechUsePort(TechUse techUse) throws Exception {
-		techUseDAO.addTechUsePort(techUse);
+	public void addTechUsePort(int tuTechNo, int tuPortNo) throws Exception {
+		techUseDAO.addTechUsePort(tuTechNo, tuPortNo);
 	}
 	
 	public TechUse getTechUse(int tuNo) throws Exception{
@@ -54,9 +54,14 @@ public class TechUseServiceImpl implements TechUseService{
 		
 		techUseDAO.deleteTechUse(tuProjNo);
 	}
+	
+	public void deleteTechUsePort(int tuPortNo) throws Exception {
+		techUseDAO.deleteTechUsePort(tuPortNo);
+	}
+	
 	@Override
 	public List<TechUse> listTechUse(List<Integer> projNoList) throws Exception {
 		return techUseDAO.listTechUse(projNoList);
 	}
-	
+
 }

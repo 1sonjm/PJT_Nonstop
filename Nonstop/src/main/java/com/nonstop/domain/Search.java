@@ -114,12 +114,33 @@ public class Search {
 	public void setPostSorting(int postSorting) {
 		this.postSorting = postSorting;
 	}
-    
+
 	@Override
 	public String toString() {
-		return "Search [currentPage=" + currentPage + ", searchCondition="
-				+ searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + ", postDivision=" + postDivision +", postSorting=" + postSorting + "]";
+		StringBuilder builder = new StringBuilder();
+		builder.append("Search [currentPage=");
+		builder.append(currentPage);
+		builder.append(", searchCondition=");
+		builder.append(searchCondition);
+		builder.append(", searchKeyword=");
+		builder.append(searchKeyword);
+		builder.append(", pageSize=");
+		builder.append(pageSize);
+		builder.append(", projPageSize=");
+		builder.append(projPageSize);
+		builder.append(", postDivision=");
+		builder.append(postDivision);
+		builder.append(", postSorting=");
+		builder.append(postSorting);
+		builder.append(", endRowNum=");
+		builder.append(endRowNum);
+		builder.append(", startRowNum=");
+		builder.append(startRowNum);
+		builder.append(", endNum=");
+		builder.append(endNum);
+		builder.append(", startNum=");
+		builder.append(startNum);
+		builder.append("]");
+		return builder.toString();
 	}
 }

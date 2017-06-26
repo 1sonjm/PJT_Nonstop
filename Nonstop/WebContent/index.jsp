@@ -835,9 +835,9 @@ $(function() {
 			
 				<div class="col-md-12">
 					<i class="fa fa-quote-left" aria-hidden="true"></i>
-					<h2 class="brand-heading">Tech Statistic Service</h2>
+					<h2 class="brand-heading">Statistic & Chatting Service</h2>
 					<p>
-					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
+					프로젝트 진행을 위해선 소통이 매우 중요합니다. 업무를 담당하게 될 프리랜서의 역량을 통계를 통해 큰 흐름을 조회하고 분석해보세요. 그리고 채팅을 통해 해당 프리랜서가 이전에 진행했던 포트폴리오 들을 직접 시연을 통해 확인하거나 자료를 전달받을 수 있습니다. 더욱 견고한 프로젝트를 준비하세요.
 					</p>
 					<div class="margin-bottom-30"></div>
 					<hr style="width:20%; border-top:1px solid #bdbdbd">
