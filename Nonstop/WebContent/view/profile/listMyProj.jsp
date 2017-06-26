@@ -39,6 +39,13 @@
 			});
 		});
 		
+		$(function() {
+			$(".addProject").on("click", function(){
+				self.location ="/view/project/addProjectView.jsp";
+			});
+			
+		});	
+		
 	</script>
 
 
@@ -46,6 +53,7 @@
 
 <body>
 
+<a href="#" class="addProject"><span class="glyphicon glyphicon-plus-sign" aria-hidden="true" style="float:right; font-size:50;"></span></a>  
 <div class="container">
   <input type="hidden" class="projNo" name="projNo" id="projNo" value="${project.projNo}" />
   <input type="hidden" class="projUserId" name="projUserId" id="projUserId" value="${project.projUserId}" />
