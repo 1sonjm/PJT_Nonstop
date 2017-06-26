@@ -281,7 +281,7 @@ $(function() {
 });
 //============= 쪽지함 이동 Event 처리 =============	
 $(function() {
-	$("#listLetter").on("click", function() {
+	$("#mail").on("click", function() {
 		var receiveId = $("#userId").val();
 		self.location = "/letter/getReceiveLetterList?receiveId=" + receiveId;
 	});
@@ -562,7 +562,7 @@ $(function() {
 		            	<c:if test="${sessionScope.user.role == '1'}">
 		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
-		                    	<a href="#" id="listLetter">
+		                    	<a href="#" id="mail">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
 		                        	
@@ -584,11 +584,9 @@ $(function() {
 		               	<c:if test="${sessionScope.user.role == '2'}">
 		                  	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
-		                    	<a href="#" id="listLetter">
+		                    	<a href="#" id="mail">
 		                        	<!-- 쪽지 -->
 		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        	<!-- 알림 -->
-		                        	<span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
@@ -604,11 +602,9 @@ $(function() {
 		                <c:if test="${sessionScope.user.role == '3'}">
 		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
 		                  	<li>
-		                    	<a href="#" id="listLetter">
+		                    	<a href="#" id="mail">
 		                        <!-- 쪽지 -->
 		                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-		                        <!-- 알림 -->
-		                        <span class="label label-rounded label-primary" style="padding: 0 .8em .1em; border-radius: .5em">new</span>
 		                     	</a>
 		                  	</li>
 		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
