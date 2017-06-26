@@ -505,13 +505,13 @@ ul {
 					alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
 					return false;
 				}
-				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+				 $("#addMail").attr("method","POST").attr("action","/letter/addLetter").submit();
 			 });
 
 		 $("#send2").on("click", function(){
-				var receiveId=$("input[name='receiveId']").val();
-				var title=$("input[name='letTitle']").val();
-				var letDetail=$("input[name='letDetail']").val();
+				var receiveId=$("#reReceiveId").val();
+				var title=$("#reLetTilte").val();
+				var letDetail=$("#reLetDetail").val();
 				var flag=$("#letReceiveUserId").text().trim();
 				
 				if(receiveId == null || receiveId.length<1 ){
@@ -526,7 +526,7 @@ ul {
 					alert("존재하지 않는 아이디 입니다.메세지 전송이 불가능 합니다.");
 					return false;
 				}
-				 $("form").attr("method","POST").attr("action","/letter/addLetter").submit();
+				 $("#returnMail").attr("method","POST").attr("action","/letter/addLetter").submit();
 			 });
 
 		$("#close").on(
@@ -762,8 +762,7 @@ ul {
 
 					<table class="table table-inbox table-hover">
 
-						<td class="inbox-small-cells"><c:if
-								test="${letter.sendId != sessionScope.user.userId }">
+						<td class="inbox-small-cells"><c:if test="${letter.sendId != sessionScope.user.userId }">
 								<c:if test="${letter.letSave!=1}">
 									<i id="${letter.letNo }" save="${letter.letSave}"
 										letNo="${letter.letNo}" class="fa fa-star"></i>
@@ -780,7 +779,7 @@ ul {
 										value=" ${letter.letTitle}" readOnly>
 								</div>
 							</div> <br /> <br />
-							<div class="form-group">
+							<div class="form-group" >
 								<label class="col-lg-2 control-label">From</label>
 								<div class="col-lg-10">
 									<input class="form-control" name="sendId"
@@ -814,6 +813,8 @@ ul {
 											letNo="${letter.letNo}" data-toggle="modal"
 											data-target="#myModal2">답장하기</button>
 									</c:if>
+									
+									
 									<div class="modal fade" id="myModal2" tabindex="-1"
 										role="dialog" aria-labelledby="myModalLabel"
 										aria-hidden="true">
@@ -826,12 +827,12 @@ ul {
 												</div>
 
 												<div class="modal-body">
-													<form role="form" id="addMail" class="form-horizontal">
+													<form role="form" id="returnMail" class="form-horizontal">
 
 														<div class="form-group">
 															<label class="col-lg-2 control-label">From</label>
 															<div class="col-lg-10">
-																<input type="text" class="form-control" name="sendId"
+																<input type="text" class="form-control" name="sendId" id="reSendId"
 																	value="${sessionScope.user.userId}" readOnly>
 															</div>
 														</div>
@@ -840,7 +841,7 @@ ul {
 															<label class="col-lg-2 control-label">To</label>
 															<div class="col-lg-10">
 																<input type="text" value="${letter.sendId}"
-																	name="receiveId" id="inputEmail1" class="form-control"
+																	name="receiveId" id="reReceiveId" class="form-control"
 																	readOnly>
 															</div>
 														</div>
@@ -848,7 +849,7 @@ ul {
 														<div class="form-group">
 															<label class="col-lg-2 control-label">Title</label>
 															<div class="col-lg-10">
-																<input type="text" name="letTitle"
+																<input type="text" name="letTitle" id="reLetTilte"
 																	placeholder="메일 제목을 입력하세요" class="form-control">
 															</div>
 														</div>
@@ -856,8 +857,8 @@ ul {
 														<div class="form-group">
 															<label class="col-lg-2 control-label">Mail</label>
 															<div class="col-lg-10">
-																<textarea rows="10" cols="30" name="letDetail"
-																	placeholder="2000자까지 입력가능" class="form-control" id=""
+																<textarea rows="10" cols="30" name="letDetail" id="reLetDetail"
+																	placeholder="2000자까지 입력가능" class="form-control" 
 																	name=""></textarea>
 															</div>
 														</div>
