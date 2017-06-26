@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=utf-8"%>
 <%@ page pageEncoding="utf-8"%>
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
@@ -343,23 +342,6 @@ $(function() {
 		 self.location = "/user/listCompany"
 	}); 
 });
-/* //============= 통계 이동 Event 처리 =============	
- $(function() {
-	 
-	 $("#listFollow").on("click" , function() {
-	
-	var reqUserId = $("#userId").val();
-	self.location = "/profile/getFollowList?reqUserId="+reqUserId;
-	
- 	 popWin 
-	= window.open("/view/profile/listFollow.jsp",
-							"popWin", 
-							"left=300,top=200,width=500,height=720,marginwidth=0,marginheight=0,"+
-							"scrollbars=no,scrolling=no,menubar=no,resizable=no");   
-	$("#logout").on("click", function() {
-		$(self.location).attr("href", "/user/logout");
-	});
-}); */
 //============= 통계 이동 Event 처리 =============	
 $(function() {
 	$("#statistics").on("click", function() {
