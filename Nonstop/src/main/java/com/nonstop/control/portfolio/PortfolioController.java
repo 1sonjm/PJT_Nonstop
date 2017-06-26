@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,6 +35,8 @@ import com.nonstop.service.portfolio.PortfolioService;
 import com.nonstop.service.profile.ProfileService;
 import com.nonstop.service.techuse.TechUseService;
 import com.nonstop.service.user.UserService;
+
+import net.sf.json.JSONObject;
 
 @Controller
 @RequestMapping("/portfolio/*")
@@ -178,22 +181,22 @@ public class PortfolioController {
 		}
 		
 		//16개씩 리스트 가져오기
-		if(search.getEndRowNum() == 0) {
-			search.setStartRowNum(1);
-			search.setEndRowNum(16);
+		if(search.getEndNum() == 0) {
+			search.setStartNum(1);
+			search.setEndNum(16);
 		}else{
-			int startRowNum = search.getEndRowNum()+1;
-			int endRowNum = startRowNum+16;
+			int startNum = search.getEndNum()+1;
+			int endNum = startNum+16;
 
-			search.setStartRowNum(startRowNum);
-			search.setEndRowNum(endRowNum);
+			search.setStartRowNum(startNum);
+			search.setEndRowNum(endNum);
 		}
 		
 		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
 		
 		//Portfolio Ranking 출력
-		search.setStartRowNum(1);
-		search.setEndRowNum(12);
+		search.setStartNum(1);
+		search.setEndNum(12);
 		
 		//search.postDivision의 맨 앞글자가 1이면 개발 전체, 2이면 디자인 전체로 세팅
 		String postDivision = String.valueOf(search.getPostDivision());
@@ -225,11 +228,11 @@ public class PortfolioController {
 			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
 		}
 
-		int startRowNum = search.getEndRowNum()+1;
-		int endRowNum = startRowNum+15;
+		int startNum = search.getEndNum()+1;
+		int endNum = startNum+15;
 
-		search.setStartRowNum(startRowNum);
-		search.setEndRowNum(endRowNum);
+		search.setStartNum(startNum);
+		search.setEndNum(endNum);
 
 		List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
 
@@ -429,7 +432,7 @@ public class PortfolioController {
 		
 	}
 	
-   @RequestMapping(value="getJSONPortfolioList/{target}/{currentPage}/{sorting}", method=RequestMethod.GET)
+	@RequestMapping(value="getJSONPortfolioList/{target}/{currentPage}/{sorting}", method=RequestMethod.GET)
    public void getJSONPortfolioList(@PathVariable("target")String target
          ,@PathVariable("currentPage")int currentPage
          ,@PathVariable("sorting")int sorting, Model model) throws Exception {
@@ -441,8 +444,8 @@ public class PortfolioController {
       Search search = new Search();
       search.setCurrentPage(currentPage);
       search.setPostSorting(sorting);
-      search.setStartRowNum((currentPage*16)-16);
-      search.setEndRowNum(currentPage*16);
+      search.setStartRowNum((currentPage*5)-5);
+      search.setEndRowNum(currentPage*5);
       
       switch(target){
       case "develop":
@@ -456,5 +459,86 @@ public class PortfolioController {
 
       model.addAttribute("list", portfolioList);
    }
+
+   @RequestMapping(value="getJSONPortfolio/{portNo}")
+	public String getJSONPortfolio(Model model,@PathVariable("portNo") int portNo) throws Exception {
+		
+		System.out.println("/portfolio/getJSONPortfolio");
+		
+		String sessionUserId="testUser";
+		
+		//스크랩, getPortfolio, 좋아요 플래그
+		Portfolio portfolio = portfolioService.getPortfolio(portNo,sessionUserId);
+		
+		if(portfolio.getPortLikeNo()!=0){
+			portfolio.setPortLikeFlag(true);
+		}
+		//댓글
+		List<PortComment> portCommentList = portfolioService.getCommentList(portNo);
+		//팔로우 플래그
+		Follow follow = profileService.getFollow(sessionUserId, portfolio.getPortUserId());
+		
+		if(follow != null){
+			portfolio.setPortFollowFlag(true);
+		}
+		
+		//클릭시 조회수 추가
+		int portViewCount = portfolio.getTotalPortView();
+		portfolio.setTotalPortView(++portViewCount);
+		portfolio.setPortViewFlag(true);		
+		portfolioService.updatePortCount(portfolio);
+		
+		//수정된 게시물의 경우 
+		if(portfolio.getPortUpdate() != null){
+			portfolio.setPortRegdate(portfolio.getPortUpdate());
+		}
+		
+		//날짜계산
+		String regdate = portfolio.getPortRegdate().toString();
+		String portMonth = regdate.substring(5, 7);
+		
+		System.out.println(portMonth);
+		
+		switch(portMonth){
+		
+			case "01": portMonth = "January"; break;
+			case "02": portMonth = "Febuary"; break;
+			case "03": portMonth = "March"; break;
+			case "04": portMonth = "April"; break;
+			case "05": portMonth = "May"; break;
+			case "06": portMonth = "June"; break;
+			case "07": portMonth = "July"; break;
+			case "08": portMonth = "August"; break;
+			case "09": portMonth = "September"; break;
+			case "10": portMonth = "October"; break;
+			case "11": portMonth = "November"; break;
+			case "12": portMonth = "December"; break;
+		
+		}
+		
+		portfolio.setPortYear(regdate.substring(0, 4));
+		portfolio.setPortMonth(portMonth);
+		portfolio.setPortDay(regdate.substring(8, 10));
+		
+		System.out.println("getPortfolio portfolio : "+portfolio);
+
+		
+		model.addAttribute("portCommentList", portCommentList);
+		model.addAttribute("portfolio", portfolio);
+		
+		return "forward:/view/portfolio/getPortfolio.jsp";
+	}
+   @RequestMapping(value="addJSONPortfoiloComment/{portNo}")
+	public void addJSONPortfoiloComment(Model model,@PathVariable("portNo") int portNo
+			,@RequestBody JSONObject JsonData) throws Exception {
+		System.out.println("/portfolio/addJSONPortfoiloComment");
+		System.out.println(JsonData.toString());
+		
+		//portfolioService.addComment(portComment);
+		
+		//portComment = portfolioService.getComment(portComment.getComNo());
+		
+		//model.addAttribute("portComment", portComment);
+	}
 
 }

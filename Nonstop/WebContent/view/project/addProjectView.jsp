@@ -77,6 +77,11 @@
 			return;
 		}
 		
+		if(projEndDate <= projStartDate){
+			alert("소요기간을 다시 설정해 주세요.");
+			return;
+		}
+		
 	    
 		var items = [];
 		$("input:checkbox[name=tuTechNo]:checked").each(function(){
