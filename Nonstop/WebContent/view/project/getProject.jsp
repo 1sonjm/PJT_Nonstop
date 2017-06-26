@@ -820,7 +820,12 @@ xmp{
                                    
                                     <div class="media">
 									  <div class="media-left">
-									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+									  	  <c:if test= "${sessionScope.user.image==null}">
+									      	<img src="/resources/images/layout/defaultProfile.jpg" width="50px" height="50px" alt="">
+									      </c:if>
+									      <c:if test= "${sessionScope.user.image!=null}">
+									      	<img src="/resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">
+									      </c:if>									      
 									  </div>
 									  
 							  	    <div class="media-body">
@@ -854,7 +859,12 @@ xmp{
 									
 									<div class="media">
 									  <div class="media-left">
-									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									  	  <c:if test= "${projCommentList.comUserImg==null}">
+									  	  	<img class="comment-img" src="/resources/images/layout/defaultProfile.jpg" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									  	  </c:if>
+									  	  <c:if test= "${projCommentList.comUserImg!=null}">
+									      	<img class="comment-img" src="/resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									      </c:if>
 									      <input type="hidden" class="comUserId" value="${projCommentList.comUserId}"/>        
 									  </div>
 									  <div class="media-body">
