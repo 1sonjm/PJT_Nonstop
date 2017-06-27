@@ -493,15 +493,9 @@
 										<div class="icon">
 											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 										</div> <span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
-											${follow.targetUserId} </span> <span> <i
-											class="glyphicon glyphicon-remove-circle"
-											targetUserId="${follow.targetUserId}"
-											followNo="${follow.followNo}"
-											title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
-									</span> <a href="#followLetter" data-toggle="modal"> <i
-											class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다."
-											aria-hidden="true"></i>
-
+											${follow.targetUserId} </span> 
+											<span> <i class="glyphicon glyphicon-remove-circle" targetUserId="${follow.targetUserId}" followNo="${follow.followNo}" title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
+									</span> <a href="#followLetter" data-toggle="modal"> <i class="fa fa-envelope"  title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다." aria-hidden="true"></i>
 									</a>
 									</li>
 
