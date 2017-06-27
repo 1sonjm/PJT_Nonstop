@@ -92,30 +92,23 @@
     cursor: inherit;
     display: block;
 }
-
 .input-group {
     position: relative;
     display: table;
     border-collapse: separate;
     margin-left: 640px;
 }
-
-
 .input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
     border-bottom-left-radius: 0;
     width: 26%;
     border-top-left-radius: 0;
     margin-left: 0px;
 }
-
 .btn-block {
     display: block;
     width: 20%;
     margin-left: 640px;
 }
-
-
-
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -265,10 +258,8 @@ $(function(){
 	$("#datepicker").datepicker({dateFormat:"yy-mm-dd", 
 		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'], 
 		  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
-
 	});
 });
-
 		//==>"이메일" 유효성Check  Event 처리 및 연결
 		 $(function() {
 			 
@@ -357,7 +348,6 @@ $(function(){
 					label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
 				input.trigger('fileselect', [label]);
 				});
-
 				$('.btn-file :file').on('fileselect', function(event, label) {
 				    
 				    var input = $(this).parents('.input-group').find(':text'),
@@ -381,19 +371,49 @@ $(function(){
 				        reader.readAsDataURL(input.files[0]);
 				    }
 				}
-
-				$("#imgInp").change(function(){
-				    readURL(file);
+				$("#image1").change(function(){
+				    readURL(this);
 				}); 	
 			});
 		    
-		   
+		   $(document).ready( function() {
+		    	$(document).on('change', '.btn-file :file', function() {
+				var input = $(this),
+					label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+				input.trigger('fileselect', [label]);
+				});
+				$('.btn-file :file').on('fileselect', function(event, label) {
+				    
+				    var input = $(this).parents('.input-group').find(':text'),
+				        log = label;
+				    
+				    if( input.length ) {
+				        input.val(log);
+				    } else {
+				        if( log ) alert(log);
+				    }
+			    
+				});
+				function readURL(input) {
+				    if (input.files && input.files[0]) {
+				        var reader = new FileReader();
+				        
+				        reader.onload = function (e) {
+				            $('#img-upload').attr('src', e.target.result);
+				        }
+				        
+				        reader.readAsDataURL(input.files[0]);
+				    }
+				}
+				$("#image2").change(function(){
+				    readURL(this);
+				}); 	
+			}); 
 		   
 		   
 		   
 		//==>"ID중복확인" Event 처리 및 연결
 		 
-
 	</script>		
     
 </head>
@@ -517,7 +537,7 @@ $(function(){
         									<div class="input-group">
            									 <span class="input-group-btn">
                 								<span class="btn btn-default btn-file">
-                    							Browse… <input type="file" id="image1" name="logoFile"/>
+                    							Browse… <input type="file" id="image1" name="file"/>
                 								</span>
             								 </span>
             							<input type="text" class="form-control" placeholder="프로필 사진을 등록해 주세요"  readonly>
