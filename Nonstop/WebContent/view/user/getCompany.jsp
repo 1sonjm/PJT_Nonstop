@@ -34,7 +34,19 @@
 	<style>
  		body {
             padding-top : 50px;
+            }
+            .text-info{
+         color: black;
+         padding-left: 10px;
         }
+        
+        .text-muted {
+         color: black;
+        }
+        .row {
+        height: 15px;
+        } 
+        
      </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -43,14 +55,14 @@
 		//============= 회원정보수정 Event  처리 =============	
 		  $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "#updateCompany" ).on("click" , function() {
+			 $( "#updateCompanyV" ).on("click" , function() {
 					self.location = "/user/updateCompany?userId=${user.userId}"
 				});
 		});
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "#listCompany" ).on("click" , function() {
+				 $( "#listCompanyX" ).on("click" , function() {
 						self.location = "/index.jsp"
 					});
 			});
@@ -158,7 +170,7 @@
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
-				<a class="btn btn-primary btn" href="#" role="button" id = "updateCompany">회원정보수정</a>	
+				<a class="btn btn-primary btn" href="#" role="button" id = "updateCompanyV">회원정보수정</a>	
 	  		</div>
 		</div>
 		
@@ -166,7 +178,7 @@
 		<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			
-				<a class="btn btn-primary btn" href="#" role="button" id = "listCompany">돌아가기</a>
+				<a class="btn btn-primary btn" href="#" role="button" id = "listCompanyX">돌아가기</a>
 	  		</div>
 		</div>
 		
