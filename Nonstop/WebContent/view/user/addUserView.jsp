@@ -28,13 +28,11 @@
 
 <!-- Custom CSS -->
 <link href="/resources/css/full.css" rel="stylesheet"> 
-	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" > -->
-	 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	 
 	<!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	 -->
 	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/cupertino/jquery-ui.css">
@@ -43,10 +41,10 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	 -->
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<link rel="stylesheet" href="/css/custom-theme.css" >
-	
+	 
 	
 	
 	
@@ -61,51 +59,53 @@
 	margin-left: 640px;
 	width: 20%;
 	}   
-     .input-group .form-control:first-child, .input-group-addon:first-child, .input-group-btn:first-child > .btn, .input-group-btn:first-child > .btn-group > .btn, .input-group-btn:first-child > .dropdown-toggle, .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle), .input-group-btn:last-child > .btn-group:not(:last-child) > .btn {
-    border-bottom-right-radius: 0;
-    border-top-right-radius: 0;
-    margin-left: 625px;
-    width: 47.5%;
     
-}   
         
     .tabbable-line > .nav-tabs {
   
     margin-top: 50px;
 }    
         
-        
-        
-  .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
-    z-index: 2;
-    margin-left: 278px;
-}
+ .tabbable-line > .nav-tabs {
+   
+    margin-left: -90px;
+}       
+      
   
         
-    .container{
-    margin-top:20px;
-}
-.image-preview-input {
+.btn-file {
     position: relative;
-	overflow: hidden;
-	margin: 0px;    
-    color: #333;
-    background-color: #fff;
-    border-color: #ccc;    
+    overflow: hidden;
 }
-.image-preview-input input[type=file] {
-	position: absolute;
-	top: 0;
-	right: 0;
-	margin: 0;
-	padding: 0;
-	font-size: 20px;
-	cursor: pointer;
-	opacity: 0;
-	filter: alpha(opacity=0);
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 100px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
 }
-.image-preview-input-title {
-    margin-left:2px;
+
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+    margin-left: 640px;
+}
+
+
+.input-group .form-control:last-child, .input-group-addon:last-child, .input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group > .btn, .input-group-btn:last-child > .dropdown-toggle, .input-group-btn:first-child > .btn:not(:first-child), .input-group-btn:first-child > .btn-group:not(:first-child) > .btn {
+    border-bottom-left-radius: 0;
+    width: 26%;
+    border-top-left-radius: 0;
+    margin-left: 0px;
 }
 
 .btn-block {
@@ -113,6 +113,8 @@
     width: 20%;
     margin-left: 640px;
 }
+
+
 
     </style>
     
@@ -125,6 +127,10 @@
 		fncAddUser();
 	});
 });	
+	
+	
+	
+	
 	
 //============= 기업회원가입 버튼 =============
 $(function() {
@@ -140,14 +146,14 @@ $(function() {
 		
 		function fncAddUser() {
 		
-	var id=$("input[name='userId']").val();
-	var name=$("input[name='userName']").val();
-	var pw=$("input[name='password']").val();
-	var pw_confirm=$("input[name='password2']").val();
-	var email=$("input[name='email']").val();
-	var tel=$("input[name='tel']").val();
-	var addr=$("input[name='addr']").val();
-	var image=$("input[name='image']").val();
+	var id=$("input[id='addUser11']").val();
+	var name=$("input[id='userName1']").val();
+	var pw=$("input[id='password11']").val();
+	var pw_confirm=$("input[id='password22']").val();
+	var email=$("input[id='email1']").val();
+	var tel=$("input[id='tel1']").val();
+	var addr=$("input[id='addr1']").val();
+	var image=$("input[id='image1']").val();
 	
 	
 	if(id == null || id.length <1){
@@ -198,19 +204,19 @@ $(function() {
 //============= 기업회원가입 =============
 function fncAddCompany() {
 		
-	var id=$("input[name='userId']").val();
-	var name=$("input[name='userName']").val();
-	var pw=$("input[name='password']").val();
-	var pw_confirm=$("input[name='password2']").val();
-	var email=$("input[name='email']").val();
-	var tel=$("input[name='tel']").val();
-	var addr=$("input[name='addr']").val();
-	var image=$("input[name='image']").val();
+	var id=$("input[id='addUser22']").val();
+	var name=$("input[id='userName2']").val();
+	var pw=$("input[id='password33']").val();
+	var pw_confirm=$("input[id='password44']").val();
+	var email=$("input[id='email2']").val();
+	var tel=$("input[id='tel2']").val();
+	var addr=$("input[id='addr2']").val();
+	var image=$("input[id='image2']").val();
 	var companyName=$("input[name='companyName']").val();
 	var empNum=$("input[name='empNum']").val();
 	var pubDate=$("input[name='pubDate']").val();
 	
-	var id=$("input[name='userId']").val();
+	
 	if(id == null || id.length <1){
 		alert("아이디는 반드시 입력하셔야 합니다.");
 		return;
@@ -313,83 +319,78 @@ $(function(){
 		
 		   $(function(){      
 			      
-			      $("#password").keyup( function(){
-			         $("#checkpw").text('');
+			      $("#password11").keyup( function(){
+			         $("#checkpw1").text('');
 			      });
 			      
-			      $("#password2").keyup( function() {
-			         if( $("#password").val() != $("#password2").val() ) {
-			            $("#checkpw").text('');
-			            $("#checkpw").html("비밀번호가 일치하지 않습니다.");
+			      $("#password22").keyup( function() {
+			         if( $("#password11").val() != $("#password22").val() ) {
+			            $("#checkpw1").text('');
+			            $("#checkpw1").html("비밀번호가 일치하지 않습니다.");
 			         } else {
-			            $("#checkpw").text('');
-			            $("#checkpw").html("비밀번호가 일치합니다.");
+			            $("#checkpw1").text('');
+			            $("#checkpw1").html("비밀번호가 일치합니다.");
 			         }
 			      });
 			   }); 
 		 
+		   $(function(){      
+			      
+			      $("#password33").keyup( function(){
+			         $("#checkpw2").text('');
+			      });
+			      
+			      $("#password44").keyup( function() {
+			         if( $("#password33").val() != $("#password44").val() ) {
+			            $("#checkpw2").text('');
+			            $("#checkpw2").html("비밀번호가 일치하지 않습니다.");
+			         } else {
+			            $("#checkpw2").text('');
+			            $("#checkpw2").html("비밀번호가 일치합니다.");
+			         }
+			      });
+			   }); 
 		 
-		 
-		 $(document).on('click', '#close-preview', function(){ 
-		        $('.image-preview').popover('hide');
-		        // Hover befor close the preview
-		        $('.image-preview').hover(
-		            function () {
-		               $('.image-preview').popover('show');
-		            }, 
-		             function () {
-		               $('.image-preview').popover('hide');
-		            }
-		        );    
-		    });
+		   $(document).ready( function() {
+		    	$(document).on('change', '.btn-file :file', function() {
+				var input = $(this),
+					label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+				input.trigger('fileselect', [label]);
+				});
 
+				$('.btn-file :file').on('fileselect', function(event, label) {
+				    
+				    var input = $(this).parents('.input-group').find(':text'),
+				        log = label;
+				    
+				    if( input.length ) {
+				        input.val(log);
+				    } else {
+				        if( log ) alert(log);
+				    }
+			    
+				});
+				function readURL(input) {
+				    if (input.files && input.files[0]) {
+				        var reader = new FileReader();
+				        
+				        reader.onload = function (e) {
+				            $('#img-upload').attr('src', e.target.result);
+				        }
+				        
+				        reader.readAsDataURL(input.files[0]);
+				    }
+				}
 
-		    $(function() {
-		        // Create the close button
-		        var closebtn = $('<button/>', {
-		            type:"button",
-		            text: 'x',
-		            id: 'close-preview',
-		            style: 'font-size: initial;',
-		        });
-		        closebtn.attr("class","close pull-right");
-		        // Set the popover default content
-		        $('.image-preview').popover({
-		            trigger:'manual',
-		            html:true,
-		            title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-		            content: "There's no image",
-		            placement:'bottom'
-		        });
-		        // Clear event
-		        $('.image-preview-clear').click(function(){
-		            $('.image-preview').attr("data-content","").popover('hide');
-		            $('.image-preview-filename').val("");
-		            $('.image-preview-clear').hide();
-		            $('.image-preview-input input:file').val("");
-		            $(".image-preview-input-title").text("Browse"); 
-		        }); 
-		        // Create the preview image
-		        $(".image-preview-input input:file").change(function (){     
-		            var img = $('<img/>', {
-		                id: 'dynamic',
-		                width:250,
-		                height:200
-		            });      
-		            var file = this.files[0];
-		            var reader = new FileReader();
-		            // Set preview image into the popover data-content
-		            reader.onload = function (e) {
-		                $(".image-preview-input-title").text("Change");
-		                $(".image-preview-clear").show();
-		                $(".image-preview-filename").val(file.name);            
-		                img.attr('src', e.target.result);
-		                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
-		            }        
-		            reader.readAsDataURL(file);
-		        });  
-		    });
+				$("#imgInp").change(function(){
+				    readURL(file);
+				}); 	
+			});
 		    
+		   
+		   
+		   
+		   
 		//==>"ID중복확인" Event 처리 및 연결
 		 
 
@@ -493,24 +494,37 @@ $(function(){
 	                                    	<div id="checkId1" style="color:red; font-size:12px; margin-left:640px;">아이디를 입력해주세요.</div>
 	                 				 	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+	                                    	<input type="password" id="password11" name="password" class="form-control" placeholder="Password">
 	                                  	</div>
 		                                <div class="form-group">
-		                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Password 확인">
+		                                    <input type="password" id="password22" name="password2" class="form-control" placeholder="Password 확인">
 		                                </div>
 	                                  	<div id="checkpw1" style="color:red; font-size:12px; margin-left:640px; margin-top:-10px;"></div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="userName" name="userName" class="form-control" placeholder="이름">
+	                                    	<input type="text" id="userName1" name="userName" class="form-control" placeholder="이름">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="addr" name="addr" class="form-control" placeholder="주소">
+	                                    	<input type="text" id="addr1" name="addr" class="form-control" placeholder="주소">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="tel" name="tel" class="form-control" placeholder="연락처">
+	                                    	<input type="text" id="tel1" name="tel" class="form-control" placeholder="연락처">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="email" name="email" class="form-control" placeholder="이메일">
+	                                    	<input type="text" id="email1" name="email" class="form-control" placeholder="이메일">
 	                                  	</div>
+                 				
+                 						<div class="form-group">
+        									<div class="input-group">
+           									 <span class="input-group-btn">
+                								<span class="btn btn-default btn-file">
+                    							Browse… <input type="file" id="image1" name="logoFile"/>
+                								</span>
+            								 </span>
+            							<input type="text" class="form-control" placeholder="프로필 사진을 등록해 주세요"  readonly>
+        									</div>
+       
+    									</div>						
+                 				
                  				
                                   		<button class="btn btn-primary btn-block" id="addUserV" style="margin-top:60px">회원가입</button>
                                   		<button class="btn btn-default btn-block">취소</button>
@@ -524,23 +538,23 @@ $(function(){
 		                                	<div id="checkId2" style="color:red; font-size:12px; margin-left:640px; " font->아이디를 입력해주세요.</div>
 		                                </div>
                                   		<div class="form-group">
-                                      		<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                                      		<input type="password" id="password33" name="password" class="form-control" placeholder="Password">
                                   		</div>
 	                                  	<div class="form-group">
-	                                      	<input type="password" id="password2" name="password2" class="form-control" placeholder="Password 확인">
+	                                      	<input type="password" id="password44" name="password2" class="form-control" placeholder="Password 확인">
 	                                  	</div>
 	                                  	<div id="checkpw2" style="color:red; font-size:12px; margin-left:640px; margin-top:-10px;"></div>
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="userName" name="userName" class="form-control" placeholder="이름">
+	                                      	<input type="text" id="userName2" name="userName" class="form-control" placeholder="이름">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="addr" name="addr" class="form-control" placeholder="주소">
+	                                      	<input type="text" id="addr2" name="addr" class="form-control" placeholder="주소">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="tel" name="tel" class="form-control" placeholder="연락처">
+	                                      	<input type="text" id="tel2" name="tel" class="form-control" placeholder="연락처">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="email" name="email" class="form-control" placeholder="이메일">
+	                                      	<input type="text" id="email2" name="email" class="form-control" placeholder="이메일">
 	                                  	</div>
 	                                  	<div class="form-group">
 	                                      	<input type="text" id="companyName" name="companyName" class="form-control" placeholder="기업명">
@@ -559,26 +573,17 @@ $(function(){
 		    </div>
 		  </div>
                  				   		<div class="form-group">
-						
-									 	<div class="col-md-5">
-										   <!-- image-preview-filename input [CUT FROM HERE]-->
-								           <div class="input-group image-preview">
-								              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-								                <span class="input-group-btn">
-								                    <!-- image-preview-clear button -->
-								                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-								                        <span class="glyphicon glyphicon-remove"></span> Clear
-								                    </button>
-								                    <!-- image-preview-input -->
-								                    <div class="btn btn-default image-preview-input">
-								                        <span class="glyphicon glyphicon-folder-open"></span>
-								                        <span class="image-preview-input-title">찾아보기</span>
-								                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="file" id="image"/> <!-- rename it -->
-								                    </div>
-								                </span>
-								            </div><!-- /input-group image-preview [TO HERE]--> 
-										</div>
-									</div>						
+       
+        <div class="input-group">
+            <span class="input-group-btn">
+                <span class="btn btn-default btn-file">
+                    Browse… <input type="file" id="image2" name="logoFile"/>
+                </span>
+            </span>
+            <input type="text" class="form-control" placeholder="기업로고를 등록해 주세요"  readonly>
+        </div>
+       
+    </div>						
 
                                 	<button class="btn btn-primary btn-block" id="addCompanyV" style="margin-top:60px">회원가입</button>
                                 	<button class="btn btn-default btn-block">취소</button>

@@ -362,16 +362,7 @@ public class UserController {
 	      model.addAttribute("result", new Boolean(result));
 	      
 	   }
-	@RequestMapping( value="checkRole/{role}", method=RequestMethod.POST)
-	   public void checkRole(  @PathVariable String role, Model model) throws Exception {
-	      
-	      System.out.println("/user/role : POST");
-	      
-	      boolean result = userService.checkRole(role);
-	      
-	      model.addAttribute("result", new Boolean(result));
-	      
-	   }
+
 	
 	
 	
