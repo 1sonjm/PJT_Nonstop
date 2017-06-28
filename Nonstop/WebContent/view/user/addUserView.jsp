@@ -64,13 +64,11 @@
     .tabbable-line > .nav-tabs {
   
     margin-top: 50px;
+    margin-left: 700px;
+    margin-bottom: 50px;
 }    
         
- .tabbable-line > .nav-tabs {
-   
-    margin-left: -90px;
-}       
-      
+
   
         
 .btn-file {
@@ -510,7 +508,7 @@ $(function(){
 								<div class="tab-pane active" id="tab_default_1">
 									<form id="addUserF" method="post" enctype="multipart/form-data">
 	                                	<div class="form-group">
-	                                    	<input type="text" id="addUser11" name="userId" class="form-control" placeholder="User ID">
+	                                    	<input type="text" id="addUser11" name="userId" class="form-control" placeholder="User ID" value="${param.userId}">
 	                                    	<div id="checkId1" style="color:red; font-size:12px; margin-left:640px;">아이디를 입력해주세요.</div>
 	                 				 	</div>
 	                                  	<div class="form-group">
