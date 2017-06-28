@@ -20,8 +20,6 @@ public interface LetterService {
 	public void deleteLetter(int letNo) throws Exception;
 	
 	public void updateReadDate(int letNo) throws Exception;
-
-	public void updateSave(int letNo) throws Exception;
 	
 	public void addSave(int letNo) throws Exception;
 	
