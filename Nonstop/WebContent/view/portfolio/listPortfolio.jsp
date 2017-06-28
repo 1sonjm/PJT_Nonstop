@@ -725,7 +725,12 @@
 		                           <blockquote>
 		                          <div class="row">
 		                            <div class="col-sm-3 text-center">
+		                            <c:if test="${ranking.portUserImg !=null}">
 		                              <img class="img-circle" src="/resources/images/upload/${ranking.portUserImg}" id="listUserImg" width="50px" height="50px" style="height:50px">
+		                            </c:if>
+		                            <c:if test="${ranking.portUserImg ==null}">
+		                              <img class="img-circle" src="/resources/images/upload/user_img.jpg" id="listUserImg" width="50px" height="50px" style="height:50px">
+		                            </c:if>  
 		                              <input type="hidden" id="portUserId" name="portUserId" value="${ranking.portUserId}"/>                         
 		                            </div>
 		                            <div class="col-sm-9">
@@ -820,7 +825,13 @@
                     	<blockquote>
                         	<div class="row">
                         		<div class="col-sm-3 text-center">
+                        		<c:if test="${portfolio.portUserImg != null}">
                             		<img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="listUserImg" width="50px" height="50px" style="height:50px">
+                            	</c:if>
+                            	
+                            	<c:if test="${portfolio.portUserImg == null}">
+                            		<img class="img-circle" src="/resources/images/upload/user_img.jpg" id="listUserImg" width="50px" height="50px" style="height:50px">
+                            	</c:if>	
                             		<input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/> 
                             	</div>
                             <div class="col-sm-9">

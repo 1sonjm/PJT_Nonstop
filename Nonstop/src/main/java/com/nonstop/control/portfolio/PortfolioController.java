@@ -158,7 +158,7 @@ public class PortfolioController {
 		
 		if(items.length > 0){
 			for(int i=0; i<items.length;i++){
-				techUseService.addTechUsePort(tuPortNo, items[i]);
+				techUseService.addTechUsePort(items[i], tuPortNo);
 			}
 		}//END
 		
