@@ -486,6 +486,21 @@ ul {
 <script type="text/javascript">
 	//============= "가입"  Event 연결 =============
 	$(function() {
+		 //글자수 표시
+	       $('#add').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
+	     //글자수 표시
+	       $('#return').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars2').text(length);
+	       });
 
 		 $("#send").on("click", function(){
 				var receiveId=$("input[name='receiveId']").val();
@@ -557,6 +572,11 @@ ul {
 			var sendId = $(this).attr('sendId');
 			self.location = "/letter/getSendLetterList?sendId=" + sendId;
 		});
+		
+		 $("#saveBox").on("click" , function() {
+			 var userId = $(this).attr('userId');
+			 self.location = "/letter/getSaveLetterList?userId="+userId;
+			});
 
 		$("i.fa").on(
 				"click",
@@ -596,7 +616,7 @@ ul {
 					});
 				});
 	});
-	zz
+	
 </script>
 
 </head>
@@ -610,9 +630,16 @@ ul {
 		<div class="mail-box">
 			<aside class="sm-side">
 				<div class="user-head">
+				<c:if test="${user.image != null }">
 					<a class="inbox-avatar" href="javascript:;"> <img width="50"
-						hieght="60" src="../../resources/images/upload/${user.image}">
+						hieght="60" src="/resources/images/upload/${user.image}">
 					</a>
+					</c:if>
+					<c:if test="${user.image == null }">
+					<a class="inbox-avatar" href="javascript:;"> <img width="50"
+						hieght="60" src="/resources/images/upload/user_img.jpg">
+					</a>
+					</c:if>
 					<div class="user-name">
 						<h5>
 							<a href="#">${user.userId}</a>
@@ -622,11 +649,11 @@ ul {
 
 				</div>
 				<div class="inbox-body">
-					<a href="#myModal" data-toggle="modal" title="Compose"
+					<a href="#addMail" data-toggle="modal" title="Compose"
 						class="btn btn-compose"> +send mail </a>
 					<!-- Modal -->
 					<div aria-hidden="true" aria-labelledby="myModalLabel"
-						role="dialog" tabindex="-1" id="myModal" class="modal fade"
+						role="dialog" tabindex="-1" id="addMail" class="modal fade"
 						style="display: none;">
 						<script type="text/javascript">
 						$(function(){
@@ -698,9 +725,10 @@ ul {
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Mail</label>
 											<div class="col-lg-10">
-												<textarea rows="10" cols="30" name="letDetail"
-													placeholder="2000자까지 입력가능" class="form-control" id=""
-													name=""></textarea>
+												<textarea id="add" maxlength="2000" rows="10" cols="30"
+													name="letDetail" placeholder="2000자까지 입력가능"
+													class="form-control"></textarea>
+													<br /> 2000/<span id="chars">2000</span>
 											</div>
 										</div>
 
@@ -857,16 +885,19 @@ ul {
 														<div class="form-group">
 															<label class="col-lg-2 control-label">Mail</label>
 															<div class="col-lg-10">
-																<textarea rows="10" cols="30" name="letDetail" id="reLetDetail"
-																	placeholder="2000자까지 입력가능" class="form-control" 
-																	name=""></textarea>
+																<textarea id="return" maxlength="2000" rows="10" cols="30"
+													name="letDetail" placeholder="2000자까지 입력가능"
+													class="form-control"></textarea>
+													<div style="text-align: left;">
+												<br /> 2000/<span id="chars2">2000</span>
+												</div>
 															</div>
 														</div>
 
 														<div class="form-group">
 															<div class="col-lg-offset-2 col-lg-10">
 
-																<div class="modal-footer">
+																<div style="text-align: left;">
 																	<button class="btn btn-send" type="submit" id="send2">send</button>
 																</div>
 															</div>

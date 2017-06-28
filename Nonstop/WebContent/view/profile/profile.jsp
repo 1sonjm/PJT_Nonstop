@@ -461,8 +461,13 @@
 					style="overflow-x: visible; overflow-y: auto; width: auto; height: 100%;">
 					<div class="user-profile">
 						<div class="profile-img">
-							<img src="../../resources/images/upload/${user.image}"
-								id="profileImg" class="img-circle" width="160px">
+						<c:if test="${user.image != null }">
+							<img src="/resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
+							</c:if>
+							<c:if test="${user.image == null }">
+							<img src="/resources/images/upload/user_img.jpg" id="profileImg" class="img-circle" width="160px">
+							</c:if>
+							
 						</div>
 						<div class="profile-text">
 							<h5 style="font-size: 16px">${user.userId}</h5>
@@ -484,7 +489,7 @@
 						<nav class="sidebar-nav active">
 
 							<ul id="sidebarnav">
-								<hr>
+								<hr/>
 								<li class="nav-small-cap">FOLLOW</li>
 								<c:set var="i" value="0" />
 								<c:forEach var="follow" items="${follow}">
@@ -539,7 +544,7 @@
 						<div class="tabbable-panel">
 							<div class="tabbable-line">
 								<ul class="nav nav-tabs ">
-									<li class="active"><a href="#profile" data-toggle="tab">Profile
+									<li class="active"><a href="#Myprofile" data-toggle="tab">Profile
 									</a></li>
 									<li><c:if test="${user.role=='2'}">
 											<a href="#portfolio" data-toggle="tab">My Portfolio </a>
@@ -559,7 +564,7 @@
 								</ul>
 								<div class="tab-content">
 
-									<div class="tab-pane active" id="profile">
+									<div class="tab-pane active" id="Myprofile">
 										<c:if test="${user.role=='2'}">
 											<div class="row">
 												<!-- Column -->

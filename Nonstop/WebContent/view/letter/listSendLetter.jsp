@@ -496,6 +496,14 @@ ul {
 <script type="text/javascript">
 	 $(function() {
 		 
+		//글자수 표시
+	       $('textarea').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
 		 $("#send").on("click", function(){
 				var receiveId=$("input[name='receiveId']").val();
 				var title=$("input[name='letTitle']").val();
@@ -562,8 +570,14 @@ ul {
 		<div class="mail-box">
 			<aside class="sm-side">
 				<div class="user-head">
-					<a class="inbox-avatar" href="javascript:;"> <img width="50"
-						hieght="60" src="../../resources/images/upload/${user.image}">
+					<a class="inbox-avatar" href="javascript:;"> 
+					<c:if test="${user.image != null }">
+					<img width="50" hieght="60" src="/resources/images/upload/${user.image}">
+					</c:if>
+					<c:if test="${user.image == null }">
+					<img width="50" hieght="60" src="/resources/images/upload/user_img.jpg">
+					</c:if>
+					
 					</a>
 					<div class="user-name">
 						<h5>
@@ -650,9 +664,10 @@ ul {
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Mail</label>
 											<div class="col-lg-10">
-												<textarea rows="10" cols="30" name="letDetail"
-													placeholder="2000자까지 입력가능" class="form-control" id=""
-													name=""></textarea>
+												<textarea maxlength="2000" rows="10" cols="30"
+													name="letDetail" placeholder="2000자까지 입력가능"
+													class="form-control"></textarea>
+												<br /> 2000/<span id="chars">2000</span>
 											</div>
 										</div>
 
