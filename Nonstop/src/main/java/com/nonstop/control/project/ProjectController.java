@@ -110,6 +110,7 @@ public class ProjectController {
 			     			  @RequestParam("projNo") int projNo ,
 							  Model model, HttpSession session ) throws Exception {
 		
+		
 		System.out.println("/project/getProject : GET");
 		
 		
@@ -244,7 +245,7 @@ public class ProjectController {
 	
 	@RequestMapping(value="listProject")
 	public String listProject( @ModelAttribute("search") Search search,
-							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
+							   Model model ,HttpSession session ) throws Exception{
 		System.out.println("/project/listProject");
 		
 		if(search.getCurrentPage() ==0 ){
@@ -252,7 +253,6 @@ public class ProjectController {
 		}
 		search.setPageSize(projPageSize);
 		String scrapUserId = "testUser";
-		
 		
 		if((User)session.getAttribute("user") != null) {
 			scrapUserId = ((User)session.getAttribute("user")).getUserId();		
@@ -369,9 +369,9 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value="listApplicant")
-	public String listProject( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
+	public String listApplicant( @ModelAttribute("recordApplicant") RecordApplicant recordApplicant,
 							   @RequestParam("projNo") int recProjNo,
-							   Model model ,HttpSession session , HttpServletRequest request) throws Exception{
+							   Model model ,HttpSession session) throws Exception{
 		System.out.println("/project/listApplicant");
 		
 		List<RecordApplicant> listApplicant = projectService.getApplicantList(recProjNo);
@@ -439,6 +439,5 @@ public class ProjectController {
 		
 		return "forward:/index.jsp";
 	}
-	
 	
 }
