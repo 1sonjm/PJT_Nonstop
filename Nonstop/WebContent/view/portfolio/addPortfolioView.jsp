@@ -159,14 +159,14 @@
 			items.push($(this).val());
 		});
 		
-		alert(items);
 		
 		$("input:hidden[name='checkBoxes']").val( items );
-		
-		alert(items);
 		/* 사용기술 넣는 부분 END */
 		
+		alert("포트폴리오가 등록되었습니다.");
+		
     	$("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit();
+		
     }
 
 
