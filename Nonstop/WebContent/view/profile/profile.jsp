@@ -461,8 +461,13 @@
 					style="overflow-x: visible; overflow-y: auto; width: auto; height: 100%;">
 					<div class="user-profile">
 						<div class="profile-img">
-							<img src="../../resources/images/upload/${user.image}"
-								id="profileImg" class="img-circle" width="160px">
+						<c:if test="${user.image != null }">
+							<img src="/resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
+							</c:if>
+							<c:if test="${user.image == null }">
+							<img src="/resources/images/upload/user_img.jpg" id="profileImg" class="img-circle" width="160px">
+							</c:if>
+							
 						</div>
 						<div class="profile-text">
 							<h5 style="font-size: 16px">${user.userId}</h5>
@@ -484,7 +489,7 @@
 						<nav class="sidebar-nav active">
 
 							<ul id="sidebarnav">
-								<hr>
+								<hr/>
 								<li class="nav-small-cap">FOLLOW</li>
 								<c:set var="i" value="0" />
 								<c:forEach var="follow" items="${follow}">
@@ -493,15 +498,9 @@
 										<div class="icon">
 											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
 										</div> <span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
-											${follow.targetUserId} </span> <span> <i
-											class="glyphicon glyphicon-remove-circle"
-											targetUserId="${follow.targetUserId}"
-											followNo="${follow.followNo}"
-											title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
-									</span> <a href="#followLetter" data-toggle="modal"> <i
-											class="fa fa-envelope" title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다."
-											aria-hidden="true"></i>
-
+											${follow.targetUserId} </span> 
+											<span> <i class="glyphicon glyphicon-remove-circle" targetUserId="${follow.targetUserId}" followNo="${follow.followNo}" title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
+									</span> <a href="#followLetter" data-toggle="modal"> <i class="fa fa-envelope"  title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다." aria-hidden="true"></i>
 									</a>
 									</li>
 
@@ -545,7 +544,7 @@
 						<div class="tabbable-panel">
 							<div class="tabbable-line">
 								<ul class="nav nav-tabs ">
-									<li class="active"><a href="#profile" data-toggle="tab">Profile
+									<li class="active"><a href="#Myprofile" data-toggle="tab">Profile
 									</a></li>
 									<li><c:if test="${user.role=='2'}">
 											<a href="#portfolio" data-toggle="tab">My Portfolio </a>
@@ -565,7 +564,7 @@
 								</ul>
 								<div class="tab-content">
 
-									<div class="tab-pane active" id="profile">
+									<div class="tab-pane active" id="Myprofile">
 										<c:if test="${user.role=='2'}">
 											<div class="row">
 												<!-- Column -->

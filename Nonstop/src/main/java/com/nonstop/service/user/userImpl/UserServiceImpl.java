@@ -118,17 +118,7 @@ public class UserServiceImpl implements UserService{
 	      return result;
 	   }
 	
-	public boolean checkRole(String role) throws Exception{
-	      
-	      boolean result = true;
-	      
-	      User user = userDAO.getUser(role);
-	      
-	      if(user != null ) {
-	         result = false;
-	      }
-	      return result;
-	   }
+	
 
 	
 
