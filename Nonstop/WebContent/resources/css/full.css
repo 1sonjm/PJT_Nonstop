@@ -282,11 +282,11 @@ ul.banner-social-buttons {
   background: #fcfcfc;
   background: rgba(255, 255, 255, 0.2);
 }
-::selection {
+/* ::selection {
   text-shadow: none;
   background: #fcfcfc;
   background: rgba(255, 255, 255, 0.2);
-}
+} */
 img::selection {
   background: transparent;
 }

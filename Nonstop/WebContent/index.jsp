@@ -50,6 +50,9 @@ body {
 		margin-right: 5%;
 	}
 }
+
+::selection { color:white; background:blue; }
+::-moz-selection { color:white; background:blue; }
 </style>
 <script type="text/javascript">
 //============= 개인회원가입 버튼 =============	
