@@ -14,7 +14,7 @@
     <item
         android:id="@+id/navigation_letter"
         android:icon="@drawable/menu_exit"
-        android:title="@string/title_project"/>
+        android:title="Logout"/>
 
     <item
         android:id="@+id/navigation_chat"

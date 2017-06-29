@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="계정명" />
 
         <EditText
             android:id="@+id/editText_user_id"
@@ -26,7 +26,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="wjdaks" />
+            android:text="" />
     </LinearLayout>
 
     <LinearLayout
@@ -38,7 +38,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="TextView" />
+            android:text="비밀번호" />
 
         <EditText
             android:id="@+id/editText_password"
@@ -47,7 +47,7 @@
             android:layout_weight="1"
             android:ems="10"
             android:inputType="textPassword"
-            android:text="123456" />
+            android:text="" />
 
     </LinearLayout>
 
