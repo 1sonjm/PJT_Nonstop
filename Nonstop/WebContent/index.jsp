@@ -516,8 +516,8 @@ $(function() {
             $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
         }        
         reader.readAsDataURL(file);
-    });   */
-});
+    });   
+});*/
   	
 </script>
 </head>
