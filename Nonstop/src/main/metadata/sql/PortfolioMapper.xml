@@ -23,7 +23,7 @@
 		<result property="portLikeNo" 		column="port_like_no" 			jdbcType="NUMERIC" />
 		<result property="scrapUserId"		column="user_id"				jdbcType="VARCHAR"/>
 		<result property="scrapNo"			column="scrap_no"				jdbcType="NUMERIC"/>
-		<result property="endRowNum"		column="row_seq"				jdbcType="NUMERIC"/>
+		<result property="endNum"			column="row_seq"				jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	 <resultMap id="commentSelectMap" type="portComment">
@@ -68,13 +68,13 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addPortImages"		parameterType="list" >
 		INSERT INTO port_images(img_no, img_port_no, img_name, img_order)
-			SELECT seq_port_images_img_no.nextval, (select MAX(port_no) from portfolio), inner_view.*
-			FROM (
-				<foreach collection="list" item="portImages" separator="UNION ALL">
-				SELECT #{portImages.imgName},#{portImages.imgOrder}
-				FROM DUAL
-				</foreach>
-			) inner_view
+		SELECT seq_port_images_img_no.nextval, (select MAX(port_no) from portfolio), inner_view.*
+		FROM (
+			<foreach collection="list" item="portImages" separator="UNION ALL">
+			SELECT #{portImages.imgName},#{portImages.imgOrder}
+			FROM DUAL
+			</foreach>
+		) inner_view
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -112,8 +112,15 @@
 					    </if>
 					    <if test="search.postDivision != 1 and search.postDivision != 2">
 					       p.port_division = #{search.postDivision}
-					    </if>   
-			
+					    </if> 
+					    <if test="search.searchCondition != null">
+			            	<if test="search.searchCondition == 0 and searchKeyword !='' "> 
+			                	AND p.port_title like '%' || #{search.searchKeyword} ||'%'
+			              	</if>
+			              	<if test="search.searchCondition == 1 and searchKeyword !='' ">
+			                  	AND p.port_user_id like '%' || #{search.searchKeyword} ||'%'
+			              	</if>
+			           </if>	
 					</where>
 				  	
 				  	<if test="search.postSorting == 1 or search.postSorting == 0">
@@ -136,19 +143,15 @@
 	 
 	 
 	<select  id="getProfilePortList" parameterType="map" resultMap="portfolioSelectMap">
-		
 		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no,users.user_img, users.user_id
 		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a , users
 		WHERE   p.port_user_id =#{profileUserId} AND p.port_no = a.port_no(+) AND users.user_id=#{profileUserId}
-		
 	</select>
 	
 	<select  id="getProfilePortScrapList" parameterType="map" resultMap="portfolioSelectMap">
-		
 		SELECT  p.port_no, p.port_user_id, p.port_division, p.port_title, p.port_regdate, p.port_update, p.port_file, p.port_viewcount, p.port_like_count, p.port_com_count, a.scrap_no,users.user_img, users.user_id
 		FROM    portfolio p , (SELECT * FROM scrap WHERE user_id=#{sessionUserId} AND proj_no is null)a , users
 		WHERE   p.port_no = a.port_no(+)AND users.user_id=p.port_user_id AND a.user_id=#{profileUserId}
-		
 	</select>
 	 
 	<!-- SQL : INSERT -->
@@ -173,7 +176,7 @@
 		<if test="portLikeFlag == true">	 
 			port_like_count=#{totalPortLike},
 		</if> 
-		<if test="totalPortComment != 0">
+		<if test="portCommentFlag == true">
 			port_com_count=#{totalPortComment},	
 		</if>	
 		</set>
@@ -214,13 +217,11 @@
 	 
 	 
 	<select  id="getCommentList"  parameterType="int"	resultMap="commentSelectMap">
-
 		SELECT c.com_no, c.com_port_no, c.com_user_id, c.com_port_regdate, c.com_port_content, u.user_id, u.user_img
 		FROM port_comment c, users u 
 		WHERE c.com_port_no = #{comPortNo} 
 		AND u.user_id = c.com_user_id
 		ORDER BY com_port_regdate DESC
-		
 	</select>
 	
 	<insert 	id="addPortLike"		parameterType="portLike" >
@@ -229,10 +230,6 @@
 		VALUES	 (seq_port_like_port_like_no.nextVal, 
 		#{portNo}, 
 		#{userId})
-		
-		<!--<selectKey keyProperty="comNo" resultType="Integer" order="AFTER">
-        SELECT seq_port_comment_com_no.currval FROM dual
-    	</selectKey> -->
 	 </insert>
 	 
 	 <delete id="deletePortLike" parameterType="int">

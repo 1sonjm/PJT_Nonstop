@@ -168,8 +168,6 @@ public class ProfileController {
 		
 		String sessionId = ((User)session.getAttribute("user")).getUserId();
 		career.setCareerUserId(sessionId);
-		career.setTechClass(1);
-		career.setTechNo(1000);
 		profileService.addCareer(career);
 		
 		User user = userService.getProfileMine(sessionId);

@@ -368,10 +368,32 @@
 						alert("제목은 반드시 입력하셔야 합니다.");
 						return false;
 					}
+					if(url != ""){
+						var contentArea = $("textarea[name='letDetail']");
+						contentArea.val(contentArea.val()+"\r\n채팅주소: "+url);
+					}
 					$("form").attr("method", "POST").attr("action",
 							"/letter/addLetter").submit();
 				});
 
+		var url = ""
+		$("#addChatUrl").on(
+				"click",
+				function() {
+					var urlArea = $('#chatUrl');
+					url = "https://192.168.0.16:8444/#"+Math.random().toString(16).substr(2);
+					$("#addChatUrl").css("display","none");
+					urlArea.css("display","block");
+					urlArea.attr("href", url);
+					urlArea.text("채팅주소: "+url);
+				});
+		
+		$(".fa-envelope").parent().on(
+				"click",
+				function(){
+					$("#inputEmail1").val($(this).parent().find(".followProfile").text().trim());
+				});
+		
 		//팔로우 add /delete
 		$(document).on("click", "#follow", function() {
 
@@ -461,8 +483,13 @@
 					style="overflow-x: visible; overflow-y: auto; width: auto; height: 100%;">
 					<div class="user-profile">
 						<div class="profile-img">
-							<img src="../../resources/images/upload/${user.image}"
-								id="profileImg" class="img-circle" width="160px">
+						<c:if test="${user.image != null }">
+							<img src="/resources/images/upload/${user.image}" id="profileImg" class="img-circle" width="160px">
+							</c:if>
+							<c:if test="${user.image == null }">
+							<img src="/resources/images/upload/user_img.jpg" id="profileImg" class="img-circle" width="160px">
+							</c:if>
+							
 						</div>
 						<div class="profile-text">
 							<h5 style="font-size: 16px">${user.userId}</h5>
@@ -484,7 +511,7 @@
 						<nav class="sidebar-nav active">
 
 							<ul id="sidebarnav">
-								<hr>
+								<hr/>
 								<li class="nav-small-cap">FOLLOW</li>
 								<c:set var="i" value="0" />
 								<c:forEach var="follow" items="${follow}">
@@ -492,11 +519,12 @@
 									<li class="nav-small">
 										<div class="icon">
 											<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
-										</div> <span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
-											${follow.targetUserId} </span> 
-											<span> <i class="glyphicon glyphicon-remove-circle" targetUserId="${follow.targetUserId}" followNo="${follow.followNo}" title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i>
-									</span> <a href="#followLetter" data-toggle="modal"> <i class="fa fa-envelope"  title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다." aria-hidden="true"></i>
-									</a>
+										</div> 
+										<span class="followProfile" title="클릭하시면 해당 회원의 프로필로 이동합니다.">
+											${follow.targetUserId}
+										</span> 
+										<span> <i class="glyphicon glyphicon-remove-circle" targetUserId="${follow.targetUserId}" followNo="${follow.followNo}" title="클릭하시면  해당 회원을 팔로우 및 언팔로우 하실 수 있습니다."></i></span>
+										<a href="#followLetter" data-toggle="modal"><i class="fa fa-envelope"  title="클릭하시면 해당 회원에게 쪽지를 작성 할 수 있습니다." aria-hidden="true"></i></a>
 									</li>
 
 
@@ -539,7 +567,7 @@
 						<div class="tabbable-panel">
 							<div class="tabbable-line">
 								<ul class="nav nav-tabs ">
-									<li class="active"><a href="#profile" data-toggle="tab">Profile
+									<li class="active"><a href="#Myprofile" data-toggle="tab">Profile
 									</a></li>
 									<li><c:if test="${user.role=='2'}">
 											<a href="#portfolio" data-toggle="tab">My Portfolio </a>
@@ -559,7 +587,7 @@
 								</ul>
 								<div class="tab-content">
 
-									<div class="tab-pane active" id="profile">
+									<div class="tab-pane active" id="Myprofile">
 										<c:if test="${user.role=='2'}">
 											<div class="row">
 												<!-- Column -->
@@ -647,8 +675,8 @@
 						<div class="form-group">
 							<label class="col-lg-2 control-label">To</label>
 							<div class="col-lg-10">
-								<input type="text" placeholder="수신자를 입력하세요" name="receiveId"
-									value="" id="inputEmail1" class="form-control">
+								<input type="text" name="receiveId" readonly
+									id="inputEmail1" class="form-control">
 							</div>
 						</div>
 
@@ -666,12 +694,14 @@
 								<textarea maxlength="2000" rows="10" cols="30" name="letDetail"
 									placeholder="2000자까지 입력가능" class="form-control"></textarea>
 								<br /> 2000/<span id="chars">2000</span>
+								<br/><a id="chatUrl" target="_blank"></a>
 							</div>
 						</div>
 
 						<div class="form-group">
 							<div class="col-lg-offset-2 col-lg-10">
 								<span>
+									<button class="btn btn-send" type="button" id="addChatUrl">채팅 주소 추가</button>
 									<button class="btn btn-send" type="submit" id="send"
 										receiveId="${sessionScope.user.userId}">send</button>
 								</span>

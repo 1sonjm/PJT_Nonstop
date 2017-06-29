@@ -15,6 +15,9 @@ html {
 body {
   margin: 0;
 }
+::selection { color:white; background:blue; }
+::-moz-selection { color:white; background:blue; }
+
 article,
 aside,
 details,

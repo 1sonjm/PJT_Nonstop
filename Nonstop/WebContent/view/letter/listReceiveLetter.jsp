@@ -62,7 +62,7 @@ body {
 .mail-box .sm-side {
 	background: none repeat scroll 0 0 #f7f7f7;
 	border-radius: 4px 0 0 4px;
-	width: 15%;
+	width: 17%;
 	height:100%;
 }
 
@@ -625,7 +625,12 @@ ul {
 			<aside class="sm-side">
 				<div class="user-head">
 					<div style="width:50px; height:55px; overflow:hidden; border-radius:4px; float: left;">
-					 	<img id="userLetterImg" style="width: 100%; height:auto;"  src="../../resources/images/upload/${user.image}">
+					 	<c:if test="${user.image != null}">
+					 	<img id="userLetterImg" style="width: 100%; height:auto;"  src="/resources/images/upload/${user.image}">
+					 	</c:if>
+					 	<c:if test="${user.image == null}">
+					 	<img id="userLetterImg" style="width: 100%; height:auto;"  src="/resources/images/upload/user_img.jpg">
+					 	</c:if>
 					</div>
 					<div class="user-name">
 						<h5>
