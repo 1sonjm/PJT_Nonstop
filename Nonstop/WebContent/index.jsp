@@ -21,15 +21,13 @@
 <!-- Awesome Font -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- jQuery -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/resources/javascript/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/javascript/bootstrap.min.js"></script>
 <!-- Plugin JavaScript -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <!-- Theme JavaScript -->
-<script src="/resources/javascript/mainpage.js"></script>
+<script src="../../resources/javascript/mainpage.js"></script>
 <!-- ///////////////////////네이버//////////////////////// -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
@@ -340,8 +338,39 @@ $(function() {
 			$("#password").focus();
 			return;
 		}
-		
-		$("#aaa").attr("method","POST").attr("action","/user/login").submit();
+		$.ajax(
+	        	{
+		        	url : '/user/checkUserId/'+id,
+		            method : "POST",
+		            dataType : "json",
+		            headers : {
+		                "Accept" : "application/json",
+		                "Content-Type" : "application/json"
+		            },
+		            context : this,
+		            success : function(JSONData, status) {     
+		            	if(JSONData.user ==null ) {
+		            		alert('회원정보가 일치하지 않습니다.');	
+		            		$(self.location).attr("href","/user/logout");
+		            		location.reload();            
+	                }else if(JSONData.user.role == 4){
+	              		alert("탈퇴한 계정입니다.");
+	              		$(self.location).attr("href","/user/logout");
+	              		location.reload();
+	                }else{
+	                	
+	                	if(JSONData.user.userId == id && JSONData.user.password == pw){
+	                	$("#aaa").attr("method","POST").attr("action","/user/login").submit();
+	              	  location.reload();
+	                }else if(JSONData.user.userId != id || JSONData.user.password != pw){
+	                alert('회원정보가 일치하지 않습니다.');	
+	                $(self.location).attr("href","/user/logout");
+	                location.reload();
+	                	}
+	                }
+	             }
+	       	});   
+	
 	});
 	
 	$("#logout").on("click" , function() {
@@ -388,7 +417,7 @@ $(function() {
 //============= 내정보수정 이동 Event 처리 =============	
 $(function() {
 	$("#updateUser").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/updateUser?userId="+userId;
 	}); 
@@ -396,7 +425,7 @@ $(function() {
 //============= 기업정보수정 이동 Event 처리 =============	
 $(function() {
 	$("#updateCompany").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/updateCompany?userId="+userId;
 	}); 
@@ -404,7 +433,7 @@ $(function() {
 //============= 회원목록조회 이동 Event 처리 =============	
 $(function() {
 	$("#listUser").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/listUser"
 	}); 
@@ -412,7 +441,7 @@ $(function() {
 //============= 기업목록조회 이동 Event 처리 =============	
 $(function() {
 	$("#listCompany").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/listCompany"
 	}); 
@@ -966,7 +995,7 @@ $(function() {
 	naver_id_login.setState(state);
 	naver_id_login.init_naver_id_login();
 	function naverSignInCallback() {
-		alert(naver_id_login.getProfileData('email'));
+		
 		var userId=naver_id_login.getProfileData('email');    
 	 	var tempId = userId.replace(".", ",");
 	 	console.log("userId :: " + userId);
@@ -985,7 +1014,8 @@ $(function() {
 	            context : this,
 	            success : function(JSONData, status) {     
 	            	if(JSONData.user ==null ) {
-              	  	self.location="/view/user/addUserView.jsp?userId="+userId;                 
+	            		alert("계정이 없습니다. 회원가입을 해주시기 바랍니다.");
+	            		self.location="/view/user/addUserView.jsp?userId="+userId;                 
                 }else if(JSONData.user.role == 4){
               		alert("탈퇴한 계정입니다.");
               		$(self.location).attr("href","/user/logout");
