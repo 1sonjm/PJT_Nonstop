@@ -62,7 +62,7 @@ body {
 .mail-box .sm-side {
 	background: none repeat scroll 0 0 #f7f7f7;
 	border-radius: 4px 0 0 4px;
-	width: 15%;
+	width: 17%;
 	height:100%;
 }
 
