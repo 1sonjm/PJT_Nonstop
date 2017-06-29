@@ -477,7 +477,6 @@ xmp{
 
               var flag = $(this).attr('scrap');
               var requestTarget;
-              alert(flag);
 
               if(flag==0){
                  requestTarget = "addJsonProjScrap";
@@ -821,7 +820,6 @@ xmp{
                                		<div id="comment" class="comment">
                                 	<h3>Discuss About Post</h3>
                                 	<div class="margin-top-20"></div>
-                                  	<h6>22 Comments</h6>
                                   	<hr class="thick-line">
                                    
                                     <div class="media">
@@ -835,7 +833,7 @@ xmp{
 									  </div>
 									  
 							  	    <div class="media-body">
-							  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
+							  		  <input type="text" class="comment-input" placeholder="댓글을 달아 주세요.">
 								  	  <div class="comment-btn" style="display:none;">
 								  		<div class="well">
 							            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>

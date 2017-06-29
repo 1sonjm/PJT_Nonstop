@@ -712,7 +712,7 @@
 										  </div>
 									
 								  	      <div class="media-body">
-									  		  <input type="text" class="comment-input" placeholder="댓글을 달아 보세염...">
+									  		  <input type="text" class="comment-input" placeholder="댓글을 달아 주세요.">
 										  	  <div class="comment-btn" style="display:none;">
 										  		<div class="well">
 									            	<h4><i class="fa fa-paper-plane-o"></i> Leave a Comment:</h4>
