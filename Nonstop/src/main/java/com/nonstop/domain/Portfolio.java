@@ -19,8 +19,8 @@ public class Portfolio{
 	private String portFile;// thumbnail 이미지 용도로 사용
 	private List<PortImages> images;
 	private List<TechUse> portTech;
-	private int endRowNum;
-	private int startRowNum;
+	private int endNum;
+	private int startNum;
 	private int scrapNo;
 	private int portLikeNo;
 	private int totalPortView;
@@ -28,6 +28,7 @@ public class Portfolio{
 	private int totalPortComment;
 	private boolean portViewFlag;
 	private boolean portLikeFlag;
+	private boolean portCommentFlag;
 	private boolean portFollowFlag;
 	private boolean portScrFlag;
 	private String scrapUserId;
@@ -106,17 +107,17 @@ public class Portfolio{
 	public void setPortFile(String portFile) {
 		this.portFile = portFile;
 	}
-	public int getEndRowNum() {
-		return endRowNum;
+	public int getEndNum() {
+		return endNum;
 	}
-	public void setEndRowNum(int endRowNum) {
-		this.endRowNum = endRowNum;
+	public void setEndNum(int endNum) {
+		this.endNum = endNum;
 	}
-	public int getStartRowNum() {
-		return startRowNum;
+	public int getStartNum() {
+		return startNum;
 	}
-	public void setStartRowNum(int startRowNum) {
-		this.startRowNum = startRowNum;
+	public void setStartNum(int startNum) {
+		this.startNum = startNum;
 	}
 	public int getPortLikeNo() {
 		return portLikeNo;
@@ -190,6 +191,12 @@ public class Portfolio{
 	public void setPortTech(List<TechUse> portTech) {
 		this.portTech = portTech;
 	}
+	public boolean isPortCommentFlag() {
+		return portCommentFlag;
+	}
+	public void setPortCommentFlag(boolean portCommentFlag) {
+		this.portCommentFlag = portCommentFlag;
+	}
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
@@ -221,10 +228,10 @@ public class Portfolio{
 		builder.append(images);
 		builder.append(", portTech=");
 		builder.append(portTech);
-		builder.append(", endRowNum=");
-		builder.append(endRowNum);
-		builder.append(", startRowNum=");
-		builder.append(startRowNum);
+		builder.append(", endNum=");
+		builder.append(endNum);
+		builder.append(", startNum=");
+		builder.append(startNum);
 		builder.append(", scrapNo=");
 		builder.append(scrapNo);
 		builder.append(", portLikeNo=");
@@ -239,6 +246,8 @@ public class Portfolio{
 		builder.append(portViewFlag);
 		builder.append(", portLikeFlag=");
 		builder.append(portLikeFlag);
+		builder.append(", portCommentFlag=");
+		builder.append(portCommentFlag);
 		builder.append(", portFollowFlag=");
 		builder.append(portFollowFlag);
 		builder.append(", portScrFlag=");

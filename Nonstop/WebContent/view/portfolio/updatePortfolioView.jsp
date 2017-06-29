@@ -143,10 +143,7 @@
     	
     	/* $("form").attr("method" , "POST").attr("action" , "/portfolio/addPortfolio").submit(); */
     }
-
-
-
-
+	
     $(function() {
     	
     	$(".btn.btn-primary.btn-block.btn-lg").on("click" , function() {

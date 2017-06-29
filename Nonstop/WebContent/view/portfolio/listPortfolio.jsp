@@ -124,19 +124,27 @@
         /* 검색 카테고리 */
         $("#searchCondition-li li").on("click" , function() {
 			var displayValue = $(this).text().trim();
-        	$("#searchCondition").text(displayValue).append('&nbsp;&nbsp;&nbsp;<span class="caret"></span>'); 
-        	$("#searchCondition").val(displayValue);
+        	if(displayValue=="제목"){
+        		$("#searchButton").text(displayValue).append('&nbsp;&nbsp;&nbsp;<span class="caret"></span>'); 
+        		$("#searchButton").val(0);
+        	}else if(displayValue=="작성자"){
+        		$("#searchButton").text(displayValue).append('&nbsp;&nbsp;&nbsp;<span class="caret"></span>');
+        		$("#searchButton").val(1);
+        	}else{
+        		$("#searchButton").val();
+        	}
+        	$("input:hidden[name=searchCondition]").val($("#searchButton").val());
         });
         
         /* 검색버튼 */
         $("#search").on("click", function() {
         	
-        	if($("#searchCondition").prev().text().trim() == "검색조건") {
+        	if(searchCondition==""){
         		alert("검색 조건을 먼저 설정해주세요.");
-        		return false;
+        		return ;
         	}
-        	
-        	var searchCondition = $("#searchCondition").val();
+        	//alert($("input:hidden[name=searchCondition]").val());
+        	var searchCondition = $("input:hidden[name=searchCondition]").val();
         	var searchKeyword = $("#searchKeyword").val();
         	var postDivision = $("#postDivision").val(); 
         	var postSorting = $("#postSorting").val(); 
@@ -248,7 +256,7 @@
 		  					context : this,					
 		  					data : {								
 		  						postDivision: $("#postDivision").val(),
-		  						endRowNum : $(".scrolling:last").attr("endRowNum"),
+		  						endNum : $(".scrolling:last").attr("endNum"),
 		  					}, 
 		  					success : function(data) {
 								//넘어오는 데이터가 json타입이 아니면 파싱을 못함 > 컨트롤러 수정 @ResponseBody
@@ -303,7 +311,7 @@
 											+'</figcaption>'
 											+'</div>'
 											+'</blockquote>'                                        
-											+'<input type="hidden" class="scrolling" endRowNum="'+this.endRowNum+'">'
+											+'<input type="hidden" class="scrolling" endNum="'+this.endNum+'">'
 											+'</div>'
 											+'</figure>'
 											+'</div>'
@@ -460,7 +468,7 @@
       position: absolute;
       bottom: 0;
       left: 0;
-      padding: 2em;
+      padding: 3em;
       width: 100%;
       opacity: 0;
       -webkit-transform: translate3d(0,10px,0);
@@ -552,8 +560,11 @@
 					<c:when test ="${param.postDivision==11 || param.postDivision==21}">
 						<span>WEB</span>
 					</c:when>
-					<c:otherwise>
+					<c:when test ="${param.postDivision==12 || param.postDivision==22}">
 						<span>APP</span>
+					</c:when>
+					<c:otherwise>
+						<span>전체</span>
 					</c:otherwise>
 					</c:choose>
 					<span class="caret"></span>
@@ -613,11 +624,12 @@
 		<form class="navbar-form navbar-right" role="search">
 		<div class="input-group input-group-sm">
 			<div class="input-group-btn">
-				<button type="button" class="btn btn-success dropdown-toggle" id="searchCondition" name="searchCondition" data-toggle="dropdown" aria-expanded="false" style="background: #fff">
+				<input type="hidden" id="searchCondition" name="searchCondition" value="${search.searchCondition}"/>
+				<button type="button" class="btn btn-success dropdown-toggle" id="searchButton" name="searchButton" data-toggle="dropdown" aria-expanded="false" style="background: #fff">
 	        		검색조건&nbsp;&nbsp;&nbsp;<span class="caret"></span></button>
 	        	<ul class="dropdown-menu" id="searchCondition-li" role="menu">
-	          		<li><a href="#">제목</a></li>
-	          		<li><a href="#">작성자</a></li>
+	          		<li><a href="#" value="0">제목</a></li>
+	          		<li><a href="#" value="1">작성자</a></li>
 	        	</ul>
 			</div><!-- /btn-group -->
 			<span class="input-group-addon" id="sizing-addon3"> <span class="glyphicon glyphicon-search" aria-hidden="true"></span> </span>
@@ -631,6 +643,7 @@
    </div>
 </nav>
 
+<c:if test="${ranking != null}">
 <!-- Ranking type-->
 <div class="container"> 
 	<div class="margin-top-50" style="margin-left:1.2%">
@@ -712,7 +725,12 @@
 		                           <blockquote>
 		                          <div class="row">
 		                            <div class="col-sm-3 text-center">
+		                            <c:if test="${ranking.portUserImg !=null}">
 		                              <img class="img-circle" src="/resources/images/upload/${ranking.portUserImg}" id="listUserImg" width="50px" height="50px" style="height:50px">
+		                            </c:if>
+		                            <c:if test="${ranking.portUserImg ==null}">
+		                              <img class="img-circle" src="/resources/images/upload/user_img.jpg" id="listUserImg" width="50px" height="50px" style="height:50px">
+		                            </c:if>  
 		                              <input type="hidden" id="portUserId" name="portUserId" value="${ranking.portUserId}"/>                         
 		                            </div>
 		                            <div class="col-sm-9">
@@ -765,6 +783,7 @@
    	  <a data-slide="next" href="#Carousel" class="right carousel-control"><span class="glyphicon glyphicon-menu-right" aria-hidden="true" style="color:rgb(189, 189, 189); font-size:40px"></span></a>
    </div>
 </div>
+</c:if>
         
 
 <div class="margin-top-70"></div>
@@ -806,7 +825,13 @@
                     	<blockquote>
                         	<div class="row">
                         		<div class="col-sm-3 text-center">
+                        		<c:if test="${portfolio.portUserImg != null}">
                             		<img class="img-circle" src="/resources/images/upload/${portfolio.portUserImg}" id="listUserImg" width="50px" height="50px" style="height:50px">
+                            	</c:if>
+                            	
+                            	<c:if test="${portfolio.portUserImg == null}">
+                            		<img class="img-circle" src="/resources/images/upload/user_img.jpg" id="listUserImg" width="50px" height="50px" style="height:50px">
+                            	</c:if>	
                             		<input type="hidden" id="portUserId" name="portUserId" value="${portfolio.portUserId}"/> 
                             	</div>
                             <div class="col-sm-9">
@@ -838,7 +863,7 @@
 							</figcaption>
 							</div>
                         </blockquote>                                        
-                        <input type="hidden" class="scrolling" endRowNum="${portfolio.endRowNum}">
+                        <input type="hidden" class="scrolling" endNum="${portfolio.endNum}">
 					</div>
                     </figure>
 				</div>
@@ -851,7 +876,6 @@
 </c:if>
    
 </c:forEach>
-
 
 <!-- Back to Top Start -->
 <!-- <a href="#" class="scroll-to-top"><i class="fa fa-long-arrow-up"></i></a> -->

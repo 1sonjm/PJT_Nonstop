@@ -158,14 +158,9 @@ public class PortfolioController {
 		
 		if(items.length > 0){
 			for(int i=0; i<items.length;i++){
-				TechUse techUse = new TechUse();
-				techUse.setTuPortNo(tuPortNo);
-				techUse.setTuTechNo(items[i]);
-				techUseService.addTechUsePort(techUse);
+				techUseService.addTechUsePort(items[i], tuPortNo);
 			}
 		}//END
-		
-		//model.addAttribute("portfolio",portfolio);
 		
 		return "redirect:/view/portfolio/addPortfolioView.jsp";
 	}
@@ -178,6 +173,25 @@ public class PortfolioController {
 		
 		if((User)session.getAttribute("user") != null) {
 			sessionUserId = ((User)session.getAttribute("user")).getUserId();		
+		}
+		
+		//검색조건이 있는 경우 : 랭킹과 리스트를 리턴하지 않는다. 검색 결과만 리턴
+		if(search.getSearchKeyword() != null){
+			//모두 가져오기 임시설정
+			search.setEndNum(100);
+			String postDivision = String.valueOf(search.getPostDivision());
+			
+			if(postDivision.startsWith("1")){
+				search.setPostDivision(1);
+			}else{
+				search.setPostDivision(2);
+			}
+			
+			List<Portfolio> portfolioList = portfolioService.getPortfolioList(search, sessionUserId);
+			
+			model.addAttribute("list", portfolioList);
+			
+			return "forward:/view/portfolio/listPortfolio.jsp";
 		}
 		
 		//16개씩 리스트 가져오기
@@ -372,7 +386,7 @@ public class PortfolioController {
 	
 	@RequestMapping(value="deletePortfolio")
 	public String deletePortfolio(@RequestParam("portNo") int portNo) throws Exception {
-		
+		techUseService.deleteTechUsePort(portNo);
 		portfolioService.deletePortfolio(portNo);
 		
 		return "forward:/index.jsp";
@@ -386,16 +400,23 @@ public class PortfolioController {
 		System.out.println("portComment : "+portComment);
 		
 		portfolioService.addComment(portComment);
-		
 		portComment = portfolioService.getComment(portComment.getComNo());
-		
-		model.addAttribute("portComment", portComment);
+		//총 댓글갯수 추가
+		Portfolio portfolio = portfolioService.getPortfolio(portComment.getComPortNo(), "testUserId");
+		portfolio.setTotalPortComment(portfolio.getTotalPortComment()+1);
+		portfolio.setPortCommentFlag(true);
+		portfolioService.updatePortCount(portfolio);
 	}
 	
 	@RequestMapping(value="deleteComment/{comNo}/{comPortNo}" , method=RequestMethod.GET)
 	public void deleteComment(@PathVariable("comNo") int comNo, @PathVariable("comPortNo") int comPortNo, Model model) throws Exception{
 		
 		portfolioService.deleteComment(comNo);
+		
+		Portfolio portfolio = portfolioService.getPortfolio(comPortNo, "testUserId");
+		portfolio.setTotalPortComment(portfolio.getTotalPortComment()-1);
+		portfolio.setPortCommentFlag(true);
+		portfolioService.updatePortCount(portfolio);
 		
 	}
 	
@@ -444,8 +465,8 @@ public class PortfolioController {
       Search search = new Search();
       search.setCurrentPage(currentPage);
       search.setPostSorting(sorting);
-      search.setStartRowNum((currentPage*5)-5);
-      search.setEndRowNum(currentPage*5);
+      search.setStartNum((currentPage*5)-5);
+      search.setEndNum(currentPage*5);
       
       switch(target){
       case "develop":

@@ -42,8 +42,12 @@ public class TechUseDAOImpl implements TechUseDAO{
 		
 	}
 	
-	public void addTechUsePort(TechUse techUse) throws Exception { 
-		sqlSession.insert("TechUseMapper.addTechUsePort", techUse);
+	public void addTechUsePort(int tuTechNo, int tuPortNo) throws Exception { 
+		Map<String , Object> map = new HashMap<String , Object>();
+		map.put("tuTechNo", tuTechNo);
+		map.put("tuPortNo", tuPortNo);
+		
+		sqlSession.insert("TechUseMapper.addTechUsePort", map);
 	}
 	
 	public TechUse getTechUse(int tuNo) throws Exception{
@@ -65,6 +69,10 @@ public class TechUseDAOImpl implements TechUseDAO{
 	public void deleteTechUse(int tuProjNo) throws Exception{
 		
 		sqlSession.delete("TechUseMapper.deleteTechUse", tuProjNo);
+	}
+	
+	public void deleteTechUsePort(int tuPortNo) throws Exception{
+		sqlSession.delete("TechUseMapper.deleteTechUsePort", tuPortNo);
 	}
 
 	@Override
