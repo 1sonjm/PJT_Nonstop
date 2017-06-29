@@ -21,13 +21,15 @@
 <!-- Awesome Font -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- jQuery -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/resources/javascript/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/javascript/bootstrap.min.js"></script>
 <!-- Plugin JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script> -->
 <!-- Theme JavaScript -->
-<script src="../../resources/javascript/mainpage.js"></script>
+<script src="/resources/javascript/mainpage.js"></script>
 <!-- ///////////////////////네이버//////////////////////// -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
@@ -50,7 +52,6 @@ body {
 		margin-right: 5%;
 	}
 }
-
 ::selection { color:white; background:blue; }
 ::-moz-selection { color:white; background:blue; }
 </style>
@@ -72,14 +73,14 @@ $(function() {
 //============= 개인회원가입 =============	
 function fncAddUser() {
 		
-	var id=$("input[name='userId']").val();
-	var name=$("input[name='userName']").val();
-	var pw=$("input[name='password']").val();
-	var pw_confirm=$("input[name='password2']").val();
-	var email=$("input[name='email']").val();
-	var tel=$("input[name='tel']").val();
-	var addr=$("input[name='addr']").val();
-	var image=$("input[name='image']").val();
+	var id=$("input[id='addUser11']").val();
+	var name=$("input[id='userName1']").val();
+	var pw=$("input[id='password11']").val();
+	var pw_confirm=$("input[id='password22']").val();
+	var email=$("input[id='email1']").val();
+	var tel=$("input[id='tel1']").val();
+	var addr=$("input[id='addr1']").val();
+	var image=$("input[id='image1']").val();
 	
 	
 	if(id == null || id.length <1){
@@ -130,19 +131,19 @@ function fncAddUser() {
 //============= 기업회원가입 =============
 function fncAddCompany() {
 		
-	var id=$("input[name='userId']").val();
-	var name=$("input[name='userName']").val();
-	var pw=$("input[name='password']").val();
-	var pw_confirm=$("input[name='password2']").val();
-	var email=$("input[name='email']").val();
-	var tel=$("input[name='tel']").val();
-	var addr=$("input[name='addr']").val();
-	var image=$("input[name='image']").val();
+	var id=$("input[id='addUser22']").val();
+	var name=$("input[id='userName2']").val();
+	var pw=$("input[id='password33']").val();
+	var pw_confirm=$("input[id='password44']").val();
+	var email=$("input[id='email2']").val();
+	var tel=$("input[id='tel2']").val();
+	var addr=$("input[id='addr2']").val();
+	var image=$("input[id='image2']").val();
 	var companyName=$("input[name='companyName']").val();
 	var empNum=$("input[name='empNum']").val();
 	var pubDate=$("input[name='pubDate']").val();
 	
-	var id=$("input[name='userId']").val();
+	
 	if(id == null || id.length <1){
 		alert("아이디는 반드시 입력하셔야 합니다.");
 		return;
@@ -190,17 +191,18 @@ function fncAddCompany() {
 $(function() {
 	//======= 이메일 ==========
  	$("input[name='email']").on("change" , function() {
-		
-		var email=$("input[name='email']").val();
-    
-		if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-    		alert("이메일 형식이 아닙니다.");
-     	}
+				
+		 var email=$("input[name='email']").val();
+	    
+		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
+	    	alert("이메일 형식이 아닙니다.");
+	     }
 	});
  	//====== datePicker ========
- 	$("#datepicker").datepicker({dateFormat:"yy-mm-dd", 
+ 	$("#datepicker").datepicker({
+ 		dateFormat:"yy-mm-dd", 
  		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토' ], 
- 		  monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+ 		monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
  	});
 });	
 //============ 아이디 중복 체크 =====================
@@ -222,32 +224,102 @@ $(function(){
                   context : this,
                   success : function(JSONData, status) {   
                                           
-                     if(! JSONData.result) {
-                         $("#checkIdd").html("존재하는 아이디입니다.");
-                     } 
-                     else if(userId <4){
-                    	 $("#checkIdd").html("아이디는 4자 이상이어야 합니다."); 
-                     }
-                     else{
-                  	   	 $("#checkIdd").html("사용가능한 아이디입니다.");
-	                       
-                     }
+	               	  if(! JSONData.result) {
+	                         $("#checkId").html("존재하는 아이디입니다.");
+	                  }else {
+	                	  
+                   	  	$("#checkId").html("사용가능한 아이디입니다.");
+                       
+                      }
                   }
             });//ajax         
      });
 	
-	$("#password").keyup( function(){
-		$("#checkpw").text('');
-		});
-	$("#password2").keyup( function() {
-		if( $("#password").val() != $("#password2").val() ) {
-		  	$("#checkpw").text('');
-		  	$("#checkpw").html("비밀번호가 일치하지 않습니다.");
-		} else {
-		  	$("#checkpw").text('');
-		  	$("#checkpw").html("비밀번호가 일치합니다.");
-		}
+	$("#password11").keyup( function(){
+        $("#checkpw1").text('');
+     });
+     
+     $("#password22").keyup( function() {
+        if( $("#password11").val() != $("#password22").val() ) {
+           $("#checkpw1").text('');
+           $("#checkpw1").html("비밀번호가 일치하지 않습니다.");
+        } else {
+           $("#checkpw1").text('');
+           $("#checkpw1").html("비밀번호가 일치합니다.");
+        }
+     });
+     $("#password33").keyup( function(){
+         $("#checkpw2").text('');
+      });
+      
+      $("#password44").keyup( function() {
+         if( $("#password33").val() != $("#password44").val() ) {
+            $("#checkpw2").text('');
+            $("#checkpw2").html("비밀번호가 일치하지 않습니다.");
+         } else {
+            $("#checkpw2").text('');
+            $("#checkpw2").html("비밀번호가 일치합니다.");
+         }
+      });
+      
+      $("#addUser11").on("keyup", function(){
+          
+      	var userId = $("#addUser11").val();
+         
+         		$.ajax(
+              	{
+                    url : '/user/checkId/'+userId,
+                    method : "GET",
+                    dataType : "json",
+                    headers : {
+                       "Accept" : "application/json",
+                       "Content-Type" : "application/json"
+                    },
+                    context : this,
+                    success : function(JSONData, status) {   
+                                            
+                       if(! JSONData.result) {
+                           $("#checkId1").text("존재하는 아이디입니다.");
+                       } 
+                       else if(userId <4){
+                      	 $("#checkId1").text("아이디는 4자 이상이어야 합니다."); 
+                       }
+                       else{
+                    	   	 $("#checkId1").text("사용가능한 아이디입니다.");
+  	                       
+                       }
+                    }
+              });//ajax      
 	});
+    $("#addUser22").on("keyup", function(){
+        
+    	var userId = $("#addUser22").val();
+       
+       		$.ajax(
+            	{
+                  url : '/user/checkId/'+userId,
+                  method : "GET",
+                  dataType : "json",
+                  headers : {
+                     "Accept" : "application/json",
+                     "Content-Type" : "application/json"
+                  },
+                  context : this,
+                  success : function(JSONData, status) {   
+                                          
+                     if(! JSONData.result) {
+                         $("#checkId2").text("존재하는 아이디입니다.");
+                     } 
+                     else if(userId <4){
+                    	 $("#checkId2").text("아이디는 4자 이상이어야 합니다."); 
+                     }
+                     else{
+                  	   	 $("#checkId2").text("사용가능한 아이디입니다.");
+	                       
+                     }
+                  }
+            }); 
+    });  
 });
 //============= login/logout 이동 Event 처리 =============	
 $(function() {
@@ -949,30 +1021,30 @@ $(function() {
 								<div class="tab-pane active" id="tab_default_1">
 									<form id="addUserF" method="post" enctype="multipart/form-data">
 	                                	<div class="form-group">
-	                                    	<input type="text" id="userId" name="userId" class="form-control" placeholder="User ID">
-	                                    	<div id="checkIdd" style="color:red; font-size:12px;">아이디를 입력해주세요.</div>
+	                                    	<input type="text" id="addUser11" name="userId" class="form-control" placeholder="User ID">
+	                                    	<div id="checkId1" style="color:red; font-size:12px;">아이디를 입력해주세요.</div>
 	                 				 	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+	                                    	<input type="password" id="password11" name="password" class="form-control" placeholder="Password">
 	                                  	</div>
 		                                <div class="form-group">
-		                                    <input type="password" id="password2" name="password2" class="form-control" placeholder="Password 확인">
+		                                    <input type="password" id="password22" name="password2" class="form-control" placeholder="Password 확인">
 		                                </div>
-	                                  	<div id="checkpw" style="color:red; font-size:12px;"></div>
+	                                  	<div id="checkpw1" style="color:red; font-size:12px;"></div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="userName" name="userName" class="form-control" placeholder="이름">
+	                                    	<input type="text" id="userName1" name="userName" class="form-control" placeholder="이름">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="addr" name="addr" class="form-control" placeholder="주소">
+	                                    	<input type="text" id="addr1" name="addr" class="form-control" placeholder="주소">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="tel" name="tel" class="form-control" placeholder="연락처">
+	                                    	<input type="text" id="tel1" name="tel" class="form-control" placeholder="연락처">
 	                                  	</div>
 	                                  	<div class="form-group">
-	                                    	<input type="text" id="email" name="email" class="form-control" placeholder="이메일">
+	                                    	<input type="text" id="email1" name="email" class="form-control" placeholder="이메일">
 	                                  	</div>
 	                                  	<div class="form-group">
-					 						<input type="file" accept="image/png, image/jpeg, image/gif" name="file" id="image1" 
+					 						<input type="file" id="image1" accept="image/png, image/jpeg, image/gif" name="file" id="image1" 
 					 						style="width: 100%; margin-top: 35px;"/>
 										</div>
                  				
@@ -984,30 +1056,34 @@ $(function() {
                         		<div class="tab-pane" id="tab_default_2">
 		                        	<form id="addCompanyF" method="post" enctype="multipart/form-data">
 		                            	<div class="form-group">
-		                                	<input type="text" id="userId" name="userId" class="form-control" placeholder="User ID">
+		                                	<input type="text" id="addUser22" name="userId" class="form-control" placeholder="User ID">
 		                                	<div id="checkIdd" style="color:red; font-size:12px;">아이디를 입력해주세요.</div>
 		                                </div>
+		                                
                                   		<div class="form-group">
-                                      		<input type="password" id="password" name="password" class="form-control" placeholder="Password">
+                                      		<input type="password" id="password33" name="password" class="form-control" placeholder="Password">
                                   		</div>
+                                  		
 	                                  	<div class="form-group">
-	                                      	<input type="password" id="password2" name="password2" class="form-control" placeholder="Password 확인">
+	                                      	<input type="password" id="password44" name="password2" class="form-control" placeholder="Password 확인">
 	                                  	</div>
-	                                  	<div id="checkpw" style="color:red; font-size:12px;"></div>
+	                                  	
+	                                  	<div id="checkpw2" style="color:red; font-size:12px;"></div>
+	                                  	
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="userName" name="userName" class="form-control" placeholder="이름">
+	                                      	<input type="text" id="userName2" name="userName" class="form-control" placeholder="이름">
 	                                  	</div>
 	                                  	
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="addr" name="addr" class="form-control" placeholder="주소">
+	                                      	<input type="text" id="addr2" name="addr" class="form-control" placeholder="주소">
 	                                  	</div>
 	                                  	
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="tel" name="tel" class="form-control" placeholder="연락처">
+	                                      	<input type="text" id="tel2" name="tel" class="form-control" placeholder="연락처">
 	                                  	</div>
 	                                  	
 	                                  	<div class="form-group">
-	                                      	<input type="text" id="email" name="email" class="form-control" placeholder="이메일">
+	                                      	<input type="text" id="email2" name="email" class="form-control" placeholder="이메일">
 	                                  	</div>
 	                                  	
 	                                  	<div class="form-group">
@@ -1019,18 +1095,19 @@ $(function() {
 	                                  	</div>
                                   
 		                                <div class="form-group">
-		                                	<input type="text" id="datepicker" name="pubDate" class="form-control" placeholder="설립일" readonly>
+		                                	<input type="text" class="form-control"  id="datepicker" name="pubDate" placeholder="이곳을 클릭하여 설립일을 선택해 주세요"  readonly>
+										    <div id="checkDate" style="color:red; font-size:12px;">설립일을 선택하세요</div>
 		                               	</div>
 		                               	
 									 	<div class="form-group">
 					 						<input type="file" accept="image/png, image/jpeg, image/gif" name="logoFile" id="image2" 
-					 						style="width: 100%; margin-top: 35px;"/>
+					 						style="width: 100%; margin-top: 25px;"/>
 										</div>
-									</div>						
-
-                                	<button class="btn btn-primary btn-block" id="addCompanyV" style="margin-top:60px">회원가입</button>
-                                	<button class="btn btn-default btn-block">취소</button>
-                              	</form>
+										
+										<button class="btn btn-primary btn-block" id="addCompanyV" style="margin-top:60px">회원가입</button>
+                                		<button class="btn btn-default btn-block">취소</button>
+														
+                              		</form>
 								</div>
 							</div>
 						</div>
