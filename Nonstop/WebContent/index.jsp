@@ -21,15 +21,13 @@
 <!-- Awesome Font -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- jQuery -->
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/resources/javascript/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/javascript/bootstrap.min.js"></script>
 <!-- Plugin JavaScript -->
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
 <!-- Theme JavaScript -->
-<script src="/resources/javascript/mainpage.js"></script>
+<script src="../../resources/javascript/mainpage.js"></script>
 <!-- ///////////////////////네이버//////////////////////// -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
