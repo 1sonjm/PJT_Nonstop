@@ -17,6 +17,9 @@
     <!-- Bootstrap Core CSS -->
     <link href="/resources/css/nonstop.css" rel="stylesheet">
     
+    <!-- Awesome Font -->
+	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
     <!-- Custom CSS -->
     <!-- <link href="/resources/css/full.css" rel="stylesheet"> -->
 
@@ -154,7 +157,6 @@
    .my-detail span {
        color: #c1c1c1;
        font-weight: 400;
-       line-height: 30px;
        font-size: 16px;
    }
 
@@ -282,6 +284,54 @@
           font-size: 25px;
        }
    }
+   
+   .sidebar-nav ul li {
+		list-style: none;
+	}
+	
+	#sidebarnav {
+		cursor:pointer;
+		padding-left: 0;
+	}
+	
+	#sidebarnav li:hover {
+		background: #ebebeb;
+	}
+	
+	.sidebar-nav li>div {
+		height: 20px;
+		margin-right: 5px;
+		display: inline-block;
+		text-align: center;
+		vertical-align: middle;
+		color: #cccccc;
+		/*border-radius: 100%; */
+	}
+	
+	.sidebar-nav span>i {
+		float: right;
+		width: auto;
+		font-size: 20px;
+		margin-top: 0px;
+		color: #cccccc;
+	}
+	
+	.sidebar-nav a>i {
+		float: right;
+		width: auto;
+		font-size: 14px;
+		margin-top: 4px;
+		margin-right: 18px;
+		color: #cccccc;
+	}
+	
+	.sidebar-nav ul li.nav-small {
+		font-size: 14px;
+		padding: 14px 14px 14px 20px;
+		/* color: #90a4ae;
+	    font-weight: 500; */
+		border-bottom: 1px solid #ebebeb;
+	}
 
     </style>
 
@@ -453,11 +503,11 @@
    /* 팔로우하기, 쪽지보내기, 프로젝트 초대, 채팅하기, 수정, 삭제, 내 프로필 이동 */
    $(function() {
 	   /*팔로우*/
-	   $("#follow").on("click" , function() {       	
+	   $("#getFollow").on("click" , function() {       	
 		   
 		   var targetUserId = $(".white-spacing h1").text();
 		   /*팔로우하기*/
-		   if($("#follow").text() == "팔로우하기") {
+		   if($("#follow").text().trim() == "팔로우 하기") {
 			   alert($(".white-spacing h1").text()+"에게 팔로우를 신청합니다.");
 			   $.ajax( 
 						{
@@ -475,7 +525,7 @@
 				});
 		   }
 		   /*팔로우취소*/
-		   if($("#follow").text() == "팔로우 취소") {
+		   if($("#follow").text().trim() == "팔로우 취소") {
 			   alert($(".white-spacing h1").text()+" 팔로우를 취소합니다.");
 			   $.ajax( 
 						{
@@ -494,20 +544,6 @@
 		   }
        });
 	   
-      /* 쪽지보내기 */ 
-      $("#sendLetter").on("click" , function() {       	
-    	  self.location="/letter/addLetter";
-      });
-      
-      /*프로젝트 초대*/
-      $("#toProject").on("click" , function() {
- 
-      });
-      
-      /*채팅하기*/
-      $("#toProject").on("click" , function() {
- 
-      });
       /* 수정 */
       $("#updatePortfolio").on("click", function (e) {
 		   alert($("#portNo").val());
@@ -520,8 +556,7 @@
 	   });
 	  /* 내 프로필 이동 */
 	  $("#getProfile").on("click", function (e) {
-		   alert($("#portNo").val());
-		   self.location="/profile/getMineProfile"; 
+		   self.location="/profile/getOtherProfile?userId="+$(".white-spacing h1").text().trim();
 	   });
    });
    
@@ -791,8 +826,53 @@
 	                    	<span>${user.email}</span><br/>
 	                    	<%-- <span>${sessionScope.user.addr}</span> --%>
 	                 	</div> 
-	                
-	                 	<div class="margin-top-20">
+	                 	
+	                	<div class="sidebar-nav">
+		                	<ul id="sidebarnav">
+		                		<c:if test="${!empty sessionScope.user}">
+									
+									<c:if test="${sessionScope.user.userId == portfolio.portUserId}">
+										<li class="nav-small" id="getProfile">
+											<div class="icon">
+												<span class="fa fa-pie-chart" aria-hidden="true"></span>
+											</div> 
+											<span class="mineProfile" style="color: #666666;">
+												내 프로필로 이동
+											</span> 
+										</li>
+									</c:if>
+									
+									<c:if test="${sessionScope.user.userId != portfolio.portUserId}">
+										<li class="nav-small" id="getProfile">
+											<div class="icon">
+												<span class="fa fa-pie-chart" aria-hidden="true"></span>
+											</div> 
+											<span class="mineProfile" style="color: #666666;">
+												프로필 보기
+											</span> 
+										</li>
+										<li class="nav-small" id="getFollow">
+											<div class="icon">
+												<span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+											</div> 
+											<c:if test="${portfolio.portFollowFlag == true}">
+												<span class="followProfile" id="follow" style="color: #666666;">
+													팔로우 취소
+												</span> 
+											</c:if>
+											<c:if test="${portfolio.portFollowFlag == false}">
+												<span class="followProfile" id="follow" style="color: #666666;">
+													팔로우 하기
+												</span> 
+											</c:if>
+										</li>
+									</c:if>
+									
+								</c:if>
+							</ul>
+	                	</div>
+	                 	
+	                 	<%-- <div class="margin-top-20">
 	                  	<c:if test="${!empty sessionScope.user}">
 		                    <c:if test="${sessionScope.user.userId == portfolio.portUserId}">
 		                    	<button type="button" class="btn btn-info btn-lg" id="getProfile">내 프로필 보기</button>
@@ -823,7 +903,7 @@
 		                  	</c:if>
 	                  	</c:if>
 	                 	</div>
-	                  	<div class="margin-bottom-20">&nbsp;</div>
+	                  	<div class="margin-bottom-20">&nbsp;</div>  --%>
 					</div>
 				</div>
 			</div>

@@ -227,12 +227,13 @@
                     	"Accept" : "application/json",
                         "Content-Type" : "application/json"   
                     },
+                    context : this,
                     success : function(data){
                     	   
                     	if(flag=="add to scrap"){
-                    		$(".Scrap").html("delete to scrap");  
+                    		$(this).html("delete to scrap");  
                     	}else{
-                            $(".Scrap").html("add to scrap");
+                            $(this).html("add to scrap");
                         }
                           
 				}//success
