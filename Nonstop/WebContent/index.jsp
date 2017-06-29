@@ -77,8 +77,39 @@ $(function() {
 			$("#password").focus();
 			return;
 		}
-		
-		$("#aaa").attr("method","POST").attr("action","/user/login").submit();
+		$.ajax(
+	        	{
+		        	url : '/user/checkUserId/'+id,
+		            method : "POST",
+		            dataType : "json",
+		            headers : {
+		                "Accept" : "application/json",
+		                "Content-Type" : "application/json"
+		            },
+		            context : this,
+		            success : function(JSONData, status) {     
+		            	if(JSONData.user ==null ) {
+		            		alert('회원정보가 일치하지 않습니다.');	
+		            		$(self.location).attr("href","/user/logout");
+		            		location.reload();            
+	                }else if(JSONData.user.role == 4){
+	              		alert("탈퇴한 계정입니다.");
+	              		$(self.location).attr("href","/user/logout");
+	              		location.reload();
+	                }else{
+	                	
+	                	if(JSONData.user.userId == id && JSONData.user.password == pw){
+	                	$("#aaa").attr("method","POST").attr("action","/user/login").submit();
+	              	  location.reload();
+	                }else if(JSONData.user.userId != id || JSONData.user.password != pw){
+	                alert('회원정보가 일치하지 않습니다.');	
+	                $(self.location).attr("href","/user/logout");
+	                location.reload();
+	                	}
+	                }
+	             }
+	       	});   
+	
 	});
 	
 	$("#logout").on("click" , function() {
@@ -125,7 +156,7 @@ $(function() {
 //============= 내정보수정 이동 Event 처리 =============	
 $(function() {
 	$("#updateUser").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/updateUser?userId="+userId;
 	}); 
@@ -133,7 +164,7 @@ $(function() {
 //============= 기업정보수정 이동 Event 처리 =============	
 $(function() {
 	$("#updateCompany").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/updateCompany?userId="+userId;
 	}); 
@@ -141,7 +172,7 @@ $(function() {
 //============= 회원목록조회 이동 Event 처리 =============	
 $(function() {
 	$("#listUser").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/listUser"
 	}); 
@@ -149,7 +180,7 @@ $(function() {
 //============= 기업목록조회 이동 Event 처리 =============	
 $(function() {
 	$("#listCompany").on("click" , function() {
-		alert($("#userId").val());
+		
 		var userId = $("#userId").val();	 	
 		 self.location = "/user/listCompany"
 	}); 
@@ -705,7 +736,7 @@ $(function() {
 	naver_id_login.setState(state);
 	naver_id_login.init_naver_id_login();
 	function naverSignInCallback() {
-		alert(naver_id_login.getProfileData('email'));
+		
 		var userId=naver_id_login.getProfileData('email');    
 	 	var tempId = userId.replace(".", ",");
 	 	console.log("userId :: " + userId);
@@ -724,7 +755,8 @@ $(function() {
 	            context : this,
 	            success : function(JSONData, status) {     
 	            	if(JSONData.user ==null ) {
-              	  	self.location="/view/user/addUserView.jsp?userId="+userId;                 
+	            		alert("계정이 없습니다. 회원가입을 해주시기 바랍니다.");
+	            		self.location="/view/user/addUserView.jsp?userId="+userId;                 
                 }else if(JSONData.user.role == 4){
               		alert("탈퇴한 계정입니다.");
               		$(self.location).attr("href","/user/logout");
