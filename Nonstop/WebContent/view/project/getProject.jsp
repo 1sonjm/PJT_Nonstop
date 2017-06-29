@@ -402,8 +402,6 @@ xmp{
 		}
 	
 	}
-	
-	
 	$(function (){
 		
 		$("#projDetail").val().replace('/\n/g', '<br>');
@@ -413,6 +411,14 @@ xmp{
 	
 	 
 	$(function() {
+		
+		//글자수 표시
+	    $('#Letter').keyup(function() {
+	   		var maxLength = 2000;
+	        var length = $(this).val().length;
+	        var length = maxLength-length;
+	         $('#aa').text(length);
+	    });
 		//프로젝트 삭제
 		$("#deleteButton").on("click", function(){
 				fncDeleteProject(1);
@@ -511,7 +517,7 @@ xmp{
 	   $(function() {
 		      /* 댓글 박스 클릭시 comment창 보이게 */ 
 		   var maxLength = 200;
-	       $('textarea').keyup(function() {
+	       $('#comContent').keyup(function() {
 	         var length = $(this).val().length;
 	         var length = maxLength-length;
 	         $('#chars').text(length);
@@ -820,7 +826,12 @@ xmp{
                                    
                                     <div class="media">
 									  <div class="media-left">
-									      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+									  	  <c:if test= "${sessionScope.user.image==null}">
+									      	<img src="/resources/images/layout/defaultProfile.jpg" width="50px" height="50px" alt="">
+									      </c:if>
+									      <c:if test= "${sessionScope.user.image!=null}">
+									      	<img src="/resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">
+									      </c:if>									      
 									  </div>
 									  
 							  	    <div class="media-body">
@@ -854,7 +865,12 @@ xmp{
 									
 									<div class="media">
 									  <div class="media-left">
-									      <img class="comment-img" src="../../resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									  	  <c:if test= "${projCommentList.comUserImg==null}">
+									  	  	<img class="comment-img" src="/resources/images/layout/defaultProfile.jpg" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									  	  </c:if>
+									  	  <c:if test= "${projCommentList.comUserImg!=null}">
+									      	<img class="comment-img" src="/resources/images/upload/${projCommentList.comUserImg}" width="45px" height="45px" alt="" comUserVal="${projCommentList.comUserId}">
+									      </c:if>
 									      <input type="hidden" class="comUserId" value="${projCommentList.comUserId}"/>        
 									  </div>
 									  <div class="media-body">
@@ -1042,7 +1058,6 @@ xmp{
 		role="dialog" tabindex="-1" id="letter" class="modal fade"
 		style="display: none;">
 		<div class="modal-dialog" id="modal-dialog2">
-
 			<div class="modal-content">
 				<div class="modal-header" id="modal-header2">
 					<button aria-hidden="true" data-dismiss="modal" class="close"
@@ -1081,10 +1096,10 @@ xmp{
 						<div class="form-group">
 							<label class="col-lg-2 control-label">Mail</label>
 							<div class="col-lg-10">
-								<textarea maxlength="2000" rows="10" cols="30"
+								<textarea id="Letter" maxlength="2000" rows="10" cols="30"
 									name="letDetail" placeholder="2000자까지 입력가능"
 									class="form-control"></textarea>
-								<br /> 2000/<span id="chars">2000</span>
+								<br /> 2000/<span id="aa">2000</span>
 							</div>
 						</div>
 

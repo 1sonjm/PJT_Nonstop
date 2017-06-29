@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -37,8 +37,13 @@
 	<style>
  		body {
             padding-top : 50px;
+            }
+            .text-info{
+         color: black;
+         padding-left: 10px;
         }
         
+
         
          #sizeChange1, #sizeChange2, #sizeChange3, #sizeChange4, #sizeChange5, #sizeChange6, #sizeChange7{
         	font-size : 17px;
@@ -46,6 +51,15 @@
         	font-weight:bold;
         }
        
+
+        .text-muted {
+         color: black;
+        }
+        .row {
+        height: 15px;
+        } 
+        
+
      </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -54,14 +68,14 @@
 		//============= 회원정보수정 Event  처리 =============	
 		  $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "#updateCompany" ).on("click" , function() {
+			 $( "#updateCompanyV" ).on("click" , function() {
 					self.location = "/user/updateCompany?userId=${user.userId}"
 				});
 		});
 		
 		 $(function() {
 				//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-				 $( "#listCompany" ).on("click" , function() {
+				 $( "#listCompanyX" ).on("click" , function() {
 						self.location = "/index.jsp"
 					});
 			});
@@ -99,12 +113,12 @@
 	    </div>
 		
 		<div class="col-md-12 text-center">
-			<%-- <c:if test="${empty user.image}">
-               	<img class="img-circle" src="/resources/images/layout/defaultProfile.jpg" width="200" height="200" />
-            </c:if>
-            <c:if test= "${!empty user.image}"> --%>
+            <c:if test="${empty user.image}">
+				<img class="img-circle" src="/resources/images/layout/defaultProfile.jpg" width="200" height="200" />
+			</c:if>
+            <c:if test="${!empty user.image}">
 				<img class="img-circle" src="/resources/images/upload/${user.image}" width="200" height="200" />
-			<%-- </c:if> --%>
+			</c:if>
         </div>
 		
 		<div class="col-md-12 text-center" style=" margin-bottom: 30px;">
@@ -147,10 +161,94 @@
 		</div>
 		
 		
+
 		<div class="form-group" >
 	  		<div class="col-md-12 text-center " style="margin-top : 30px;">
 				<a class="btn btn-primary btn" href="#" role="button" id = "updateCompany">기업정보수정</a>	
 				<a class="btn btn-primary btn" href="#" role="button" id = "listCompany">돌아가기</a>
+
+	<hr/>
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>이 름</strong></div>
+			<div class="col-xs-8 col-md-4">${user.userName}</div>
+		</div>
+		
+		<hr/>
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2"><strong>아 이 디</strong></div>
+			<div class="col-xs-8 col-md-4">${user.userId}</div>
+		</div>
+		
+		<hr/>
+		
+		
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>주소</strong></div>
+			<div class="col-xs-8 col-md-4">${user.addr}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>연락처</strong></div>
+			<div class="col-xs-8 col-md-4">${ !empty user.tel ? user.tel : ''}	</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>기업명</strong></div>
+			<div class="col-xs-8 col-md-4">${user.companyName}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>직원수</strong></div>
+			<div class="col-xs-8 col-md-4">${user.empNum}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>설립일</strong></div>
+			<div class="col-xs-8 col-md-4">${user.pubDate}</div>
+		</div>
+		
+		<hr/>
+		
+		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2"><strong>이 메 일</strong></div>
+			<div class="col-xs-8 col-md-4">${user.email}</div>
+		</div>
+		
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "updateCompanyV">회원정보수정</a>	
+	  		</div>
+		</div>
+		
+		<hr/>
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+				<a class="btn btn-primary btn" href="#" role="button" id = "listCompanyX">돌아가기</a>
+	  		</div>
+		</div>
+		
+		<hr/>
+		<div class="row">
+	  		<div class="col-md-12 text-center ">
+	  			
+
 				<a class="btn btn-primary btn" href="#" role="button" id = "deleteUser" userId="${user.userId}">회원탈퇴</a>
 	  		</div>
 		</div>

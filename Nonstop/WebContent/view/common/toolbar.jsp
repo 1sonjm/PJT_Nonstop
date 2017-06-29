@@ -83,64 +83,63 @@ $(document).ready(function(){
                     
                <c:if test="${!empty sessionScope.user.userId }">
                     <c:if test="${sessionScope.user.role == '1'}">
-                
-                    <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
-                    <li>
-	                    <a href="#" id="mail">
-	                    	
-	                    		<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-	                    </a>
-                    </li>
-                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
-                    <ul class="dropdown-menu">
-                      <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}"/>                     
-                      <li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
-                      <li><a href="#" id="getUser">내정보보기</a></li>
-                      <li><a href="#" id="updateUser">내정보수정</a></li>
-                      <li><a href="#" id="listFollow">팔로우 목록보기</a></li>
-                      <li><a href="#" id="logout">로그아웃</a></li>
-                    </ul>
-                  </li>
-                 
-                     </c:if>
-               <c:if test="${sessionScope.user.role == '2'}">
-                  <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
-                  <li>
-                     <a href="#" id="mail">
-                        <!-- 쪽지 -->
-                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-                     </a>
-                  </li>
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
-                     <ul class="dropdown-menu">
-                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-                        <li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
-                        <li><a href="#" id="getUser">내정보보기</a></li>
-                        <li><a href="#" id="updateUser">내정보수정</a></li>
-                        <li><a href="#" id="listFollow">팔로우 목록보기</a></li>
-                        <li><a href="#" id="logout">로그아웃</a></li>
-                     </ul></li>
-                     </c:if>
-                  <c:if test="${sessionScope.user.role == '3'}">
-                  <li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
-                  <li>
-                     <a href="#" id="mail">
-                        <!-- 쪽지 -->
-                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
-                     </a>
-                  </li>
-                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
-                     <ul class="dropdown-menu">
-                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
-                        <li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
-                        <li><a href="#" id="getCompany">기업정보보기</a></li>
-                        <li><a href="#" id="updateCompany">기업정보수정</a></li>
-                        <li><a href="#" id="listFollow">팔로우 목록보기</a></li>
-                        <li><a href="#" id="logout">로그아웃</a></li>
-                     </ul></li>
-                     </c:if>   
-                 </c:if> 
-                  
+
+		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
+		                  	<li>
+		                    	<a href="#" id="mail">
+		                        	<!-- 쪽지 -->
+		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+		                     	</a>
+		                  	</li>
+		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
+		                    	<ul class="dropdown-menu">
+		                        	<input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
+		                        	<li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
+		                        	<li><a href="#" id="listUser">개인회원목록조회</a></li>
+		                        	<li><a href="#" id="listCompany">기업회원목록조회</a></li>
+		                        	<li><a href="#" id="getUser">내정보보기</a></li>
+		                        	<li><a href="#" id="updateUser">내정보수정</a></li>
+		                        	<li><a href="#" id="logout">로그아웃</a></li>
+		                     	</ul>
+		                  	</li>
+                     	</c:if>
+		               	<c:if test="${sessionScope.user.role == '2'}">
+		                  	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
+		                  	<li>
+		                    	<a href="#" id="mail">
+		                        	<!-- 쪽지 -->
+		                        	<span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+		                     	</a>
+		                  	</li>
+		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
+		                    <ul class="dropdown-menu">
+		                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
+		                        <li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
+		                        <li><a href="#" id="getUser">내정보보기</a></li>
+		                        <li><a href="#" id="updateUser">내정보수정</a></li>
+		                        <li><a href="#" id="logout">로그아웃</a></li>
+		                     </ul></li>
+		                </c:if>
+		                <c:if test="${sessionScope.user.role == '3'}">
+		                	<li><a href="#"><span class="glyphicon glyphicon-user"></span>${sessionScope.user.userName}님 환영합니다.</a></li>
+		                  	<li>
+		                    	<a href="#" id="mail">
+		                        <!-- 쪽지 -->
+		                        <span class="glyphicon glyphicon-envelope" style="margin-top:3px; margin-bottom:5px"></span>
+		                     	</a>
+		                  	</li>
+		                  	<li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><span class="glyphicon glyphicon-align-justify" style="margin-top:3px; margin-bottom:5px"></span></a>
+		                    <ul class="dropdown-menu">
+		                        <input type="hidden" id="userId" name="userId" value="${sessionScope.user.userId}" />
+		                        <li><a href="#" id="profile2" role="${user.role}">프로필</a></li>
+		                        <li><a href="#" id="getCompany">기업정보보기</a></li>
+		                        <li><a href="#" id="updateCompany">기업정보수정</a></li>
+		                        <li><a href="#" id="logout">로그아웃</a></li>
+		                    </ul></li>
+		                 </c:if>	
+					</c:if>
+
+
                   
              </ul>
             </div>

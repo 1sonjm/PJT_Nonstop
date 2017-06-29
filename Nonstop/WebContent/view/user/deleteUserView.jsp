@@ -38,6 +38,12 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
+        .jumbotron {
+    
+    background-color: white;
+    }
+    
     </style>
     
     <!--  ///////////////////////// JavaScript ////////////////////////// -->

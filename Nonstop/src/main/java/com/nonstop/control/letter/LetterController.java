@@ -46,18 +46,6 @@ public class LetterController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
-	@RequestMapping(value="addReturnLetter", method=RequestMethod.GET)
-	public String addReturnLetter(@RequestParam("letNo")int letNo, Model model) throws Exception{
-		
-		System.out.println("/letter/addReturnLetter : GET");
-		
-		Letter letter = letterService.getLetter(letNo);
-		
-		model.addAttribute("letter",letter);
-		
-		return "forward:/view/letter/addReturnLetterView.jsp";
-	}
-	
 	@RequestMapping(value="addLetter", method=RequestMethod.POST)
 	public String addLetter(@ModelAttribute("letter") Letter letter, HttpSession session, Model model) throws Exception{
 		
@@ -252,10 +240,8 @@ public class LetterController {
 		if(user!=null){
 			if(letterService.getUnreadLetterList(userId).size() > 0){
 				model.addAttribute("flag", true);
-				System.out.println("트루");
 			}else {
 				model.addAttribute("flag", false);
-				System.out.println("false");
 			}
 		}
 	}

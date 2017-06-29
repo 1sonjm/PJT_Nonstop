@@ -56,6 +56,7 @@
 			$("form").attr("method" , "POST").attr("action" , "/user/listUser").submit();
 		}
 		
+	
 		
 		//============= "검색"  Event  처리 =============	
 		 $(function() {
@@ -78,6 +79,8 @@
 			$( "td:nth-child(2)" ).css("color" , "coral");
 			
 		});	
+		
+		
 		
 		
 		//============= userId 에 회원정보보기  Event  처리 (double Click)=============

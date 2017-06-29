@@ -496,6 +496,14 @@ ul {
 <script type="text/javascript">
 	 $(function() {
 		 
+		//글자수 표시
+	       $('textarea').keyup(function() {
+	    	 var maxLength = 2000;
+	         var length = $(this).val().length;
+	         var length = maxLength-length;
+	         $('#chars').text(length);
+	       });
+		 
 		 $("#send").on("click", function(){
 				var receiveId=$("input[name='receiveId']").val();
 				var title=$("input[name='letTitle']").val();
@@ -522,6 +530,12 @@ ul {
 			 self.location = "/letter/getReceiveLetterList?receiveId="+receiveId;
 
 		 });
+		  
+		  //팔로워프로필로 이동
+			$(".followProfile").on("click", function(){
+				 var userId = $(this).text().trim();
+				 self.location = "/profile/getOtherProfile?userId="+userId;
+			 });
 		  
 		  $("#sendBox").on("click", function(){
 				 var sendId = $(this).attr('sendId');
@@ -562,8 +576,14 @@ ul {
 		<div class="mail-box">
 			<aside class="sm-side">
 				<div class="user-head">
-					<a class="inbox-avatar" href="javascript:;"> <img width="50"
-						hieght="60" src="../../resources/images/upload/${user.image}">
+					<a class="inbox-avatar" href="javascript:;"> 
+					<c:if test="${user.image != null }">
+					<img width="50" hieght="60" src="/resources/images/upload/${user.image}">
+					</c:if>
+					<c:if test="${user.image == null }">
+					<img width="50" hieght="60" src="/resources/images/upload/user_img.jpg">
+					</c:if>
+					
 					</a>
 					<div class="user-name">
 						<h5>
@@ -650,9 +670,10 @@ ul {
 										<div class="form-group">
 											<label class="col-lg-2 control-label">Mail</label>
 											<div class="col-lg-10">
-												<textarea rows="10" cols="30" name="letDetail"
-													placeholder="2000자까지 입력가능" class="form-control" id=""
-													name=""></textarea>
+												<textarea maxlength="2000" rows="10" cols="30"
+													name="letDetail" placeholder="2000자까지 입력가능"
+													class="form-control"></textarea>
+												<br /> 2000/<span id="chars">2000</span>
 											</div>
 										</div>
 
@@ -696,7 +717,8 @@ ul {
 					<c:forEach var="follow" items="${list2}">
 						<c:set var="i" value="${ i+1 }" />
 
-						<li><a href="#"> <i class=" fa fa-sign-blank text-danger"></i>
+						<li><a href="#" class="followProfile" userId="${user.userId}">
+								<i class=" fa fa-sign-blank text-danger"></i>
 								${follow.targetUserId}
 						</a></li>
 
@@ -711,19 +733,17 @@ ul {
 				</div>
 				<div class="inbox-body">
 					<div class="mail-option">
-						
+
 						<div class="btn-group hidden-phone">
 							<a data-toggle="dropdown" href="#" class="btn mini blue"
 								aria-expanded="false"> More <i class="fa fa-angle-down"></i>
 							</a>
 							<ul class="dropdown-menu">
-								
-								<li class="divider"></li>
+
 								<li><a href="#" id="deleteLetter" letNo="${letter.letNo}"><i
 										class="fa fa-trash-o"></i> Delete</a></li>
 							</ul>
 						</div>
-
 					</div>
 					<table class="table table-inbox table-hover">
 						<tbody>
