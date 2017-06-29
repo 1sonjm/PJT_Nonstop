@@ -109,6 +109,9 @@
 			margin-top:10px;
 	 	}		
 	}
+	
+	::selection { color:white; background:blue; }
+	::-moz-selection { color:white; background:blue; }
 
 </style>
 

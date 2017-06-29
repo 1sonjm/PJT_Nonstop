@@ -32,8 +32,7 @@ body {
 			});
 		 
 		 $("#addCareer").on("click" , function() {
-			$("#selectTechClass").val(1);
-			$("#selectTechData").val(1000);
+
 		 		$("form").attr("method" , "POST").attr("action" , "/profile/addCareer").submit();
 			}); 
 		 
