@@ -460,7 +460,7 @@ function loginWithKakao() {
 	   	}
   	});
 }
-$(document).on('click', '#close-preview', function(){ 
+/* $(document).on('click', '#close-preview', function(){ 
     $('.image-preview').popover('hide');
     // Hover befor close the preview
     $('.image-preview').hover(
@@ -516,7 +516,7 @@ $(function() {
             $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
         }        
         reader.readAsDataURL(file);
-    });  
+    });   */
 });
   	
 </script>
@@ -968,6 +968,10 @@ $(function() {
 	                                  	<div class="form-group">
 	                                    	<input type="text" id="email" name="email" class="form-control" placeholder="이메일">
 	                                  	</div>
+	                                  	<div class="form-group">
+					 						<input type="file" accept="image/png, image/jpeg, image/gif" name="file" id="image1" 
+					 						style="width: 100%; margin-top: 35px;"/>
+										</div>
                  				
                                   		<button class="btn btn-primary btn-block" id="addUserV" style="margin-top:60px">회원가입</button>
                                   		<button class="btn btn-default btn-block">취소</button>
@@ -990,18 +994,23 @@ $(function() {
 	                                  	<div class="form-group">
 	                                      	<input type="text" id="userName" name="userName" class="form-control" placeholder="이름">
 	                                  	</div>
+	                                  	
 	                                  	<div class="form-group">
 	                                      	<input type="text" id="addr" name="addr" class="form-control" placeholder="주소">
 	                                  	</div>
+	                                  	
 	                                  	<div class="form-group">
 	                                      	<input type="text" id="tel" name="tel" class="form-control" placeholder="연락처">
 	                                  	</div>
+	                                  	
 	                                  	<div class="form-group">
 	                                      	<input type="text" id="email" name="email" class="form-control" placeholder="이메일">
 	                                  	</div>
+	                                  	
 	                                  	<div class="form-group">
 	                                      	<input type="text" id="companyName" name="companyName" class="form-control" placeholder="기업명">
 	                                  	</div>
+	                                  	
 	                                   	<div class="form-group">
 	                                      	<input type="text" id="empNum" name="empNum" class="form-control" placeholder="직원수">
 	                                  	</div>
@@ -1009,25 +1018,10 @@ $(function() {
 		                                <div class="form-group">
 		                                	<input type="text" id="datepicker" name="pubDate" class="form-control" placeholder="설립일" readonly>
 		                               	</div>
-                 				   		<div class="form-group">
-						
-									 	<div class="col-md-5">
-										   <!-- image-preview-filename input [CUT FROM HERE]-->
-								           <div class="input-group image-preview">
-								              <input type="text" class="form-control image-preview-filename" disabled="disabled"> <!-- don't give a name === doesn't send on POST/GET -->
-								                <span class="input-group-btn">
-								                    <!-- image-preview-clear button -->
-								                    <button type="button" class="btn btn-default image-preview-clear" style="display:none;">
-								                        <span class="glyphicon glyphicon-remove"></span> Clear
-								                    </button>
-								                    <!-- image-preview-input -->
-								                    <div class="btn btn-default image-preview-input">
-								                        <span class="glyphicon glyphicon-folder-open"></span>
-								                        <span class="image-preview-input-title">찾아보기</span>
-								                        <input type="file" accept="image/png, image/jpeg, image/gif, image/jpg" name="file" id="image"/> <!-- rename it -->
-								                    </div>
-								                </span>
-								            </div><!-- /input-group image-preview [TO HERE]--> 
+		                               	
+									 	<div class="form-group">
+					 						<input type="file" accept="image/png, image/jpeg, image/gif" name="logoFile" id="image2" 
+					 						style="width: 100%; margin-top: 35px;"/>
 										</div>
 									</div>						
 
