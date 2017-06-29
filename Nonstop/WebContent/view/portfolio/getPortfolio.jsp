@@ -695,14 +695,19 @@
                                 <div id="comment" class="comment">
                                 	<h3>Discuss About Post</h3>
                                 	<div class="margin-top-20"></div>
-                                  	<h6>22 Comments</h6>
+                                  	<h6>${portfolio.totalPortComment} Comments</h6>
                                   	<hr class="thick-line">
                                    
                                     <c:if test="${!empty sessionScope.user}">
 	                                    <div class="media">
 										  <div class="media-left">
 										    <a href="#">
-										      <img src="../../resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+										    <c:if test="${sessionScope.user.image !=null}">
+										      <img src="/resources/images/upload/${sessionScope.user.image}" width="50px" height="50px" alt="">									      
+										    </c:if>
+										     <c:if test="${sessionScope.user.image ==null}">
+										      <img src="/resources/images/upload/user_img.jpg" width="50px" height="50px" alt="">									      
+										    </c:if>
 										    </a>
 										  </div>
 									
@@ -736,8 +741,13 @@
 									
 									<div class="media">
 									  <div class="media-left">
-									    <a href="#">									    
-									      <img class="comment-img" src="../../resources/images/upload/${portCommentList.comUserImg}" width="45px" height="45px" alt="">
+									    <a href="#">
+									    <c:if test="${portCommentList.comUserImg !=null}">									    
+									      <img class="comment-img" src="/resources/images/upload/${portCommentList.comUserImg}" width="45px" height="45px" alt="">
+									    </c:if>
+									    <c:if test="${portCommentList.comUserImg ==null}">									    
+									      <img class="comment-img" src="/resources/images/upload/user_img.jpg" width="45px" height="45px" alt="">
+									    </c:if>
 									    </a>
 									  </div>
 									  <div class="media-body">

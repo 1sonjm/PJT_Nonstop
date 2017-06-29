@@ -10,7 +10,7 @@ public interface TechUseDAO {
 	
 	public void addTechUse(int tuTechNo, int tuProjNo) throws Exception;
 
-	public void addTechUsePort(TechUse techUse) throws Exception;
+	public void addTechUsePort(int tuTechNo, int tuPortNo) throws Exception;
 //	public List<TechUse> getTechUse(int techNo) throws Exception;
 	public TechUse getTechUse(int tuNo) throws Exception;
 	
@@ -21,5 +21,7 @@ public interface TechUseDAO {
 	public void updateTechUse(TechUse techUse) throws Exception;
 	
 	public void deleteTechUse(int tuProjNo) throws Exception;
+	
+	public void deleteTechUsePort(int tuPortNo) throws Exception;
 	
 }

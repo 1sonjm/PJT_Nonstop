@@ -21,13 +21,15 @@
 <!-- Awesome Font -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- jQuery -->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/resources/javascript/jquery.js"></script>
 <!-- Bootstrap Core JavaScript -->
 <script src="/resources/javascript/bootstrap.min.js"></script>
 <!-- Plugin JavaScript -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script> -->
 <!-- Theme JavaScript -->
-<script src="../../resources/javascript/mainpage.js"></script>
+<script src="/resources/javascript/mainpage.js"></script>
 <!-- ///////////////////////네이버//////////////////////// -->
 <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
 <!-- <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.3.min.js"></script> -->
@@ -50,14 +52,275 @@ body {
 		margin-right: 5%;
 	}
 }
+::selection { color:white; background:blue; }
+::-moz-selection { color:white; background:blue; }
 </style>
 <script type="text/javascript">
-
-
-
-
-
+//============= 개인회원가입 버튼 =============	
+$(function() {
+	$( "#addUserV" ).on("click" , function() {
+		fncAddUser();
+	});
+});	
 	
+//============= 기업회원가입 버튼 =============
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	$( "#addCompanyV" ).on("click" , function() {
+		fncAddCompany();
+	});
+});	
+//============= 개인회원가입 =============	
+function fncAddUser() {
+		
+	var id=$("input[id='addUser11']").val();
+	var name=$("input[id='userName1']").val();
+	var pw=$("input[id='password11']").val();
+	var pw_confirm=$("input[id='password22']").val();
+	var email=$("input[id='email1']").val();
+	var tel=$("input[id='tel1']").val();
+	var addr=$("input[id='addr1']").val();
+	var image=$("input[id='image1']").val();
+	
+	
+	if(id == null || id.length <1){
+		alert("아이디는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(name == null || name.length <1){
+		alert("이름은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(pw == null || pw.length <1){
+		alert("패스워드는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	if(pw_confirm == null || pw_confirm.length <1){
+		alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(email == null || email.length <1){
+		alert("이메일은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(tel == null || tel.length <1){
+		alert("연락처는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(addr == null || addr.length <1){
+		alert("주소는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	
+	if( pw != pw_confirm ) {				
+		alert("비밀번호 확인이 일치하지 않습니다.");
+		$("input:text[name='password2']").focus();
+		return;
+	}
+		
+	
+	$("#addUserF").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+}
+	
+//============= 기업회원가입 =============
+function fncAddCompany() {
+		
+	var id=$("input[id='addUser22']").val();
+	var name=$("input[id='userName2']").val();
+	var pw=$("input[id='password33']").val();
+	var pw_confirm=$("input[id='password44']").val();
+	var email=$("input[id='email2']").val();
+	var tel=$("input[id='tel2']").val();
+	var addr=$("input[id='addr2']").val();
+	var image=$("input[id='image2']").val();
+	var companyName=$("input[name='companyName']").val();
+	var empNum=$("input[name='empNum']").val();
+	var pubDate=$("input[name='pubDate']").val();
+	
+	
+	if(id == null || id.length <1){
+		alert("아이디는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(name == null || name.length <1){
+		alert("이름은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(pw == null || pw.length <1){
+		alert("패스워드는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	if(pw_confirm == null || pw_confirm.length <1){
+		alert("패스워드 확인은  반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(email == null || email.length <1){
+		alert("이메일은 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(tel == null || tel.length <1){
+		alert("연락처는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	if(addr == null || addr.length <1){
+		alert("주소는 반드시 입력하셔야 합니다.");
+		return;
+	}
+	
+	
+	if( pw != pw_confirm ) {				
+		alert("비밀번호 확인이 일치하지 않습니다.");
+		$("input:text[name='password2']").focus();
+		return;
+	}
+	
+	$("#addCompanyF").attr("method" , "POST").attr("action" , "/user/addCompany").submit();
+}
+	
+$(function() {
+	//======= 이메일 ==========
+ 	$("input[name='email']").on("change" , function() {
+				
+		 var email=$("input[name='email']").val();
+	    
+		 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
+	    	alert("이메일 형식이 아닙니다.");
+	     }
+	});
+ 	//====== datePicker ========
+ 	$("#datepicker").datepicker({
+ 		dateFormat:"yy-mm-dd", 
+ 		dayNamesMin: ['일', '월', '화', '수', '목', '금', '토' ], 
+ 		monthNames : ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월']
+ 	});
+});	
+//============ 아이디 중복 체크 =====================
+$(function(){
+    
+	$("#userId").on("keyup", function(){
+       
+    	var userId = $("#userId").val();
+       
+       		$.ajax(
+            	{
+                  url : '/user/checkId/'+userId,
+                  method : "GET",
+                  dataType : "json",
+                  headers : {
+                     "Accept" : "application/json",
+                     "Content-Type" : "application/json"
+                  },
+                  context : this,
+                  success : function(JSONData, status) {   
+                                          
+	               	  if(! JSONData.result) {
+	                         $("#checkId").html("존재하는 아이디입니다.");
+	                  }else {
+	                	  
+                   	  	$("#checkId").html("사용가능한 아이디입니다.");
+                       
+                      }
+                  }
+            });//ajax         
+     });
+	
+	$("#password11").keyup( function(){
+        $("#checkpw1").text('');
+     });
+     
+     $("#password22").keyup( function() {
+        if( $("#password11").val() != $("#password22").val() ) {
+           $("#checkpw1").text('');
+           $("#checkpw1").html("비밀번호가 일치하지 않습니다.");
+        } else {
+           $("#checkpw1").text('');
+           $("#checkpw1").html("비밀번호가 일치합니다.");
+        }
+     });
+     $("#password33").keyup( function(){
+         $("#checkpw2").text('');
+      });
+      
+      $("#password44").keyup( function() {
+         if( $("#password33").val() != $("#password44").val() ) {
+            $("#checkpw2").text('');
+            $("#checkpw2").html("비밀번호가 일치하지 않습니다.");
+         } else {
+            $("#checkpw2").text('');
+            $("#checkpw2").html("비밀번호가 일치합니다.");
+         }
+      });
+      
+      $("#addUser11").on("keyup", function(){
+          
+      	var userId = $("#addUser11").val();
+         
+         		$.ajax(
+              	{
+                    url : '/user/checkId/'+userId,
+                    method : "GET",
+                    dataType : "json",
+                    headers : {
+                       "Accept" : "application/json",
+                       "Content-Type" : "application/json"
+                    },
+                    context : this,
+                    success : function(JSONData, status) {   
+                                            
+                       if(! JSONData.result) {
+                           $("#checkId1").text("존재하는 아이디입니다.");
+                       } 
+                       else if(userId <4){
+                      	 $("#checkId1").text("아이디는 4자 이상이어야 합니다."); 
+                       }
+                       else{
+                    	   	 $("#checkId1").text("사용가능한 아이디입니다.");
+  	                       
+                       }
+                    }
+              });//ajax      
+	});
+    $("#addUser22").on("keyup", function(){
+        
+    	var userId = $("#addUser22").val();
+       
+       		$.ajax(
+            	{
+                  url : '/user/checkId/'+userId,
+                  method : "GET",
+                  dataType : "json",
+                  headers : {
+                     "Accept" : "application/json",
+                     "Content-Type" : "application/json"
+                  },
+                  context : this,
+                  success : function(JSONData, status) {   
+                                          
+                     if(! JSONData.result) {
+                         $("#checkId2").text("존재하는 아이디입니다.");
+                     } 
+                     else if(userId <4){
+                    	 $("#checkId2").text("아이디는 4자 이상이어야 합니다."); 
+                     }
+                     else{
+                  	   	 $("#checkId2").text("사용가능한 아이디입니다.");
+	                       
+                     }
+                  }
+            }); 
+    });  
+});
 //============= login/logout 이동 Event 처리 =============	
 $(function() {
 	
@@ -87,7 +350,7 @@ $(function() {
 });
 //============= 회원가입 이동 Event 처리 =============	
 $(function() {
-	$("#addUserV").on("click", function() {
+	$("#addUser").on("click", function() {
 		self.location = "/user/addUser"
 	});
 });
@@ -272,7 +535,7 @@ function loginWithKakao() {
 	   	}
   	});
 }
-$(document).on('click', '#close-preview', function(){ 
+/* $(document).on('click', '#close-preview', function(){ 
     $('.image-preview').popover('hide');
     // Hover befor close the preview
     $('.image-preview').hover(
@@ -286,52 +549,50 @@ $(document).on('click', '#close-preview', function(){
 });
 //이미지=====================
 $(function() {
-		        // Create the close button
-		        var closebtn = $('<button/>', {
-		            type:"button",
-		            text: 'x',
-		            id: 'close-preview',
-		            style: 'font-size: initial;',
-		        });
-		        closebtn.attr("class","close pull-right");
-		        // Set the popover default content
-		        $('.image-preview').popover({
-		            trigger:'manual',
-		            html:true,
-		            title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
-		            content: "There's no image",
-		            placement:'bottom'
-		        });
-		        // Clear event
-		        $('.image-preview-clear').click(function(){
-		            $('.image-preview').attr("data-content","").popover('hide');
-		            $('.image-preview-filename').val("");
-		            $('.image-preview-clear').hide();
-		            $('.image-preview-input input:file').val("");
-		            $(".image-preview-input-title").text("Browse"); 
-		        }); 
-		        // Create the preview image
-		        $(".image-preview-input input:file").change(function (){     
-		            var img = $('<img/>', {
-		                id: 'dynamic',
-		                width:250,
-		                height:200
-		            });      
-		            var file = this.files[0];
-		            var reader = new FileReader();
-		            // Set preview image into the popover data-content
-		            reader.onload = function (e) {
-		                $(".image-preview-input-title").text("Change");
-		                $(".image-preview-clear").show();
-		                $(".image-preview-filename").val(file.name);            
-		                img.attr('src', e.target.result);
-		                $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
-		            }        
-		            reader.readAsDataURL(file);
-		        });  
-		    });
-
-
+    // Create the close button
+    var closebtn = $('<button/>', {
+        type:"button",
+        text: 'x',
+        id: 'close-preview',
+        style: 'font-size: initial;',
+    });
+    closebtn.attr("class","close pull-right");
+    // Set the popover default content
+    $('.image-preview').popover({
+        trigger:'manual',
+        html:true,
+        title: "<strong>Preview</strong>"+$(closebtn)[0].outerHTML,
+        content: "There's no image",
+        placement:'bottom'
+    });
+    // Clear event
+    $('.image-preview-clear').click(function(){
+        $('.image-preview').attr("data-content","").popover('hide');
+        $('.image-preview-filename').val("");
+        $('.image-preview-clear').hide();
+        $('.image-preview-input input:file').val("");
+        $(".image-preview-input-title").text("Browse"); 
+    }); 
+    // Create the preview image
+    $(".image-preview-input input:file").change(function (){     
+        var img = $('<img/>', {
+            id: 'dynamic',
+            width:250,
+            height:200
+        });      
+        var file = this.files[0];
+        var reader = new FileReader();
+        // Set preview image into the popover data-content
+        reader.onload = function (e) {
+            $(".image-preview-input-title").text("Change");
+            $(".image-preview-clear").show();
+            $(".image-preview-filename").val(file.name);            
+            img.attr('src', e.target.result);
+            $(".image-preview").attr("data-content",$(img)[0].outerHTML).popover("show");
+        }        
+        reader.readAsDataURL(file);
+    });   
+});*/
   	
 </script>
 </head>
@@ -367,9 +628,9 @@ $(function() {
 				<ul class="nav navbar-nav navbar-right">
 					<c:if test="${empty sessionScope.user.userId }">
 						<li><a href="#myModalLogin" id="modalLogin" data-toggle="modal" data-target="#myModalLogin">로그인</a></li>
-						<li><a href="#" id="addUserV">회원가입</a></li>
+						<li><a href="#myModalAdd" id="modalAddUser" data-toggle="modal" data-target="#myModalAdd">회원가입</a></li>
 					</c:if>
-					 
+					
 					<%-- <c:if test="${sessionScope.user.role == '1' || ${sessionScope.user.role == '2' || ${sessionScope.user.role == '3'}"> --%>
                		<c:if test="${!empty sessionScope.user.userId }">
                
@@ -649,9 +910,9 @@ $(function() {
 			
 				<div class="col-md-12">
 					<i class="fa fa-quote-left" aria-hidden="true"></i>
-					<h2 class="brand-heading">Tech Statistic Service</h2>
+					<h2 class="brand-heading">Statistic & Chatting Service</h2>
 					<p>
-					그동안 작업한 포트폴리오를 손쉽게 올리고 관리할 수 있습니다. pdf 파일 형식 지원과 다중 이미지 업로드를 지원 등 이전에 만들어놓은 포트폴리오 파일을 수정없이 등록하여 사용할 수 있도록 서비스하기 위해 노력하고 있습니다. 각자 등록한 작업들은 프로필 페이지에서 따로 관리할 수 있으며 서로의 작업물을 추천하고 의견을 나눌 수 있습니다.
+					프로젝트 진행을 위해선 소통이 매우 중요합니다. 업무를 담당하게 될 프리랜서의 역량을 통계를 통해 큰 흐름을 조회하고 분석해보세요. 그리고 채팅을 통해 해당 프리랜서가 이전에 진행했던 포트폴리오 들을 직접 시연을 통해 확인하거나 자료를 전달받을 수 있습니다. 더욱 견고한 프로젝트를 준비하세요.
 					</p>
 					<div class="margin-bottom-30"></div>
 					<hr style="width:20%; border-top:1px solid #bdbdbd">
@@ -737,11 +998,126 @@ $(function() {
     }                  
     
  	naver_id_login.get_naver_userprofile("naverSignInCallback()");
-
  	</script>
     
     <!-- modal Add User -->
-	
+	<div class="modal fade" id="myModalAdd" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    	<div class="modal-dialog" style="width: 450px">
+        	<div class="modal-content" style="margin-top: -4%; padding-bottom: 0; padding-top: 10px;">
+        	
+        		<div class="tab-content">
+	        		
+	        		<div class="tabbable-panel">
+						<div class="tabbable-line">
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a href="#tab_default_1" data-toggle="tab"><strong>개인 회원가입 </strong></a>
+								</li>
+								<li>
+									<a href="#tab_default_2" data-toggle="tab"><strong>기업 회원가입</strong></a>
+								</li>
+							</ul>
+							<div class="tab-content">
+								<div class="tab-pane active" id="tab_default_1">
+									<form id="addUserF" method="post" enctype="multipart/form-data">
+	                                	<div class="form-group">
+	                                    	<input type="text" id="addUser11" name="userId" class="form-control" placeholder="User ID">
+	                                    	<div id="checkId1" style="color:red; font-size:12px;">아이디를 입력해주세요.</div>
+	                 				 	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="password" id="password11" name="password" class="form-control" placeholder="Password">
+	                                  	</div>
+		                                <div class="form-group">
+		                                    <input type="password" id="password22" name="password2" class="form-control" placeholder="Password 확인">
+		                                </div>
+	                                  	<div id="checkpw1" style="color:red; font-size:12px;"></div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="userName1" name="userName" class="form-control" placeholder="이름">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="addr1" name="addr" class="form-control" placeholder="주소">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="tel1" name="tel" class="form-control" placeholder="연락처">
+	                                  	</div>
+	                                  	<div class="form-group">
+	                                    	<input type="text" id="email1" name="email" class="form-control" placeholder="이메일">
+	                                  	</div>
+	                                  	<div class="form-group">
+					 						<input type="file" id="image1" accept="image/png, image/jpeg, image/gif" name="file" id="image1" 
+					 						style="width: 100%; margin-top: 35px;"/>
+										</div>
+                 				
+                                  		<button class="btn btn-primary btn-block" id="addUserV" style="margin-top:60px">회원가입</button>
+                                  		<button class="btn btn-default btn-block">취소</button>
+            
+									</form>
+                        		</div>
+                        		<div class="tab-pane" id="tab_default_2">
+		                        	<form id="addCompanyF" method="post" enctype="multipart/form-data">
+		                            	<div class="form-group">
+		                                	<input type="text" id="addUser22" name="userId" class="form-control" placeholder="User ID">
+		                                	<div id="checkIdd" style="color:red; font-size:12px;">아이디를 입력해주세요.</div>
+		                                </div>
+		                                
+                                  		<div class="form-group">
+                                      		<input type="password" id="password33" name="password" class="form-control" placeholder="Password">
+                                  		</div>
+                                  		
+	                                  	<div class="form-group">
+	                                      	<input type="password" id="password44" name="password2" class="form-control" placeholder="Password 확인">
+	                                  	</div>
+	                                  	
+	                                  	<div id="checkpw2" style="color:red; font-size:12px;"></div>
+	                                  	
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="userName2" name="userName" class="form-control" placeholder="이름">
+	                                  	</div>
+	                                  	
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="addr2" name="addr" class="form-control" placeholder="주소">
+	                                  	</div>
+	                                  	
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="tel2" name="tel" class="form-control" placeholder="연락처">
+	                                  	</div>
+	                                  	
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="email2" name="email" class="form-control" placeholder="이메일">
+	                                  	</div>
+	                                  	
+	                                  	<div class="form-group">
+	                                      	<input type="text" id="companyName" name="companyName" class="form-control" placeholder="기업명">
+	                                  	</div>
+	                                  	
+	                                   	<div class="form-group">
+	                                      	<input type="text" id="empNum" name="empNum" class="form-control" placeholder="직원수">
+	                                  	</div>
+                                  
+		                                <div class="form-group">
+		                                	<input type="text" class="form-control"  id="datepicker" name="pubDate" placeholder="이곳을 클릭하여 설립일을 선택해 주세요"  readonly>
+										    <div id="checkDate" style="color:red; font-size:12px;">설립일을 선택하세요</div>
+		                               	</div>
+		                               	
+									 	<div class="form-group">
+					 						<input type="file" accept="image/png, image/jpeg, image/gif" name="logoFile" id="image2" 
+					 						style="width: 100%; margin-top: 25px;"/>
+										</div>
+										
+										<button class="btn btn-primary btn-block" id="addCompanyV" style="margin-top:60px">회원가입</button>
+                                		<button class="btn btn-default btn-block">취소</button>
+														
+                              		</form>
+								</div>
+							</div>
+						</div>
+					</div>
+	        		
+        		</div>
+        		
+        	</div>
+        </div>
+    </div>
 	
 	<!-- Footer -->
 	<footer>
